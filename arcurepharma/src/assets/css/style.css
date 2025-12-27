@@ -302,6 +302,7 @@ body::-webkit-scrollbar {
   );
   opacity: 0;
   transition: opacity 0.4s ease;
+  pointer-events: none;
 }
 
 .glass-card:hover {
@@ -404,4 +405,44 @@ body::-webkit-scrollbar {
 
 .section-spacing {
   padding-top: 100px;
+}
+
+/* Success Banner */
+.success-banner {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%);
+  border: 1px solid rgba(165, 180, 252, 0.3);
+  color: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate__fadeInDown {
+  animation: fadeInDown 0.5s ease-out;
+}
+
+.error-text {
+  color: #ff4d4d;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+.is-invalid {
+  border-color: rgba(255, 77, 77, 0.5) !important;
 }

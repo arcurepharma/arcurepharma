@@ -1,6 +1,48 @@
+import React, { useState } from "react";
 import contactInfo from "../dependencies/contactInfo";
 
 export default function Contact() {
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+    if (!formData.subject.trim()) newErrors.subject = "Subject is required";
+    if (!formData.message.trim()) newErrors.message = "Message is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const handleSendMessage = () => {
+    if (validateForm()) {
+      setShowSuccess(true);
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      setTimeout(() => setShowSuccess(false), 5000);
+    }
+  };
+
   return (
     <>
       <div className="backgroung-modern d-flex flex-column pt-5">
@@ -33,7 +75,17 @@ export default function Contact() {
             {/* Contact Form */}
             <div className="col-lg-7">
               <div className="glass-card">
-                <h3 className="fw-bold mb-4">Send us a Message</h3>
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                  <h3 className="fw-bold mb-0">Send us a Message</h3>
+                </div>
+
+                {showSuccess && (
+                  <div className="success-banner mb-4 animate__animated animate__fadeInDown">
+                    <span className="me-2">✅</span>
+                    Message sent successfully! We'll get back to you soon.
+                  </div>
+                )}
+
                 <form>
                   <div className="row g-3">
                     <div className="col-md-6">
@@ -43,9 +95,17 @@ export default function Contact() {
                         </label>
                         <input
                           type="text"
-                          className="form-control glass-input"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          className={`form-control glass-input ${
+                            errors.name ? "is-invalid" : ""
+                          }`}
                           placeholder="John Doe"
                         />
+                        {errors.name && (
+                          <div className="error-text">{errors.name}</div>
+                        )}
                       </div>
                     </div>
                     <div className="col-md-6">
@@ -55,9 +115,17 @@ export default function Contact() {
                         </label>
                         <input
                           type="email"
-                          className="form-control glass-input"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          className={`form-control glass-input ${
+                            errors.email ? "is-invalid" : ""
+                          }`}
                           placeholder="john@example.com"
                         />
+                        {errors.email && (
+                          <div className="error-text">{errors.email}</div>
+                        )}
                       </div>
                     </div>
                     <div className="col-12">
@@ -67,9 +135,17 @@ export default function Contact() {
                         </label>
                         <input
                           type="text"
-                          className="form-control glass-input"
+                          name="subject"
+                          value={formData.subject}
+                          onChange={handleInputChange}
+                          className={`form-control glass-input ${
+                            errors.subject ? "is-invalid" : ""
+                          }`}
                           placeholder="How can we help?"
                         />
+                        {errors.subject && (
+                          <div className="error-text">{errors.subject}</div>
+                        )}
                       </div>
                     </div>
                     <div className="col-12">
@@ -78,16 +154,25 @@ export default function Contact() {
                           Message
                         </label>
                         <textarea
-                          className="form-control glass-input"
+                          name="message"
+                          value={formData.message}
+                          onChange={handleInputChange}
+                          className={`form-control glass-input ${
+                            errors.message ? "is-invalid" : ""
+                          }`}
                           rows="4"
                           placeholder="Write your message here..."
                         ></textarea>
+                        {errors.message && (
+                          <div className="error-text">{errors.message}</div>
+                        )}
                       </div>
                     </div>
                     <div className="col-12 mt-4">
                       <button
                         type="button"
                         className="btn btn-modern-submit w-100"
+                        onClick={handleSendMessage}
                       >
                         Send Message
                       </button>

@@ -1,13 +1,22 @@
 import React from "react";
 import NavLink from "./NavLink";
 import { Link } from "react-router-dom";
+import * as bootstrap from "bootstrap";
 
 export default function Navbar({ route }) {
+  const closeMenu = () => {
+    const navbarContent = document.getElementById("navbarContent");
+    if (navbarContent && navbarContent.classList.contains("show")) {
+      const bsCollapse = new bootstrap.Collapse(navbarContent, { toggle: false });
+      bsCollapse.hide();
+    }
+  };
+
   return (
     <nav className="navbar navbar-expand-lg fixed-top modern-navbar">
       <div className="container-fluid">
         {/* Brand / Logo */}
-        <Link className="navbar-brand fw-bold text-uppercase" to="/">
+        <Link className="navbar-brand fw-bold text-uppercase" to="/" onClick={closeMenu}>
           Arcurepharma
         </Link>
 
@@ -36,6 +45,7 @@ export default function Navbar({ route }) {
                   name={item.name}
                   path={item.path}
                   icon={item.icon}
+                  onClick={closeMenu}
                 />
               ))}
           </ul>

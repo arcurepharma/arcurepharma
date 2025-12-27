@@ -13,11 +13,6 @@ const routes = [
         name: "Contact",
         path: "/contact",
         icon: "test"
-    },
-    {
-        name: "Mission & Vision",
-        path: "/mission-vision",
-        icon: "test"
     }
 ];
 

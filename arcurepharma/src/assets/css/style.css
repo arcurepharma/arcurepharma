@@ -1,24 +1,68 @@
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
-  font-family: 'Helvetica', sans-serif;
+  font-family: "Helvetica", sans-serif;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom Mobile Toggler Styling */
+.custom-toggler {
+  border: none;
+  padding: 5px;
+  background-color: transparent !important;
+  box-shadow: none !important; /* Remove blue glow */
+}
+
+.custom-toggler:focus {
+  box-shadow: none !important;
+}
+
+.toggler-bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  background-color: white;
+  border-radius: 2px;
+}
+
+/* Rotate into X when active (class 'collapsed' is REMOVED by bootstrap when open) */
+.custom-toggler:not(.collapsed) .bar1 {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.custom-toggler:not(.collapsed) .bar2 {
+  opacity: 0;
+}
+
+.custom-toggler:not(.collapsed) .bar3 {
+  transform: translateY(-8px) rotate(-45deg);
 }
 
 .backgroung-modern {
-  height: 100vh;
+  min-height: 100vh;
   background: #0e0f2c;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  overflow: hidden;
+  padding-bottom: 50px;
 }
 
 .floating-shapes .shape {
   position: absolute;
   border-radius: 50%;
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   animation: float 15s infinite;
 }
 
@@ -47,9 +91,15 @@ body, html {
 }
 
 @keyframes float {
-  0% { transform: translateY(0) translateX(0);}
-  50% { transform: translateY(-50px) translateX(30px);}
-  100% { transform: translateY(0) translateX(0);}
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-50px) translateX(30px);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
 }
 
 .content {
@@ -69,7 +119,7 @@ body, html {
   letter-spacing: 2px;
   font-size: 3rem;
   font-weight: 800;
-  margin: 30px  0px;
+  margin: 30px 0px;
 }
 
 .heading-h2 {
@@ -125,4 +175,56 @@ body, html {
 .home-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+}
+
+/* Navbar Enhancements */
+.modern-navbar {
+  background: rgba(
+    14,
+    15,
+    44,
+    0.85
+  ); /* Matches background-modern with opacity */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.modern-navbar .navbar-brand {
+  color: #fff !important;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  font-size: 1.5rem;
+}
+
+.modern-navbar .nav-link {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.modern-navbar .nav-link:hover,
+.modern-navbar .nav-link.active {
+  color: #fff !important;
+  transform: translateY(-2px);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.modern-navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0px;
+  left: 50%;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.modern-navbar .nav-link:hover::after {
+  width: 100%;
 }

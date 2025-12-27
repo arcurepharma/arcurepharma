@@ -1,12 +1,22 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ComingSoon from './pages/CommingSoon';
 import NotFound from "./pages/NotFound";
+import Layout from "./components/Layout";
+import HomePage from "./pages/Home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import MissionAndVision from "./pages/MissionAndVision";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/home" element={<ComingSoon />} />
+        <Route path="/" element={<Layout />} >
+          <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/mission-vision" element={<MissionAndVision />} />
+        </Route>
         <Route path="*" element={<NotFound/>} />
       </Routes>
     </BrowserRouter >

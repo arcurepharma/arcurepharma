@@ -1,7 +1,4 @@
-import { useNavigate } from "react-router-dom";
-
-function NotFound() {
-  const navigate = useNavigate();
+export default function Contact() {
   return (
     <>
       <div className="backgroung-modern">
@@ -12,15 +9,9 @@ function NotFound() {
         </div>
         <div className="content">
           <h3 className='heading-h3'>📦 Arcurepharma</h3>
-          <h2 className="heading-h2">404</h2>
-          <small className="oops">OOPS! PAGE NOT FOUND</small>
-          <button className="home-btn" onClick={() => navigate("/")}>
-            GO BACK HOME
-          </button>
+          <h2 className="heading-h2">CONTACT</h2>
         </div>
       </div>
     </>
   );
 }
-
-export default NotFound;

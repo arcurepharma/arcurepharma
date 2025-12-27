@@ -17,7 +17,7 @@ export default function ComingSoon() {
   const seconds = String(timeLeft % 60).padStart(2, '0');
 
   return (
-    <div className="coming-soon-modern">
+    <div className="backgroung-modern">
       <div className="floating-shapes">
         <div className="shape"></div>
         <div className="shape"></div>
@@ -25,8 +25,8 @@ export default function ComingSoon() {
       </div>
 
       <div className="content">
-        <h3>📦 Arcurepharma</h3>
-        <h1>COMING SOON</h1>
+        <h3 className='heading-h3'>📦 Arcurepharma</h3>
+        <h1 className='heading-h1'>COMING SOON</h1>
         <div className="countdown">
           <div><span>{days}</span><small>Days</small></div>
           <div><span>{hours}</span><small>Hours</small></div>

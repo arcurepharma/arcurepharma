@@ -4,7 +4,7 @@ body, html {
   font-family: 'Helvetica', sans-serif;
 }
 
-.coming-soon-modern {
+.backgroung-modern {
   height: 100vh;
   background: #0e0f2c;
   color: white;
@@ -53,22 +53,30 @@ body, html {
 }
 
 .content {
-  padding: 10px;
+  padding: 20px;
   text-align: center;
   z-index: 2;
 }
 
-.content h3 {
+.heading-h3 {
   font-weight: 400;
-  margin: 0 0 30px 0;
+  margin: 0px;
   font-size: 2rem;
   color: #aaa;
 }
 
-.content h1 {
-  font-size: 3rem;
-  margin: 0 0 30px 0;
+.heading-h1 {
   letter-spacing: 2px;
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 30px  0px;
+}
+
+.heading-h2 {
+  letter-spacing: 2px;
+  font-size: clamp(5rem, 18vw, 12rem);
+  font-weight: 800;
+  margin: 0;
 }
 
 .countdown {
@@ -91,4 +99,30 @@ body, html {
 .countdown small {
   font-size: 0.8rem;
   color: #aaa;
+}
+
+.oops {
+  font-size: 1rem;
+  letter-spacing: 2px;
+  color: #aaa;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.home-btn {
+  margin-top: 30px;
+  padding: 14px 36px;
+  border-radius: 50px;
+  border: none;
+  background: #ffffff;
+  color: #0e0f2c;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.home-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
 }

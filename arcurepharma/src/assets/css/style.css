@@ -59,6 +59,15 @@ body::-webkit-scrollbar {
   padding-bottom: 50px;
 }
 
+.backgroung-modern_home
+{
+  min-height: 80vh;
+  background: radial-gradient(circle at top right, #1a1c4b 0%, #0e0f2c 60%, #050616 100%);
+  color: white;
+  position: relative;
+  padding-bottom: 50px;
+}
+
 .floating-shapes .shape {
   position: absolute;
   border-radius: 50%;
@@ -142,12 +151,12 @@ body::-webkit-scrollbar {
 }
 
 .countdown span {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: bold;
 }
 
 .countdown small {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: #aaa;
 }
 

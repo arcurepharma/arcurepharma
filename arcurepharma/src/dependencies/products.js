@@ -1,6 +1,6 @@
 /*
-mport img1 from "../assets/pics/products/1.jpg";
-imagePath:"img1",
+mport img0 from "../assets/pics/products/0.jpg";
+imagePath:"img0",
 imageUrl: "https://img.jpg"
 */
 

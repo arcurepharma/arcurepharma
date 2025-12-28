@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import socialLinks from "../dependencies/socialLinks";
 import contactInfo from "../dependencies/contactInfo";
@@ -21,64 +20,22 @@ export default function Footer() {
               compassion to create pharmaceutical solutions that change lives.
             </p>
             <div className="social-links-grid justify-content-center justify-content-lg-start">
-              {socialLinks.map((link, index) => {
-                let icon;
-                const name = link.name.toLowerCase();
-                if (name.includes("facebook")) {
-                  icon = (
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-                    </svg>
-                  );
-                } else if (name.includes("twitter") || name.includes("x")) {
-                  icon = (
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
-                    </svg>
-                  );
-                } else if (name.includes("linkedin")) {
-                  icon = (
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
-                      <circle cx="4.98" cy="4.4" r="2.27" />
-                      <path d="M2 7.84h5.96V22H2zM12.22 7.84V22h5.96v-8.12c0-2.18.9-4.24 3.7-4.24 2.76 0 2.87 2.58 2.87 4.4V22h5.96v-10c0-4.94-1.06-8.72-6.84-8.72-2.78 0-4.64 1.53-5.4 2.96h-.08V7.84z" />
-                    </svg>
-                  );
-                } else {
-                  icon = (
+              {socialLinks.map((link, index) => (
+                <a
+                  key={index}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-icon-v2"
+                  title={link.name}
+                >
+                  {link.icon || (
                     <span style={{ fontSize: "0.8rem", fontWeight: 800 }}>
                       {link.name.substring(0, 2).toUpperCase()}
                     </span>
-                  );
-                }
-
-                return (
-                  <a
-                    key={index}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-icon-v2"
-                    title={link.name}
-                  >
-                    {icon}
-                  </a>
-                );
-              })}
+                  )}
+                </a>
+              ))}
             </div>
           </div>
 

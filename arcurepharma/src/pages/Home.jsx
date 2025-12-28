@@ -285,7 +285,6 @@ export default function Home() {
             className={`modern-toast ${t.isHiding ? "hiding" : ""}`}
             style={{ marginTop: "10px" }}
           >
-            <div className="toast-icon">✅</div>
             <div className="toast-message">{t.message}</div>
           </div>
         ))}

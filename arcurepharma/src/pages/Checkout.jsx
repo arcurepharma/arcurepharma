@@ -28,9 +28,20 @@ export default function Checkout() {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address";
     }
-    if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
-    if (!formData.whatsapp.trim())
-      newErrors.whatsapp = "WhatsApp number is required";
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+    } else if (!/^\+?\d{10,15}$/.test(formData.phone.replace(/[\s()-]/g, ""))) {
+      newErrors.phone = "Please enter a valid phone number (e.g., 03001245300)";
+    }
+
+    // WhatsApp is optional, but if provided, validate format
+    if (
+      formData.whatsapp.trim() &&
+      !/^\+?\d{10,15}$/.test(formData.whatsapp.replace(/[\s()-]/g, ""))
+    ) {
+      newErrors.whatsapp = "Please enter a valid WhatsApp number";
+    }
+
     if (!formData.address.trim())
       newErrors.address = "Shipping address is required";
     if (!formData.city.trim()) newErrors.city = "City is required";
@@ -141,10 +152,17 @@ export default function Checkout() {
                 <h3 className="footer-title mb-4">Shipping Information</h3>
                 <div className="row g-3">
                   <div className="col-md-6">
-                    <label className="form-label op-7">First Name</label>
+                    <label
+                      htmlFor="checkout-firstName"
+                      className="form-label op-7"
+                    >
+                      First Name
+                    </label>
                     <input
+                      id="checkout-firstName"
                       type="text"
                       name="firstName"
+                      autoComplete="given-name"
                       className={`glass-input w-100 ${
                         errors.firstName ? "is-invalid" : ""
                       }`}
@@ -156,10 +174,17 @@ export default function Checkout() {
                     )}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label op-7">Last Name</label>
+                    <label
+                      htmlFor="checkout-lastName"
+                      className="form-label op-7"
+                    >
+                      Last Name
+                    </label>
                     <input
+                      id="checkout-lastName"
                       type="text"
                       name="lastName"
+                      autoComplete="family-name"
                       className={`glass-input w-100 ${
                         errors.lastName ? "is-invalid" : ""
                       }`}
@@ -171,10 +196,14 @@ export default function Checkout() {
                     )}
                   </div>
                   <div className="col-12">
-                    <label className="form-label op-7">Email Address</label>
+                    <label htmlFor="checkout-email" className="form-label op-7">
+                      Email Address
+                    </label>
                     <input
+                      id="checkout-email"
                       type="email"
                       name="email"
+                      autoComplete="email"
                       className={`glass-input w-100 ${
                         errors.email ? "is-invalid" : ""
                       }`}
@@ -186,10 +215,14 @@ export default function Checkout() {
                     )}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label op-7">Phone Number</label>
+                    <label htmlFor="checkout-phone" className="form-label op-7">
+                      Phone Number
+                    </label>
                     <input
+                      id="checkout-phone"
                       type="tel"
                       name="phone"
+                      autoComplete="tel"
                       className={`glass-input w-100 ${
                         errors.phone ? "is-invalid" : ""
                       }`}
@@ -202,23 +235,40 @@ export default function Checkout() {
                     )}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label op-7">
-                      WhatsApp Number (Optional)
+                    <label
+                      htmlFor="checkout-whatsapp"
+                      className="form-label op-7"
+                    >
+                      WhatsApp Number
                     </label>
                     <input
+                      id="checkout-whatsapp"
                       type="tel"
                       name="whatsapp"
-                      className="glass-input w-100"
+                      autoComplete="tel"
+                      className={`glass-input w-100 ${
+                        errors.whatsapp ? "is-invalid" : ""
+                      }`}
                       placeholder="+1234567890"
                       value={formData.whatsapp}
                       onChange={handleInputChange}
                     />
+                    {errors.whatsapp && (
+                      <div className="error-text">{errors.whatsapp}</div>
+                    )}
                   </div>
                   <div className="col-12">
-                    <label className="form-label op-7">Shipping Address</label>
+                    <label
+                      htmlFor="checkout-address"
+                      className="form-label op-7"
+                    >
+                      Shipping Address
+                    </label>
                     <input
+                      id="checkout-address"
                       type="text"
                       name="address"
+                      autoComplete="street-address"
                       className={`glass-input w-100 ${
                         errors.address ? "is-invalid" : ""
                       }`}
@@ -230,10 +280,14 @@ export default function Checkout() {
                     )}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label op-7">City</label>
+                    <label htmlFor="checkout-city" className="form-label op-7">
+                      City
+                    </label>
                     <input
+                      id="checkout-city"
                       type="text"
                       name="city"
+                      autoComplete="address-level2"
                       className={`glass-input w-100 ${
                         errors.city ? "is-invalid" : ""
                       }`}
@@ -245,10 +299,14 @@ export default function Checkout() {
                     )}
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label op-7">ZIP / Postal Code</label>
+                    <label htmlFor="checkout-zip" className="form-label op-7">
+                      ZIP / Postal Code
+                    </label>
                     <input
+                      id="checkout-zip"
                       type="text"
                       name="zip"
+                      autoComplete="postal-code"
                       className={`glass-input w-100 ${
                         errors.zip ? "is-invalid" : ""
                       }`}

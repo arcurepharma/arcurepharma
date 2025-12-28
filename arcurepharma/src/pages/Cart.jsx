@@ -57,13 +57,13 @@ export default function Cart() {
       </div>
 
       <div className="container section-spacing pb-5">
-        <div className="row cart-header-section align-items-end">
-          <div className="col-md-8">
+        <div className="row mb-5">
+          <div className="col-12 text-center">
             <span className="hero-subtitle">Premium Selection</span>
-            <h1 className="hero-title mb-0">
+            <h1 className="hero-title">
               Your <span className="text-gradient">Cart</span>
             </h1>
-            <p className="op-7 mt-2">
+            <p className="op-7 lead mb-0">
               {getCartCount()} item{getCartCount() !== 1 ? "s" : ""} ships at
               checkout
             </p>

@@ -1,54 +1,131 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import NavLink from "./NavLink";
 import { Link } from "react-router-dom";
-import * as bootstrap from "bootstrap";
 
 export default function Navbar({ route }) {
-  const closeMenu = () => {
-    const navbarContent = document.getElementById("navbarContent");
-    if (navbarContent && navbarContent.classList.contains("show")) {
-      const bsCollapse = new bootstrap.Collapse(navbarContent, { toggle: false });
-      bsCollapse.hide();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+    if (!isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
     }
   };
 
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    document.body.style.overflow = "auto";
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg fixed-top modern-navbar">
-      <div className="container-fluid">
-        {/* Brand / Logo */}
-        <Link className="navbar-brand fw-bold text-uppercase" to="/" onClick={closeMenu}>
+    <nav className={`modern-navbar-v2 ${scrolled ? "scrolled" : ""}`}>
+      <div className="navbar-container">
+        {/* Logo */}
+        <Link className="navbar-logo" to="/" onClick={closeMenu}>
           Arcurepharma
         </Link>
 
-        {/* Mobile Toggle Button */}
-        <button
-          className="navbar-toggler custom-toggler collapsed"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarContent"
-          aria-controls="navbarContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="toggler-bar bar1"></span>
-          <span className="toggler-bar bar2"></span>
-          <span className="toggler-bar bar3"></span>
-        </button>
-
-        {/* Collapsible Content */}
-        <div className="collapse navbar-collapse" id="navbarContent">
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+        {/* Desktop Navigation */}
+        <div className="nav-links-desktop">
+          <ul className="nav-list">
             {route &&
               route.map((item, index) => (
                 <NavLink
                   key={index}
                   name={item.name}
                   path={item.path}
-                  icon={item.icon}
                   onClick={closeMenu}
                 />
               ))}
           </ul>
+        </div>
+
+        {/* Cart Button */}
+        <div className="nav-cta-desktop">
+          <Link to="/cart" className="btn-cart" onClick={closeMenu}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ display: "block" }}
+            >
+              <circle cx="9" cy="21" r="1" />
+              <circle cx="20" cy="21" r="1" />
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+            </svg>
+          </Link>
+        </div>
+
+        {/* Mobile Toggle */}
+        <button
+          className={`mobile-toggle-v2 ${isMenuOpen ? "open" : ""}`}
+          onClick={toggleMenu}
+          aria-label="Toggle navigation"
+        >
+          <span className="line"></span>
+          <span className="line"></span>
+          <span className="line"></span>
+        </button>
+
+        {/* Mobile Menu Overlay */}
+        <div className={`mobile-menu-overlay ${isMenuOpen ? "active" : ""}`}>
+          <div className="overlay-content">
+            <ul className="mobile-nav-list">
+              {route &&
+                route.map((item, index) => (
+                  <li key={index} className="mobile-nav-item">
+                    <Link
+                      to={item.path}
+                      onClick={closeMenu}
+                      className="mobile-nav-link"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+            <div className="mobile-cta">
+              <Link
+                to="/cart"
+                className="btn-cart mobile-btn"
+                onClick={closeMenu}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ display: "block" }}
+                >
+                  <circle cx="9" cy="21" r="1" />
+                  <circle cx="20" cy="21" r="1" />
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                </svg>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </nav>

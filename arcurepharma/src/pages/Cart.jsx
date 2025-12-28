@@ -39,7 +39,7 @@ export default function Cart() {
             <p className="op-7 lead mb-5">
               Looks like you haven't added any premium wellness products yet.
             </p>
-            <Link to="/home" className="btn-modern-submit text-decoration-none">
+            <Link to="/" className="btn-modern-submit text-decoration-none">
               Continue Shopping
             </Link>
           </div>
@@ -83,7 +83,7 @@ export default function Cart() {
                       )} away from FREE SHIPPING!`
                     : "✨ You've unlocked FREE SHIPPING!"}
                 </span>
-                <Link to="/home" className="keep-shopping-link">
+                <Link to="/" className="keep-shopping-link">
                   Keep Shopping
                 </Link>
               </div>
@@ -165,7 +165,7 @@ export default function Cart() {
 
             <div className="mt-4">
               <Link
-                to="/home"
+                to="/"
                 className="text-white-50 text-decoration-none d-flex align-items-center gap-2"
               >
                 ← Back to Products

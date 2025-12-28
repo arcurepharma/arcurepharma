@@ -77,28 +77,65 @@ export default function Checkout() {
 
   if (isSuccess) {
     return (
-      <div className="background-modern-home pt-5">
-        <div className="container section-spacing text-center py-5">
-          <div
-            className="glass-card py-5 my-5 mx-auto reveal-item"
-            style={{ maxWidth: "600px" }}
-          >
-            <div className="success-icon mb-4" style={{ fontSize: "5rem" }}>
-              ✅
-            </div>
-            <h2 className="hero-title mb-4">
-              Order <span className="text-gradient">Confirmed!</span>
-            </h2>
-            <p className="op-7 lead mb-5">
-              Thank you for choosing Arcurepharma. Our team will contact you
-              shortly to verify your order before shipping.
-            </p>
-            <div className="d-flex gap-3 justify-content-center">
-              <Link
-                to="/home"
-                className="btn-modern-submit text-decoration-none"
+      <div className="background-modern-home pt-5 overflow-hidden">
+        <div className="success-screen-wrapper container">
+          <div className="success-card-premium">
+            {/* Ambient Particles */}
+            {/* <div className="particle p1"></div> */}
+            {/* <div className="particle p2"></div> */}
+            {/* <div className="particle p3"></div> */}
+            {/* <div className="particle p4"></div> */}
+
+            <div className="checkmark-container">
+              <div className="checkmark-glow"></div>
+              <svg
+                className="checkmark-svg"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 52 52"
               >
-                Continue Shopping
+                <circle
+                  className="checkmark-circle"
+                  cx="26"
+                  cy="26"
+                  r="25"
+                  fill="none"
+                />
+                <path
+                  className="checkmark-check"
+                  fill="none"
+                  d="M14.1 27.2l7.1 7.2 16.7-16.8"
+                />
+              </svg>
+            </div>
+
+            <div className="reveal-text delay-1">
+              <span className="hero-subtitle mb-2 d-block">
+                Order Successfully Placed
+              </span>
+              <h1 className="hero-title mb-4">
+                Thank <span className="text-gradient">You!</span>
+              </h1>
+            </div>
+
+            <div
+              className="reveal-text delay-2 glass-card p-4 mx-auto mb-5"
+              style={{
+                maxWidth: "500px",
+                border: "1px solid rgba(255,255,255,0.05)",
+              }}
+            >
+              <p className="op-7 mb-0">
+                Your health is our priority. Our team will verify your order via
+                phone shortly before shipping your premium selection.
+              </p>
+            </div>
+
+            <div className="reveal-text delay-3">
+              <Link
+                to="/"
+                className="btn-modern-submit text-decoration-none px-5 py-3"
+              >
+                Back to Store
               </Link>
             </div>
           </div>
@@ -115,10 +152,16 @@ export default function Checkout() {
             className="glass-card py-5 my-5 mx-auto"
             style={{ maxWidth: "600px" }}
           >
+            <div className="empty-cart-icon mb-4" style={{ fontSize: "4rem" }}>
+              🛒
+            </div>
             <h2 className="hero-title mb-4">
               No Order to <span className="text-gradient">Checkout</span>
             </h2>
-            <Link to="/home" className="btn-modern-submit text-decoration-none">
+            <p className="op-7 lead mb-5">
+              Looks like you haven't added any premium wellness products yet.
+            </p>
+            <Link to="/" className="btn-modern-submit text-decoration-none">
               Start Shopping
             </Link>
           </div>
@@ -144,7 +187,7 @@ export default function Checkout() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <div className="row g-5">
             {/* Shipping & Payment Form */}
             <div className="col-lg-7">

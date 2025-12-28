@@ -32,7 +32,7 @@ export default function ComingSoon() {
 
   return (
     <>
-      <div className="backgroung-modern_home d-flex flex-column pt-5">
+      <div className="background-modern-home d-flex flex-column pt-5">
         <div className="floating-shapes">
           <div className="shape"></div>
           <div className="shape"></div>

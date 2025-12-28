@@ -45,7 +45,7 @@ export default function Contact() {
 
   return (
     <>
-      <div className="backgroung-modern d-flex flex-column pt-5">
+      <div className="background-modern d-flex flex-column pt-5">
         <div className="floating-shapes">
           <div className="shape"></div>
           <div className="shape"></div>

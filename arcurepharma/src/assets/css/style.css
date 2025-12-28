@@ -13,7 +13,7 @@ body::-webkit-scrollbar {
 }
 
 /* Custom Mobile Toggler Styling - Legacy removed or updated in v2 section */
-.backgroung-modern {
+.background-modern {
   min-height: 100vh;
   background: radial-gradient(
     circle at top right,
@@ -29,7 +29,7 @@ body::-webkit-scrollbar {
   padding-bottom: 50px;
 }
 
-.backgroung-modern_home {
+.background-modern-home {
   min-height: 80vh;
   background: radial-gradient(
     circle at top right,

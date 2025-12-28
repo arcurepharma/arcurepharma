@@ -1,14 +1,14 @@
 const socialLinks = [
   {
-    name: "FB",
+    name: "Facebook",
     url: "https://facebook.com",
   },
   {
-    name: "TW",
+    name: "Twitter",
     url: "https://twitter.com",
   },
   {
-    name: "IN",
+    name: "LinkedIn",
     url: "https://linkedin.com",
   },
 ];

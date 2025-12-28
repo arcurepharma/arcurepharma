@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink as RouterNavLink } from "react-router-dom";
 
 export default function NavLink({ name, path, icon, onClick }) {
   // Check if icon is effectively empty/placeholder (like "test")
@@ -7,7 +7,7 @@ export default function NavLink({ name, path, icon, onClick }) {
 
   return (
     <li className="nav-item">
-      <Link className="nav-link px-3" to={path} onClick={onClick}>
+      <RouterNavLink className="nav-link px-3" to={path} onClick={onClick}>
         <div className="d-flex align-items-center">
           {hasIcon && (
             <img
@@ -18,7 +18,7 @@ export default function NavLink({ name, path, icon, onClick }) {
           )}
           <span>{name}</span>
         </div>
-      </Link>
+      </RouterNavLink>
     </li>
   );
 }

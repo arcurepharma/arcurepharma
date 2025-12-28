@@ -223,7 +223,8 @@ body::-webkit-scrollbar {
   padding: 8px 0 !important;
 }
 
-.nav-links-desktop .nav-link:hover {
+.nav-links-desktop .nav-link:hover,
+.nav-links-desktop .nav-link.active {
   color: #fff !important;
 }
 
@@ -238,7 +239,8 @@ body::-webkit-scrollbar {
   transition: width 0.3s ease;
 }
 
-.nav-links-desktop .nav-link:hover::after {
+.nav-links-desktop .nav-link:hover::after,
+.nav-links-desktop .nav-link.active::after {
   width: 100%;
 }
 

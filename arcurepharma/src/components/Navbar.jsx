@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NavLink from "./NavLink";
-import { Link } from "react-router-dom";
+import { Link, NavLink as RouterNavLink } from "react-router-dom";
 
 export default function Navbar({ route }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -91,13 +91,13 @@ export default function Navbar({ route }) {
               {route &&
                 route.map((item, index) => (
                   <li key={index} className="mobile-nav-item">
-                    <Link
+                    <RouterNavLink
                       to={item.path}
                       onClick={closeMenu}
                       className="mobile-nav-link"
                     >
                       {item.name}
-                    </Link>
+                    </RouterNavLink>
                   </li>
                 ))}
             </ul>

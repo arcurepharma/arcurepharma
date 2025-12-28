@@ -845,17 +845,84 @@ body::-webkit-scrollbar {
   font-size: 1.1rem;
 }
 
-@media (max-width: 767px) {
-  .product-modal-content {
-    border-radius: 20px;
+/* --- Pagination & Infinite Scroll --- */
+.pagination-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+  min-height: 120px;
+}
+
+.products-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.spinner-glow {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0%, #6366f1 100%);
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+}
+
+.spinner-glow::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  background: #050616;
+  border-radius: 50%;
+}
+
+.loading-text {
+  color: #fff;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  font-weight: 500;
+  background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.5) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: pulse 2s infinite;
+}
+
+/* --- Reveal Animation for Infinite Scroll --- */
+.reveal-item {
+  animation: revealItem 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes revealItem {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
   }
-  .modal-img-container {
-    min-height: 300px;
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
-  .modal-details {
-    padding: 30px 20px;
-  }
-  .modal-title {
-    font-size: 1.8rem;
-  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+.op-5 {
+  opacity: 0.5;
 }

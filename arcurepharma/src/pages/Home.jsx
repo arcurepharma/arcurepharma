@@ -1,9 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { products } from "../dependencies/products";
 import fallbackImg from "../assets/pics/products/0.jpg";
 
 export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [visibleProducts, setVisibleProducts] = useState(15);
+  const [isLoading, setIsLoading] = useState(false);
+  const sentinelRef = useRef(null);
+
+  const handleLoadMore = useCallback(() => {
+    if (isLoading || visibleProducts >= products.length) return;
+
+    setIsLoading(true);
+    // Simulate network delay for a premium feel and smooth transition
+    setTimeout(() => {
+      setVisibleProducts((prev) => prev + 15);
+      setIsLoading(false);
+    }, 800);
+  }, [isLoading, visibleProducts]);
+
+  useEffect(() => {
+    const currentSentinel = sentinelRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          handleLoadMore();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (currentSentinel) {
+      observer.observe(currentSentinel);
+    }
+
+    return () => {
+      if (currentSentinel) {
+        observer.unobserve(currentSentinel);
+      }
+    };
+  }, [handleLoadMore]);
 
   const handleImageError = (e, product) => {
     // If it was the external URL failing, try the local path
@@ -54,10 +90,10 @@ export default function Home() {
           </div>
 
           <div className="row g-4 product-grid">
-            {products.map((product) => (
+            {products.slice(0, visibleProducts).map((product, index) => (
               <div
-                className="col-xl-3 col-lg-4 col-sm-6 col-12"
-                key={product.id}
+                className="col-xl-3 col-lg-4 col-sm-6 col-12 reveal-item"
+                key={`${product.id}-${index}`}
               >
                 <div
                   className="product-card"
@@ -112,6 +148,29 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Sentinel & Pagination Section */}
+          <div
+            ref={sentinelRef}
+            className="pagination-container mt-5"
+            style={{ minHeight: "20px" }}
+          >
+            {isLoading && (
+              <div className="products-loader">
+                <div className="spinner-glow"></div>
+                <span className="loading-text">
+                  Discovering more products...
+                </span>
+              </div>
+            )}
+            {!isLoading &&
+              visibleProducts >= products.length &&
+              products.length > 0 && (
+                <p className="text-center op-5 mt-4">
+                  You've explored all our excellence.
+                </p>
+              )}
           </div>
         </div>
       </div>

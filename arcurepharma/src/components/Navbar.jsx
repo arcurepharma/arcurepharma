@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import NavLink from "./NavLink";
 import { Link, NavLink as RouterNavLink } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 export default function Navbar({ route }) {
+  const { getCartCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -53,7 +55,12 @@ export default function Navbar({ route }) {
 
         {/* Cart Button */}
         <div className="nav-cta-desktop">
-          <Link to="/cart" className="btn-cart" onClick={closeMenu}>
+          <Link
+            to="/cart"
+            className="btn-cart"
+            onClick={closeMenu}
+            style={{ position: "relative" }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -70,6 +77,9 @@ export default function Navbar({ route }) {
               <circle cx="20" cy="21" r="1" />
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
             </svg>
+            {getCartCount() > 0 && (
+              <span className="cart-badge">{getCartCount()}</span>
+            )}
           </Link>
         </div>
 
@@ -106,6 +116,7 @@ export default function Navbar({ route }) {
                 to="/cart"
                 className="btn-cart mobile-btn"
                 onClick={closeMenu}
+                style={{ position: "relative" }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -123,6 +134,9 @@ export default function Navbar({ route }) {
                   <circle cx="20" cy="21" r="1" />
                   <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
                 </svg>
+                {getCartCount() > 0 && (
+                  <span className="cart-badge">{getCartCount()}</span>
+                )}
               </Link>
             </div>
           </div>

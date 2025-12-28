@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { products } from "../dependencies/products";
 import fallbackImg from "../assets/pics/products/0.jpg";
+import { useCart } from "../context/CartContext";
 
 export default function Home() {
+  const { addToCart } = useCart();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [visibleProducts, setVisibleProducts] = useState(5);
   const [isLoading, setIsLoading] = useState(false);
@@ -90,7 +92,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="backgroung-modern_home pt-5">
+      <div className="background-modern-home pt-5">
         <div className="floating-shapes">
           <div className="shape"></div>
           <div className="shape"></div>
@@ -242,6 +244,7 @@ export default function Home() {
                         className="btn-cart modal-action-btn"
                         style={{ marginTop: 0 }}
                         onClick={() => {
+                          addToCart(selectedProduct, modalQuantity);
                           showToast(
                             `Added ${modalQuantity} ${selectedProduct.name} to cart!`
                           );

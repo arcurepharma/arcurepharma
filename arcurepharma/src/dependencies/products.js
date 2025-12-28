@@ -81,7 +81,8 @@ export const products = [
     imagePath: "",
     imageUrl: "",
     features: ["High Vitamin C", "Zinc Boosted", "Daily Support"]
-  },
+  }
+  /*,
   {
     id: 8,
     name: "CardioVive Plus",
@@ -1127,4 +1128,5 @@ export const products = [
     imageUrl: "",
     features: ["Micronized", "Strength Support", "Pure Purity"]
   }
+    */
 ];

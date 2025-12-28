@@ -34,7 +34,7 @@ export default function Home() {
     setIsLoading(true);
     // Simulate network delay for a premium feel and smooth transition
     setTimeout(() => {
-      setVisibleProducts((prev) => prev + 15);
+      setVisibleProducts((prev) => prev + 5);
       setIsLoading(false);
     }, 800);
   }, [isLoading, visibleProducts]);

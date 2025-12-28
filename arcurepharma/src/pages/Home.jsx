@@ -6,7 +6,27 @@ export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [visibleProducts, setVisibleProducts] = useState(15);
   const [isLoading, setIsLoading] = useState(false);
+  const [toasts, setToasts] = useState([]);
   const sentinelRef = useRef(null);
+
+  const showToast = (message) => {
+    const id = Date.now();
+    const newToast = { id, message, isHiding: false };
+
+    setToasts((prev) => [...prev, newToast]);
+
+    // Start hiding phase
+    setTimeout(() => {
+      setToasts((prev) =>
+        prev.map((t) => (t.id === id ? { ...t, isHiding: true } : t))
+      );
+
+      // Remove from array after animation
+      setTimeout(() => {
+        setToasts((prev) => prev.filter((t) => t.id !== id));
+      }, 500);
+    }, 3000);
+  };
 
   const handleLoadMore = useCallback(() => {
     if (isLoading || visibleProducts >= products.length) return;
@@ -123,8 +143,7 @@ export default function Home() {
                         className="btn-add-to-cart"
                         onClick={(e) => {
                           e.stopPropagation();
-                          // Add to cart logic here
-                          alert(`Added ${product.name} to cart!`);
+                          showToast(`Added ${product.name} to cart!`);
                         }}
                       >
                         <svg
@@ -221,7 +240,7 @@ export default function Home() {
                   <button
                     className="btn-cart modal-action-btn mt-4"
                     onClick={() => {
-                      alert(`Added ${selectedProduct.name} to cart!`);
+                      showToast(`Added ${selectedProduct.name} to cart!`);
                       closeModal();
                     }}
                   >
@@ -233,6 +252,20 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {/* Modern Stacking Toast Banner */}
+      <div className="modern-toast-container">
+        {toasts.map((t) => (
+          <div
+            key={t.id}
+            className={`modern-toast ${t.isHiding ? "hiding" : ""}`}
+            style={{ marginTop: "10px" }}
+          >
+            <div className="toast-icon">✅</div>
+            <div className="toast-message">{t.message}</div>
+          </div>
+        ))}
+      </div>
     </>
   );
 }

@@ -45,7 +45,7 @@ export default function Contact() {
 
   return (
     <>
-      <div className="backgroung-modern d-flex flex-column pt-5">
+      <div className="background-modern d-flex flex-column pt-5">
         <div className="floating-shapes">
           <div className="shape"></div>
           <div className="shape"></div>
@@ -90,14 +90,19 @@ export default function Contact() {
                   <div className="row g-3">
                     <div className="col-md-6">
                       <div className="form-group">
-                        <label className="text-white-50 mb-2 small">
+                        <label
+                          htmlFor="contact-name"
+                          className="text-white-50 mb-2 small"
+                        >
                           Your Name
                         </label>
                         <input
+                          id="contact-name"
                           type="text"
                           name="name"
                           value={formData.name}
                           onChange={handleInputChange}
+                          autoComplete="name"
                           className={`form-control glass-input ${
                             errors.name ? "is-invalid" : ""
                           }`}
@@ -110,14 +115,19 @@ export default function Contact() {
                     </div>
                     <div className="col-md-6">
                       <div className="form-group">
-                        <label className="text-white-50 mb-2 small">
+                        <label
+                          htmlFor="contact-email"
+                          className="text-white-50 mb-2 small"
+                        >
                           Your Email
                         </label>
                         <input
+                          id="contact-email"
                           type="email"
                           name="email"
                           value={formData.email}
                           onChange={handleInputChange}
+                          autoComplete="email"
                           className={`form-control glass-input ${
                             errors.email ? "is-invalid" : ""
                           }`}
@@ -130,10 +140,14 @@ export default function Contact() {
                     </div>
                     <div className="col-12">
                       <div className="form-group">
-                        <label className="text-white-50 mb-2 small">
+                        <label
+                          htmlFor="contact-subject"
+                          className="text-white-50 mb-2 small"
+                        >
                           Subject
                         </label>
                         <input
+                          id="contact-subject"
                           type="text"
                           name="subject"
                           value={formData.subject}
@@ -150,10 +164,14 @@ export default function Contact() {
                     </div>
                     <div className="col-12">
                       <div className="form-group">
-                        <label className="text-white-50 mb-2 small">
+                        <label
+                          htmlFor="contact-message"
+                          className="text-white-50 mb-2 small"
+                        >
                           Message
                         </label>
                         <textarea
+                          id="contact-message"
                           name="message"
                           value={formData.message}
                           onChange={handleInputChange}

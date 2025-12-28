@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { products } from "../dependencies/products";
 import fallbackImg from "../assets/pics/products/0.jpg";
+import { useCart } from "../context/CartContext";
 
 export default function Home() {
+  const { addToCart } = useCart();
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [visibleProducts, setVisibleProducts] = useState(15);
+  const [visibleProducts, setVisibleProducts] = useState(5);
   const [isLoading, setIsLoading] = useState(false);
   const [toasts, setToasts] = useState([]);
+  const [modalQuantity, setModalQuantity] = useState(1);
   const sentinelRef = useRef(null);
 
   const showToast = (message) => {
@@ -78,6 +81,7 @@ export default function Home() {
 
   const openModal = (product) => {
     setSelectedProduct(product);
+    setModalQuantity(1); // Set default quantity to 1 when opening
     document.body.style.overflow = "hidden";
   };
 
@@ -88,7 +92,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="backgroung-modern_home pt-5">
+      <div className="background-modern-home pt-5">
         <div className="floating-shapes">
           <div className="shape"></div>
           <div className="shape"></div>
@@ -139,29 +143,7 @@ export default function Home() {
                       <span className="product-price">
                         ${product.price.toFixed(2)}
                       </span>
-                      <button
-                        className="btn-add-to-cart"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          showToast(`Added ${product.name} to cart!`);
-                        }}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <circle cx="9" cy="21" r="1" />
-                          <circle cx="20" cy="21" r="1" />
-                          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                        </svg>
-                      </button>
+                      <span className="view-details-btn">View Details →</span>
                     </div>
                   </div>
                 </div>
@@ -237,15 +219,57 @@ export default function Home() {
                     </ul>
                   </div>
 
-                  <button
-                    className="btn-cart modal-action-btn mt-4"
-                    onClick={() => {
-                      showToast(`Added ${selectedProduct.name} to cart!`);
-                      closeModal();
-                    }}
-                  >
-                    Add to Cart
-                  </button>
+                  <div className="modal-quantity-wrapper">
+                    <span className="modal-quantity-label">Quantity</span>
+                    <div className="product-actions">
+                      <div className="quantity-selector">
+                        <button
+                          className="qty-btn"
+                          onClick={() =>
+                            setModalQuantity(Math.max(1, modalQuantity - 1))
+                          }
+                          disabled={modalQuantity <= 1}
+                        >
+                          −
+                        </button>
+                        <span className="qty-value">{modalQuantity}</span>
+                        <button
+                          className="qty-btn"
+                          onClick={() => setModalQuantity(modalQuantity + 1)}
+                        >
+                          +
+                        </button>
+                      </div>
+                      <button
+                        className="btn-cart modal-action-btn"
+                        style={{ marginTop: 0 }}
+                        onClick={() => {
+                          addToCart(selectedProduct, modalQuantity);
+                          showToast(
+                            `Added ${modalQuantity} ${selectedProduct.name} to cart!`
+                          );
+                          closeModal();
+                        }}
+                        aria-label="Add to cart"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <circle cx="9" cy="21" r="1" />
+                          <circle cx="20" cy="21" r="1" />
+                          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -261,7 +285,6 @@ export default function Home() {
             className={`modern-toast ${t.isHiding ? "hiding" : ""}`}
             style={{ marginTop: "10px" }}
           >
-            <div className="toast-icon">✅</div>
             <div className="toast-message">{t.message}</div>
           </div>
         ))}

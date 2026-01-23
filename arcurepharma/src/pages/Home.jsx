@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { products } from "../dependencies/products";
 import fallbackImg from "../assets/pics/products/0.jpg";
 import { useCart } from "../context/CartContext";
+import HeroSection from "../components/shared/HeroSection";
 
 export default function Home() {
   const { addToCart } = useCart();
@@ -21,7 +22,7 @@ export default function Home() {
     // Start hiding phase
     setTimeout(() => {
       setToasts((prev) =>
-        prev.map((t) => (t.id === id ? { ...t, isHiding: true } : t))
+        prev.map((t) => (t.id === id ? { ...t, isHiding: true } : t)),
       );
 
       // Remove from array after animation
@@ -50,7 +51,7 @@ export default function Home() {
           handleLoadMore();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (currentSentinel) {
@@ -92,7 +93,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="background-modern-home pt-5">
+      <div className="bg-modern pt-5">
         <div className="floating-shapes">
           <div className="shape"></div>
           <div className="shape"></div>
@@ -100,18 +101,15 @@ export default function Home() {
         </div>
 
         <div className="container section-spacing">
-          <div className="row justify-content-center mb-5">
-            <div className="col-lg-8 text-center">
-              <span className="hero-subtitle">Premium Wellness</span>
-              <h1 className="hero-title mb-4">
+          <HeroSection
+            subtitle="Premium Wellness"
+            title={
+              <>
                 Our <span className="text-gradient">Products</span>
-              </h1>
-              <p className="op-7 lead">
-                Discover our scientifically formulated pharmaceuticals and
-                supplements designed for your peak performance and health.
-              </p>
-            </div>
-          </div>
+              </>
+            }
+            description="Discover our scientifically formulated pharmaceuticals and supplements designed for your peak performance and health."
+          />
 
           <div className="row g-4 product-grid">
             {products.slice(0, visibleProducts).map((product, index) => (
@@ -141,7 +139,7 @@ export default function Home() {
                     </p>
                     <div className="product-footer">
                       <span className="product-price">
-                        ${product.price.toFixed(2)}
+                        Rs. {product.price.toLocaleString()}
                       </span>
                       <span className="view-details-btn">View Details →</span>
                     </div>
@@ -204,7 +202,7 @@ export default function Home() {
                   </span>
                   <h2 className="modal-title">{selectedProduct.name}</h2>
                   <div className="modal-price">
-                    ${selectedProduct.price.toFixed(2)}
+                    Rs. {selectedProduct.price.toLocaleString()}
                   </div>
                   <p className="modal-description">
                     {selectedProduct.description}
@@ -246,7 +244,7 @@ export default function Home() {
                         onClick={() => {
                           addToCart(selectedProduct, modalQuantity);
                           showToast(
-                            `Added ${modalQuantity} ${selectedProduct.name} to cart!`
+                            `Added ${modalQuantity} ${selectedProduct.name} to cart!`,
                           );
                           closeModal();
                         }}

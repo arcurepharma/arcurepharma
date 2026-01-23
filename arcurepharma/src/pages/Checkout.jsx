@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import fallbackImg from "../assets/pics/products/0.jpg";
+import { shippingData } from "../dependencies/shippingData";
+import HeroSection from "../components/shared/HeroSection";
+import GlassCard from "../components/shared/GlassCard";
+import FormInput from "../components/shared/FormInput";
+import OrderSummary from "../components/shared/OrderSummary";
 
 export default function Checkout() {
   const { cart, getCartTotal, clearCart } = useCart();
+  const taxAmount = getCartTotal() * (shippingData.TAX_PERCENTAGE / 100);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -77,7 +83,7 @@ export default function Checkout() {
 
   if (isSuccess) {
     return (
-      <div className="background-modern-home pt-5 overflow-hidden">
+      <div className="bg-modern pt-5 overflow-hidden">
         <div className="success-screen-wrapper container">
           <div className="success-card-premium">
             {/* Ambient Particles */}
@@ -146,10 +152,10 @@ export default function Checkout() {
 
   if (cart.length === 0) {
     return (
-      <div className="background-modern-home pt-5">
+      <div className="bg-modern pt-5">
         <div className="container section-spacing text-center py-5">
-          <div
-            className="glass-card py-5 my-5 mx-auto"
+          <GlassCard
+            className="py-5 my-5 mx-auto"
             style={{ maxWidth: "600px" }}
           >
             <div className="empty-cart-icon mb-4" style={{ fontSize: "4rem" }}>
@@ -161,210 +167,140 @@ export default function Checkout() {
             <p className="op-7 lead mb-5">
               Looks like you haven't added any premium wellness products yet.
             </p>
-            <Link to="/" className="btn-modern-submit text-decoration-none">
+            <Link
+              to="/"
+              className="btn-modern-submit premium-btn text-decoration-none px-5"
+            >
               Start Shopping
             </Link>
-          </div>
+          </GlassCard>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="background-modern-home pt-5">
+    <div className="bg-modern pt-5">
       <div className="floating-shapes">
         <div className="shape"></div>
         <div className="shape"></div>
       </div>
 
       <div className="container section-spacing">
-        <div className="row mb-5">
-          <div className="col-12 text-center">
-            <span className="hero-subtitle">Secure Payment</span>
-            <h1 className="hero-title">
+        <HeroSection
+          subtitle="Secure Payment"
+          title={
+            <>
               Complete <span className="text-gradient">Order</span>
-            </h1>
-          </div>
-        </div>
+            </>
+          }
+        />
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="row g-5">
             {/* Shipping & Payment Form */}
             <div className="col-lg-7">
-              <div className="glass-card p-4 p-md-5">
+              <GlassCard className="p-4 p-md-5">
                 <h3 className="footer-title mb-4">Shipping Information</h3>
                 <div className="row g-3">
                   <div className="col-md-6">
-                    <label
-                      htmlFor="checkout-firstName"
-                      className="form-label op-7"
-                    >
-                      First Name
-                    </label>
-                    <input
+                    <FormInput
+                      label="First Name"
                       id="checkout-firstName"
-                      type="text"
                       name="firstName"
-                      autoComplete="given-name"
-                      className={`glass-input w-100 ${
-                        errors.firstName ? "is-invalid" : ""
-                      }`}
                       value={formData.firstName}
                       onChange={handleInputChange}
+                      error={errors.firstName}
+                      autoComplete="given-name"
                     />
-                    {errors.firstName && (
-                      <div className="error-text">{errors.firstName}</div>
-                    )}
                   </div>
                   <div className="col-md-6">
-                    <label
-                      htmlFor="checkout-lastName"
-                      className="form-label op-7"
-                    >
-                      Last Name
-                    </label>
-                    <input
+                    <FormInput
+                      label="Last Name"
                       id="checkout-lastName"
-                      type="text"
                       name="lastName"
-                      autoComplete="family-name"
-                      className={`glass-input w-100 ${
-                        errors.lastName ? "is-invalid" : ""
-                      }`}
                       value={formData.lastName}
                       onChange={handleInputChange}
+                      error={errors.lastName}
+                      autoComplete="family-name"
                     />
-                    {errors.lastName && (
-                      <div className="error-text">{errors.lastName}</div>
-                    )}
                   </div>
                   <div className="col-12">
-                    <label htmlFor="checkout-email" className="form-label op-7">
-                      Email Address
-                    </label>
-                    <input
+                    <FormInput
+                      label="Email Address"
                       id="checkout-email"
                       type="email"
                       name="email"
-                      autoComplete="email"
-                      className={`glass-input w-100 ${
-                        errors.email ? "is-invalid" : ""
-                      }`}
                       value={formData.email}
                       onChange={handleInputChange}
+                      error={errors.email}
+                      autoComplete="email"
                     />
-                    {errors.email && (
-                      <div className="error-text">{errors.email}</div>
-                    )}
                   </div>
                   <div className="col-md-6">
-                    <label htmlFor="checkout-phone" className="form-label op-7">
-                      Phone Number
-                    </label>
-                    <input
+                    <FormInput
+                      label="Phone Number"
                       id="checkout-phone"
                       type="tel"
                       name="phone"
-                      autoComplete="tel"
-                      className={`glass-input w-100 ${
-                        errors.phone ? "is-invalid" : ""
-                      }`}
-                      placeholder="+1234567890"
                       value={formData.phone}
                       onChange={handleInputChange}
+                      error={errors.phone}
+                      placeholder="+1234567890"
+                      autoComplete="tel"
                     />
-                    {errors.phone && (
-                      <div className="error-text">{errors.phone}</div>
-                    )}
                   </div>
                   <div className="col-md-6">
-                    <label
-                      htmlFor="checkout-whatsapp"
-                      className="form-label op-7"
-                    >
-                      WhatsApp Number
-                    </label>
-                    <input
+                    <FormInput
+                      label="WhatsApp Number"
                       id="checkout-whatsapp"
                       type="tel"
                       name="whatsapp"
-                      autoComplete="tel"
-                      className={`glass-input w-100 ${
-                        errors.whatsapp ? "is-invalid" : ""
-                      }`}
-                      placeholder="+1234567890"
                       value={formData.whatsapp}
                       onChange={handleInputChange}
+                      error={errors.whatsapp}
+                      placeholder="+1234567890"
+                      autoComplete="tel"
                     />
-                    {errors.whatsapp && (
-                      <div className="error-text">{errors.whatsapp}</div>
-                    )}
                   </div>
                   <div className="col-12">
-                    <label
-                      htmlFor="checkout-address"
-                      className="form-label op-7"
-                    >
-                      Shipping Address
-                    </label>
-                    <input
+                    <FormInput
+                      label="Shipping Address"
                       id="checkout-address"
-                      type="text"
                       name="address"
-                      autoComplete="street-address"
-                      className={`glass-input w-100 ${
-                        errors.address ? "is-invalid" : ""
-                      }`}
                       value={formData.address}
                       onChange={handleInputChange}
+                      error={errors.address}
+                      autoComplete="street-address"
                     />
-                    {errors.address && (
-                      <div className="error-text">{errors.address}</div>
-                    )}
                   </div>
                   <div className="col-md-6">
-                    <label htmlFor="checkout-city" className="form-label op-7">
-                      City
-                    </label>
-                    <input
+                    <FormInput
+                      label="City"
                       id="checkout-city"
-                      type="text"
                       name="city"
-                      autoComplete="address-level2"
-                      className={`glass-input w-100 ${
-                        errors.city ? "is-invalid" : ""
-                      }`}
                       value={formData.city}
                       onChange={handleInputChange}
+                      error={errors.city}
+                      autoComplete="address-level2"
                     />
-                    {errors.city && (
-                      <div className="error-text">{errors.city}</div>
-                    )}
                   </div>
                   <div className="col-md-6">
-                    <label htmlFor="checkout-zip" className="form-label op-7">
-                      ZIP / Postal Code
-                    </label>
-                    <input
+                    <FormInput
+                      label="ZIP / Postal Code"
                       id="checkout-zip"
-                      type="text"
                       name="zip"
-                      autoComplete="postal-code"
-                      className={`glass-input w-100 ${
-                        errors.zip ? "is-invalid" : ""
-                      }`}
                       value={formData.zip}
                       onChange={handleInputChange}
+                      error={errors.zip}
+                      autoComplete="postal-code"
                     />
-                    {errors.zip && (
-                      <div className="error-text">{errors.zip}</div>
-                    )}
                   </div>
                 </div>
 
                 <h3 className="footer-title mb-4 mt-4">Payment Selection</h3>
-                <div
-                  className="glass-card p-4 border-indigo-light"
+                <GlassCard
+                  className="p-4 border-indigo-light"
                   style={{ background: "rgba(99, 102, 241, 0.05)" }}
                 >
                   <div className="d-flex align-items-center gap-3">
@@ -381,7 +317,7 @@ export default function Checkout() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </GlassCard>
                 <div className="mt-3 p-3 rounded-block bg-white-5 op-7 small d-flex gap-2">
                   <span>ℹ️</span>
                   <span>
@@ -389,30 +325,45 @@ export default function Checkout() {
                     the package and make the payment.
                   </span>
                 </div>
-              </div>
+              </GlassCard>
             </div>
 
-            {/* Order Review Sidebar */}
             <div className="col-lg-5">
               <div className="sticky-summary-wrapper">
-                <div className="glass-card p-4">
-                  <h3 className="footer-title mb-4">Order Review</h3>
-
+                <OrderSummary
+                  subtotal={getCartTotal()}
+                  taxAmount={taxAmount}
+                  taxPercentage={shippingData.TAX_PERCENTAGE}
+                  shippingCost={shippingData.SHIPPING_COST}
+                  shippingDiscount={
+                    getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD
+                      ? shippingData.SHIPPING_COST
+                      : 0
+                  }
+                  total={
+                    getCartTotal() +
+                    (getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD
+                      ? 0
+                      : shippingData.SHIPPING_COST) +
+                    taxAmount
+                  }
+                  currency={shippingData.CURRENCY}
+                >
                   <div
-                    className="order-items-scroll mb-4"
-                    style={{ maxHeight: "300px", overflowY: "auto" }}
+                    className="order-items-scroll mt-4 mb-4"
+                    style={{ maxHeight: "250px", overflowY: "auto" }}
                   >
                     {cart.map((item) => (
                       <div
                         key={item.id}
-                        className="d-flex align-items-center justify-content-between mb-3"
+                        className="d-flex align-items-center justify-content-between mb-3 px-1"
                       >
                         <div className="d-flex align-items-center gap-3">
                           <div
                             style={{
-                              width: "50px",
-                              height: "50px",
-                              borderRadius: "10px",
+                              width: "40px",
+                              height: "40px",
+                              borderRadius: "8px",
                               overflow: "hidden",
                             }}
                           >
@@ -427,7 +378,10 @@ export default function Checkout() {
                             />
                           </div>
                           <div>
-                            <div className="text-white small font-weight-bold">
+                            <div
+                              className="text-white extra-small font-weight-bold"
+                              style={{ fontSize: "0.8rem" }}
+                            >
                               {item.name}
                             </div>
                             <div className="text-white-50 tiny">
@@ -435,44 +389,20 @@ export default function Checkout() {
                             </div>
                           </div>
                         </div>
-                        <div className="text-white small">
-                          ${(item.price * item.quantity).toFixed(2)}
+                        <div
+                          className="text-white extra-small"
+                          style={{ fontSize: "0.8rem" }}
+                        >
+                          {shippingData.CURRENCY}{" "}
+                          {(item.price * item.quantity).toLocaleString()}
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  <hr style={{ borderColor: "rgba(255,255,255,0.1)" }} />
-
-                  <div className="summary-details mb-4">
-                    <div className="d-flex justify-content-between mb-2 text-white-50 small">
-                      <span>Subtotal</span>
-                      <span>${getCartTotal().toFixed(2)}</span>
-                    </div>
-                    <div className="d-flex justify-content-between mb-2 text-white-50 small">
-                      <span>Shipping</span>
-                      <span
-                        className={
-                          getCartTotal() >= 150 ? "text-success" : "text-white"
-                        }
-                      >
-                        {getCartTotal() >= 150 ? "Free" : "$5.00"}
-                      </span>
-                    </div>
-                    <div className="d-flex justify-content-between mt-3">
-                      <span className="h5 text-white">Final Total</span>
-                      <span className="h4 text-gradient font-weight-bold">
-                        $
-                        {(
-                          getCartTotal() + (getCartTotal() >= 150 ? 0 : 5)
-                        ).toFixed(2)}
-                      </span>
-                    </div>
-                  </div>
-
                   <button
                     type="submit"
-                    className="btn-modern-submit w-100 py-3 shadow-lg"
+                    className="btn btn-modern-submit premium-btn w-100 py-3 shadow-lg"
                   >
                     Complete Purchase
                   </button>
@@ -492,9 +422,9 @@ export default function Checkout() {
                       <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                       <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                     </svg>
-                    Secure SSL Encrypted Checkout
+                    Secure Encrypted Checkout
                   </div>
-                </div>
+                </OrderSummary>
               </div>
             </div>
           </div>

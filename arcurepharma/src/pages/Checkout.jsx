@@ -7,6 +7,7 @@ import HeroSection from "../components/shared/HeroSection";
 import GlassCard from "../components/shared/GlassCard";
 import FormInput from "../components/shared/FormInput";
 import OrderSummary from "../components/shared/OrderSummary";
+import socialLinks from "../dependencies/socialLinks";
 
 export default function Checkout() {
   const { cart, getCartTotal, clearCart } = useCart();
@@ -70,11 +71,54 @@ export default function Checkout() {
     e.target.src = fallbackImg;
   };
 
-  const handleSubmit = (e) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Simulate payment processing
+      setIsSubmitting(true);
+
+      const totalAmountVal =
+        getCartTotal() +
+        (getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD
+          ? 0
+          : shippingData.SHIPPING_COST) +
+        taxAmount;
+
+      const orderDetailsStr = cart
+        .map(
+          (item) =>
+            `${item.name} x ${item.quantity} — Rs. ${(
+              item.price * item.quantity
+            ).toLocaleString()}`,
+        )
+        .join("\n");
+
+      try {
+        await fetch("/api/send-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            customer_name: `${formData.firstName} ${formData.lastName}`,
+            customer_email: formData.email,
+            order_details: orderDetailsStr,
+            subtotal: `Rs. ${getCartTotal().toLocaleString()}`,
+            shipping: `Rs. ${(getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD ? 0 : shippingData.SHIPPING_COST).toLocaleString()}`,
+            tax: `Rs. ${taxAmount.toLocaleString()}`,
+            total_amount: `Rs. ${totalAmountVal.toLocaleString()}`,
+            shipping_address: `${formData.address}, ${formData.city}, ${formData.zip}`,
+            social_links: socialLinks.map((link) => ({
+              name: link.name,
+              url: link.url,
+            })),
+          }),
+        });
+      } catch (error) {
+        console.error("Email API failed:", error);
+      }
+
       setIsSuccess(true);
+      setIsSubmitting(false);
       setTimeout(() => {
         clearCart();
       }, 2000);
@@ -86,12 +130,6 @@ export default function Checkout() {
       <div className="bg-modern pt-5 overflow-hidden">
         <div className="success-screen-wrapper container">
           <div className="success-card-premium">
-            {/* Ambient Particles */}
-            {/* <div className="particle p1"></div> */}
-            {/* <div className="particle p2"></div> */}
-            {/* <div className="particle p3"></div> */}
-            {/* <div className="particle p4"></div> */}
-
             <div className="checkmark-container">
               <div className="checkmark-glow"></div>
               <svg
@@ -403,8 +441,9 @@ export default function Checkout() {
                   <button
                     type="submit"
                     className="btn btn-modern-submit premium-btn w-100 py-3 shadow-lg"
+                    disabled={isSubmitting}
                   >
-                    Complete Purchase
+                    {isSubmitting ? "Processing..." : "Complete Purchase"}
                   </button>
 
                   <div className="text-white-50 text-center mt-3 small">

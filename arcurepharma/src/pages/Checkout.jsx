@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import fallbackImg from "../assets/pics/products/0.jpg";
+import { shippingData } from "../dependencies/shippingData";
 
 export default function Checkout() {
   const { cart, getCartTotal, clearCart } = useCart();
+  const taxAmount = getCartTotal() * (shippingData.TAX_PERCENTAGE / 100);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -436,7 +438,8 @@ export default function Checkout() {
                           </div>
                         </div>
                         <div className="text-white small">
-                          ${(item.price * item.quantity).toFixed(2)}
+                          {shippingData.CURRENCY}{" "}
+                          {(item.price * item.quantity).toLocaleString()}
                         </div>
                       </div>
                     ))}
@@ -447,25 +450,43 @@ export default function Checkout() {
                   <div className="summary-details mb-4">
                     <div className="d-flex justify-content-between mb-2 text-white-50 small">
                       <span>Subtotal</span>
-                      <span>${getCartTotal().toFixed(2)}</span>
+                      <span>
+                        {shippingData.CURRENCY}{" "}
+                        {getCartTotal().toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="d-flex justify-content-between mb-2 text-white-50 small">
+                      <span>Tax ({shippingData.TAX_PERCENTAGE}%)</span>
+                      <span>
+                        {shippingData.CURRENCY} {taxAmount.toLocaleString()}
+                      </span>
                     </div>
                     <div className="d-flex justify-content-between mb-2 text-white-50 small">
                       <span>Shipping</span>
                       <span
                         className={
-                          getCartTotal() >= 150 ? "text-success" : "text-white"
+                          getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD
+                            ? "text-success"
+                            : "text-white"
                         }
                       >
-                        {getCartTotal() >= 150 ? "Free" : "$5.00"}
+                        {getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD
+                          ? "Free"
+                          : `${shippingData.CURRENCY} ${shippingData.SHIPPING_COST}`}
                       </span>
                     </div>
                     <div className="d-flex justify-content-between mt-3">
                       <span className="h5 text-white">Final Total</span>
                       <span className="h4 text-gradient font-weight-bold">
-                        $
+                        {shippingData.CURRENCY}{" "}
                         {(
-                          getCartTotal() + (getCartTotal() >= 150 ? 0 : 5)
-                        ).toFixed(2)}
+                          getCartTotal() +
+                          (getCartTotal() >=
+                          shippingData.FREE_SHIPPING_THRESHOLD
+                            ? 0
+                            : shippingData.SHIPPING_COST) +
+                          taxAmount
+                        ).toLocaleString()}
                       </span>
                     </div>
                   </div>

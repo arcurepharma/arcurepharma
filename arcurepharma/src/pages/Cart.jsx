@@ -2,17 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import fallbackImg from "../assets/pics/products/0.jpg";
+import { shippingData } from "../dependencies/shippingData";
 
 export default function Cart() {
   const { cart, removeFromCart, updateQuantity, getCartTotal, getCartCount } =
     useCart();
   const navigate = useNavigate();
   const [shippingProgress, setShippingProgress] = useState(0);
-  const FREE_SHIPPING_THRESHOLD = 150;
 
   useEffect(() => {
     const total = getCartTotal();
-    const progress = Math.min((total / FREE_SHIPPING_THRESHOLD) * 100, 100);
+    const progress = Math.min(
+      (total / shippingData.FREE_SHIPPING_THRESHOLD) * 100,
+      100,
+    );
     setShippingProgress(progress);
   }, [getCartTotal]);
 
@@ -20,7 +23,11 @@ export default function Cart() {
     e.target.src = fallbackImg;
   };
 
-  const amountAway = Math.max(0, FREE_SHIPPING_THRESHOLD - getCartTotal());
+  const amountAway = Math.max(
+    0,
+    shippingData.FREE_SHIPPING_THRESHOLD - getCartTotal(),
+  );
+  const taxAmount = getCartTotal() * (shippingData.TAX_PERCENTAGE / 100);
 
   if (cart.length === 0) {
     return (
@@ -78,9 +85,7 @@ export default function Cart() {
               <div className="shipping-info-text">
                 <span className="shipping-msg">
                   {amountAway > 0
-                    ? `You're $${amountAway.toFixed(
-                        2
-                      )} away from FREE SHIPPING!`
+                    ? `You're ${shippingData.CURRENCY} ${amountAway.toLocaleString()} away from FREE SHIPPING!`
                     : "✨ You've unlocked FREE SHIPPING!"}
                 </span>
                 <Link to="/" className="keep-shopping-link">
@@ -136,7 +141,7 @@ export default function Cart() {
                             onClick={() =>
                               updateQuantity(
                                 item.id,
-                                Math.max(1, item.quantity - 1)
+                                Math.max(1, item.quantity - 1),
                               )
                             }
                             disabled={item.quantity <= 1}
@@ -154,7 +159,7 @@ export default function Cart() {
                           </button>
                         </div>
                         <div className="item-price-v2 text-gradient">
-                          ${(item.price * item.quantity).toFixed(2)}
+                          Rs. {(item.price * item.quantity).toLocaleString()}
                         </div>
                       </div>
                     </div>
@@ -189,27 +194,40 @@ export default function Cart() {
               <div className="summary-details-v2">
                 <div className="summary-row-v2">
                   <span>Subtotal ({getCartCount()} Items)</span>
-                  <span>${getCartTotal().toFixed(2)}</span>
+                  <span>
+                    {shippingData.CURRENCY} {getCartTotal().toLocaleString()}
+                  </span>
                 </div>
                 <div className="summary-row-v2">
-                  <span>Shipping Discount</span>
-                  <span className={amountAway === 0 ? "text-success" : ""}>
-                    {amountAway === 0 ? "-$5.00" : "$0.00"}
+                  <span>Tax ({shippingData.TAX_PERCENTAGE}%)</span>
+                  <span>
+                    {shippingData.CURRENCY} {taxAmount.toLocaleString()}
                   </span>
                 </div>
                 <div className="summary-row-v2">
                   <span>Shipping & Handling</span>
-                  <span>$5.00</span>
+                  <span>
+                    {shippingData.CURRENCY} {shippingData.SHIPPING_COST}
+                  </span>
                 </div>
                 <div className="summary-row-v2">
-                  <span>Tax</span>
-                  <span>$0.00</span>
+                  <span>Shipping Discount</span>
+                  <span className={amountAway === 0 ? "text-success" : ""}>
+                    {amountAway === 0
+                      ? `-${shippingData.CURRENCY} ${shippingData.SHIPPING_COST}`
+                      : `${shippingData.CURRENCY} 0`}
+                  </span>
                 </div>
 
                 <div className="summary-row-v2 total">
                   <span>Balance</span>
                   <span className="text-gradient">
-                    ${(getCartTotal() + (amountAway === 0 ? 0 : 5)).toFixed(2)}
+                    {shippingData.CURRENCY}{" "}
+                    {(
+                      getCartTotal() +
+                      (amountAway === 0 ? 0 : shippingData.SHIPPING_COST) +
+                      taxAmount
+                    ).toLocaleString()}
                   </span>
                 </div>
               </div>

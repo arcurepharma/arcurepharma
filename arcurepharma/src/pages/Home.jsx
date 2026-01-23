@@ -21,7 +21,7 @@ export default function Home() {
     // Start hiding phase
     setTimeout(() => {
       setToasts((prev) =>
-        prev.map((t) => (t.id === id ? { ...t, isHiding: true } : t))
+        prev.map((t) => (t.id === id ? { ...t, isHiding: true } : t)),
       );
 
       // Remove from array after animation
@@ -50,7 +50,7 @@ export default function Home() {
           handleLoadMore();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (currentSentinel) {
@@ -141,7 +141,7 @@ export default function Home() {
                     </p>
                     <div className="product-footer">
                       <span className="product-price">
-                        ${product.price.toFixed(2)}
+                        Rs. {product.price.toLocaleString()}
                       </span>
                       <span className="view-details-btn">View Details →</span>
                     </div>
@@ -204,7 +204,7 @@ export default function Home() {
                   </span>
                   <h2 className="modal-title">{selectedProduct.name}</h2>
                   <div className="modal-price">
-                    ${selectedProduct.price.toFixed(2)}
+                    Rs. {selectedProduct.price.toLocaleString()}
                   </div>
                   <p className="modal-description">
                     {selectedProduct.description}
@@ -246,7 +246,7 @@ export default function Home() {
                         onClick={() => {
                           addToCart(selectedProduct, modalQuantity);
                           showToast(
-                            `Added ${modalQuantity} ${selectedProduct.name} to cart!`
+                            `Added ${modalQuantity} ${selectedProduct.name} to cart!`,
                           );
                           closeModal();
                         }}

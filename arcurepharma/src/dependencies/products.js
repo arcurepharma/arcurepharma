@@ -8,7 +8,7 @@ export const products = [
   {
     id: 1,
     name: "NeuroPlus Essential",
-    price: 45.99,
+    price: 4600,
     category: "Brain Health",
     shortDescription: "Advanced cognitive support for mental clarity and focus.",
     description: "NeuroPlus Essential is formulated with scientifically backed ingredients to enhance cognitive function, improve memory retention, and support long-term brain health. Ideal for professionals and students seeking a mental edge.",
@@ -41,7 +41,7 @@ export const products = [
   {
     id: 4,
     name: "PureFlex Joint Support",
-    price: 34.00,
+    price: 3400,
     category: "Joint Care",
     shortDescription: "Enhanced mobility and joint health for active lifestyles.",
     description: "PureFlex combines Glucosamine, Chondroitin, and Turmeric to provide a powerful anti-inflammatory effect. Specifically engineered for athletes and those looking to maintain joint flexibility and reduce discomfort.",
@@ -63,7 +63,7 @@ export const products = [
   {
     id: 6,
     name: "OptiVision Guard",
-    price: 38.50,
+    price: 3800,
     category: "Eye Health",
     shortDescription: "Protect your vision against blue light and eye strain.",
     description: "With Lutein and Zeaxanthin, OptiVision Guard helps protect your eyes from the harmful effects of digital screens. Perfect for those who spend significant time on computers and mobile devices.",
@@ -74,7 +74,7 @@ export const products = [
   {
     id: 7,
     name: "ImmunoShield Pro",
-    price: 32.99,
+    price: 3300,
     category: "Immune Support",
     shortDescription: "High-potency Vitamin C and Zinc for immune defense.",
     description: "ImmunoShield Pro is designed to fortify your body's natural defenses with a blend of Vitamin C, Zinc, and Elderberry extract.",
@@ -86,7 +86,7 @@ export const products = [
   {
     id: 8,
     name: "CardioVive Plus",
-    price: 42.00,
+    price: 4200,
     category: "Heart Health",
     shortDescription: "Support cardiovascular health and circulation.",
     description: "CardioVive Plus contains Omega-3 fatty acids and CoQ10 to support a healthy heart and maintain optimal blood pressure levels.",
@@ -108,7 +108,7 @@ export const products = [
   {
     id: 10,
     name: "MetaboRise Energy",
-    price: 39.99,
+    price: 4000,
     category: "Metabolism",
     shortDescription: "Boost metabolic rate and natural energy levels.",
     description: "MetaboRise uses green tea extract and B-vitamins to support a healthy metabolism and provide sustained energy without the crash.",
@@ -130,7 +130,7 @@ export const products = [
   {
     id: 12,
     name: "PureBiotix 50B",
-    price: 48.00,
+    price: 4800,
     category: "Digestive Health",
     shortDescription: "High-dose probiotic for balanced gut flora.",
     description: "Featuring 50 billion CFU and 12 distinct strains, PureBiotix supports a healthy gut microbiome and regular digestive function.",
@@ -152,7 +152,7 @@ export const products = [
   {
     id: 14,
     name: "OsteoShield Calcium+",
-    price: 27.50,
+    price: 2700,
     category: "Bone Health",
     shortDescription: "Essential minerals for strong, healthy bones.",
     description: "OsteoShield provides a balanced ratio of Calcium, Magnesium, and Vitamin D3 to support bone density and prevent mineral deficiency.",

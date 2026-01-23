@@ -107,7 +107,7 @@ export default function Checkout() {
             tax: `Rs. ${taxAmount.toLocaleString()}`,
             total_amount: `Rs. ${totalAmountVal.toLocaleString()}`,
             shipping_address: `${formData.address}, ${formData.city}, ${formData.zip}`,
-            order_id: `ARC-${Date.now().toString().slice(-6)}${Math.floor(Math.random() * 100)}`,
+            order_id: `ARC-${Math.random().toString(36).substring(2, 12).toUpperCase()}`,
             order_time: new Date().toLocaleTimeString("en-US", {
               hour: "2-digit",
               minute: "2-digit",

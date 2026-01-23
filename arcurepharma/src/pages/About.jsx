@@ -1,9 +1,11 @@
 import aboutData from "../dependencies/aboutData";
+import HeroSection from "../components/shared/HeroSection";
+import GlassCard from "../components/shared/GlassCard";
 
 export default function About() {
   return (
     <>
-      <div className="background-modern d-flex flex-column pt-5">
+      <div className="bg-modern d-flex flex-column pt-5">
         <div className="floating-shapes">
           <div className="shape"></div>
           <div className="shape"></div>
@@ -11,51 +13,44 @@ export default function About() {
         </div>
 
         <div className="container section-spacing">
-          {/* Hero Section */}
-          <div className="row justify-content-center mb-5">
-            <div className="col-lg-8 text-center">
-              <span className="hero-subtitle">Who We Are</span>
-              <h1 className="hero-title mb-4">
+          <HeroSection
+            subtitle="Who We Are"
+            title={
+              <>
                 Redefining <span className="text-gradient">Healthcare</span>
-              </h1>
-              <p
-                className="lead op-8"
-                style={{ fontSize: "1.25rem", fontWeight: 300 }}
-              >
-                At Arcurepharma, we combine science and compassion to create
-                pharmaceutical solutions that change lives.
-              </p>
-            </div>
-          </div>
+              </>
+            }
+            description="At Arcurepharma, we combine science and compassion to create pharmaceutical solutions that change lives."
+          />
 
           {/* Cards Grid */}
           <div className="row g-4 mb-5">
             <div className="col-md-4">
-              <div className="glass-card text-start">
+              <GlassCard className="text-start">
                 <div className="icon-box">🚀</div>
                 <h4 className="fw-bold mb-3">Our Story</h4>
                 <p className="op-7 small" style={{ textAlign: "justify" }}>
                   {aboutData.story}
                 </p>
-              </div>
+              </GlassCard>
             </div>
             <div className="col-md-4">
-              <div className="glass-card text-start">
+              <GlassCard className="text-start">
                 <div className="icon-box">🎯</div>
                 <h4 className="fw-bold mb-3">Our Mission</h4>
                 <p className="op-7 small" style={{ textAlign: "justify" }}>
                   {aboutData.mission}
                 </p>
-              </div>
+              </GlassCard>
             </div>
             <div className="col-md-4">
-              <div className="glass-card text-start">
+              <GlassCard className="text-start">
                 <div className="icon-box">💡</div>
                 <h4 className="fw-bold mb-3">Our Vision</h4>
                 <p className="op-7 small" style={{ textAlign: "justify" }}>
                   {aboutData.vision}
                 </p>
-              </div>
+              </GlassCard>
             </div>
           </div>
 

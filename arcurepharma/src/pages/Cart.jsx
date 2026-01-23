@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import fallbackImg from "../assets/pics/products/0.jpg";
 import { shippingData } from "../dependencies/shippingData";
+import HeroSection from "../components/shared/HeroSection";
+import GlassCard from "../components/shared/GlassCard";
+import OrderSummary from "../components/shared/OrderSummary";
 
 export default function Cart() {
   const { cart, removeFromCart, updateQuantity, getCartTotal, getCartCount } =
@@ -31,10 +34,10 @@ export default function Cart() {
 
   if (cart.length === 0) {
     return (
-      <div className="background-modern-home pt-5">
+      <div className="bg-modern pt-5">
         <div className="container section-spacing text-center py-5">
-          <div
-            className="glass-card py-5 my-5 mx-auto"
+          <GlassCard
+            className="py-5 my-5 mx-auto"
             style={{ maxWidth: "600px" }}
           >
             <div className="empty-cart-icon mb-4" style={{ fontSize: "4rem" }}>
@@ -46,17 +49,20 @@ export default function Cart() {
             <p className="op-7 lead mb-5">
               Looks like you haven't added any premium wellness products yet.
             </p>
-            <Link to="/" className="btn-modern-submit text-decoration-none">
+            <Link
+              to="/"
+              className="btn-modern-submit premium-btn text-decoration-none px-5"
+            >
               Continue Shopping
             </Link>
-          </div>
+          </GlassCard>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="background-modern-home pt-5">
+    <div className="bg-modern pt-5">
       <div className="floating-shapes">
         <div className="shape"></div>
         <div className="shape"></div>
@@ -64,18 +70,15 @@ export default function Cart() {
       </div>
 
       <div className="container section-spacing pb-5">
-        <div className="row mb-5">
-          <div className="col-12 text-center">
-            <span className="hero-subtitle">Premium Selection</span>
-            <h1 className="hero-title">
+        <HeroSection
+          subtitle="Premium Selection"
+          title={
+            <>
               Your <span className="text-gradient">Cart</span>
-            </h1>
-            <p className="op-7 lead mb-0">
-              {getCartCount()} item{getCartCount() !== 1 ? "s" : ""} ships at
-              checkout
-            </p>
-          </div>
-        </div>
+            </>
+          }
+          description={`${getCartCount()} item${getCartCount() !== 1 ? "s" : ""} ships at checkout`}
+        />
 
         <div className="row g-5">
           {/* Right Column: Items */}
@@ -180,58 +183,23 @@ export default function Cart() {
 
           {/* Left Column: Summary */}
           <div className="col-lg-4">
-            <div
-              className="cart-summary-card-v2 reveal-item"
-              style={{ animationDelay: "0.3s" }}
+            <OrderSummary
+              subtotal={getCartTotal()}
+              taxAmount={taxAmount}
+              taxPercentage={shippingData.TAX_PERCENTAGE}
+              shippingCost={shippingData.SHIPPING_COST}
+              shippingDiscount={
+                amountAway === 0 ? shippingData.SHIPPING_COST : 0
+              }
+              total={
+                getCartTotal() +
+                (amountAway === 0 ? 0 : shippingData.SHIPPING_COST) +
+                taxAmount
+              }
+              currency={shippingData.CURRENCY}
+              itemsCount={getCartCount()}
+              className="reveal-item"
             >
-              <h3
-                className="hero-title pt-0 mb-4"
-                style={{ fontSize: "1.8rem" }}
-              >
-                Summary
-              </h3>
-
-              <div className="summary-details-v2">
-                <div className="summary-row-v2">
-                  <span>Subtotal ({getCartCount()} Items)</span>
-                  <span>
-                    {shippingData.CURRENCY} {getCartTotal().toLocaleString()}
-                  </span>
-                </div>
-                <div className="summary-row-v2">
-                  <span>Tax ({shippingData.TAX_PERCENTAGE}%)</span>
-                  <span>
-                    {shippingData.CURRENCY} {taxAmount.toLocaleString()}
-                  </span>
-                </div>
-                <div className="summary-row-v2">
-                  <span>Shipping & Handling</span>
-                  <span>
-                    {shippingData.CURRENCY} {shippingData.SHIPPING_COST}
-                  </span>
-                </div>
-                <div className="summary-row-v2">
-                  <span>Shipping Discount</span>
-                  <span className={amountAway === 0 ? "text-success" : ""}>
-                    {amountAway === 0
-                      ? `-${shippingData.CURRENCY} ${shippingData.SHIPPING_COST}`
-                      : `${shippingData.CURRENCY} 0`}
-                  </span>
-                </div>
-
-                <div className="summary-row-v2 total">
-                  <span>Balance</span>
-                  <span className="text-gradient">
-                    {shippingData.CURRENCY}{" "}
-                    {(
-                      getCartTotal() +
-                      (amountAway === 0 ? 0 : shippingData.SHIPPING_COST) +
-                      taxAmount
-                    ).toLocaleString()}
-                  </span>
-                </div>
-              </div>
-
               <button
                 className="btn-checkout-v2"
                 onClick={() => navigate("/checkout")}
@@ -261,7 +229,7 @@ export default function Cart() {
                   </div>
                 </div>
               </div>
-            </div>
+            </OrderSummary>
           </div>
         </div>
       </div>

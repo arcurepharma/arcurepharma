@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { products } from "../dependencies/products";
 import fallbackImg from "../assets/pics/products/0.jpg";
 import { useCart } from "../context/CartContext";
+import HeroSection from "../components/shared/HeroSection";
 
 export default function Home() {
   const { addToCart } = useCart();
@@ -92,7 +93,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="background-modern-home pt-5">
+      <div className="bg-modern pt-5">
         <div className="floating-shapes">
           <div className="shape"></div>
           <div className="shape"></div>
@@ -100,18 +101,15 @@ export default function Home() {
         </div>
 
         <div className="container section-spacing">
-          <div className="row justify-content-center mb-5">
-            <div className="col-lg-8 text-center">
-              <span className="hero-subtitle">Premium Wellness</span>
-              <h1 className="hero-title mb-4">
+          <HeroSection
+            subtitle="Premium Wellness"
+            title={
+              <>
                 Our <span className="text-gradient">Products</span>
-              </h1>
-              <p className="op-7 lead">
-                Discover our scientifically formulated pharmaceuticals and
-                supplements designed for your peak performance and health.
-              </p>
-            </div>
-          </div>
+              </>
+            }
+            description="Discover our scientifically formulated pharmaceuticals and supplements designed for your peak performance and health."
+          />
 
           <div className="row g-4 product-grid">
             {products.slice(0, visibleProducts).map((product, index) => (

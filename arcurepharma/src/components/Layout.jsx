@@ -2,6 +2,7 @@ import routes from "../dependencies/route";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import FloatingCart from "./FloatingCart";
+import WhatsAppButton from "./WhatsAppButton";
 import { Outlet } from "react-router-dom";
 
 export default function Layout(props) {
@@ -13,6 +14,7 @@ export default function Layout(props) {
           <Outlet />
         </div>
         <FloatingCart />
+        <WhatsAppButton />
         <Footer />
       </div>
     </>

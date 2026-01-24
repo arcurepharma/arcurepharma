@@ -5,51 +5,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Order Confirmation Preview</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    @media screen and (max-width: 600px) {
+      .container { width: 100% !important; border-radius: 0 !important; border: none !important; }
+      .content-padding { padding-left: 20px !important; padding-right: 20px !important; }
+      .hero-text { font-size: 28px !important; }
+      .info-bar td { display: block !important; width: 100% !important; padding: 12px 0 !important; border: none !important; text-align: left !important; }
+      .info-bar { border-radius: 12px !important; padding: 15px !important; }
+      .summary-card { padding: 15px !important; border-radius: 16px !important; }
+      .address-row td { display: block !important; width: 100% !important; margin-bottom: 15px !important; }
+      .footer { padding: 30px 20px !important; }
+      .price-total { font-size: 24px !important; }
+    }
+  </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #02030d; font-family: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+<body style="margin: 0; padding: 0; background-color: #050616; font-family: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
   <!-- Mock Data for Preview -->
   <div style="background: #111; color: #aaa; padding: 10px; text-align: center; font-size: 12px; border-bottom: 1px solid #333;">
-    PREVIEW MODE: This matches the ultra-premium email your customers will receive.
+    PREVIEW MODE: This matches the lighter, modern palette from your web pages.
   </div>
 
-  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #02030d;">
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #050616;">
     <tr>
-      <td align="center" style="padding: 50px 0;">
-        <table border="0" cellpadding="0" cellspacing="0" width="600" style="background: #0a0c1f; background: linear-gradient(180deg, #0e112a 0%, #050616 100%); border: 1px solid rgba(99, 102, 241, 0.15); border-radius: 36px; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.8);">
+      <td align="center" style="padding: 30px 0;">
+        <table border="0" cellpadding="0" cellspacing="0" width="600" class="container" style="background: #0e0f2c; background: linear-gradient(180deg, #1a1c4b 0%, #0e0f2c 100%); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 36px; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.6);">
           
-          <!-- Glossy Top Accent -->
           <tr>
-            <td style="height: 4px; background: linear-gradient(90deg, #6366f1, #a855f7, #6366f1); background-size: 200% 100%;"></td>
+            <td style="height: 4px; background: linear-gradient(90deg, #6366f1, #a855f7, #6366f1);"></td>
           </tr>
 
           <!-- Hero Header -->
           <tr>
-            <td align="center" style="padding: 60px 40px 40px 40px; position: relative;">
-              <div style="background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%); width: 250px; height: 250px; position: absolute; top: -50px; left: 50%; transform: translateX(-50%); z-index: 0;"></div>
-              <div style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); width: 84px; height: 84px; border-radius: 24px; display: inline-block; text-align: center; margin-bottom: 30px; box-shadow: 0 15px 35px rgba(79, 70, 229, 0.4); z-index: 1; position: relative;">
-                <span style="font-size: 40px; line-height: 84px; filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));">✨</span>
+            <td align="center" class="content-padding" style="padding: 50px 40px 40px 40px; position: relative;">
+              <div style="background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%); width: 300px; height: 300px; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); z-index: 0;"></div>
+              <div style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); width: 70px; height: 70px; border-radius: 20px; display: inline-block; text-align: center; margin-bottom: 25px; box-shadow: 0 15px 35px rgba(79, 70, 229, 0.3); z-index: 1; position: relative;">
+                <span style="font-size: 32px; line-height: 70px;">✨</span>
               </div>
-              <h1 style="color: #ffffff; margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; z-index: 1; position: relative;">Order <span style="background: linear-gradient(90deg, #6366f1, #a855f7); -webkit-background-clip: text; color: #6366f1;">Confirmed</span></h1>
-              <p style="color: rgba(255,255,255,0.5); font-size: 17px; margin: 15px 0 0 0; font-weight: 500; z-index: 1; position: relative;">Hi John, your wellness journey is our priority.</p>
+              <h1 class="hero-text" style="color: #ffffff; margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; z-index: 1; position: relative;">Order <span style="background: linear-gradient(90deg, #6366f1, #a855f7); -webkit-background-clip: text; color: #6366f1;">Confirmed</span></h1>
+              <p style="color: rgba(255,255,255,0.7); font-size: 16px; margin: 15px 0 0 0; font-weight: 500; z-index: 1; position: relative;">Hi John, your wellness journey is our priority.</p>
             </td>
           </tr>
 
           <!-- Order Info Bar -->
           <tr>
-            <td style="padding: 0 40px;">
-               <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 20px;">
+            <td class="content-padding" style="padding: 0 40px;">
+               <table border="0" cellpadding="0" cellspacing="0" width="100%" class="info-bar" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px;">
                   <tr>
                      <td align="left">
-                        <div style="color: rgba(255,255,255,0.4); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin-bottom: 4px;">Order ID</div>
-                        <div style="color: #ffffff; font-size: 14px; font-weight: 700;">#ARC-9X2V4M8L7Q</div>
+                        <div style="color: rgba(255,255,255,0.5); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin-bottom: 4px;">Order ID</div>
+                        <div style="color: #ffffff; font-size: 13px; font-weight: 700;">#ARC-9X2V4M8L7Q</div>
                      </td>
-                     <td align="center" style="border-left: 1px solid rgba(255,255,255,0.05); border-right: 1px solid rgba(255,255,255,0.05);">
-                        <div style="color: rgba(255,255,255,0.4); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin-bottom: 4px;">Placed On</div>
-                        <div style="color: #ffffff; font-size: 14px; font-weight: 700;">January 24, 2026</div>
+                     <td align="center" style="border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.1);">
+                        <div style="color: rgba(255,255,255,0.5); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin-bottom: 4px;">Placed On</div>
+                        <div style="color: #ffffff; font-size: 13px; font-weight: 700;">January 24, 2026</div>
                      </td>
                      <td align="right">
-                        <div style="color: rgba(255,255,255,0.4); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin-bottom: 4px;">Time</div>
-                        <div style="color: #ffffff; font-size: 14px; font-weight: 700;">04:36 AM</div>
+                        <div style="color: rgba(255,255,255,0.5); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin-bottom: 4px;">Time</div>
+                        <div style="color: #ffffff; font-size: 13px; font-weight: 700;">04:36 AM</div>
                      </td>
                   </tr>
                </table>
@@ -58,39 +70,39 @@
 
           <!-- Main Receipt -->
           <tr>
-            <td style="padding: 30px 40px 20px 40px;">
-              <h3 style="color: #ffffff; font-size: 18px; font-weight: 700; margin: 0 0 20px 0;">Summary <span style="margin-left: 10px; background: rgba(99, 102, 241, 0.1); color: #6366f1; padding: 4px 12px; border-radius: 8px; font-size: 12px;">Invoice</span></h3>
-              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.03); border-radius: 24px; padding: 25px; backdrop-filter: blur(20px);">
+            <td class="content-padding" style="padding: 30px 40px 20px 40px;">
+              <h3 style="color: #ffffff; font-size: 18px; font-weight: 700; margin: 0 0 20px 0;">Summary <span style="margin-left: 10px; background: rgba(99, 102, 241, 0.2); color: #6366f1; padding: 4px 12px; border-radius: 8px; font-size: 12px;">Invoice</span></h3>
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" class="summary-card" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 25px;">
                 <tr>
                   <td>
                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                       <tr>
-                        <td style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.03); color: #e5e7eb; font-size: 14px; font-weight: 500;">Premium Wellness Kit x 1</td>
-                        <td align="right" style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.03); color: #ffffff; font-size: 14px; font-weight: 700;">Rs. 4,500</td>
+                        <td style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: #e5e7eb; font-size: 14px; font-weight: 500;">Premium Wellness Kit x 1</td>
+                        <td align="right" style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ffffff; font-size: 14px; font-weight: 700;">Rs. 4,500</td>
                       </tr>
                       <tr>
-                        <td style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.03); color: #e5e7eb; font-size: 14px; font-weight: 500;">Daily Immune Support x 2</td>
-                        <td align="right" style="padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.03); color: #ffffff; font-size: 14px; font-weight: 700;">Rs. 3,200</td>
+                        <td style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: #e5e7eb; font-size: 14px; font-weight: 500;">Daily Immune Support x 2</td>
+                        <td align="right" style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ffffff; font-size: 14px; font-weight: 700;">Rs. 3,200</td>
                       </tr>
                     </table>
 
                     <!-- Detailed Breakdown -->
-                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 25px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.1);">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 25px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.2);">
                       <tr>
-                        <td style="color: rgba(255,255,255,0.4); font-size: 14px; padding: 6px 0;">Subtotal</td>
+                        <td style="color: rgba(255,255,255,0.6); font-size: 14px; padding: 6px 0;">Subtotal</td>
                         <td align="right" style="color: #ffffff; font-size: 14px; padding: 6px 0; font-weight: 600;">Rs. 7,700</td>
                       </tr>
                       <tr>
-                        <td style="color: rgba(255,255,255,0.4); font-size: 14px; padding: 6px 0;">Shipping</td>
+                        <td style="color: rgba(255,255,255,0.6); font-size: 14px; padding: 6px 0;">Shipping</td>
                         <td align="right" style="color: #10b981; font-size: 14px; padding: 6px 0; font-weight: 600;">FREE</td>
                       </tr>
                       <tr>
-                        <td style="color: rgba(255,255,255,0.4); font-size: 14px; padding: 6px 0;">GST / Tax</td>
+                        <td style="color: rgba(255,255,255,0.6); font-size: 14px; padding: 6px 0;">GST / Tax</td>
                         <td align="right" style="color: #ffffff; font-size: 14px; padding: 6px 0; font-weight: 600;">Rs. 0</td>
                       </tr>
                       <tr>
-                        <td style="color: #ffffff; font-size: 20px; font-weight: 800; padding: 25px 0 0 0;">Total Amount</td>
-                        <td align="right" style="color: #6366f1; font-size: 30px; font-weight: 900; padding: 25px 0 0 0; font-family: 'Helvetica', sans-serif; letter-spacing: -1px;">Rs. 7,700</td>
+                        <td style="color: #ffffff; font-size: 18px; font-weight: 800; padding: 25px 0 0 0;">Total Amount</td>
+                        <td align="right" class="price-total" style="color: #6366f1; font-size: 28px; font-weight: 900; padding: 25px 0 0 0; letter-spacing: -1px;">Rs. 7,700</td>
                       </tr>
                     </table>
                   </td>
@@ -99,25 +111,24 @@
             </td>
           </tr>
 
-          <!-- Address & Timeline Row -->
+          <!-- Address & Timeline row class -->
           <tr>
-            <td style="padding: 10px 40px 30px 40px;">
-              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <td class="content-padding" style="padding: 10px 40px 30px 40px;">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" class="address-row">
                 <tr>
-                   <td width="48%" valign="top" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 20px; padding: 20px;">
-                       <div style="color: rgba(255,255,255,0.4); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin-bottom: 12px;">Ship To</div>
+                   <td width="48%" valign="top" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 20px;">
+                       <div style="color: rgba(255,255,255,0.5); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin-bottom: 12px;">Ship To</div>
                        <div style="color: #ffffff; font-size: 14px; line-height: 1.6; font-weight: 600;">
                          <span style="color: #6366f1;">John Doe</span><br/>
                          <span style="font-weight: 400; color: rgba(255,255,255,0.7);">123 Healthcare Ave, Lahore, 54000</span>
                        </div>
                    </td>
                    <td width="4%"></td>
-                   <td width="48%" valign="top" style="background: rgba(99, 102, 241, 0.05); border: 1px solid rgba(99, 102, 241, 0.1); border-radius: 20px; padding: 20px;">
-                       <div style="color: rgba(99, 102, 241, 0.6); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin-bottom: 15px;">Next Steps</div>
+                   <td width="48%" valign="top" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 20px; padding: 20px;">
+                       <div style="color: rgba(99, 102, 241, 1); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin-bottom: 15px;">Next Steps</div>
                        <div style="color: #ffffff; font-size: 13px; line-height: 1.4;">
                          <div style="margin-bottom: 10px;">✅ Confirmed</div>
-                         <div style="margin-bottom: 10px; opacity: 0.5;">📦 Processing</div>
-                         <div style="opacity: 0.5;">🚚 Shipped</div>
+                         <div style="opacity: 0.6;">📦 Processing</div>
                        </div>
                    </td>
                 </tr>
@@ -125,20 +136,18 @@
             </td>
           </tr>
 
-          <!-- Wellness Concierge Card -->
+          <!-- Concierge -->
           <tr>
-            <td style="padding: 0 40px 30px 40px;">
+            <td class="content-padding" style="padding: 0 40px 30px 40px;">
                <a href="#" style="text-decoration: none; display: block;">
-                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background: rgba(99, 102, 241, 0.05); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 28px; padding: 25px; overflow: hidden;">
+                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 24px; padding: 20px;">
                     <tr>
-                      <td style="padding-left: 20px;">
-                         <div style="color: #ffffff; font-size: 16px; font-weight: 800; margin-bottom: 2px;">Wellness Concierge</div>
-                         <div style="color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 500;">Connect with our experts for priority assistance.</div>
+                      <td style="padding-left: 5px;">
+                         <div style="color: #ffffff; font-size: 15px; font-weight: 800; margin-bottom: 2px;">Wellness Concierge</div>
+                         <div style="color: rgba(255,255,255,0.6); font-size: 12px;">Need help? Chat with our experts.</div>
                       </td>
                       <td align="right">
-                         <div style="text-align: center;">
-                            <img src="https://cdn-icons-png.flaticon.com/32/733/733585.png" width="32" height="32" alt="WhatsApp" style="opacity: 0.9; filter: drop-shadow(0 0 10px rgba(37, 211, 102, 0.5));">
-                         </div>
+                         <img src="https://cdn-icons-png.flaticon.com/32/733/733585.png" width="28" height="28" alt="WhatsApp" style="opacity: 0.9;">
                       </td>
                     </tr>
                  </table>
@@ -146,30 +155,23 @@
             </td>
           </tr>
 
-          <!-- Footer / Brand / Socials -->
+          <!-- Footer -->
           <tr>
-            <td align="center" style="padding: 50px 40px 40px 40px; background: rgba(0,0,0,0.3); border-top: 1px solid rgba(255,255,255,0.05);">
-               <div style="margin-bottom: 30px; letter-spacing: 4px; font-weight: 900; color: #ffffff; font-size: 20px;">ARCURE <span style="color: #6366f1;">PHARMA</span></div>
+            <td align="center" class="footer" style="padding: 50px 40px 40px 40px; background: rgba(0,0,0,0.5); border-top: 1px solid rgba(255,255,255,0.1);">
+               <div style="margin-bottom: 25px; letter-spacing: 3px; font-weight: 900; color: #ffffff; font-size: 18px;">ARCURE<span style="color: #6366f1;">PHARMA</span></div>
                
-               <div style="margin-bottom: 35px;">
-                  <a href="#" style="text-decoration: none; margin: 0 15px; display: inline-block;">
-                    <img src="https://cdn-icons-png.flaticon.com/32/733/733547.png" width="26" height="26" alt="Facebook" style="display: block; opacity: 0.8; filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));">
+               <div style="margin-bottom: 30px;">
+                  <a href="#" style="text-decoration: none; margin: 0 12px; display: inline-block;">
+                    <img src="https://cdn-icons-png.flaticon.com/32/733/733547.png" width="22" height="22" alt="Facebook" style="opacity: 0.8;">
                   </a>
-                  <a href="#" style="text-decoration: none; margin: 0 15px; display: inline-block;">
-                    <img src="https://cdn-icons-png.flaticon.com/32/2111/2111463.png" width="26" height="26" alt="Instagram" style="display: block; opacity: 0.8; filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));">
-                  </a>
-                  <a href="#" style="text-decoration: none; margin: 0 15px; display: inline-block;">
-                    <img src="https://cdn-icons-png.flaticon.com/32/5969/5969020.png" width="26" height="26" alt="Twitter" style="display: block; opacity: 0.8; filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));">
-                  </a>
-                  <a href="#" style="text-decoration: none; margin: 0 15px; display: inline-block;">
-                    <img src="https://cdn-icons-png.flaticon.com/32/733/733585.png" width="26" height="26" alt="WhatsApp" style="display: block; opacity: 0.8; filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));">
+                  <a href="#" style="text-decoration: none; margin: 0 12px; display: inline-block;">
+                    <img src="https://cdn-icons-png.flaticon.com/32/2111/2111463.png" width="22" height="22" alt="Instagram" style="opacity: 0.8;">
                   </a>
                </div>
                
-               <p style="color: rgba(255,255,255,0.3); font-size: 13px; line-height: 1.8; margin: 0; max-width: 400px;">
-                Our team will verify your order via phone shortly before shipping your premium selection.<br/><br/>
+               <p style="color: rgba(255,255,255,0.5); font-size: 12px; line-height: 1.6; margin: 0; max-width: 400px;">
                 &copy; 2026 Arcure Pharma PVT LTD.<br/>
-                Built for ultimate wellness and pharmaceutical excellence.
+                Pharmaceutical Excellence & Wellness.
               </p>
             </td>
           </tr>

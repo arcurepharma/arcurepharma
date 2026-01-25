@@ -27,16 +27,10 @@ const sendContactEmail = async (data, res) => {
       replyTo: email,
       subject: `New Message: ${subject} (${name})`,
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
-      html: `<h3>New Contact Message</h3><p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Subject:</strong> ${subject}</p><hr/><p><strong>Message:</strong></p><p style="background:#f4f4f4;padding:15px;border-radius:8px;">${message.replace(/\n/g, '<br/>')}</p>`
+      html: `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>New Contact Message</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><style>body{margin:0;padding:20px;background-color:#f5f5f5;font-family:'Inter',sans-serif}</style></head><body><div style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:6px;overflow:hidden;border:1px solid #e2e8f0"><div style="background:#050616;padding:10px 15px;border-bottom:2px solid #d4fc79"><span style="color:#ffffff;font-weight:800;font-size:12px;letter-spacing:1px">ARCUREPHARMA - NEW INQUIRY</span></div><div style="padding:15px"><table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:10px;font-size:13px"><tr><td style="color:#718096;width:60px;font-weight:600">SENDER:</td><td style="color:#1a202c;font-weight:600">${name} <span style="font-weight:400;opacity:0.7">&lt;${email}&gt;</span></td></tr><tr><td style="color:#718096;font-weight:600;padding-top:4px">SUBJECT:</td><td style="color:#1a202c;font-weight:600;padding-top:4px">${subject}</td></tr></table><div style="background:#f8fafc;border:1px solid #edf2f7;border-radius:4px;padding:12px;font-size:13px;color:#4a5568;line-height:1.4">${message.replace(/\n/g, '<br/>')}</div><div style="margin-top:12px;text-align:right"><a href="mailto:${email}?subject=Re: ${subject}" style="background:#1a1c4b;color:#ffffff;padding:8px 20px;border-radius:4px;text-decoration:none;font-weight:600;font-size:12px;display:inline-block">Reply</a></div></div></div></body></html>`
     });
 
-    // 2. Send acknowledgement to CUSTOMER
-    await transporter.sendMail({
-      from: `"ArcurePharma Support" <${supportEmail}>`,
-      to: email,
-      subject: `We received your message: ${subject}`,
-      html: `<div style="font-family:Arial,sans-serif;color:#333;max-width:600px;margin:0 auto;"><div style="background:#6366f1;padding:20px;text-align:center;border-radius:8px 8px 0 0;"><h2 style="color:white;margin:0;">Message Received</h2></div><div style="padding:20px;border:1px solid #e1e1e1;border-top:none;border-radius:0 0 8px 8px;"><p>Hi ${name.split(' ')[0]},</p><p>Thanks for getting in touch! We have received your message regarding "<strong>${subject}</strong>".</p><p>Our support team will review it and get back to you as soon as possible.</p><hr style="border:0;border-top:1px solid #eee;margin:20px 0;"/><p style="color:#666;font-size:14px;">Your message:</p><p style="font-style:italic;color:#555;">"${message}"</p><br/><p>Best Regards,<br/><strong>ArcurePharma Team</strong></p></div></div>`
-    });
+ 
 
     return res.status(200).json({ message: "Contact email sent successfully" });
   } catch (error) {

@@ -33,14 +33,70 @@ body::-webkit-scrollbar {
   background-clip: text;
 }
 
-.glass-morphism {
-  background: var(--glass-white);
+/* --- Utility Classes --- */
+/* Backdrop Blur Utilities */
+.blur-8 {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.blur-10 {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-white-border);
+}
+
+.blur-15 {
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+.blur-20 {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.blur-25 {
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+}
+
+.blur-30 {
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+
+.blur-40 {
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+}
+
+/* Border Radius Utilities */
+.radius-16 {
+  border-radius: 16px;
+}
+
+.radius-18 {
+  border-radius: 18px;
+}
+
+.radius-20 {
   border-radius: 20px;
 }
 
+/* Transition Utilities */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-smooth-slow {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-ease {
+  transition: all 0.3s ease;
+}
+
+/* --- Glass Morphism Components --- */
 .glass-card {
   background: var(--glass-white);
   backdrop-filter: blur(10px);

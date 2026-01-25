@@ -1221,6 +1221,12 @@ body::-webkit-scrollbar {
   animation: toastSlideOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
+.modern-toast.toast-error {
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(14, 15, 44, 0.9);
+  box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
+}
+
 .toast-icon {
   width: 24px;
   height: 24px;

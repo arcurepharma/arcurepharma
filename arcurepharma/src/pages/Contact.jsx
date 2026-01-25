@@ -5,7 +5,7 @@ import GlassCard from "../components/shared/GlassCard";
 import FormInput from "../components/shared/FormInput";
 
 export default function Contact() {
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [toasts, setToasts] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -13,6 +13,25 @@ export default function Contact() {
     message: "",
   });
   const [errors, setErrors] = useState({});
+
+  const showToast = (message, type = "success") => {
+    const id = Date.now();
+    const newToast = { id, message, type, isHiding: false };
+
+    setToasts((prev) => [...prev, newToast]);
+
+    // Start hiding phase
+    setTimeout(() => {
+      setToasts((prev) =>
+        prev.map((t) => (t.id === id ? { ...t, isHiding: true } : t)),
+      );
+
+      // Remove from array after animation
+      setTimeout(() => {
+        setToasts((prev) => prev.filter((t) => t.id !== id));
+      }, 500);
+    }, 3000);
+  };
 
   const validateForm = () => {
     const newErrors = {};
@@ -54,15 +73,23 @@ export default function Contact() {
         });
 
         if (response.ok) {
-          setShowSuccess(true);
+          showToast(
+            "✅ Message sent successfully! We'll get back to you soon.",
+            "success",
+          );
           setFormData({ name: "", email: "", subject: "", message: "" });
-          setTimeout(() => setShowSuccess(false), 5000);
         } else {
-          // You might want to handle error state here
-          console.error("Failed to send message");
+          showToast(
+            "❌ Failed to send message. Please try again or contact us directly.",
+            "error",
+          );
         }
       } catch (error) {
         console.error("Error sending message:", error);
+        showToast(
+          "❌ Failed to send message. Please try again or contact us directly.",
+          "error",
+        );
       } finally {
         setIsSubmitting(false);
       }
@@ -97,13 +124,6 @@ export default function Contact() {
                 <div className="d-flex justify-content-between align-items-center mb-4">
                   <h3 className="fw-bold mb-0">Send us a Message</h3>
                 </div>
-
-                {showSuccess && (
-                  <div className="success-banner mb-4 animate__animated animate__fadeInDown">
-                    <span className="me-2">✅</span>
-                    Message sent successfully! We'll get back to you soon.
-                  </div>
-                )}
 
                 <form>
                   <div className="row g-3">
@@ -243,6 +263,18 @@ export default function Contact() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Modern Stacking Toast Banner */}
+      <div className="modern-toast-container">
+        {toasts.map((t) => (
+          <div
+            key={t.id}
+            className={`modern-toast ${t.isHiding ? "hiding" : ""} ${t.type === "error" ? "toast-error" : ""}`}
+          >
+            <div className="toast-message">{t.message}</div>
+          </div>
+        ))}
       </div>
     </>
   );

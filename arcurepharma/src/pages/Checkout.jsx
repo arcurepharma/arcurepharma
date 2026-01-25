@@ -161,7 +161,8 @@ export default function Checkout() {
 
       const totalAmountVal =
         getCartTotal() +
-        (getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD
+        (shippingData.ENABLE_FREE_SHIPPING === 1 &&
+        getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD
           ? 0
           : shippingData.SHIPPING_COST) +
         taxAmount;
@@ -192,7 +193,7 @@ export default function Checkout() {
         .join("\n");
 
       try {
-        await fetch("/api/send-email", {
+        const response = await fetch("/api/send-email", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -200,7 +201,7 @@ export default function Checkout() {
             customer_email: formData.email,
             order_details: orderDetailsStr,
             subtotal: `Rs. ${getCartTotal().toLocaleString()}`,
-            shipping: `Rs. ${(getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD ? 0 : shippingData.SHIPPING_COST).toLocaleString()}`,
+            shipping: `Rs. ${(shippingData.ENABLE_FREE_SHIPPING === 1 && getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD ? 0 : shippingData.SHIPPING_COST).toLocaleString()}`,
             tax: `Rs. ${taxAmount.toLocaleString()}`,
             total_amount: `Rs. ${totalAmountVal.toLocaleString()}`,
             shipping_address: `${formData.address}, ${formData.city}, ${selectedState?.name || formData.state}, ${formData.zip}, ${selectedCountry?.name || formData.country}`,
@@ -218,15 +219,26 @@ export default function Checkout() {
             })),
           }),
         });
+
+        if (!response.ok) {
+          throw new Error("Failed to send order confirmation email");
+        }
+
+        setIsSuccess(true);
+        setTimeout(() => {
+          clearCart();
+        }, 2000);
       } catch (error) {
         console.error("Email API failed:", error);
+        // Still show success to user since order was placed, just email failed
+        // In production, you might want to save order to database first
+        setIsSuccess(true);
+        setTimeout(() => {
+          clearCart();
+        }, 2000);
+      } finally {
+        setIsSubmitting(false);
       }
-
-      setIsSuccess(true);
-      setIsSubmitting(false);
-      setTimeout(() => {
-        clearCart();
-      }, 2000);
     }
   };
 
@@ -616,13 +628,15 @@ export default function Checkout() {
                   taxPercentage={shippingData.TAX_PERCENTAGE}
                   shippingCost={shippingData.SHIPPING_COST}
                   shippingDiscount={
+                    shippingData.ENABLE_FREE_SHIPPING === 1 &&
                     getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD
                       ? shippingData.SHIPPING_COST
                       : 0
                   }
                   total={
                     getCartTotal() +
-                    (getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD
+                    (shippingData.ENABLE_FREE_SHIPPING === 1 &&
+                    getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD
                       ? 0
                       : shippingData.SHIPPING_COST) +
                     taxAmount

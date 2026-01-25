@@ -38,11 +38,34 @@ export default function Contact() {
     }
   };
 
-  const handleSendMessage = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSendMessage = async () => {
     if (validateForm()) {
-      setShowSuccess(true);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-      setTimeout(() => setShowSuccess(false), 5000);
+      setIsSubmitting(true);
+      try {
+        const response = await fetch("/api/send-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            type: "contact",
+            ...formData,
+          }),
+        });
+
+        if (response.ok) {
+          setShowSuccess(true);
+          setFormData({ name: "", email: "", subject: "", message: "" });
+          setTimeout(() => setShowSuccess(false), 5000);
+        } else {
+          // You might want to handle error state here
+          console.error("Failed to send message");
+        }
+      } catch (error) {
+        console.error("Error sending message:", error);
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -137,8 +160,9 @@ export default function Contact() {
                         type="button"
                         className="btn btn-modern-submit w-100"
                         onClick={handleSendMessage}
+                        disabled={isSubmitting}
                       >
-                        Send Message
+                        {isSubmitting ? "Sending..." : "Send Message"}
                       </button>
                     </div>
                   </div>

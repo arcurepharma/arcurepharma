@@ -356,6 +356,7 @@ export default function Checkout() {
               onChange={handleInputChange}
               tabIndex="-1"
               autoComplete="off"
+              aria-hidden="true"
             />
           </div>
           <div className="row g-5">
@@ -399,7 +400,10 @@ export default function Checkout() {
                     />
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label op-7 d-block mb-2">
+                    <label
+                      htmlFor="checkout-phone"
+                      className="form-label op-7 d-block mb-2"
+                    >
                       Phone Number
                     </label>
                     <div className="d-flex gap-2 align-items-start">
@@ -442,7 +446,10 @@ export default function Checkout() {
                     </div>
                   </div>
                   <div className="col-md-6">
-                    <label className="form-label op-7 d-block mb-2">
+                    <label
+                      htmlFor="checkout-whatsapp"
+                      className="form-label op-7 d-block mb-2"
+                    >
                       WhatsApp Number
                     </label>
                     <div className="d-flex gap-2 align-items-start">

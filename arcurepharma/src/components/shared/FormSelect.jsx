@@ -47,6 +47,23 @@ const FormSelect = ({
           {label}
         </label>
       )}
+      <input
+        type="text"
+        id={id}
+        name={name}
+        value={value}
+        onChange={() => {}}
+        style={{
+          opacity: 0,
+          height: 0,
+          width: 0,
+          position: "absolute",
+          zIndex: -1,
+        }}
+        tabIndex={-1}
+        aria-hidden="true"
+        autoComplete="off"
+      />
 
       <div className={`custom-select-container ${isOpen ? "open" : ""}`}>
         <div
@@ -66,6 +83,10 @@ const FormSelect = ({
             <div className="custom-select-search">
               <input
                 type="text"
+                id={`search-${id}`}
+                name={`search-${name}`}
+                aria-label="Search options"
+                autoComplete="off"
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}

@@ -694,6 +694,33 @@ export default function Checkout() {
                     ))}
                   </div>
 
+                  {/* Math CAPTCHA Field - Adaptive (Only shows if suspicious) */}
+                  {showCaptcha && (
+                    <div className="mt-0 mb-4">
+                      <label className="form-label text-white small mb-2">
+                        Human Verification: What is{" "}
+                        <strong>
+                          {captchaMath.num1} + {captchaMath.num2}
+                        </strong>
+                        ?
+                      </label>
+                      <input
+                        type="number"
+                        name="captchaAnswer"
+                        className={`form-control glass-input ${errors.captcha ? "is-invalid" : ""}`}
+                        value={formData.captchaAnswer}
+                        onChange={handleInputChange}
+                        placeholder="Calculate sum"
+                        required
+                      />
+                      {errors.captcha && (
+                        <div className="invalid-feedback d-block">
+                          {errors.captcha}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   <button
                     type="submit"
                     className="btn btn-modern-submit premium-btn w-100 py-3 shadow-lg"
@@ -719,33 +746,6 @@ export default function Checkout() {
                     </svg>
                     Secure Encrypted Checkout
                   </div>
-
-                  {/* Math CAPTCHA Field - Adaptive (Only shows if suspicious) */}
-                  {showCaptcha && (
-                    <div className="mt-4">
-                      <label className="form-label text-white small mb-2">
-                        Human Verification: What is{" "}
-                        <strong>
-                          {captchaMath.num1} + {captchaMath.num2}
-                        </strong>
-                        ?
-                      </label>
-                      <input
-                        type="number"
-                        name="captchaAnswer"
-                        className={`form-control glass-input ${errors.captcha ? "is-invalid" : ""}`}
-                        value={formData.captchaAnswer}
-                        onChange={handleInputChange}
-                        placeholder="Calculate sum"
-                        required
-                      />
-                      {errors.captcha && (
-                        <div className="invalid-feedback d-block">
-                          {errors.captcha}
-                        </div>
-                      )}
-                    </div>
-                  )}
                 </OrderSummary>
               </div>
             </div>

@@ -11,7 +11,21 @@ export default function Contact() {
     email: "",
     subject: "",
     message: "",
+    _honey: "", // Honeypot field
+    captchaAnswer: "", // User's answer to math problem
   });
+  // Track mount time for bot protection
+  const [startTime] = useState(Date.now());
+  const [captchaMath, setCaptchaMath] = useState({ num1: 0, num2: 0 });
+  const [showCaptcha, setShowCaptcha] = useState(false);
+
+  React.useEffect(() => {
+    // Generate random numbers for CAPTCHA
+    setCaptchaMath({
+      num1: Math.floor(Math.random() * 9) + 1,
+      num2: Math.floor(Math.random() * 9) + 1,
+    });
+  }, []);
   const [errors, setErrors] = useState({});
 
   const showToast = (message, type = "success") => {
@@ -38,8 +52,12 @@ export default function Contact() {
     if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
+    } else {
+      // Stricter email regex: prevents spaces, requires TLD of at least 2 chars
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      if (!emailRegex.test(formData.email)) {
+        newErrors.email = "Please enter a valid email address";
+      }
     }
     if (!formData.subject.trim()) newErrors.subject = "Subject is required";
     if (!formData.message.trim()) newErrors.message = "Message is required";
@@ -60,6 +78,40 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSendMessage = async () => {
+    // BOT PROTECTION: Honeypot Check
+    if (formData._honey) {
+      console.warn("Bot detected: Honeypot filled");
+      return; // Silent failure
+    }
+
+    // Time-based check: If submitted too quickly (< 3 seconds), Trigger CAPTCHA
+    const timeElapsed = Date.now() - startTime;
+    if (!showCaptcha && timeElapsed < 3000) {
+      console.warn(
+        "Bot detected: Submitted too fast. Challenging with CAPTCHA.",
+      );
+      setShowCaptcha(true);
+      setErrors((prev) => ({
+        ...prev,
+        captcha: "Please verify you are human by solving the math problem.",
+      }));
+      return;
+    }
+
+    // Math CAPTCHA Check (Only if triggered)
+    if (showCaptcha) {
+      if (
+        parseInt(formData.captchaAnswer) !==
+        captchaMath.num1 + captchaMath.num2
+      ) {
+        setErrors((prev) => ({
+          ...prev,
+          captcha: "Incorrect verification code. Please try again.",
+        }));
+        return;
+      }
+    }
+
     if (validateForm()) {
       setIsSubmitting(true);
       try {
@@ -125,7 +177,31 @@ export default function Contact() {
                   <h3 className="fw-bold mb-0">Send us a Message</h3>
                 </div>
 
-                <form>
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }}
+                >
+                  {/* Honeypot Hidden Field */}
+                  <div
+                    style={{
+                      display: "none",
+                      opacity: 0,
+                      position: "absolute",
+                      left: "-9999px",
+                    }}
+                  >
+                    <input
+                      type="text"
+                      name="_honey"
+                      value={formData._honey}
+                      onChange={handleInputChange}
+                      tabIndex="-1"
+                      autoComplete="off"
+                      aria-hidden="true"
+                    />
+                  </div>
                   <div className="row g-3">
                     <div className="col-md-6">
                       <FormInput
@@ -175,6 +251,34 @@ export default function Contact() {
                         placeholder="Write your message here..."
                       />
                     </div>
+
+                    {/* Math CAPTCHA Field - Adaptive (Only shows if suspicious) */}
+                    {showCaptcha && (
+                      <div className="col-12 mt-3">
+                        <label className="form-label text-white-50 small mb-2">
+                          Human Verification: What is{" "}
+                          <strong>
+                            {captchaMath.num1} + {captchaMath.num2}
+                          </strong>
+                          ?
+                        </label>
+                        <input
+                          type="number"
+                          name="captchaAnswer"
+                          className={`form-control glass-input ${errors.captcha ? "is-invalid" : ""}`}
+                          value={formData.captchaAnswer}
+                          onChange={handleInputChange}
+                          placeholder="Calculate sum"
+                          required
+                        />
+                        {errors.captcha && (
+                          <div className="invalid-feedback d-block mt-1">
+                            {errors.captcha}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
                     <div className="col-12 mt-4">
                       <button
                         type="button"

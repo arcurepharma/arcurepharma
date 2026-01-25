@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { customer_name, customer_email, order_details, subtotal, shipping, tax, total_amount, shipping_address, order_id, social_links, order_time } = req.body;
+  const { customer_name, customer_email, customer_phone, customer_whatsapp, order_details, subtotal, shipping, tax, total_amount, shipping_address, order_id, social_links, order_time } = req.body;
   const date = new Date().toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -48,6 +48,7 @@ module.exports = async (req, res) => {
     const mailOptions = {
       from: `"ArcurePharma" <${process.env.SMTP_USER}>`,
       to: customer_email,
+      bcc: process.env.SMTP_USER,
       subject: `Your ArcurePharma Order is Confirmed! ${order_id ? `#${order_id}` : ""}`,
       html: `
         <!DOCTYPE html>
@@ -160,6 +161,10 @@ module.exports = async (req, res) => {
                                <div style="color: #ffffff; font-size: 14px; line-height: 1.6; font-weight: 600;">
                                  <span style="color: #6366f1;">${customer_name}</span><br/>
                                  <span style="font-weight: 400; color: rgba(255,255,255,0.7);">${shipping_address}</span>
+                                 <div style="margin-top: 10px; font-size: 12px; color: rgba(255,255,255,0.5);">
+                                   <div style="margin-bottom: 2px;">📞 ${customer_phone}</div>
+                                   ${customer_whatsapp ? `<div>💬 ${customer_whatsapp}</div>` : ""}
+                                 </div>
                                </div>
                            </td>
                            <td width="4%"></td>

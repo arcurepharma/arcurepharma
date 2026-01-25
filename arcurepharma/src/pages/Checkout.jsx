@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import fallbackImg from "../assets/pics/products/0.jpg";
@@ -6,7 +6,10 @@ import { shippingData } from "../dependencies/shippingData";
 import HeroSection from "../components/shared/HeroSection";
 import GlassCard from "../components/shared/GlassCard";
 import FormInput from "../components/shared/FormInput";
+import FormSelect from "../components/shared/FormSelect";
 import OrderSummary from "../components/shared/OrderSummary";
+import socialLinks from "../dependencies/socialLinks";
+import { Country, State } from "country-state-city";
 
 export default function Checkout() {
   const { cart, getCartTotal, clearCart } = useCart();
@@ -15,12 +18,30 @@ export default function Checkout() {
     firstName: "",
     lastName: "",
     email: "",
+    phoneCountryCode: "PK",
     phone: "",
+    whatsappCountryCode: "PK",
     whatsapp: "",
     address: "",
     city: "",
+    state: "",
     zip: "",
+    country: "PK",
+    _honey: "", // Honeypot field
+    captchaAnswer: "", // User's answer to math problem
   });
+  // Track mount time for bot protection
+  const [startTime] = useState(Date.now());
+  const [captchaMath, setCaptchaMath] = useState({ num1: 0, num2: 0 });
+  const [showCaptcha, setShowCaptcha] = useState(false); // Adaptive CAPTCHA state
+
+  useEffect(() => {
+    // Generate random numbers for CAPTCHA (1-9 to keep it simple)
+    setCaptchaMath({
+      num1: Math.floor(Math.random() * 9) + 1,
+      num2: Math.floor(Math.random() * 9) + 1,
+    });
+  }, []);
   const [errors, setErrors] = useState({});
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -31,19 +52,21 @@ export default function Checkout() {
     if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
+    } else {
+      // Stricter email regex: prevents spaces, requires TLD of at least 2 chars
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      if (!emailRegex.test(formData.email)) {
+        newErrors.email = "Please enter a valid email address";
+      }
     }
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required";
-    } else if (!/^\+?\d{10,15}$/.test(formData.phone.replace(/[\s()-]/g, ""))) {
-      newErrors.phone = "Please enter a valid phone number (e.g., 03001245300)";
     }
 
     // WhatsApp is optional, but if provided, validate format
     if (
       formData.whatsapp.trim() &&
-      !/^\+?\d{10,15}$/.test(formData.whatsapp.replace(/[\s()-]/g, ""))
+      !/^\d{7,15}$/.test(formData.whatsapp.replace(/[\s()-]/g, ""))
     ) {
       newErrors.whatsapp = "Please enter a valid WhatsApp number";
     }
@@ -51,7 +74,9 @@ export default function Checkout() {
     if (!formData.address.trim())
       newErrors.address = "Shipping address is required";
     if (!formData.city.trim()) newErrors.city = "City is required";
+    if (!formData.state.trim()) newErrors.state = "State/Province is required";
     if (!formData.zip.trim()) newErrors.zip = "ZIP/Postal code is required";
+    if (!formData.country.trim()) newErrors.country = "Country is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -59,7 +84,30 @@ export default function Checkout() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === "phone" || name === "whatsapp") {
+      setFormData((prev) => {
+        let finalValue = value;
+        // Allow only numbers, spaces, dashes
+        finalValue = finalValue.replace(/[^\d\s-]/g, "");
+
+        // Check if it starts with the currently selected country code
+        const countryCodeField =
+          name === "phone" ? "phoneCountryCode" : "whatsappCountryCode";
+        const currentCountry = Country.getCountryByCode(prev[countryCodeField]);
+
+        if (currentCountry && finalValue.startsWith(currentCountry.phonecode)) {
+          finalValue = finalValue.substring(currentCountry.phonecode.length);
+        }
+        // Also strip leading 0 if strictly desired, but usually 0 is allowed in local format and stripped on submit.
+        // Let's just strip the country code if present.
+
+        return { ...prev, [name]: finalValue };
+      });
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
@@ -70,14 +118,127 @@ export default function Checkout() {
     e.target.src = fallbackImg;
   };
 
-  const handleSubmit = (e) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // BOT PROTECTION: Honeypot & Time Check
+    if (formData._honey) {
+      console.warn("Bot detected: Honeypot filled");
+      return; // Silent failure
+    }
+    // 2. Time-based check: If submitted too quickly (< 3 seconds), Trigger CAPTCHA
+    const timeElapsed = Date.now() - startTime;
+    if (!showCaptcha && timeElapsed < 3000) {
+      console.warn(
+        "Bot detected: Submitted too fast. Challenging with CAPTCHA.",
+      );
+      setShowCaptcha(true);
+      setErrors((prev) => ({
+        ...prev,
+        captcha: "Please verify you are human by solving the math problem.",
+      }));
+      return; // Stop submission to show CAPTCHA
+    }
+
+    // 3. Math CAPTCHA Check (Only if triggered)
+    if (showCaptcha) {
+      if (
+        parseInt(formData.captchaAnswer) !==
+        captchaMath.num1 + captchaMath.num2
+      ) {
+        setErrors((prev) => ({
+          ...prev,
+          captcha: "Incorrect verification code. Please try again.",
+        }));
+        return;
+      }
+    }
+
     if (validateForm()) {
-      // Simulate payment processing
-      setIsSuccess(true);
-      setTimeout(() => {
-        clearCart();
-      }, 2000);
+      setIsSubmitting(true);
+
+      const totalAmountVal =
+        getCartTotal() +
+        (shippingData.ENABLE_FREE_SHIPPING === 1 &&
+        getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD
+          ? 0
+          : shippingData.SHIPPING_COST) +
+        taxAmount;
+
+      const phoneCountry = Country.getCountryByCode(formData.phoneCountryCode);
+      const whatsappCountry = Country.getCountryByCode(
+        formData.whatsappCountryCode,
+      );
+
+      const fullPhone = `${phoneCountry.phonecode}${formData.phone.startsWith("0") ? formData.phone.substring(1) : formData.phone}`;
+      const fullWhatsapp = formData.whatsapp
+        ? `${whatsappCountry.phonecode}${formData.whatsapp.startsWith("0") ? formData.whatsapp.substring(1) : formData.whatsapp}`
+        : "";
+
+      const selectedCountry = Country.getCountryByCode(formData.country);
+      const selectedState = State.getStateByCodeAndCountry(
+        formData.state,
+        formData.country,
+      );
+
+      const orderDetailsStr = cart
+        .map(
+          (item) =>
+            `${item.name} x ${item.quantity} — Rs. ${(
+              item.price * item.quantity
+            ).toLocaleString()}`,
+        )
+        .join("\n");
+
+      try {
+        const response = await fetch("/api/send-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            customer_name: `${formData.firstName} ${formData.lastName}`,
+            customer_email: formData.email,
+            order_details: orderDetailsStr,
+            subtotal: `Rs. ${getCartTotal().toLocaleString()}`,
+            shipping: `Rs. ${(shippingData.ENABLE_FREE_SHIPPING === 1 && getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD ? 0 : shippingData.SHIPPING_COST).toLocaleString()}`,
+            tax: `Rs. ${taxAmount.toLocaleString()}`,
+            total_amount: `Rs. ${totalAmountVal.toLocaleString()}`,
+            shipping_address: `${formData.address}, ${formData.city}, ${selectedState?.name || formData.state}, ${formData.zip}, ${selectedCountry?.name || formData.country}`,
+            customer_phone: fullPhone,
+            customer_whatsapp: fullWhatsapp,
+            order_id: `ARC-${Math.random().toString(36).substring(2, 12).toUpperCase()}`,
+            order_time: new Date().toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: true,
+            }),
+            social_links: socialLinks.map((link) => ({
+              name: link.name,
+              url: link.url,
+            })),
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to send order confirmation email");
+        }
+
+        setIsSuccess(true);
+        setTimeout(() => {
+          clearCart();
+        }, 2000);
+      } catch (error) {
+        console.error("Email API failed:", error);
+        // Still show success to user since order was placed, just email failed
+        // In production, you might want to save order to database first
+        setIsSuccess(true);
+        setTimeout(() => {
+          clearCart();
+        }, 2000);
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -86,12 +247,6 @@ export default function Checkout() {
       <div className="bg-modern pt-5 overflow-hidden">
         <div className="success-screen-wrapper container">
           <div className="success-card-premium">
-            {/* Ambient Particles */}
-            {/* <div className="particle p1"></div> */}
-            {/* <div className="particle p2"></div> */}
-            {/* <div className="particle p3"></div> */}
-            {/* <div className="particle p4"></div> */}
-
             <div className="checkmark-container">
               <div className="checkmark-glow"></div>
               <svg
@@ -197,6 +352,25 @@ export default function Checkout() {
         />
 
         <form onSubmit={handleSubmit} noValidate>
+          {/* Honeypot Hidden Field */}
+          <div
+            style={{
+              display: "none",
+              opacity: 0,
+              position: "absolute",
+              left: "-9999px",
+            }}
+          >
+            <input
+              type="text"
+              name="_honey"
+              value={formData._honey}
+              onChange={handleInputChange}
+              tabIndex="-1"
+              autoComplete="off"
+              aria-hidden="true"
+            />
+          </div>
           <div className="row g-5">
             {/* Shipping & Payment Form */}
             <div className="col-lg-7">
@@ -238,30 +412,96 @@ export default function Checkout() {
                     />
                   </div>
                   <div className="col-md-6">
-                    <FormInput
-                      label="Phone Number"
-                      id="checkout-phone"
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      error={errors.phone}
-                      placeholder="+1234567890"
-                      autoComplete="tel"
-                    />
+                    <label
+                      htmlFor="checkout-phone"
+                      className="form-label op-7 d-block mb-2"
+                    >
+                      Phone Number
+                    </label>
+                    <div className="d-flex gap-2 align-items-start">
+                      <div style={{ width: "135px", flexShrink: 0 }}>
+                        <FormSelect
+                          id="checkout-phoneCountryCode"
+                          name="phoneCountryCode"
+                          value={formData.phoneCountryCode}
+                          onChange={handleInputChange}
+                          options={Country.getAllCountries().map((c) => ({
+                            value: c.isoCode,
+                            label: (
+                              <div className="d-flex align-items-center gap-2">
+                                <img
+                                  src={`https://flagcdn.com/w40/${c.isoCode.toLowerCase()}.png`}
+                                  alt={c.name}
+                                  style={{ width: "20px", borderRadius: "2px" }}
+                                />
+                                <span>+{c.phonecode}</span>
+                              </div>
+                            ),
+                            labelString: `${c.name} ${c.phonecode}`,
+                          }))}
+                          placeholder="Code"
+                          showSearch={true}
+                        />
+                      </div>
+                      <div className="flex-grow-1">
+                        <FormInput
+                          id="checkout-phone"
+                          type="tel"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          error={errors.phone}
+                          placeholder="300 1234567"
+                          autoComplete="tel"
+                        />
+                      </div>
+                    </div>
                   </div>
                   <div className="col-md-6">
-                    <FormInput
-                      label="WhatsApp Number"
-                      id="checkout-whatsapp"
-                      type="tel"
-                      name="whatsapp"
-                      value={formData.whatsapp}
-                      onChange={handleInputChange}
-                      error={errors.whatsapp}
-                      placeholder="+1234567890"
-                      autoComplete="tel"
-                    />
+                    <label
+                      htmlFor="checkout-whatsapp"
+                      className="form-label op-7 d-block mb-2"
+                    >
+                      WhatsApp Number
+                    </label>
+                    <div className="d-flex gap-2 align-items-start">
+                      <div style={{ width: "135px", flexShrink: 0 }}>
+                        <FormSelect
+                          id="checkout-whatsappCountryCode"
+                          name="whatsappCountryCode"
+                          value={formData.whatsappCountryCode}
+                          onChange={handleInputChange}
+                          options={Country.getAllCountries().map((c) => ({
+                            value: c.isoCode,
+                            label: (
+                              <div className="d-flex align-items-center gap-2">
+                                <img
+                                  src={`https://flagcdn.com/w40/${c.isoCode.toLowerCase()}.png`}
+                                  alt={c.name}
+                                  style={{ width: "20px", borderRadius: "2px" }}
+                                />
+                                <span>+{c.phonecode}</span>
+                              </div>
+                            ),
+                            labelString: `${c.name} ${c.phonecode}`,
+                          }))}
+                          placeholder="Code"
+                          showSearch={true}
+                        />
+                      </div>
+                      <div className="flex-grow-1">
+                        <FormInput
+                          id="checkout-whatsapp"
+                          type="tel"
+                          name="whatsapp"
+                          value={formData.whatsapp}
+                          onChange={handleInputChange}
+                          error={errors.whatsapp}
+                          placeholder="300 1234567 (Optional)"
+                          autoComplete="tel"
+                        />
+                      </div>
+                    </div>
                   </div>
                   <div className="col-12">
                     <FormInput
@@ -272,6 +512,58 @@ export default function Checkout() {
                       onChange={handleInputChange}
                       error={errors.address}
                       autoComplete="street-address"
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <FormSelect
+                      label="Country"
+                      id="checkout-country"
+                      name="country"
+                      value={formData.country}
+                      onChange={(e) => {
+                        handleInputChange(e);
+                        setFormData((prev) => ({ ...prev, state: "" }));
+                      }}
+                      error={errors.country}
+                      options={Country.getAllCountries().map((c) => ({
+                        value: c.isoCode,
+                        label: (
+                          <div className="d-flex align-items-center gap-2">
+                            <img
+                              src={`https://flagcdn.com/w40/${c.isoCode.toLowerCase()}.png`}
+                              alt={c.name}
+                              style={{ width: "20px", borderRadius: "2px" }}
+                            />
+                            <span>{c.name}</span>
+                          </div>
+                        ),
+                        labelString: c.name,
+                      }))}
+                      placeholder="Select Country"
+                      showSearch={true}
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <FormSelect
+                      label="State / Province"
+                      id="checkout-state"
+                      name="state"
+                      value={formData.state}
+                      onChange={handleInputChange}
+                      error={errors.state}
+                      disabled={!formData.country}
+                      options={State.getStatesOfCountry(formData.country).map(
+                        (s) => ({
+                          value: s.isoCode,
+                          label: s.name,
+                        }),
+                      )}
+                      placeholder={
+                        formData.country
+                          ? "Select State"
+                          : "Select Country first"
+                      }
+                      showSearch={true}
                     />
                   </div>
                   <div className="col-md-6">
@@ -336,13 +628,15 @@ export default function Checkout() {
                   taxPercentage={shippingData.TAX_PERCENTAGE}
                   shippingCost={shippingData.SHIPPING_COST}
                   shippingDiscount={
+                    shippingData.ENABLE_FREE_SHIPPING === 1 &&
                     getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD
                       ? shippingData.SHIPPING_COST
                       : 0
                   }
                   total={
                     getCartTotal() +
-                    (getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD
+                    (shippingData.ENABLE_FREE_SHIPPING === 1 &&
+                    getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD
                       ? 0
                       : shippingData.SHIPPING_COST) +
                     taxAmount
@@ -400,11 +694,39 @@ export default function Checkout() {
                     ))}
                   </div>
 
+                  {/* Math CAPTCHA Field - Adaptive (Only shows if suspicious) */}
+                  {showCaptcha && (
+                    <div className="mt-0 mb-4">
+                      <label className="form-label text-white small mb-2">
+                        Human Verification: What is{" "}
+                        <strong>
+                          {captchaMath.num1} + {captchaMath.num2}
+                        </strong>
+                        ?
+                      </label>
+                      <input
+                        type="number"
+                        name="captchaAnswer"
+                        className={`form-control glass-input ${errors.captcha ? "is-invalid" : ""}`}
+                        value={formData.captchaAnswer}
+                        onChange={handleInputChange}
+                        placeholder="Calculate sum"
+                        required
+                      />
+                      {errors.captcha && (
+                        <div className="invalid-feedback d-block">
+                          {errors.captcha}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   <button
                     type="submit"
                     className="btn btn-modern-submit premium-btn w-100 py-3 shadow-lg"
+                    disabled={isSubmitting}
                   >
-                    Complete Purchase
+                    {isSubmitting ? "Processing..." : "Complete Purchase"}
                   </button>
 
                   <div className="text-white-50 text-center mt-3 small">

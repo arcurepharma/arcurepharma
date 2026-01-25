@@ -84,24 +84,26 @@ export default function Cart() {
           {/* Right Column: Items */}
           <div className="col-lg-8">
             {/* Free Shipping Progress */}
-            <div className="shipping-progress-card reveal-item">
-              <div className="shipping-info-text">
-                <span className="shipping-msg">
-                  {amountAway > 0
-                    ? `You're ${shippingData.CURRENCY} ${amountAway.toLocaleString()} away from FREE SHIPPING!`
-                    : "✨ You've unlocked FREE SHIPPING!"}
-                </span>
-                <Link to="/" className="keep-shopping-link">
-                  Keep Shopping
-                </Link>
+            {shippingData.ENABLE_FREE_SHIPPING === 1 && (
+              <div className="shipping-progress-card reveal-item">
+                <div className="shipping-info-text">
+                  <span className="shipping-msg">
+                    {amountAway > 0
+                      ? `You're ${shippingData.CURRENCY} ${amountAway.toLocaleString()} away from FREE SHIPPING!`
+                      : "✨ You've unlocked FREE SHIPPING!"}
+                  </span>
+                  <Link to="/" className="keep-shopping-link">
+                    Keep Shopping
+                  </Link>
+                </div>
+                <div className="progress-glass-container">
+                  <div
+                    className="progress-glass-fill"
+                    style={{ width: `${shippingProgress}%` }}
+                  ></div>
+                </div>
               </div>
-              <div className="progress-glass-container">
-                <div
-                  className="progress-glass-fill"
-                  style={{ width: `${shippingProgress}%` }}
-                ></div>
-              </div>
-            </div>
+            )}
 
             {/* Cart Items */}
             <div className="cart-items-wrapper">
@@ -189,11 +191,15 @@ export default function Cart() {
               taxPercentage={shippingData.TAX_PERCENTAGE}
               shippingCost={shippingData.SHIPPING_COST}
               shippingDiscount={
-                amountAway === 0 ? shippingData.SHIPPING_COST : 0
+                shippingData.ENABLE_FREE_SHIPPING === 1 && amountAway === 0
+                  ? shippingData.SHIPPING_COST
+                  : 0
               }
               total={
                 getCartTotal() +
-                (amountAway === 0 ? 0 : shippingData.SHIPPING_COST) +
+                (shippingData.ENABLE_FREE_SHIPPING === 1 && amountAway === 0
+                  ? 0
+                  : shippingData.SHIPPING_COST) +
                 taxAmount
               }
               currency={shippingData.CURRENCY}

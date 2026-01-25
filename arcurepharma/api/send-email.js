@@ -83,22 +83,13 @@ const sendOrderEmail = async (data, res) => {
   const date = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
   const whatsappUrl = social_links?.find(l => l.name === "WhatsApp")?.url || "https://wa.me/";
 
+  // Updated Icon Map with Official Colored Brand Icons
   const iconMap = {
-    "Facebook": "https://cdn-icons-png.flaticon.com/32/733/733547.png",
-    "Instagram": "https://cdn-icons-png.flaticon.com/32/2111/2111463.png",
+    "Facebook": "https://cdn-icons-png.flaticon.com/32/5968/5968764.png",
+    "Instagram": "https://cdn-icons-png.flaticon.com/32/3955/3955024.png",
     "Twitter": "https://cdn-icons-png.flaticon.com/32/5969/5969020.png",
-    "WhatsApp": "https://cdn-icons-png.flaticon.com/32/733/733585.png",
+    "WhatsApp": "https://cdn-icons-png.flaticon.com/32/3670/3670051.png",
   };
-
-  const formattedItems = order_details.split("\n").map(line => {
-    const [desc, price] = line.split(" — ");
-    return `
-        <tr>
-            <td style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: #e5e7eb; font-size: 14px; font-weight: 500;">${desc}</td>
-            <td align="right" style="padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ffffff; font-size: 14px; font-weight: 700;">${price}</td>
-        </tr>
-    `;
-  }).join("");
 
   try {
     await transporter.sendMail({
@@ -113,167 +104,447 @@ const sendOrderEmail = async (data, res) => {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Order Confirmation</title>
-        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
         <style>
           @media screen and (max-width: 600px) {
-            .container { width: 100% !important; border-radius: 0 !important; border: none !important; }
+            .container { width: 100% !important; padding: 0 !important; }
             .content-padding { padding-left: 20px !important; padding-right: 20px !important; }
-            .hero-text { font-size: 28px !important; }
-            .info-bar td { display: block !important; width: 100% !important; padding: 12px 0 !important; border: none !important; text-align: left !important; }
-            .info-bar { border-radius: 12px !important; padding: 15px !important; }
-            .summary-card { padding: 15px !important; border-radius: 16px !important; }
-            .address-row td { display: block !important; width: 100% !important; margin-bottom: 15px !important; }
-            .footer { padding: 30px 20px !important; }
-            .price-total { font-size: 24px !important; }
+            .hero-text { font-size: 24px !important; }
+            .info-grid { display: block !important; }
+            .info-item { display: block !important; width: 100% !important; margin-bottom: 15px !important; padding: 15px !important; }
+            .two-col { display: block !important; }
+            .col-50 { width: 100% !important; display: block !important; margin-bottom: 15px !important; }
+            .contact-grid td { display: block !important; width: 100% !important; padding: 0 !important; }
+            .contact-col { width: 100% !important; margin-bottom: 10px !important; padding: 0 !important; }
           }
         </style>
       </head>
-      <body style="margin: 0; padding: 0; background-color: #050616; font-family: 'Plus Jakarta Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
-        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #050616;">
+      <body style="margin: 0; padding: 0; background-color: #f5f5f5; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f5f5f5; padding: 40px 0;">
           <tr>
-            <td align="center" style="padding: 30px 0;">
-              <table border="0" cellpadding="0" cellspacing="0" width="600" class="container" style="background: #0e0f2c; background: linear-gradient(180deg, #1a1c4b 0%, #0e0f2c 100%); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 36px; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.6);">
+            <td align="center">
+              <table border="0" cellpadding="0" cellspacing="0" width="600" class="container" style="background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
                 
+                <!-- Header with Illustration -->
                 <tr>
-                  <td style="height: 4px; background: linear-gradient(90deg, #6366f1, #a855f7, #6366f1);"></td>
-                </tr>
+                  <td align="center" style="padding: 0; background-color: #ffffff;">
+                    <div style="background: radial-gradient(circle at top right, #1a1c4b 0%, #0e0f2c 60%, #050616 100%); padding: 70px 0 50px; position: relative; overflow: hidden; text-align: center;">
+                      
+                      <!-- Animated Wow Illustration (3D Volume Style) -->
+                      <svg width="340" height="240" viewBox="0 0 340 240" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: relative; z-index: 10; margin: 0 auto; display: block;">
+                        <style>
+                          /* Animations */
+                          @keyframes spin {
+                            100% { transform: rotate(360deg); }
+                          }
+                          @keyframes bounce-truck {
+                            0%, 100% { transform: translate(0, 0); }
+                            50% { transform: translate(0, -3px); }
+                          }
+                          @keyframes road-move {
+                            0% { transform: translateX(0); }
+                            100% { transform: translateX(-40px); }
+                          }
+                          @keyframes float-particle {
+                            0%, 100% { transform: translate(0, 0); }
+                            50% { transform: translate(-3px, -8px); }
+                          }
+                          
+                          /* Classes */
+                          .truck-wrapper { animation: bounce-truck 0.6s ease-in-out infinite; }
+                          .road-lines { animation: road-move 0.6s linear infinite; }
+                          .particle { animation: float-particle 3s ease-in-out infinite; }
+                          
+                          /* Exact Wheel Rotation Centers */
+                          .wheel-rear { 
+                            animation: spin 0.8s linear infinite; 
+                            transform-origin: 90px 180px; 
+                          }
+                          .wheel-front { 
+                            animation: spin 0.8s linear infinite; 
+                            transform-origin: 230px 180px; 
+                          }
+                        </style>
 
-                <!-- Hero Header -->
-                <tr>
-                  <td align="center" class="content-padding" style="padding: 50px 40px 40px 40px; position: relative;">
-                    <div style="background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%); width: 300px; height: 300px; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); z-index: 0;"></div>
-                    <div style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); width: 70px; height: 70px; border-radius: 20px; display: inline-block; text-align: center; margin-bottom: 25px; box-shadow: 0 15px 35px rgba(79, 70, 229, 0.3); z-index: 1; position: relative;">
-                      <span style="font-size: 32px; line-height: 70px;">✨</span>
+                        <!-- 1. DEFINITIONS (Gradients for 3D Look) -->
+                        <defs>
+                          <!-- Body Gradient -->
+                          <linearGradient id="body3D" x1="130" y1="65" x2="130" y2="165" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#ffffff"/>
+                            <stop offset="1" stop-color="#e2e8f0"/>
+                          </linearGradient>
+                          <!-- Green Branding Gradient -->
+                          <linearGradient id="brand3D" x1="130" y1="95" x2="130" y2="135" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#d4fc79"/>
+                            <stop offset="1" stop-color="#96e6a1"/>
+                          </linearGradient>
+                          <!-- Cab Gradient -->
+                          <linearGradient id="cab3D" x1="235" y1="95" x2="235" y2="180" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#48bb78"/>
+                            <stop offset="0.5" stop-color="#2f855a"/>
+                            <stop offset="1" stop-color="#22543d"/>
+                          </linearGradient>
+                          <!-- Glass Gradient -->
+                          <linearGradient id="glass3D" x1="205" y1="100" x2="260" y2="130" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#e6fffa"/>
+                            <stop offset="1" stop-color="#81e6d9"/>
+                          </linearGradient>
+                          <!-- Rim Gradient -->
+                          <linearGradient id="rim3D" x1="90" y1="166" x2="90" y2="194" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#edf2f7"/>
+                            <stop offset="1" stop-color="#a0aec0"/>
+                          </linearGradient>
+                          <!-- Tire Gradient -->
+                          <radialGradient id="tire3D" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(90 180) rotate(90) scale(22)">
+                            <stop offset="0.7" stop-color="#2d3748"/>
+                            <stop offset="1" stop-color="#1a202c"/>
+                          </radialGradient>
+                          <!-- Shadow -->
+                          <linearGradient id="groundShadow" x1="170" y1="180" x2="170" y2="220" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#1c4532" stop-opacity="0.3"/>
+                            <stop offset="1" stop-color="#1c4532" stop-opacity="0"/>
+                          </linearGradient>
+                        </defs>
+
+                        <!-- 2. SCENE -->
+                        <ellipse cx="170" cy="195" rx="140" ry="10" fill="url(#groundShadow)" />
+
+                        <!-- Speed Lines -->
+                        <g class="road-lines" opacity="0.5">
+                          <rect x="0" y="120" width="40" height="4" rx="2" fill="#ffffff" opacity="0.4"/>
+                          <rect x="80" y="120" width="80" height="4" rx="2" fill="#ffffff" opacity="0.4"/>
+                          <rect x="200" y="120" width="60" height="4" rx="2" fill="#ffffff" opacity="0.4"/>
+                          <rect x="300" y="120" width="100" height="4" rx="2" fill="#ffffff" opacity="0.4"/>
+                          <rect x="20" y="160" width="60" height="4" rx="2" fill="#ffffff" opacity="0.6"/>
+                          <rect x="120" y="160" width="40" height="4" rx="2" fill="#ffffff" opacity="0.6"/>
+                          <rect x="190" y="160" width="90" height="4" rx="2" fill="#ffffff" opacity="0.6"/>
+                          <rect x="320" y="160" width="50" height="4" rx="2" fill="#ffffff" opacity="0.6"/>
+                        </g>
+
+                        <!-- 3. 3D TRUCK GROUP -->
+                        <g class="truck-wrapper">
+                          <!-- Depth Layer -->
+                          <g transform="translate(6, 0)"> 
+                             <rect x="60" y="65" width="140" height="98" rx="6" fill="#cbd5e0"/>
+                             <path d="M200 95 H250 L273 135 V165 H200 Z" fill="#22543d"/>
+                             <path d="M200 165 H262 L262 180 L200 180 Z" fill="#171923"/> 
+                          </g>
+                          <!-- Main Body -->
+                          <rect x="70" y="160" width="180" height="15" fill="#2d3748"/>
+                          <rect x="70" y="160" width="180" height="2" fill="#4a5568" opacity="0.5"/>
+                          <rect x="60" y="65" width="140" height="100" rx="6" fill="url(#body3D)"/>
+                          <rect x="60" y="65" width="140" height="100" rx="6" stroke="#ffffff" stroke-width="2" stroke-opacity="0.5"/>
+                          <rect x="60" y="85" width="140" height="15" fill="#cbd5e0" opacity="0.3"/>
+                          <rect x="110" y="95" width="40" height="40" rx="6" fill="url(#brand3D)"/>
+                          <rect x="128" y="102" width="4" height="26" rx="1" fill="#2f855a"/>
+                          <rect x="117" y="113" width="26" height="4" rx="1" fill="#2f855a"/>
+                          <path d="M200 95 H250 L270 135 V165 H200 V95 Z" fill="url(#cab3D)"/>
+                          <path d="M200 95 H250 L270 135" stroke="#68d391" stroke-width="2" fill="none"/> 
+                          <path d="M200 165 H250 L260 180 L200 180 V165" fill="#1a202c"/> 
+                          <rect x="250" y="170" width="10" height="5" fill="#f6e05e"/>
+                          <path d="M205 100 H245 L260 130 H205 V100 Z" fill="url(#glass3D)"/>
+                          <path d="M230 100 L245 130" stroke="#ffffff" stroke-width="10" stroke-opacity="0.3"/>
+                          <rect x="210" y="140" width="15" height="4" rx="2" fill="#1a202c" opacity="0.5"/>
+                          <circle cx="230" cy="120" r="8" fill="#f6ad55"/>
+                          <path d="M225 128 Q230 135 235 128" stroke="#c05621" stroke-width="2" fill="none"/>
+                          <circle cx="268" cy="148" r="6" fill="#f6e05e"/>
+                          <circle cx="268" cy="148" r="3" fill="#fffff0"/>
+                          <!-- Rear Wheel -->
+                          <g class="wheel-rear">
+                            <circle cx="90" cy="180" r="22" fill="url(#tire3D)"/>
+                            <circle cx="90" cy="180" r="14" fill="url(#rim3D)"/>
+                            <circle cx="90" cy="180" r="14" stroke="#a0aec0" stroke-width="1"/>
+                            <circle cx="90" cy="180" r="5" fill="#2d3748"/>
+                            <rect x="88" y="166" width="4" height="28" fill="#718096" rx="1"/> 
+                            <rect x="76" y="178" width="28" height="4" fill="#718096" rx="1"/>
+                          </g>
+                          <!-- Front Wheel -->
+                          <g class="wheel-front">
+                            <circle cx="230" cy="180" r="22" fill="url(#tire3D)"/>
+                            <circle cx="230" cy="180" r="14" fill="url(#rim3D)"/>
+                            <circle cx="230" cy="180" r="14" stroke="#a0aec0" stroke-width="1"/>
+                            <circle cx="230" cy="180" r="5" fill="#2d3748"/>
+                            <rect x="228" y="166" width="4" height="28" fill="#718096" rx="1"/>
+                            <rect x="216" y="178" width="28" height="4" fill="#718096" rx="1"/>
+                          </g>
+                        </g>
+
+                        <!-- Accents -->
+                        <circle class="particle" cx="280" cy="60" r="5" fill="#d4fc79"/>
+                        <circle class="particle" cx="300" cy="75" r="3" fill="#ffffff" opacity="0.8" style="animation-delay: 1s;"/>
+                        <rect class="particle" x="290" y="210" width="40" height="6" rx="3" fill="#ffffff" opacity="0.3" style="animation-delay: 1s"/>
+                      </svg>
+                      
+                      <!-- Bottom Wave -->
+                      <div style="position: absolute; bottom: 0; left: 0; width: 100%;">
+                          <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; width: 100%; height: 40px;" preserveAspectRatio="none">
+                              <path d="M0 60L48 55C96 50 192 40 288 45C384 50 480 70 576 75C672 80 768 70 864 60C960 50 1056 40 1152 45C1248 50 1344 70 1392 80L1440 90V100H1392C1344 100 1248 100 1152 100C1056 100 960 100 864 100C768 100 672 100 576 100C480 100 384 100 288 100C192 100 96 100 0 100Z" fill="#ffffff"/>
+                          </svg>
+                      </div>
                     </div>
-                    <h1 class="hero-text" style="color: #ffffff; margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; z-index: 1; position: relative;">Order <span style="background: linear-gradient(90deg, #6366f1, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: #6366f1;">Confirmed</span></h1>
-                    <p style="color: rgba(255,255,255,0.7); font-size: 16px; margin: 15px 0 0 0; font-weight: 500; z-index: 1; position: relative;">Hi ${customer_name.split(' ')[0]}, your wellness journey is our priority.</p>
                   </td>
                 </tr>
 
-                <!-- Order Info Bar -->
+                <!-- Main Content -->
                 <tr>
-                  <td class="content-padding" style="padding: 0 40px;">
-                     <table border="0" cellpadding="0" cellspacing="0" width="100%" class="info-bar" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 20px;">
-                        <tr>
-                           <td align="left">
-                              <div style="color: rgba(255,255,255,0.5); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin-bottom: 4px;">Order ID</div>
-                              <div style="color: #ffffff; font-size: 13px; font-weight: 700;">#${order_id || 'PENDING'}</div>
-                           </td>
-                           <td align="center" style="border-left: 1px solid rgba(255,255,255,0.1); border-right: 1px solid rgba(255,255,255,0.1);">
-                              <div style="color: rgba(255,255,255,0.5); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin-bottom: 4px;">Placed On</div>
-                              <div style="color: #ffffff; font-size: 13px; font-weight: 700;">${date}</div>
-                           </td>
-                           <td align="right">
-                              <div style="color: rgba(255,255,255,0.5); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin-bottom: 4px;">Time</div>
-                              <div style="color: #ffffff; font-size: 13px; font-weight: 700;">${order_time || '--:--'}</div>
-                           </td>
-                        </tr>
-                     </table>
-                  </td>
-                </tr>
-
-                <!-- Main Receipt -->
-                <tr>
-                  <td class="content-padding" style="padding: 30px 40px 20px 40px;">
-                    <h3 style="color: #ffffff; font-size: 18px; font-weight: 700; margin: 0 0 20px 0;">Summary <span style="margin-left: 10px; background: rgba(99, 102, 241, 0.2); color: #6366f1; padding: 4px 12px; border-radius: 8px; font-size: 12px;">Invoice</span></h3>
-                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="summary-card" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 25px;">
+                  <td class="content-padding" style="padding: 40px 40px 30px 40px;">
+                    <h1 class="hero-text" style="color: #1a202c; margin: 0 0 10px 0; font-size: 28px; font-weight: 700; line-height: 1.2;">Thanks for the order</h1>
+                    <p style="color: #718096; font-size: 15px; margin: 0 0 30px 0; line-height: 1.5;">Hi <strong>\${customer_name.split(' ')[0]}</strong>, Your order is all set to hit the road. We're packing it up with care and it'll be on its way to you soon.</p>
+                    
+                    <!-- Order Progress Stepper -->
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 35px;">
                       <tr>
-                        <td>
-                          <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                            ${formattedItems}
-                          </table>
-
-                          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 25px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.2);">
-                            <tr>
-                              <td style="color: rgba(255,255,255,0.6); font-size: 14px; padding: 6px 0;">Subtotal</td>
-                              <td align="right" style="color: #ffffff; font-size: 14px; padding: 6px 0; font-weight: 600;">${subtotal}</td>
-                            </tr>
-                            <tr>
-                              <td style="color: rgba(255,255,255,0.6); font-size: 14px; padding: 6px 0;">Shipping</td>
-                              <td align="right" style="color: #10b981; font-size: 14px; padding: 6px 0; font-weight: 600;">${shipping === 'Rs. 0' ? 'FREE' : shipping}</td>
-                            </tr>
-                            <tr>
-                              <td style="color: rgba(255,255,255,0.6); font-size: 14px; padding: 6px 0;">GST / Tax</td>
-                              <td align="right" style="color: #ffffff; font-size: 14px; padding: 6px 0; font-weight: 600;">${tax}</td>
-                            </tr>
-                            <tr>
-                              <td style="color: #ffffff; font-size: 18px; font-weight: 800; padding: 25px 0 0 0;">Total Amount</td>
-                              <td align="right" class="price-total" style="color: #6366f1; font-size: 28px; font-weight: 900; padding: 25px 0 0 0; letter-spacing: -1px;">${total_amount}</td>
-                            </tr>
-                          </table>
+                        <td align="center" width="25%" style="vertical-align: top;">
+                          <div style="width: 44px; height: 44px; margin: 0 auto 12px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <circle cx="22" cy="22" r="20" stroke="#3b82f6" stroke-width="3"/>
+                              <path d="M14 22L19 27L30 16" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                          </div>
+                          <div style="color: #3b82f6; font-size: 13px; font-weight: 700;">Confirmed</div>
+                        </td>
+                        <td align="center" width="12%" style="vertical-align: top; padding-top: 22px;">
+                          <div style="border-top: 2px dashed #cbd5e0; width: 100%; height: 0;"></div>
+                        </td>
+                        <td align="center" width="25%" style="vertical-align: top;">
+                          <div style="width: 44px; height: 44px; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2d3748" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                               <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
+                            </svg>
+                          </div>
+                          <div style="color: #718096; font-size: 13px; font-weight: 600;">Shipping</div>
+                        </td>
+                        <td align="center" width="12%" style="vertical-align: top; padding-top: 22px;">
+                          <div style="border-top: 2px dashed #cbd5e0; width: 100%; height: 0;"></div>
+                        </td>
+                        <td align="center" width="25%" style="vertical-align: top;">
+                          <div style="width: 44px; height: 44px; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2d3748" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M20 12v10H4V12M2 7h20v5H2V7zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+                            </svg>
+                          </div>
+                          <div style="color: #718096; font-size: 13px; font-weight: 600;">Delivered</div>
                         </td>
                       </tr>
                     </table>
-                  </td>
-                </tr>
 
-                <!-- Address & Timeline row class -->
-                <tr>
-                  <td class="content-padding" style="padding: 10px 40px 30px 40px;">
-                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="address-row">
-                      <tr>
-                         <td width="48%" valign="top" style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 20px;">
-                             <div style="color: rgba(255,255,255,0.5); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin-bottom: 12px;">Ship To</div>
-                             <div style="color: #ffffff; font-size: 14px; line-height: 1.6; font-weight: 600;">
-                               <span style="color: #6366f1;">${customer_name}</span><br/>
-                               <span style="font-weight: 400; color: rgba(255,255,255,0.7);">${shipping_address}</span>
-                               <div style="margin-top: 10px; font-size: 12px; color: rgba(255,255,255,0.5);">
-                                 <div style="margin-bottom: 2px;">📞 ${customer_phone}</div>
-                                 ${customer_whatsapp ? `<div>💬 ${customer_whatsapp}</div>` : ""}
-                               </div>
-                             </div>
-                         </td>
-                         <td width="4%"></td>
-                         <td width="48%" valign="top" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 20px; padding: 20px;">
-                             <div style="color: rgba(99, 102, 241, 1); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; margin-bottom: 15px;">Next Steps</div>
-                             <div style="color: #ffffff; font-size: 13px; line-height: 1.4;">
-                               <div style="margin-bottom: 10px;">✅ Confirmed</div>
-                               <div style="opacity: 0.6;">📦 Processing</div>
-                             </div>
-                         </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
+                    <!-- Order Summary Card -->
+                    <div style="background: #f7fafc; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+                      <h2 style="color: #2d3748; font-size: 16px; font-weight: 700; margin: 0 0 20px 0;">Order summary</h2>
+                      
+                      <!-- Order Info Grid -->
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 20px;">
+                        <tr>
+                          <td style="padding: 8px 0;">
+                            <div style="color: #a0aec0; font-size: 12px; margin-bottom: 4px;">Order number</div>
+                            <div style="color: #2d3748; font-size: 14px; font-weight: 600;">#\${order_id || 'PENDING'}</div>
+                          </td>
+                          <td align="right" style="padding: 8px 0;">
+                            <div style="color: #a0aec0; font-size: 12px; margin-bottom: 4px;">Date</div>
+                            <div style="color: #2d3748; font-size: 14px; font-weight: 600;">\${date} at \${order_time}</div>
+                          </td>
+                        </tr>
+                      </table>
 
-                <!-- Concierge -->
-                <tr>
-                  <td class="content-padding" style="padding: 0 40px 30px 40px;">
-                     <a href="${whatsappUrl}" style="text-decoration: none; display: block;">
-                       <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 24px; padding: 20px;">
-                          <tr>
-                            <td style="padding-left: 5px;">
-                               <div style="color: #ffffff; font-size: 15px; font-weight: 800; margin-bottom: 2px;">Wellness Concierge</div>
-                               <div style="color: rgba(255,255,255,0.6); font-size: 12px;">Need help? Chat with our experts.</div>
-                            </td>
-                            <td align="right">
-                               <img src="https://cdn-icons-png.flaticon.com/32/733/733585.png" width="28" height="28" alt="WhatsApp" style="opacity: 0.9;">
-                            </td>
-                          </tr>
-                       </table>
-                     </a>
-                  </td>
-                </tr>
-
-                <!-- Footer -->
-                <tr>
-                  <td align="center" class="footer" style="padding: 50px 40px 40px 40px; background: rgba(0,0,0,0.5); border-top: 1px solid rgba(255,255,255,0.1);">
-                     <div style="margin-bottom: 25px; letter-spacing: 3px; font-weight: 900; color: #ffffff; font-size: 18px;">ARCURE<span style="color: #6366f1;">PHARMA</span></div>
-                     
-                     <div style="margin-bottom: 30px;">
-                        ${social_links?.map(link => {
-                          const iconUrl = iconMap[link.name];
-                          return iconUrl ? `
-                            <a href="${link.url}" style="text-decoration: none; margin: 0 12px; display: inline-block;">
-                              <img src="${iconUrl}" width="22" height="22" alt="${link.name}" style="opacity: 0.8;">
-                            </a>
-                          ` : "";
+                      <!-- Order Items (Dynamic) -->
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 20px;">
+                        \${order_details.split("\\n").map(line => {
+                          const [desc, price] = line.split(" — ");
+                          return \`
+                            <tr>
+                              <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; vertical-align: top;">
+                                <div style="color: #1a202c; font-size: 14px; font-weight: 700; margin-bottom: 4px;">\${desc}</div>
+                              </td>
+                              <td align="right" style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; vertical-align: top; color: #2d3748; font-size: 14px; font-weight: 600;">\${price}</div>
+                            </tr>
+                          \`;
                         }).join("")}
-                     </div>
-                     
-                     <p style="color: rgba(255,255,255,0.5); font-size: 12px; line-height: 1.6; margin: 0; max-width: 400px;">
-                      &copy; 2026 Arcure Pharma PVT LTD.<br/>
-                      Pharmaceutical Excellence & Wellness.
+                      </table>
+
+                      <!-- Totals -->
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                          <td style="padding: 6px 0; color: #718096; font-size: 14px;">Subtotal</td>
+                          <td align="right" style="padding: 6px 0; color: #2d3748; font-size: 14px; font-weight: 500;">\${subtotal}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 6px 0; color: #718096; font-size: 14px;">Shipping</td>
+                          <td align="right" style="padding: 6px 0; color: \${shipping === 'Rs. 0' ? '#48bb78' : '#2d3748'}; font-size: 14px; font-weight: 500;">\${shipping === 'Rs. 0' ? 'FREE' : shipping}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 6px 0; color: #718096; font-size: 14px;">Tax</td>
+                          <td align="right" style="padding: 6px 0; color: #2d3748; font-size: 14px; font-weight: 500;">\${tax}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 20px 0 0 0; color: #1a202c; font-size: 16px; font-weight: 700; border-top: 2px solid #e2e8f0;">Total amount</td>
+                          <td align="right" style="padding: 20px 0 0 0; color: #1a202c; font-size: 20px; font-weight: 700; border-top: 2px solid #e2e8f0;">\${total_amount}</td>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <!-- Customer Information -->
+                    <div style="background: #f7fafc; border-radius: 12px; padding: 24px; margin-bottom: 30px;">
+                      <h2 style="color: #2d3748; font-size: 16px; font-weight: 700; margin: 0 0 20px 0;">Customer information</h2>
+                      
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%" class="two-col">
+                        <tr>
+                          <td width="48%" class="col-50" valign="top" style="padding-right: 2%;">
+                            <div style="margin-bottom: 20px;">
+                              <div style="color: #a0aec0; font-size: 12px; margin-bottom: 8px; font-weight: 600;">Shipping address</div>
+                                <div style="display: flex; align-items: flex-start;">
+                                  <div style="margin-right: 8px; margin-top: 3px;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#718096" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                      <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                  </div>
+                                  <div style="color: #4a5568; font-size: 14px; line-height: 1.6;">
+                                    \${customer_name}<br/>
+                                    \${shipping_address}<br/>
+                                    \${customer_phone}<br/>
+                                    \${customer_whatsapp ? customer_whatsapp : ''}
+                                  </div>
+                                </div>
+                            </div>
+                            <div>
+                              <div style="color: #a0aec0; font-size: 12px; margin-bottom: 8px; font-weight: 600;">Shipping method</div>
+                              <div style="color: #4a5568; font-size: 14px; display: flex; align-items: center;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#718096" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                                  <rect x="1" y="3" width="15" height="13"></rect>
+                                  <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                  <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                  <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                                </svg>
+                                Standard Shipping
+                              </div>
+                            </div>
+                          </td>
+                          <td width="48%" class="col-50" valign="top" style="padding-left: 2%;">
+                            <div style="margin-bottom: 20px;">
+                              <div style="color: #a0aec0; font-size: 12px; margin-bottom: 8px; font-weight: 600;">Billing address</div>
+                                <div style="display: flex; align-items: flex-start;">
+                                  <div style="margin-right: 8px; margin-top: 3px;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#718096" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                      <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                  </div>
+                                  <div style="color: #4a5568; font-size: 14px; line-height: 1.6;">
+                                    \${customer_name}<br/>
+                                    \${shipping_address}<br/>
+                                    \${customer_phone}<br/>
+                                    \${customer_whatsapp ? customer_whatsapp : ''}
+                                  </div>
+                                </div>
+                            </div>
+                            <div>
+                               <div style="color: #a0aec0; font-size: 12px; margin-bottom: 8px; font-weight: 600;">Payment method</div>
+                               <div style="color: #4a5568; font-size: 14px; display: flex; align-items: center;">
+                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#718096" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                                   <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                                   <circle cx="12" cy="12" r="2"></circle>
+                                   <path d="M6 12h.01M18 12h.01"></path>
+                                 </svg>
+                                 Cash on Delivery
+                               </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+
+                    <!-- Contact Support Section -->
+                    <div style="background: #ffffff; border-radius: 12px; padding: 20px 0;">
+                      <h3 style="color: #1a202c; font-size: 18px; font-weight: 700; margin: 0 0 20px 0; text-align: center;">Problems with the Order?</h3>
+                      <table border="0" cellpadding="0" cellspacing="0" width="100%" class="contact-grid">
+                        <tr>
+                          <!-- Email -->
+                          <td class="contact-col" width="32%" style="vertical-align: top; padding-right: 1%;">
+                            <a href="mailto:\${process.env.SUPPORT_EMAIL || 'support@arcurepharma.com'}" style="text-decoration: none; display: block; height: 100%;">
+                              <div style="background: #eff6ff; border-radius: 12px; padding: 15px; height: 100%; box-sizing: border-box;">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                  <tr>
+                                    <td style="vertical-align: middle;">
+                                      <div style="color: #4a5568; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">EMAIL</div>
+                                    </td>
+                                    <td width="30" style="vertical-align: middle; text-align: right;">
+                                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                      </svg>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </a>
+                          </td>
+                          <!-- Phone -->
+                          <td class="contact-col" width="32%" style="vertical-align: top; padding: 0 1%;">
+                            <a href="tel:\${process.env.SUPPORT_PHONE || '+92 300 1234567'}" style="text-decoration: none; display: block; height: 100%;">
+                              <div style="background: #eff6ff; border-radius: 12px; padding: 15px; height: 100%; box-sizing: border-box;">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                  <tr>
+                                    <td style="vertical-align: middle;">
+                                      <div style="color: #4a5568; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">PHONE</div>
+                                    </td>
+                                    <td width="30" style="vertical-align: middle; text-align: right;">
+                                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                      </svg>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </a>
+                          </td>
+                          <!-- WhatsApp -->
+                          <td class="contact-col" width="32%" style="vertical-align: top; padding-left: 1%;">
+                            <a href="\${whatsappUrl}" style="text-decoration: none; display: block; height: 100%;">
+                              <div style="background: #eff6ff; border-radius: 12px; padding: 15px; height: 100%; box-sizing: border-box;">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+                                  <tr>
+                                    <td style="vertical-align: middle;">
+                                      <div style="color: #4a5568; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">WHATSAPP</div>
+                                    </td>
+                                    <td width="30" style="vertical-align: middle; text-align: right;">
+                                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                      </svg>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </div>
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- Footer (Dynamic Socials) -->
+                <tr>
+                  <td align="center" style="padding: 30px 40px; background: #1a1c4b; border-top: 1px solid #2d3748;">
+                    <!-- Social Links -->
+                    <div style="margin-bottom: 10px;">
+                      \${social_links?.map(link => {
+                        const iconUrl = iconMap[link.name];
+                        return iconUrl ? \`
+                          <a href="\${link.url}" style="text-decoration: none; margin: 0 8px; display: inline-block;">
+                            <img src="\${iconUrl}" width="24" height="24" alt="\${link.name}">
+                          </a>
+                        \` : "";
+                      }).join("")}
+                    </div>
+                    
+                    <div style="margin-top: 10px;">
+                      <a href="https://arcurepharma.com" style="text-decoration: none;">
+                        <strong style="color: #ffffff; font-size: 14px; font-weight: 700; letter-spacing: 0.5px;">ARCUREPHARMA</strong>
+                      </a>
+                    </div>
+                    
+                    <p style="color: #cbd5e0; font-size: 11px; margin: 15px 0 0 0;">
+                      © ArcurePharma. All right reserved &nbsp;|&nbsp; <a href="#" style="color: #a0aec0; text-decoration: none;">Help center</a> &nbsp;|&nbsp; <a href="#" style="color: #a0aec0; text-decoration: none;">Privacy policy</a>
                     </p>
                   </td>
                 </tr>

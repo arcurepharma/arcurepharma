@@ -1,11 +1,11 @@
 const contactInfo = {
   address: {
-    line1: "123 Health Innovation Way",
-    line2: "Pharma City, PC 56789",
+    line1: "Plot No. E99/B, Site Super Highway",
+    line2: "Karachi, Pakistan",
   },
   phone: {
-    number: "+1 (555) 123-4567",
-    hours: "Mon-Fri, 9am - 6pm",
+    number: "+92 334 116 9999",
+    hours: "Mon-Sun, 9am - 5pm",
   },
   email: {
     primary: "info@arcurepharma.com",

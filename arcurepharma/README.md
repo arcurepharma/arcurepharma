@@ -25,12 +25,13 @@ A modern, fast, and professional wellness storefront built with React and optimi
 
 This project uses Vercel Serverless Functions (`/api/send-email.js`). To enable email confirmations, you must set the following **Environment Variables** in your Vercel Dashboard:
 
-| Variable    | Description                      |
-| :---------- | :------------------------------- |
-| `SMTP_USER` | Your Namecheap Pro email address |
-| `SMTP_PASS` | Your email password              |
-| `SMTP_HOST` | `mail.privateemail.com`          |
-| `SMTP_PORT` | `587`                            |
+| Variable          | Description                      |
+| :---------------- | :------------------------------- |
+| `SMTP_PASS`       | Your email password              |
+| `SMTP_HOST`       | `mail.privateemail.com`          |
+| `SMTP_PORT`       | `587`                            |
+| `SUPPORT_EMAIL`   | `support.email`                  |
+| `ORDER_EMAIL`     | `orders.email`                   |
 
 ## 🛠️ Project Structure
 
@@ -40,5 +41,3 @@ This project uses Vercel Serverless Functions (`/api/send-email.js`). To enable 
 - `/api`: Vercel serverless function for email dispatch.
 
 ---
-
-_Optimized and enhanced by Antigravity._

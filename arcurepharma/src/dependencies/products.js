@@ -92,5 +92,16 @@ export const products = [
     imagePath: "",
     imageUrl: "",
     features: ["High Vitamin C", "Zinc Boosted", "Daily Support","Daily Support"]
+  },
+  {
+    id: 9,
+    name: "Panadol",
+    price: 3300,
+    category: "Immune Support",
+    shortDescription: "High-potency Vitamin C and Zinc for immune defense.",
+    description: "ImmunoShield Pro is designed to fortify your body's natural defenses with a blend of Vitamin C, Zinc, and Elderberry extract.",
+    imagePath: "",
+    imageUrl: "",
+    features: ["High Vitamin C", "Zinc Boosted", "Daily Support"]
   }
 ];

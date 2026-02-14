@@ -216,6 +216,9 @@ export default function Home() {
                       ))}
                     </ul>
                   </div>
+                  <a href={selectedProduct.pdf}>
+                    <button  className="modal-action-btn">PDF</button>
+                  </a>
 
                   <div className="modal-quantity-wrapper">
                     <span className="modal-quantity-label">Quantity</span>

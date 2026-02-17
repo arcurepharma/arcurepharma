@@ -5,103 +5,76 @@ imageUrl: "https://img.jpg"
 */
 
 export const products = [
-  {
+    {
     id: 1,
-    name: "NeuroPlus Essential",
-    price: 4600,
-    category: "Brain Health",
-    shortDescription: "Advanced cognitive support for mental clarity and focus.",
-    description: "NeuroPlus Essential is formulated with scientifically backed ingredients to enhance cognitive function, improve memory retention, and support long-term brain health. Ideal for professionals and students seeking a mental edge.",
-    imagePath:"",
-    imageUrl: "",
-    features: ["Boosts Focus", "Supports Memory", "Natural Ingredients"]
-  },
-  {
+    name: "ALPHAMAN",
+    price: 1950.00,
+    category: "Men's Performance & Vitality",
+    shortDescription: "Advanced formula to boost stamina, strength, and masculine vitality.",
+    description: "ALPHAMAN is a premium men's health formula designed to enhance stamina, energy, and overall performance. Crafted with powerful ingredients, it supports strength, endurance, and confidence, helping men perform at their absolute best every day.",
+    imagePath: "",
+    imageUrl: "https://i.ibb.co/ZRqpcCz2/ALPHAMAN-supplement-with-natural-ingredients.png",
+    pdf: "https://drive.google.com/uc?export=download&id=1I2RU4R9ZbgP6BWLxK8IyLMYK2eKWBzfu",
+    features: [
+            "Boosts Energy & Stamina",
+            "Enhances Strength & Performance",
+            "Supports Male Vitality",
+            "Improves Confidence",
+            "Advanced Daily Formula"
+        ]
+    },
+    {
     id: 2,
-    name: "VitaGlow Complex",
-    price: 29.50,
-    category: "Supplements",
-    shortDescription: "Daily multivitamin for radiant skin and immune support.",
-    description: "Our VitaGlow Complex provides 100% of your daily required vitamins plus a proprietary blend of antioxidants. It supports cellular regeneration, giving your skin a natural, healthy glow while strengthening your immune system.",
+    name: "ARCUBIO",
+    price: 1250.00,
+    category: "Advanced Nutritional Support",
+    shortDescription: "Complete daily nutrition for strength, immunity, and wellness.",
+    description: "ARCUBIO is a scientifically formulated nutritional supplement designed to support overall wellness and daily performance. It strengthens immunity, improves vitality, and provides essential nutrients your body needs to stay active and healthy.",
     imagePath: "",
-    imageUrl: "",
-    features: ["Antioxidant Rich", "Immune Defense", "Gluten-Free"]
-  },
-  {
+    imageUrl: "https://i.ibb.co/nNtBfYW3/Chat-GPT-Image-Feb-15-2026-03-20-37-AM.png",
+    pdf: "https://drive.google.com/uc?export=download&id=1YjMC-QSjq8fuOGnui7Wb6rwa3hRX5-6n",
+    features: [
+            "Supports Overall Wellness",
+            "Boosts Immunity",
+            "Enhances Daily Performance",
+            "Premium Quality Formula"
+        ]
+    },
+    {
     id: 3,
-    name: "DeepSleep Melatonin",
-    price: 18.99,
-    category: "Wellness",
-    shortDescription: "Natural sleep aid for a restful night and refreshed morning.",
-    description: "Designed for those struggling with occasional sleeplessness. Our non-habit-forming formula helps you fall asleep faster and stay asleep longer, ensuring you wake up feeling revitalized without morning grogginess.",
+    name: "ARCUGLOW",
+    price: 4100.00,
+    category: "Premium Skin Whitening & Antioxidant",
+    shortDescription: "Reduced Glutathione 500mg for radiant, youthful, glowing skin.",
+    description: "ARCUGLOW is a luxury skin-enhancing formula powered by 500mg Reduced Glutathione, Vitamin C, Alpha Lipoic Acid, Milk Thistle Extract, and Zinc. It works from within to detoxify, brighten, and rejuvenate your skin. Designed for radiant glow, reduced pigmentation, and youthful confidence.",
     imagePath: "",
-    imageUrl: "",
-    features: ["Fast Acting", "Non-Habit Forming", "Vegan"]
-  },
-  {
+    imageUrl: "https://i.ibb.co/fzW3kHTx/Chat-GPT-Image-Feb-15-2026-03-21-36-AM.png",
+    pdf: "https://drive.google.com/uc?export=download&id=14e-DTOOOamZhui1CiTORgjLypkMdCKWO",
+    features: [
+            "500mg Reduced Glutathione",
+            "Reduces Pigmentation & Dullness",
+            "Powerful Antioxidant Protection",
+            "Supports Liver Detox",
+            "Promotes Youthful Radiance",
+            "Premium Softgel Absorption"
+        ]
+    },
+    {
     id: 4,
-    name: "PureFlex Joint Support",
-    price: 3400,
-    category: "Joint Care",
-    shortDescription: "Enhanced mobility and joint health for active lifestyles.",
-    description: "PureFlex combines Glucosamine, Chondroitin, and Turmeric to provide a powerful anti-inflammatory effect. Specifically engineered for athletes and those looking to maintain joint flexibility and reduce discomfort.",
+    name: "MIDA-D",
+    price: 295.00,
+    category: "Bone Strength & Immunity Support",
+    shortDescription: "High-quality Vitamin D support for stronger bones and immunity.",
+    description: "MIDA-D is a high-potency Vitamin D supplement formulated to strengthen bones, improve calcium absorption, and enhance immune function. Perfect for maintaining skeletal health and overall vitality in daily life.",
     imagePath: "",
-    imageUrl: "",
-    features: ["Reduces Inflammation", "Supports Cartilage", "High Potency"]
-  },
-  {
-    id: 5,
-    name: "HydraPure Electrolytes",
-    price: 22.00,
-    category: "Performance",
-    shortDescription: "Maximum hydration for peak physical performance.",
-    description: "Stay hydrated and maintain electrolyte balance with HydraPure. Our sugar-free formula provides essential minerals to prevent cramping and sustain energy levels during intense physical activity.",
-    imagePath: "",
-    imageUrl: "",
-    features: ["Zero Sugar", "Rapid Hydration", "Natural Flavors"]
-  },
-  {
-    id: 6,
-    name: "OptiVision Guard",
-    price: 3800,
-    category: "Eye Health",
-    shortDescription: "Protect your vision against blue light and eye strain.",
-    description: "With Lutein and Zeaxanthin, OptiVision Guard helps protect your eyes from the harmful effects of digital screens. Perfect for those who spend significant time on computers and mobile devices.",
-    imagePath: "",
-    imageUrl: "",
-    features: ["Blue Light Shield", "Macular Support", "Clinically Proven"]
-  },
-  {
-    id: 7,
-    name: "ImmunoShield Pro",
-    price: 3300,
-    category: "Immune Support",
-    shortDescription: "High-potency Vitamin C and Zinc for immune defense.",
-    description: "ImmunoShield Pro is designed to fortify your body's natural defenses with a blend of Vitamin C, Zinc, and Elderberry extract.",
-    imagePath: "",
-    imageUrl: "",
-    features: ["High Vitamin C", "Zinc Boosted", "Daily Support"]
-  } ,
-  {
-    id: 8,
-    name: "EYE ointment",
-    price: 3300,
-    category: "Immune Support",
-    shortDescription: "High-potency Vitamin C and Zinc for immune defense.",
-    description: "ImmunoShield Pro is designed to fortify your body's natural defenses with a blend of Vitamin C, Zinc, and Elderberry extract.",
-    imagePath: "",
-    imageUrl: "",
-    features: ["High Vitamin C", "Zinc Boosted", "Daily Support","Daily Support"]
-  },
-  {
-    id: 9,
-    name: "Panadol",
-    price: 3300,
-    category: "Immune Support",
-    shortDescription: "High-potency Vitamin C and Zinc for immune defense.",
-    description: "ImmunoShield Pro is designed to fortify your body's natural defenses with a blend of Vitamin C, Zinc, and Elderberry extract.",
-    imagePath: "",
-    imageUrl: "",
-    features: ["High Vitamin C", "Zinc Boosted", "Daily Support"]
-  }
+    imageUrl: "https://i.ibb.co/Fbn2nb1z/Chat-GPT-Image-Feb-15-2026-03-22-47-AM.png",
+    pdf: "https://drive.google.com/uc?export=download&id=1c_Scxsv70id153YoNOopbVO6BC8uJvfM",
+    features: [
+            "Supports Bone Strength",
+            "Improves Calcium Absorption",
+            "Boosts Immunity",
+            "High-Potency Vitamin D",
+            "Daily Health Support"
+        ]
+    }
 ];

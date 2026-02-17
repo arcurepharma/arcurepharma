@@ -32,6 +32,7 @@ export const products = [
     description: "ARCUBIO is a scientifically formulated nutritional supplement designed to support overall wellness and daily performance. It strengthens immunity, improves vitality, and provides essential nutrients your body needs to stay active and healthy.",
     imagePath: "",
     imageUrl: "https://i.ibb.co/nNtBfYW3/Chat-GPT-Image-Feb-15-2026-03-20-37-AM.png",
+    // imageUrl: "https://lh3.googleusercontent.com/d/1s1ypJkforCDSdobZqdzw9Uwkb9RDeTk0",
     pdf: "https://drive.google.com/uc?export=download&id=1YjMC-QSjq8fuOGnui7Wb6rwa3hRX5-6n",
     features: [
             "Supports Overall Wellness",

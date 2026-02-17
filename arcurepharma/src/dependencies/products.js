@@ -1,7 +1,6 @@
 /*
-import img0 from "../assets/pics/products/0.jpg";
 imagePath:"img0",
-imageUrl: "https://img.jpg"
+Google Drive imageUrl: "https://lh3.googleusercontent.com/d/FILE_ID",
 */
 
 export const products = [

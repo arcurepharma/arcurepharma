@@ -186,7 +186,7 @@ export default function Checkout() {
       const orderDetailsStr = cart
         .map(
           (item) =>
-            `${item.name} x ${item.quantity} — Rs. ${(
+            `${item.imageUrl || ""} — ${item.name} x ${item.quantity} — Rs. ${(
               item.price * item.quantity
             ).toLocaleString()}`,
         )
@@ -225,6 +225,7 @@ export default function Checkout() {
         }
 
         setIsSuccess(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
         setTimeout(() => {
           clearCart();
         }, 2000);
@@ -233,6 +234,7 @@ export default function Checkout() {
         // Still show success to user since order was placed, just email failed
         // In production, you might want to save order to database first
         setIsSuccess(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
         setTimeout(() => {
           clearCart();
         }, 2000);

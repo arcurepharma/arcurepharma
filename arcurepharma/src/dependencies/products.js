@@ -5,7 +5,7 @@ imageUrl: "https://img.jpg"
 */
 
 export const products = [
-   {
+    {
     id: 1,
     name: "ALPHAMAN",
     price: 1950.00,
@@ -16,14 +16,14 @@ export const products = [
     imageUrl: "https://i.ibb.co/ZRqpcCz2/ALPHAMAN-supplement-with-natural-ingredients.png",
     pdf: "https://drive.google.com/uc?export=download&id=1I2RU4R9ZbgP6BWLxK8IyLMYK2eKWBzfu",
     features: [
-      "Boosts Energy & Stamina",
-      "Enhances Strength & Performance",
-      "Supports Male Vitality",
-      "Improves Confidence",
-      "Advanced Daily Formula"
-    ]
-  },
-  {
+            "Boosts Energy & Stamina",
+            "Enhances Strength & Performance",
+            "Supports Male Vitality",
+            "Improves Confidence",
+            "Advanced Daily Formula"
+        ]
+    },
+    {
     id: 2,
     name: "ARCUBIO",
     price: 1250.00,
@@ -34,14 +34,13 @@ export const products = [
     imageUrl: "https://i.ibb.co/nNtBfYW3/Chat-GPT-Image-Feb-15-2026-03-20-37-AM.png",
     pdf: "https://drive.google.com/uc?export=download&id=1YjMC-QSjq8fuOGnui7Wb6rwa3hRX5-6n",
     features: [
-      "Supports Overall Wellness",
-      "Boosts Immunity",
-      "Enhances Daily Performance",
-      "Premium Quality Formula"
-    ]
-
-  },
-  {
+            "Supports Overall Wellness",
+            "Boosts Immunity",
+            "Enhances Daily Performance",
+            "Premium Quality Formula"
+        ]
+    },
+    {
     id: 3,
     name: "ARCUGLOW",
     price: 4100.00,
@@ -52,15 +51,15 @@ export const products = [
     imageUrl: "https://i.ibb.co/fzW3kHTx/Chat-GPT-Image-Feb-15-2026-03-21-36-AM.png",
     pdf: "https://drive.google.com/uc?export=download&id=14e-DTOOOamZhui1CiTORgjLypkMdCKWO",
     features: [
-      "500mg Reduced Glutathione",
-      "Reduces Pigmentation & Dullness",
-      "Powerful Antioxidant Protection",
-      "Supports Liver Detox",
-      "Promotes Youthful Radiance",
-      "Premium Softgel Absorption"
-    ]
-  },
-  {
+            "500mg Reduced Glutathione",
+            "Reduces Pigmentation & Dullness",
+            "Powerful Antioxidant Protection",
+            "Supports Liver Detox",
+            "Promotes Youthful Radiance",
+            "Premium Softgel Absorption"
+        ]
+    },
+    {
     id: 4,
     name: "MIDA-D",
     price: 295.00,
@@ -71,11 +70,11 @@ export const products = [
     imageUrl: "https://i.ibb.co/Fbn2nb1z/Chat-GPT-Image-Feb-15-2026-03-22-47-AM.png",
     pdf: "https://drive.google.com/uc?export=download&id=1c_Scxsv70id153YoNOopbVO6BC8uJvfM",
     features: [
-      "Supports Bone Strength",
-      "Improves Calcium Absorption",
-      "Boosts Immunity",
-      "High-Potency Vitamin D",
-      "Daily Health Support"
-    ]
-  }
+            "Supports Bone Strength",
+            "Improves Calcium Absorption",
+            "Boosts Immunity",
+            "High-Potency Vitamin D",
+            "Daily Health Support"
+        ]
+    }
 ];

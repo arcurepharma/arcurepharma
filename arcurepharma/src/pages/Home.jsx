@@ -121,26 +121,50 @@ export default function Home() {
                   className="product-card"
                   onClick={() => openModal(product)}
                 >
-                  <div className="product-img-container">
-                    <img
-                      src={getInitialImage(product)}
-                      alt={product.name}
-                      className="product-img"
-                      onError={(e) => handleImageError(e, product)}
-                    />
-                    <div className="product-category-badge">
-                      {product.category}
-                    </div>
+                <div className="product-img-container">
+                  <img
+                    src={getInitialImage(product)}
+                    alt={product.name}
+                    className="product-img"
+                    onError={(e) => handleImageError(e, product)}
+                  />
+
+                  <div className="product-category-badge">
+                    {product.category}
                   </div>
+
+                  {/* ✅ Discount Badge */}
+                  {Number(product.discountedPrice) > 0 &&
+                  Number(product.discountedPrice) < Number(product.price) && (
+                    <div className="product-discount-badge">
+                      -{Math.round(
+                        ((Number(product.price) - Number(product.discountedPrice)) /
+                          Number(product.price)) *
+                          100
+                      )}%
+                    </div>
+                  )}
+                </div>
                   <div className="product-info">
                     <h3 className="product-name">{product.name}</h3>
-                    <p className="product-short-desc">
-                      {product.shortDescription}
-                    </p>
+                    <p className="product-short-desc">{product.shortDescription}</p>
+
                     <div className="product-footer">
-                      <span className="product-price">
-                        Rs. {product.price.toLocaleString()}
-                      </span>
+                      {Number(product.discountedPrice) > 0 &&
+                      Number(product.discountedPrice) < Number(product.price) ? (
+                        <>
+                          <span className="original-price">
+                            Rs. {Number(product.price).toLocaleString()}
+                          </span>
+                          <span className="discounted-price">
+                            Rs. {Number(product.discountedPrice).toLocaleString()}
+                          </span>
+                        </>
+                      ) : (
+                        <span className="discounted-price">
+                          Rs. {Number(product.price).toLocaleString()}
+                        </span>
+                      )}
                       <span className="view-details-btn">View Details →</span>
                     </div>
                   </div>
@@ -193,6 +217,17 @@ export default function Home() {
                     className="modal-img"
                     onError={(e) => handleImageError(e, selectedProduct)}
                   />
+                  {/* ✅ Discount Badge */}
+                  {Number(selectedProduct.discountedPrice) > 0 &&
+                  Number(selectedProduct.discountedPrice) < Number(selectedProduct.price) && (
+                    <div className="modal-discount-badge">
+                      -{Math.round(
+                        ((Number(selectedProduct.price) - Number(selectedProduct.discountedPrice)) /
+                          Number(selectedProduct.price)) *
+                          100
+                      )}%
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="col-md-6">
@@ -202,7 +237,21 @@ export default function Home() {
                   </span>
                   <h2 className="modal-title">{selectedProduct.name}</h2>
                   <div className="modal-price">
-                    Rs. {selectedProduct.price.toLocaleString()}
+                    {Number(selectedProduct.discountedPrice) > 0 &&
+                    Number(selectedProduct.discountedPrice) < Number(selectedProduct.price) ? (
+                      <>
+                        <span className="original-price">
+                          Rs. {Number(selectedProduct.price).toLocaleString()}
+                        </span>
+                        <span className="discounted-price">
+                          Rs. {Number(selectedProduct.discountedPrice).toLocaleString()}
+                        </span>
+                      </>
+                    ) : (
+                      <span className="discounted-price">
+                        Rs. {Number(selectedProduct.price).toLocaleString()}
+                      </span>
+                    )}
                   </div>
                   <p className="modal-description">
                     {selectedProduct.description}
@@ -216,8 +265,8 @@ export default function Home() {
                       ))}
                     </ul>
                   </div>
-                  <a href={selectedProduct.pdf} download>
-                    <button className="modal-action-btn">PDF</button>
+                  <a href={selectedProduct.pdf}>
+                    <button  className="modal-action-btn">PDF</button>
                   </a>
 
                   <div className="modal-quantity-wrapper">

@@ -164,7 +164,7 @@ export default function Cart() {
                           </button>
                         </div>
                         <div className="item-price-v2 text-gradient">
-                          Rs. {(item.price * item.quantity).toLocaleString()}
+                          Rs. {(item.discountedPrice * item.quantity).toLocaleString()}
                         </div>
                       </div>
                     </div>

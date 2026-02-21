@@ -27,7 +27,7 @@ export const products = [
     id: 2,
     name: "ARCUBIO",
     price: 1250.00,
-    discountedPrice: 1060.00,
+    discountedPrice: 0,
     category: "Advanced Nutritional Support",
     shortDescription: "Complete daily nutrition for strength, immunity, and wellness.",
     description: "ARCUBIO is a scientifically formulated nutritional supplement designed to support overall wellness and daily performance. It strengthens immunity, improves vitality, and provides essential nutrients your body needs to stay active and healthy.",

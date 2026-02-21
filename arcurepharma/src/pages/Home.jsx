@@ -273,8 +273,8 @@ export default function Home() {
                       ))}
                     </ul>
                   </div>
-                  <a href={selectedProduct.pdf} download>
-                    <button className="modal-action-btn">PDF</button>
+                  <a href={selectedProduct.pdf} download className="btn-download-brochure" >
+                    📄 Download Brochure
                   </a>
 
                   <div className="modal-quantity-wrapper">

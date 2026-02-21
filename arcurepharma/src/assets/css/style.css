@@ -254,6 +254,8 @@ input[type="number"] {-moz-appearance: textfield;appearance: textfield;}
 .modal-price .discounted-price {font-size: 2.2rem;font-weight: 800;background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);-webkit-background-clip: text;background-clip: text;-webkit-text-fill-color: transparent;letter-spacing: -0.5px;}
 .modal-save-tag {display: block;width: 100%;margin-top: 4px;background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(168, 85, 247, 0.08));border: 1px solid rgba(168, 85, 247, 0.2);border-left: 3px solid #a855f7;color: #c084fc;font-size: 0.8rem;font-weight: 600;padding: 8px 14px;border-radius: 8px;letter-spacing: 0.3px;}
 .modal-img-container {position: relative;border-radius: 16px;overflow: hidden;}
+.btn-download-brochure {display: flex;align-items: center;justify-content: center;gap: 10px;background: rgba(99, 102, 241, 0.1);border: 1px solid rgba(99, 102, 241, 0.3);color: #a5b4fc;padding: 14px 24px;border-radius: 14px;font-weight: 700;font-size: 0.9rem;letter-spacing: 0.5px;text-decoration: none;transition: all 0.3s ease;margin-top: 10px;}
+.btn-download-brochure:hover {background: rgba(99, 102, 241, 0.25);border-color: rgba(99, 102, 241, 0.6);color: #fff;transform: translateY(-2px);box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);}
 .cart-price-group {display: flex;align-items: center;gap: 8px;flex-wrap: wrap;}
 .cart-original {font-size: 0.8rem !important;color: rgba(255,255,255,0.25) !important;}
 .checkout-item-price {display: flex;flex-direction: column;align-items: flex-end;gap: 1px;}

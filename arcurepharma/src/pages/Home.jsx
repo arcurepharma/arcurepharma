@@ -144,7 +144,7 @@ export default function Home() {
                         Number(product.discountedPrice) <
                           Number(product.price) && (
                           <span className="save-tag">
-                            🔥 Save{" "}
+                            🔥{" "}
                             {Math.round(
                               ((Number(product.price) -
                                 Number(product.discountedPrice)) /

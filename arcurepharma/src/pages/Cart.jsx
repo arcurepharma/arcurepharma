@@ -163,8 +163,51 @@ export default function Cart() {
                             +
                           </button>
                         </div>
-                        <div className="item-price-v2 text-gradient">
-                          Rs. {(item.price * item.quantity).toLocaleString()}
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "6px",
+                          }}
+                        >
+                          {Number(item.discountedPrice) > 0 &&
+                            Number(item.discountedPrice) <
+                              Number(item.price) && (
+                              <span className="save-tag">
+                                🔥 Save{" "}
+                                {Math.round(
+                                  ((item.price - item.discountedPrice) /
+                                    item.price) *
+                                    100,
+                                )}
+                                % OFF
+                              </span>
+                            )}
+                          <div className="cart-price-group">
+                            {Number(item.discountedPrice) > 0 &&
+                            Number(item.discountedPrice) <
+                              Number(item.price) ? (
+                              <>
+                                <span className="item-price-v2 text-gradient">
+                                  Rs.{" "}
+                                  {(
+                                    item.discountedPrice * item.quantity
+                                  ).toLocaleString()}
+                                </span>
+                                <span className="original-price cart-original">
+                                  Rs.{" "}
+                                  {(
+                                    item.price * item.quantity
+                                  ).toLocaleString()}
+                                </span>
+                              </>
+                            ) : (
+                              <span className="item-price-v2 text-gradient">
+                                Rs.{" "}
+                                {(item.price * item.quantity).toLocaleString()}
+                              </span>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>

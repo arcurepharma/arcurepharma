@@ -1,6 +1,6 @@
 /*
 imagePath:"img0",
-Google Drive imageUrl: "https://lh3.googleusercontent.com/d/FILE_ID",
+Google Drive imageUrl: "https://lh3.googleusercontent.com/d/1edscVzf4nX_MtoInduFPmm5emGrSM6GB",
 */
 
 export const products = [
@@ -8,6 +8,7 @@ export const products = [
     id: 1,
     name: "ALPHAMAN",
     price: 1950.00,
+    discountedPrice: 1650.00,
     category: "Men's Performance & Vitality",
     shortDescription: "Advanced formula to boost stamina, strength, and masculine vitality.",
     description: "ALPHAMAN is a premium men's health formula designed to enhance stamina, energy, and overall performance. Crafted with powerful ingredients, it supports strength, endurance, and confidence, helping men perform at their absolute best every day.",
@@ -26,6 +27,7 @@ export const products = [
     id: 2,
     name: "ARCUBIO",
     price: 1250.00,
+    discountedPrice: 1060.00,
     category: "Advanced Nutritional Support",
     shortDescription: "Complete daily nutrition for strength, immunity, and wellness.",
     description: "ARCUBIO is a scientifically formulated nutritional supplement designed to support overall wellness and daily performance. It strengthens immunity, improves vitality, and provides essential nutrients your body needs to stay active and healthy.",
@@ -43,6 +45,7 @@ export const products = [
     id: 3,
     name: "ARCUGLOW",
     price: 4100.00,
+    discountedPrice: 3500.00,
     category: "Premium Skin Whitening & Antioxidant",
     shortDescription: "Reduced Glutathione 500mg for radiant, youthful, glowing skin.",
     description: "ARCUGLOW is a luxury skin-enhancing formula powered by 500mg Reduced Glutathione, Vitamin C, Alpha Lipoic Acid, Milk Thistle Extract, and Zinc. It works from within to detoxify, brighten, and rejuvenate your skin. Designed for radiant glow, reduced pigmentation, and youthful confidence.",
@@ -62,6 +65,7 @@ export const products = [
     id: 4,
     name: "MIDA-D",
     price: 295.00,
+    discountedPrice: 250.00,
     category: "Bone Strength & Immunity Support",
     shortDescription: "High-quality Vitamin D support for stronger bones and immunity.",
     description: "MIDA-D is a high-potency Vitamin D supplement formulated to strengthen bones, improve calcium absorption, and enhance immune function. Perfect for maintaining skeletal health and overall vitality in daily life.",

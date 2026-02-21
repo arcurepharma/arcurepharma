@@ -31,7 +31,7 @@ const sendContactEmail = async (data, res) => {
 };
 
 const sendOrderEmail = async (data, res) => {
-  const { customer_name, customer_email, customer_phone, customer_whatsapp, order_details, subtotal, shipping, tax, total_amount, shipping_address, order_id, social_links, order_time } = data;
+  const { customer_name, customer_email, customer_phone, customer_whatsapp, order_items, subtotal, shipping, tax, total_amount, shipping_address, order_id, social_links, order_time } = data;
   const orderEmail = process.env.ORDER_EMAIL;
   const orderSupportEmail = process.env.ORDER_SUPPORT_EMAIL;
   const transporter = createTransporter(orderEmail);
@@ -52,24 +52,15 @@ const sendOrderEmail = async (data, res) => {
     }
   }
 
-  const productRows = order_details.split("\n").map(line => {
-    const parts = line.split(" — ");
-    let imageUrl = "";
-    let desc, price;
-    // Format: imageUrl — ProductName x qty — Rs. price  OR  ProductName x qty — Rs. price
-    if (parts.length >= 3) {
-      imageUrl = parts[0].trim();
-      desc = parts[1].trim();
-      price = parts[2].trim();
+  const productRows = (order_items || []).map(item => {
+    const imgHtml = item.imageUrl && item.imageUrl.startsWith("http") ? `<td style="padding: 12px 8px 12px 0; border-bottom: 1px solid #e2e8f0; vertical-align: middle; width: 50px;"><img src="${item.imageUrl}" alt="${item.name}" width="50" height="50" style="border-radius: 8px; object-fit: cover; display: block;"></td>` : '';
+    let priceHtml;
+    if (item.originalPrice) {
+      priceHtml = `<div style="color: #2d3748; font-size: 14px; font-weight: 700;">Rs. ${item.price.toLocaleString()}</div><div style="color: #a0aec0; font-size: 11px; text-decoration: line-through;">Rs. ${item.originalPrice.toLocaleString()}</div>`;
     } else {
-      desc = parts[0]?.trim() || "";
-      price = parts[1]?.trim() || "";
+      priceHtml = `<div style="color: #2d3748; font-size: 14px; font-weight: 600;">Rs. ${item.price.toLocaleString()}</div>`;
     }
-    const qtyMatch = desc.match(/x\s*(\d+)$/);
-    const productName = qtyMatch ? desc.replace(/x\s*\d+$/, "").trim() : desc;
-    const qty = qtyMatch ? qtyMatch[1] : "1";
-    const imgHtml = imageUrl && imageUrl.startsWith("http") ? `<td style="padding: 12px 8px 12px 0; border-bottom: 1px solid #e2e8f0; vertical-align: middle; width: 50px;"><img src="${imageUrl}" alt="${productName}" width="50" height="50" style="border-radius: 8px; object-fit: cover; display: block;"></td>` : '';
-    return `<tr>${imgHtml}<td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; vertical-align: middle;"><div style="color: #1a202c; font-size: 14px; font-weight: 700; margin-bottom: 4px;">${productName}</div><div style="color: #a0aec0; font-size: 12px; font-weight: 500;">QTY: ${qty}</div></td><td align="right" style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; vertical-align: middle; color: #2d3748; font-size: 14px; font-weight: 600;">${price}</td></tr>`;
+    return `<tr>${imgHtml}<td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; vertical-align: middle;"><div style="color: #1a202c; font-size: 14px; font-weight: 700; margin-bottom: 4px;">${item.name}</div><div style="color: #a0aec0; font-size: 12px; font-weight: 500;">QTY: ${item.quantity}</div></td><td align="right" style="padding: 12px 0; border-bottom: 1px solid #e2e8f0; vertical-align: middle;">${priceHtml}</td></tr>`;
   }).join("");
 
   const iconMap = {

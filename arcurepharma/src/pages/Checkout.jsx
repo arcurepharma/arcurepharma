@@ -183,14 +183,19 @@ export default function Checkout() {
         formData.country,
       );
 
-      const orderDetailsStr = cart
-        .map(
-          (item) =>
-            `${item.imageUrl || ""} — ${item.name} x ${item.quantity} — Rs. ${(
-              item.price * item.quantity
-            ).toLocaleString()}`,
-        )
-        .join("\n");
+      const orderItems = cart.map((item) => {
+        const hasDiscount =
+          Number(item.discountedPrice) > 0 &&
+          Number(item.discountedPrice) < Number(item.price);
+        return {
+          name: item.name,
+          quantity: item.quantity,
+          price:
+            (hasDiscount ? item.discountedPrice : item.price) * item.quantity,
+          originalPrice: hasDiscount ? item.price * item.quantity : null,
+          imageUrl: item.imageUrl || "",
+        };
+      });
 
       try {
         const response = await fetch("/api/send-email", {
@@ -199,7 +204,7 @@ export default function Checkout() {
           body: JSON.stringify({
             customer_name: `${formData.firstName} ${formData.lastName}`,
             customer_email: formData.email,
-            order_details: orderDetailsStr,
+            order_items: orderItems,
             subtotal: `Rs. ${getCartTotal().toLocaleString()}`,
             shipping: `Rs. ${(shippingData.ENABLE_FREE_SHIPPING === 1 && getCartTotal() >= shippingData.FREE_SHIPPING_THRESHOLD ? 0 : shippingData.SHIPPING_COST).toLocaleString()}`,
             tax: `Rs. ${taxAmount.toLocaleString()}`,
@@ -685,12 +690,27 @@ export default function Checkout() {
                             </div>
                           </div>
                         </div>
-                        <div
-                          className="text-white extra-small"
-                          style={{ fontSize: "0.8rem" }}
-                        >
-                          {shippingData.CURRENCY}{" "}
-                          {(item.price * item.quantity).toLocaleString()}
+                        <div className="checkout-item-price">
+                          {Number(item.discountedPrice) > 0 &&
+                          Number(item.discountedPrice) < Number(item.price) ? (
+                            <>
+                              <span className="checkout-original-price">
+                                {shippingData.CURRENCY}{" "}
+                                {(item.price * item.quantity).toLocaleString()}
+                              </span>
+                              <span className="extra-small">
+                                {shippingData.CURRENCY}{" "}
+                                {(
+                                  item.discountedPrice * item.quantity
+                                ).toLocaleString()}
+                              </span>
+                            </>
+                          ) : (
+                            <span className="extra-small">
+                              {shippingData.CURRENCY}{" "}
+                              {(item.price * item.quantity).toLocaleString()}
+                            </span>
+                          )}
                         </div>
                       </div>
                     ))}

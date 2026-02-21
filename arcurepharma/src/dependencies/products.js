@@ -8,12 +8,12 @@ export const products = [
     id: 1,
     name: "ALPHAMAN",
     price: 1950.00,
-    discountedPrice: 1650.00,
+    discountedPrice: 0,
     category: "Men's Performance & Vitality",
     shortDescription: "Advanced formula to boost stamina, strength, and masculine vitality.",
     description: "ALPHAMAN is a premium men's health formula designed to enhance stamina, energy, and overall performance. Crafted with powerful ingredients, it supports strength, endurance, and confidence, helping men perform at their absolute best every day.",
     imagePath: "",
-    imageUrl: "https://lh3.googleusercontent.com/d/1edscVzf4nX_MtoInduFPmm5emGrSM6GB",
+    imageUrl: "https://i.ibb.co/ZRqpcCz2/ALPHAMAN-supplement-with-natural-ingredients.png",
     pdf: "https://drive.google.com/uc?export=download&id=1I2RU4R9ZbgP6BWLxK8IyLMYK2eKWBzfu",
     features: [
             "Boosts Energy & Stamina",
@@ -32,7 +32,7 @@ export const products = [
     shortDescription: "Complete daily nutrition for strength, immunity, and wellness.",
     description: "ARCUBIO is a scientifically formulated nutritional supplement designed to support overall wellness and daily performance. It strengthens immunity, improves vitality, and provides essential nutrients your body needs to stay active and healthy.",
     imagePath: "",
-    imageUrl: "https://lh3.googleusercontent.com/d/1_18rzBjHVspKNqsIJ5_LIkaj6hrYH2Tu",
+    imageUrl: "https://i.ibb.co/nNtBfYW3/Chat-GPT-Image-Feb-15-2026-03-20-37-AM.png",
     pdf: "https://drive.google.com/uc?export=download&id=1YjMC-QSjq8fuOGnui7Wb6rwa3hRX5-6n",
     features: [
             "Supports Overall Wellness",
@@ -50,7 +50,7 @@ export const products = [
     shortDescription: "Reduced Glutathione 500mg for radiant, youthful, glowing skin.",
     description: "ARCUGLOW is a luxury skin-enhancing formula powered by 500mg Reduced Glutathione, Vitamin C, Alpha Lipoic Acid, Milk Thistle Extract, and Zinc. It works from within to detoxify, brighten, and rejuvenate your skin. Designed for radiant glow, reduced pigmentation, and youthful confidence.",
     imagePath: "",
-    imageUrl: "https://lh3.googleusercontent.com/d/1KINQBx_hfAiC-Ndj8GLBJJaQn6Fms9FR",
+    imageUrl: "https://i.ibb.co/fzW3kHTx/Chat-GPT-Image-Feb-15-2026-03-21-36-AM.png",
     pdf: "https://drive.google.com/uc?export=download&id=14e-DTOOOamZhui1CiTORgjLypkMdCKWO",
     features: [
             "500mg Reduced Glutathione",
@@ -70,7 +70,7 @@ export const products = [
     shortDescription: "High-quality Vitamin D support for stronger bones and immunity.",
     description: "MIDA-D is a high-potency Vitamin D supplement formulated to strengthen bones, improve calcium absorption, and enhance immune function. Perfect for maintaining skeletal health and overall vitality in daily life.",
     imagePath: "",
-    imageUrl: "https://lh3.googleusercontent.com/d/1yUCn4w6ZjKgieM_ovwTM01bqamHgLfEu",
+    imageUrl: "https://i.ibb.co/Fbn2nb1z/Chat-GPT-Image-Feb-15-2026-03-22-47-AM.png",
     pdf: "https://drive.google.com/uc?export=download&id=1c_Scxsv70id153YoNOopbVO6BC8uJvfM",
     features: [
             "Supports Bone Strength",

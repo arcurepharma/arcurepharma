@@ -174,7 +174,7 @@ export default function Cart() {
                             Number(item.discountedPrice) <
                               Number(item.price) && (
                               <span className="save-tag">
-                                🔥 Save{" "}
+                                🔥{" "}
                                 {Math.round(
                                   ((item.price - item.discountedPrice) /
                                     item.price) *

@@ -44,7 +44,10 @@ export const CartProvider = ({ children }) => {
   const clearCart = () => setCart([]);
 
   const getCartTotal = () => {
-    return cart.reduce((total, item) => total + item.discountedPrice * item.quantity, 0);
+    return cart.reduce((total, item) => {
+      const effectivePrice = Number(item.discountedPrice) > 0 ? item.discountedPrice : item.price;
+      return total + effectivePrice * item.quantity;
+    }, 0);
   };
 
   const getCartCount = () => {

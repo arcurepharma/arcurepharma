@@ -143,16 +143,23 @@ export default function Home() {
                       {Number(product.discountedPrice) > 0 &&
                         Number(product.discountedPrice) <
                           Number(product.price) && (
-                          <span className="save-tag">
-                            🔥{" "}
-                            {Math.round(
-                              ((Number(product.price) -
-                                Number(product.discountedPrice)) /
-                                Number(product.price)) *
-                                100,
-                            )}
-                            % OFF
-                          </span>
+<span className="save-tag">
+  {Math.round(
+    ((Number(product.price) - Number(product.discountedPrice)) /
+      Number(product.price)) *
+      100
+  ) > 25
+    ? `🚀 MEGA Discount ${Math.round(
+        ((Number(product.price) - Number(product.discountedPrice)) /
+          Number(product.price)) *
+          100
+      )}%`
+    : `🔥 ${Math.round(
+        ((Number(product.price) - Number(product.discountedPrice)) /
+          Number(product.price)) *
+          100
+      )}% OFF`}
+</span>
                         )}
 
                       <div className="price-area">

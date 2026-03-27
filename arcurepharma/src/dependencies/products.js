@@ -13,7 +13,7 @@ export const products = [
     shortDescription: "A lightweight serum that brightens, hydrates, and smooths skin.",
     description: "ARCU-DERM CS Serum combines Vitamin C, Salicylic Acid, and Hyaluronic Acid to improve radiance, reduce blemishes, and keep skin hydrated and smooth.",
     imagePath: "",
-    imageUrl: "https://res.cloudinary.com/dqkg6vvnk/image/upload/v1774382223/PXL_20260316_083442793.PORTRAIT.ORIGINAL_yf4ezb.jpg",
+    imageUrl: "https://res.cloudinary.com/dqkg6vvnk/image/upload/v1774558588/PXL_20260316_083727923_vvt8mh.jpg",
     pdf: "https://drive.google.com/file/d/1osJoBTiRQby-DW7Ygd-0A3QDXtgDB1ZO/view?usp=sharing",
     features: [
             "Brightens and evens skin tone",
@@ -27,12 +27,12 @@ export const products = [
     id: 2,
     name: "ARCUGLOW",
     price: 4100.00,
-    discountedPrice: 4100.00,
+    discountedPrice: 3000.00,
     category: "Premium Skin Whitening & Antioxidant",
     shortDescription: "Reduced Glutathione 500mg for radiant, youthful, glowing skin.",
     description: "ARCUGLOW is a luxury skin-enhancing formula powered by 500mg Reduced Glutathione, Vitamin C, Alpha Lipoic Acid, Milk Thistle Extract, and Zinc. It works from within to detoxify, brighten, and rejuvenate your skin. Designed for radiant glow, reduced pigmentation, and youthful confidence.",
     imagePath: "",
-    imageUrl: "https://res.cloudinary.com/dqkg6vvnk/image/upload/v1771718806/WhatsApp_Image_2026-02-20_at_3.43.34_PM_mx7zw0.jpg",
+    imageUrl: "https://res.cloudinary.com/dqkg6vvnk/image/upload/v1774558413/1997_fabipz.jpg",
     pdf: "https://drive.google.com/uc?export=download&id=14e-DTOOOamZhui1CiTORgjLypkMdCKWO",
     features: [
             "500mg Reduced Glutathione",
@@ -61,7 +61,6 @@ export const products = [
             "Premium Quality Formula"
         ]
     },
-    
     {
     id: 4,
     name: "MIDA-D",
@@ -81,8 +80,26 @@ export const products = [
             "Daily Health Support"
         ]
     },
-        {
+    {
     id: 5,
+    name: "ARCU CAL",
+    price: 295.00,
+    discountedPrice: 295.00,
+    category: "Bone & Joint Health Support",
+    shortDescription: "High-quality calcium support for stronger bones and joints.",
+    description: "ARCU-CAL K2 is a powerful dietary supplement formulated with Calcium, Vitamin D3, Magnesium, Zinc, and Vitamin K2 to support strong bones and healthy joints. It helps improve calcium absorption and maintain optimal bone density",
+    imagePath: "",
+    imageUrl: "https://res.cloudinary.com/dqkg6vvnk/image/upload/v1774558680/PXL_20260308_195927417.PORTRAIT_ikclxh.jpg",
+    pdf: "https://drive.google.com/file/d/1KWB5tgGA3jzA5qgqSmnNOk7NveuDqxvv/view?usp=sharing",
+    features: [
+            "Supports Bone Strength",
+            "Improves Calcium Absorption",
+            "Supports Bone Density",
+            "Strengthens Joints"
+        ]
+    },
+        {
+    id: 6,
     name: "ALPHAMAN",
     price: 1950.00,
     discountedPrice: 1950.00,

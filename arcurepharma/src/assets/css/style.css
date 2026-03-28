@@ -28,7 +28,7 @@ input[type="number"] {-moz-appearance: textfield;appearance: textfield;}
 .premium-shadow {box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);}
 .bg-premium-gradient {background: radial-gradient(  circle at top right,  var(--bg-indigo) 0%,  var(--bg-dark) 60%,  var(--bg-deep) 100%);}
 .section-spacing {padding-top: 100px;}
-.bg-modern {min-height: 100vh;background: radial-gradient(  circle at top right,  #1a1c4b 0%,  #0e0f2c 60%,  #050616 100%);color: white;position: relative;padding-bottom: 50px;}
+.bg-modern {min-height: 100vh;background: radial-gradient(  circle at top right,  #5d60ad 0%,  #1a1c58 60%,  #050616 100%);color: white;position: relative;padding-bottom: 50px;}
 .floating-shapes {position: absolute;top: 0;left: 0;width: 100%;height: 100%;overflow: hidden;pointer-events: none;z-index: 1;}
 .floating-shapes .shape {position: absolute;border-radius: 50%;background: rgba(255, 255, 255, 0.05);animation: floatingShape 15s ease-in-out infinite;}
 .floating-shapes .shape:nth-child(1) {width: 200px;height: 200px;top: 10%;left: 20%;animation-delay: 0s;}
@@ -262,3 +262,59 @@ input[type="number"] {-moz-appearance: textfield;appearance: textfield;}
 .checkout-item-price {display: flex;flex-direction: column;align-items: flex-end;gap: 1px;}
 .checkout-original-price {font-size: 0.65rem;color: rgba(255,255,255,0.25);text-decoration: line-through;}
 .extra-small {font-size: 0.9rem; font-weight: 600;}
+
+.popup-carousel {
+  max-width: 900px;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: #fff;
+}
+
+.carousel-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.carousel-slide {
+  flex: 1;
+  text-align: center;
+}
+
+.popup-product img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.carousel-nav {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ff4d4f;
+  padding: 0 10px;
+}
+
+.popup-save-tag {
+  color: #ff4d4f;
+  font-weight: bold;
+  margin: 10px 0;
+  display: inline-block;
+}
+.modal-slider-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.modal-slider-nav button {
+  background: #3a4b70;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}

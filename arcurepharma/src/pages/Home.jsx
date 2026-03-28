@@ -91,8 +91,135 @@ export default function Home() {
     document.body.style.overflow = "auto";
   };
 
+// 🔥 State for modal
+// ✅ State for auto popup
+const [autoPopupOpen, setAutoPopupOpen] = useState(false);
+const [autoPopupProduct, setAutoPopupProduct] = useState(null);
+
+const [discountedProducts, setDiscountedProducts] = useState([]);
+const [currentIndex, setCurrentIndex] = useState(0);
+
+// Discounted products array
+
+useEffect(() => {
+  const discounted = products.filter(
+    (p) => Number(p.discountedPrice) > 0 && Number(p.discountedPrice) < Number(p.price)
+  );
+  setDiscountedProducts(discounted);
+  if (discounted.length > 0) setAutoPopupOpen(true);
+}, []);
+// 🔥 Open modal from popup
+const openModalFromPopup = () => {
+  setModalQuantity(1);
+  document.body.style.overflow = "hidden";
+};
   return (
     <>
+{autoPopupOpen && discountedProducts.length > 0 && (
+  <div className="product-modal-overlay" onClick={() => setAutoPopupOpen(false)}>
+    <div className="product-modal-content" onClick={(e) => e.stopPropagation()}>
+      <button className="modal-close-btn" onClick={() => setAutoPopupOpen(false)}>
+        &times;
+      </button>
+
+      <div className="row g-0">
+        {/* Image Column */}
+        <div className="col-md-6">
+          <div className="modal-img-container">
+            <img
+              src={getInitialImage(discountedProducts[currentIndex])}
+              alt={discountedProducts[currentIndex].name}
+              className="modal-img"
+              onError={(e) => handleImageError(e, discountedProducts[currentIndex])}
+            />
+          </div>
+        </div>
+
+        {/* Details Column */}
+        <div className="col-md-6">
+          <div className="modal-details" style={{ padding: "20px" }}>
+            <span className="modal-category">{discountedProducts[currentIndex].category}</span>
+            <h2 className="modal-title">{discountedProducts[currentIndex].name}</h2>
+
+            {/* Mega Discount Badge */}
+            <span
+              className="modal-save-tag"
+              style={{
+                display: "inline-block",
+                margin: "10px 0",
+                padding: "5px 12px",
+                borderRadius: "8px",
+                background: "linear-gradient(90deg, #ff4d4f, #ffb84d)",
+                color: "#fff",
+                fontWeight: "700",
+                fontSize: "1rem",
+                textShadow: "1px 1px 2px #000",
+              }}
+            >
+              {Math.round(
+                ((Number(discountedProducts[currentIndex].price) -
+                  Number(discountedProducts[currentIndex].discountedPrice)) /
+                  Number(discountedProducts[currentIndex].price)) *
+                  100
+              ) > 25
+                ? `🚀 BUMPER OFFER ${Math.round(
+                    ((Number(discountedProducts[currentIndex].price) -
+                      Number(discountedProducts[currentIndex].discountedPrice)) /
+                      Number(discountedProducts[currentIndex].price)) *
+                      100
+                  )}% OFF`
+                : `🔥 ${Math.round(
+                    ((Number(discountedProducts[currentIndex].price) -
+                      Number(discountedProducts[currentIndex].discountedPrice)) /
+                      Number(discountedProducts[currentIndex].price)) *
+                      100
+                  )}% OFF`}
+            </span>
+
+            {/* Price */}
+            <div className="modal-price" style={{ marginTop: "10px", fontWeight: "600" }}>
+              <span className="discounted-price" style={{ color: "#ff4d4f" }}>
+                Rs. {Number(discountedProducts[currentIndex].discountedPrice).toLocaleString()}
+              </span>
+              <span
+                className="original-price"
+                style={{ marginLeft: "10px", textDecoration: "line-through", color: "#888" }}
+              >
+                Rs. {Number(discountedProducts[currentIndex].price).toLocaleString()}
+              </span>
+            </div>
+
+            {/* Slider Navigation */}
+            {discountedProducts.length > 1 && (
+              <div className="modal-slider-nav" style={{ display: "flex", justifyContent: "space-between", marginTop: "20px" }}>
+                <button
+                  className="btn-cart"
+                  onClick={() =>
+                    setCurrentIndex((prev) =>
+                      prev === 0 ? discountedProducts.length - 1 : prev - 1
+                    )
+                  }
+                >
+                  ‹ Prev
+                </button>
+                <button
+                  className="btn-cart"
+                  onClick={() =>
+                    setCurrentIndex((prev) =>
+                      prev === discountedProducts.length - 1 ? 0 : prev + 1
+                    )
+                  }
+                >
+                  Next ›
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
       <div className="bg-modern pt-5">
         <div className="floating-shapes">
           <div className="shape"></div>

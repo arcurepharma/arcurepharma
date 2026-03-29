@@ -83,8 +83,8 @@ export const products = [
     {
     id: 5,
     name: "ARCU CAL",
-    price: 295.00,
-    discountedPrice: 295.00,
+    price: 1250.00,
+    discountedPrice: 1250.00,
     category: "Bone & Joint Health Support",
     shortDescription: "High-quality calcium support for stronger bones and joints.",
     description: "ARCU-CAL K2 is a powerful dietary supplement formulated with Calcium, Vitamin D3, Magnesium, Zinc, and Vitamin K2 to support strong bones and healthy joints. It helps improve calcium absorption and maintain optimal bone density",

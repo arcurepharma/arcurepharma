@@ -27,7 +27,7 @@ export const products = [
     id: 2,
     name: "ARCUGLOW",
     price: 4100.00,
-    discountedPrice: 3000.00,
+    discountedPrice: 4100.00,
     category: "Premium Skin Whitening & Antioxidant",
     shortDescription: "Reduced Glutathione 500mg for radiant, youthful, glowing skin.",
     description: "ARCUGLOW is a luxury skin-enhancing formula powered by 500mg Reduced Glutathione, Vitamin C, Alpha Lipoic Acid, Milk Thistle Extract, and Zinc. It works from within to detoxify, brighten, and rejuvenate your skin. Designed for radiant glow, reduced pigmentation, and youthful confidence.",

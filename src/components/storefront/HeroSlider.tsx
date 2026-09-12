@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { ChevronLeft, ChevronRight, ChevronDown, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 
 interface Slide {
   id: string;
@@ -153,29 +152,6 @@ export default function HeroSlider() {
                       {slide.subtitle}
                     </p>
                   )}
-
-                  {/* CTA Buttons */}
-                  <div
-                    key={`cta-${i}-${current}`}
-                    className={`flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-4 ${
-                      i === current ? "animate-fade-in-up" : "opacity-0"
-                    }`}
-                    style={{ animationDelay: "0.4s" }}
-                  >
-                    <Link
-                      href="/#products"
-                      className="inline-flex items-center justify-center gap-1.5 sm:gap-2.5 px-4 sm:px-8 py-2.5 sm:py-4 bg-white text-teal-700 text-xs sm:text-sm font-bold rounded-full shadow-2xl shadow-black/20 hover:shadow-lg hover:scale-105 transition-all duration-300 min-h-[44px]"
-                    >
-                      Shop Now
-                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </Link>
-                    <Link
-                      href="/#about"
-                      className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-8 py-2.5 sm:py-4 bg-white/10 backdrop-blur-sm text-white text-xs sm:text-sm font-semibold rounded-full border border-white/30 hover:bg-white/20 transition-all duration-300 min-h-[44px]"
-                    >
-                      Learn More
-                    </Link>
-                  </div>
 
                   {/* Trust badges */}
                   <div

@@ -1,4 +1,6 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 
 export const alt = "Arcure Pharma - Your Trusted Online Pharmacy in Pakistan";
 export const size = {
@@ -8,6 +10,12 @@ export const size = {
 export const contentType = "image/png";
 
 export default async function OpengraphImage() {
+  const logoBuffer = await readFile(
+    path.join(process.cwd(), "public", "logo-arcure.jpg")
+  );
+  const logoBase64 = logoBuffer.toString("base64");
+  const logoDataUrl = `data:image/jpeg;base64,${logoBase64}`;
+
   return new ImageResponse(
     (
       <div
@@ -23,27 +31,18 @@ export default async function OpengraphImage() {
           padding: "60px",
         }}
       >
-        <div
+        <img
+          src={logoDataUrl}
+          alt="Arcure Pharma"
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "96px",
-            height: "96px",
-            borderRadius: "24px",
-            background: "rgba(255,255,255,0.2)",
-            marginBottom: "32px",
+            width: "140px",
+            height: "auto",
+            marginBottom: "28px",
+            borderRadius: "16px",
+            background: "rgba(255,255,255,0.92)",
+            objectFit: "contain",
           }}
-        >
-          <div
-            style={{
-              width: "56px",
-              height: "56px",
-              borderRadius: "12px",
-              background: "white",
-            }}
-          />
-        </div>
+        />
         <div
           style={{
             display: "flex",

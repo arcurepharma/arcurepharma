@@ -46,7 +46,9 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       <Navbar />
-      <HeroSlider />
+      <div className="pt-16 lg:pt-[72px]">
+        <HeroSlider />
+      </div>
 
       {/* Products Section */}
       <section id="products" className="py-20 lg:py-28 bg-white">

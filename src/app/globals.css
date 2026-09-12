@@ -234,13 +234,6 @@ html.theme-transition *::after {
   }
 }
 
-/* ---------- Announcement bar ---------- */
-.announcement-bar {
-  background: linear-gradient(90deg, var(--color-teal-600), var(--color-teal-700), var(--color-teal-600));
-  background-size: 200% 100%;
-  animation: shimmer 8s linear infinite;
-}
-
 /* ---------- Hero section ---------- */
 .hero-gradient-overlay {
   background: linear-gradient(

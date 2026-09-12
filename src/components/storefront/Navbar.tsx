@@ -59,22 +59,12 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Announcement bar */}
-      <div className="announcement-bar fixed top-0 left-0 right-0 z-[60] py-2 text-center">
-        <p className="text-white text-xs sm:text-sm font-medium">
-          🎉 Free delivery on orders above Rs. 2,000! &nbsp;|&nbsp; Call us:{" "}
-          <a href="tel:+923341169999" className="underline font-bold">
-            +92 334 116 9999
-          </a>
-        </p>
-      </div>
-
       {/* Main header */}
       <header
-        className={`fixed left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "top-0 bg-white/95 backdrop-blur-md shadow-lg shadow-black/5"
-            : "top-[36px] bg-white shadow-sm"
+            ? "bg-white/95 backdrop-blur-md shadow-lg shadow-black/5"
+            : "bg-white shadow-sm"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

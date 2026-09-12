@@ -280,7 +280,7 @@ export default function OrderTrackingPage() {
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <a
-                    href="https://wa.me/923001234567"
+                    href="https://wa.me/933162647620"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-xl transition-all"

@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 export default function AdminSettingsPage() {
   const [deliveryFee, setDeliveryFee] = useState("150");
   const [sliderDuration, setSliderDuration] = useState("5");
-  const [whatsappNumber, setWhatsappNumber] = useState("923001234567");
+  const [whatsappNumber, setWhatsappNumber] = useState("933162647620");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -109,7 +109,7 @@ export default function AdminSettingsPage() {
         <div>
           <h2 className="font-bold text-gray-900 mb-1">WhatsApp Number</h2>
           <p className="text-gray-500 text-sm mb-4">
-            Number for the WhatsApp chat widget (international format, no + or dashes, e.g. 923001234567)
+            Number for the WhatsApp chat widget (international format, no + or dashes, e.g. 933162647620)
           </p>
           <div className="flex items-center gap-3">
             <span className="p-3 bg-teal-50 rounded-xl">
@@ -120,7 +120,7 @@ export default function AdminSettingsPage() {
               value={whatsappNumber}
               onChange={(e) => setWhatsappNumber(e.target.value)}
               className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-              placeholder="923001234567"
+              placeholder="933162647620"
             />
           </div>
         </div>

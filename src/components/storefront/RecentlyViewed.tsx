@@ -18,14 +18,17 @@ export default function RecentlyViewed() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    try {
-      const viewed = JSON.parse(
-        localStorage.getItem("arcure-recently-viewed") || "[]"
-      ) as Product[];
-      setProducts(viewed.slice(0, 4)); // Show max 4 products
-    } catch {
-      setProducts([]);
-    }
+    const t = window.setTimeout(() => {
+      try {
+        const viewed = JSON.parse(
+          localStorage.getItem("arcure-recently-viewed") || "[]"
+        ) as Product[];
+        setProducts(viewed.slice(0, 4)); // Show max 4 products
+      } catch {
+        setProducts([]);
+      }
+    }, 0);
+    return () => window.clearTimeout(t);
   }, []);
 
   if (products.length === 0) return null;
@@ -69,7 +72,7 @@ export default function RecentlyViewed() {
                   alt={product.title}
                   fill
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  className="object-contain group-hover:scale-105 transition-transform duration-500"
                 />
                 {product.category && (
                   <span className="absolute top-2 left-2 px-2.5 py-1 bg-white/95 backdrop-blur-sm text-purple-700 text-xs font-semibold rounded-lg shadow-sm">

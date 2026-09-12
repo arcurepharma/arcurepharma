@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Pill, Mail, Phone, MapPin, ArrowRight, Clock } from "lucide-react";
+import Image from "next/image";
+import { Mail, Phone, MapPin, ArrowRight, Clock } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -66,15 +67,13 @@ export default function Footer() {
             {/* Brand */}
             <div className="lg:col-span-1">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-teal-600 rounded-xl flex items-center justify-center">
-                  <Pill className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold">Arcure</h3>
-                  <p className="text-[10px] text-teal-400 tracking-widest uppercase">
-                    Pharma
-                  </p>
-                </div>
+                <Image
+                  src="/logo-arcure.jpg"
+                  alt="Arcure Pharma"
+                  width={160}
+                  height={40}
+                  className="h-10 w-auto object-contain"
+                />
               </div>
               <p className="text-gray-400 text-sm leading-relaxed mb-6">
                 Your trusted partner in health. Quality products, delivered with

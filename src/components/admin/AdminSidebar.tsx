@@ -2,17 +2,17 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import {
   LayoutDashboard,
   Package,
-  Image,
+  Image as ImageIcon,
   ShoppingCart,
   Settings,
   ChevronLeft,
   ChevronRight,
-  Pill,
   Tags,
   MessageSquareWarning,
   Star,
@@ -22,7 +22,7 @@ const menuItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/categories", label: "Categories", icon: Tags },
-  { href: "/admin/sliders", label: "Sliders", icon: Image },
+  { href: "/admin/sliders", label: "Sliders", icon: ImageIcon },
   { href: "/admin/reviews", label: "Reviews", icon: Star },
   { href: "/admin/orders", label: "Orders", icon: ShoppingCart },
   { href: "/admin/complaints", label: "Complaints", icon: MessageSquareWarning },
@@ -54,14 +54,22 @@ export default function AdminSidebar() {
       }`}
     >
       <div className="p-4 flex items-center gap-3 border-b border-gray-800">
-        <div className="w-10 h-10 bg-teal-600 rounded-xl flex items-center justify-center shrink-0">
-          <Pill className="w-6 h-6 text-white" />
-        </div>
-        {!collapsed && (
-          <div>
-            <h2 className="font-bold text-sm">Arcure Admin</h2>
-            <p className="text-[10px] text-gray-400">Management Panel</p>
-          </div>
+        {collapsed ? (
+          <Image
+            src="/logo-arcure.jpg"
+            alt="Arcure Pharma"
+            width={80}
+            height={40}
+            className="h-9 w-auto object-contain mx-auto"
+          />
+        ) : (
+          <Image
+            src="/logo-arcure.jpg"
+            alt="Arcure Pharma"
+            width={140}
+            height={40}
+            className="h-9 w-auto object-contain"
+          />
         )}
       </div>
 

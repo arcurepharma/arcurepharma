@@ -14,10 +14,8 @@ import {
   ShieldCheck,
   Truck,
   BadgeCheck,
-  Scale,
 } from "lucide-react";
 import { useCartStore } from "@/store/cart";
-import { useComparisonStore } from "@/store/comparison";
 import { formatPrice } from "@/lib/utils";
 import toast from "react-hot-toast";
 
@@ -34,7 +32,6 @@ interface Product {
 
 export default function ProductCard({ product }: { product: Product }) {
   const addItem = useCartStore((s) => s.addItem);
-  const { addItem: addToComparison, isInComparison, removeItem: removeFromComparison } = useComparisonStore();
 
   const gallery = Array.from(
     new Set([product.imageUrl, ...(product.images || [])])
@@ -103,26 +100,6 @@ export default function ProductCard({ product }: { product: Product }) {
     }
   };
 
-  const toggleComparison = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const inComparison = isInComparison(product.id);
-    if (inComparison) {
-      removeFromComparison(product.id);
-      toast.success("Removed from comparison");
-    } else {
-      addToComparison({
-        id: product.id,
-        title: product.title,
-        price: product.price,
-        imageUrl: product.imageUrl,
-        category: product.category,
-        description: product.description,
-      });
-      toast.success("Added to comparison");
-    }
-  };
-
   const openQuickView = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -162,7 +139,7 @@ export default function ProductCard({ product }: { product: Product }) {
                   fill
                   priority={i === 0}
                   sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  className={`object-cover transition-all duration-700 group-hover:scale-110 ${
+                  className={`object-contain transition-all duration-700 group-hover:scale-105 ${
                     i === 0
                       ? "opacity-100"
                       : "opacity-0 group-hover:opacity-100"
@@ -198,19 +175,6 @@ export default function ProductCard({ product }: { product: Product }) {
                 <Heart
                   className={`w-4 h-4 ${wishlisted ? "fill-white" : ""}`}
                 />
-              </button>
-
-              {/* Compare */}
-              <button
-                onClick={toggleComparison}
-                aria-label={isInComparison(product.id) ? "Remove from comparison" : "Add to comparison"}
-                className={`absolute top-11 sm:top-14 right-2 sm:right-3 z-10 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center backdrop-blur-sm shadow-md transition-all duration-300 active:scale-90 min-h-[44px] min-w-[44px] sm:min-h-[36px] sm:min-w-[36px] ${
-                  isInComparison(product.id)
-                    ? "bg-teal-600/95 text-white hover:bg-teal-700"
-                    : "bg-white/95 text-gray-500 hover:text-teal-600 hover:scale-110"
-                }`}
-              >
-                <Scale className="w-4 h-4" />
               </button>
 
               {/* Image counter */}
@@ -310,7 +274,7 @@ export default function ProductCard({ product }: { product: Product }) {
                   alt={product.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
+                  className="object-contain p-2"
                 />
                 {product.category && (
                   <span className="absolute top-3 sm:top-4 left-3 sm:left-4 px-2 sm:px-3 py-1 sm:py-1.5 bg-white/95 backdrop-blur-sm text-teal-700 text-xs font-semibold rounded-lg shadow-sm">

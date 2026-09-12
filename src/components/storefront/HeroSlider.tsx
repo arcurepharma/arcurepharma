@@ -76,7 +76,7 @@ export default function HeroSlider() {
 
   if (loading) {
     return (
-      <section className="relative h-[60vh] lg:h-[80vh] bg-teal-600 flex items-center justify-center">
+      <section className="relative h-[60vh] lg:h-[80vh] bg-teal-600 flex items-center justify-center mt-[64px] lg:mt-[72px]">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto" />
           <p className="text-white/70 mt-4 text-sm">Loading...</p>
@@ -86,7 +86,7 @@ export default function HeroSlider() {
   }
 
   return (
-    <section className="relative h-64 sm:h-80 md:h-96 lg:h-[85vh] overflow-hidden bg-gray-900">
+    <section className="relative h-64 sm:h-80 md:h-96 lg:h-[85vh] overflow-hidden bg-gray-900 mt-[64px] lg:mt-[72px]">
       <div className="relative w-full h-full">
         {slides.map((slide, i) => (
           <div

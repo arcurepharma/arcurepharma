@@ -1,0 +1,64 @@
+"use client";
+
+import { Building2, Users } from "lucide-react";
+import { useReveal } from "@/lib/useReveal";
+
+const CLIENTS = [
+  "Dermalax clinic",
+  "AB clinic",
+  "Al khaleej",
+  "Shamsi hospital",
+  "Dr shaheena",
+  "Shan clinic",
+  "Revive aesthetic clinic",
+  "Dr ilayas clinic",
+  "Adnan Khan hospital",
+];
+
+export default function OurClients() {
+  const { ref: headerRef, visible: headerVisible } = useReveal();
+
+  return (
+    <section className="py-16 lg:py-24 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          ref={headerRef}
+          className={`text-center mb-12 reveal ${headerVisible ? "is-visible" : ""}`}
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-teal-50 text-teal-700 text-sm font-semibold rounded-full mb-4">
+            <Users className="w-4 h-4" />
+            Our Clients
+          </span>
+          <h2 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-4">
+            Trusted by Leading Clinics &amp; Hospitals
+          </h2>
+          <p className="text-gray-500 mt-3 max-w-xl mx-auto text-lg">
+            Proudly serving healthcare providers across the region
+          </p>
+          <div className="section-divider mt-6" />
+        </div>
+      </div>
+
+      <div className="relative w-full">
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-white to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-white to-transparent z-10" />
+
+        <div className="flex items-center gap-4 animate-clients-marquee">
+          {[...CLIENTS, ...CLIENTS].map((name, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-3 px-6 sm:px-8 py-4 sm:py-5 bg-white rounded-2xl border border-gray-100 shadow-sm whitespace-nowrap min-w-max"
+            >
+              <div className="w-9 h-9 sm:w-11 sm:h-11 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl flex items-center justify-center shrink-0">
+                <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+              </div>
+              <span className="font-semibold text-gray-800 text-sm sm:text-base">
+                {name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

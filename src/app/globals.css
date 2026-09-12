@@ -55,6 +55,19 @@ html {
   scroll-behavior: smooth;
 }
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+video,
+iframe,
+picture {
+  max-width: 100%;
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -175,6 +188,27 @@ html.theme-transition *::after {
     color 0.35s ease, box-shadow 0.35s ease, fill 0.2s ease !important;
 }
 
+/* ---------- Our Clients marquee ---------- */
+@keyframes clients-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-clients-marquee {
+  animation: clients-marquee 20s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-clients-marquee {
+    animation: none;
+  }
+}
+
 /* ---------- Floating / ambient animations ---------- */
 @keyframes float {
   0%,
@@ -232,13 +266,6 @@ html.theme-transition *::after {
   body.custom-cursor-active * {
     cursor: none !important;
   }
-}
-
-/* ---------- Announcement bar ---------- */
-.announcement-bar {
-  background: linear-gradient(90deg, var(--color-teal-600), var(--color-teal-700), var(--color-teal-600));
-  background-size: 200% 100%;
-  animation: shimmer 8s linear infinite;
 }
 
 /* ---------- Hero section ---------- */

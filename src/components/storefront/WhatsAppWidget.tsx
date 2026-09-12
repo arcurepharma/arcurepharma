@@ -1,311 +1,43 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { MessageCircle, X, Send, Phone } from "lucide-react";
-import { v4 as uuidv4 } from "uuid";
+import { useEffect, useState } from "react";
 
-interface Message {
-  role: "user" | "bot";
-  content: string;
-  timestamp: string;
-}
+const DEFAULT_WHATSAPP_NUMBER = "923001234567";
 
 export default function WhatsAppWidget() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [userInput, setUserInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [sessionId, setSessionId] = useState("");
-  const [userPhone, setUserPhone] = useState("");
-  const [showPhoneInput, setShowPhoneInput] = useState(false);
+  const [whatsappNumber, setWhatsappNumber] = useState(DEFAULT_WHATSAPP_NUMBER);
 
-  // Initialize session
   useEffect(() => {
-    const storedSession = localStorage.getItem("whatsapp_session");
-    if (storedSession) {
-      setSessionId(storedSession);
-      loadChatHistory(storedSession);
-    } else {
-      const newSession = uuidv4();
-      setSessionId(newSession);
-      localStorage.setItem("whatsapp_session", newSession);
-      loadInitialMessage();
-    }
+    fetch("/api/settings")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data?.whatsapp_number) {
+          setWhatsappNumber(data.whatsapp_number);
+        }
+      })
+      .catch(() => {});
   }, []);
 
-  const loadInitialMessage = () => {
-    const greeting: Message = {
-      role: "bot",
-      content: `👋 Welcome to Arcure Pharma Support!
-
-I'm here to help you with:
-1️⃣ Product Information
-2️⃣ Order Tracking
-3️⃣ Payment Options
-4️⃣ General Questions
-
-How can I assist you today?`,
-      timestamp: new Date().toISOString(),
-    };
-    setMessages([greeting]);
-  };
-
-  const loadChatHistory = async (id: string) => {
-    try {
-      const response = await fetch(`/api/whatsapp/chat?sessionId=${id}`);
-      const data = await response.json();
-      if (data.messages.length > 0) {
-        setMessages(data.messages);
-        setUserPhone(data.sessionInfo?.userPhone || "");
-      } else {
-        loadInitialMessage();
-      }
-    } catch (error) {
-      console.error("Error loading chat history:", error);
-      loadInitialMessage();
-    }
-  };
-
-  const handleSendMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!userInput.trim()) return;
-
-    // Add user message
-    const userMsg: Message = {
-      role: "user",
-      content: userInput,
-      timestamp: new Date().toISOString(),
-    };
-
-    setMessages((prev) => [...prev, userMsg]);
-    setUserInput("");
-    setLoading(true);
-
-    try {
-      const response = await fetch("/api/whatsapp/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sessionId,
-          userMessage: userInput,
-          userName: localStorage.getItem("user_name") || "Guest",
-          userEmail: localStorage.getItem("user_email") || "",
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        const botMsg: Message = {
-          role: "bot",
-          content: data.response,
-          timestamp: data.timestamp,
-        };
-        setMessages((prev) => [...prev, botMsg]);
-      }
-    } catch (error) {
-      console.error("Error sending message:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleShiftToWhatsApp = async () => {
-    if (!userPhone) {
-      setShowPhoneInput(true);
-      return;
-    }
-
-    try {
-      // Send conversation link via WhatsApp
-      const message = `Hi! I'm from Arcure Pharma Support. Your chat session ID is: ${sessionId}. Continue your conversation with us via WhatsApp. Type 'help' for options.`;
-
-      await fetch("/api/whatsapp/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          phoneNumber: userPhone,
-          message,
-          sessionId,
-        }),
-      });
-
-      // Mark conversation as transferred
-      await fetch("/api/whatsapp/conversations", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sessionId,
-          action: "shiftToWhatsApp",
-        }),
-      });
-
-      alert("✅ Conversation shifted to WhatsApp!");
-      setIsOpen(false);
-    } catch (error) {
-      console.error("Error shifting to WhatsApp:", error);
-      alert("Failed to shift to WhatsApp. Please try again.");
-    }
-  };
-
-  const handlePhoneSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (userPhone) {
-      handleShiftToWhatsApp();
+  const handleRedirect = () => {
+    if (whatsappNumber) {
+      window.open(`https://wa.me/${whatsappNumber}`, "_blank");
     }
   };
 
   return (
-    <>
-      {/* Floating Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 animate-pulse min-h-[56px] min-w-[56px]"
-        aria-label="Open WhatsApp Chat"
+    <button
+      onClick={handleRedirect}
+      className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 animate-pulse min-h-[56px] min-w-[56px]"
+      aria-label="Chat on WhatsApp"
+    >
+      <svg
+        viewBox="0 0 448 512"
+        fill="currentColor"
+        className="w-7 h-7 sm:w-9 sm:h-9"
+        aria-hidden="true"
       >
-        {isOpen ? (
-          <X className="w-6 h-6 sm:w-8 sm:h-8" />
-        ) : (
-          <MessageCircle className="w-6 h-6 sm:w-8 sm:h-8" />
-        )}
-      </button>
-
-      {/* Chat Window */}
-      {isOpen && (
-        <div className="fixed bottom-16 sm:bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-32px)] sm:w-96 max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-slide-up max-h-[75vh] sm:max-h-96">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-teal-600 to-teal-700 text-white px-3 sm:px-6 py-3 sm:py-4 flex-shrink-0">
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-base sm:text-lg truncate">Arcure Pharma Support</h3>
-                <p className="text-teal-100 text-xs sm:text-sm">Usually replies instantly</p>
-              </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="hover:bg-white/20 p-2 rounded-full transition-colors flex-shrink-0 min-h-[44px] min-w-[44px]"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Messages Container */}
-          <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 bg-gray-50">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`flex ${
-                  msg.role === "user" ? "justify-end" : "justify-start"
-                }`}
-              >
-                <div
-                  className={`max-w-xs px-3 sm:px-4 py-2 sm:py-3 rounded-lg text-sm sm:text-base ${
-                    msg.role === "user"
-                      ? "bg-teal-600 text-white rounded-br-none"
-                      : "bg-white text-gray-800 rounded-bl-none border border-gray-200"
-                  }`}
-                >
-                  <p className="whitespace-pre-wrap break-words">{msg.content}</p>
-                  <p
-                    className={`text-xs mt-1 ${
-                      msg.role === "user"
-                        ? "text-teal-100"
-                        : "text-gray-400"
-                    }`}
-                  >
-                    {new Date(msg.timestamp).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
-                </div>
-              </div>
-            ))}
-            {loading && (
-              <div className="flex justify-start">
-                <div className="bg-white text-gray-800 px-3 sm:px-4 py-2 sm:py-3 rounded-lg rounded-bl-none border border-gray-200">
-                  <div className="flex gap-2">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
-                    <div
-                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                      style={{ animationDelay: "0.1s" }}
-                    />
-                    <div
-                      className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                      style={{ animationDelay: "0.2s" }}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Phone Input Section */}
-          {showPhoneInput && (
-            <div className="px-3 sm:px-4 py-2 sm:py-3 bg-blue-50 border-t border-blue-200 flex-shrink-0">
-              <form onSubmit={handlePhoneSubmit} className="space-y-2">
-                <label className="text-xs sm:text-sm font-semibold text-gray-700">
-                  Enter your WhatsApp number:
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="tel"
-                    placeholder="03001234567"
-                    value={userPhone}
-                    onChange={(e) => setUserPhone(e.target.value)}
-                    className="flex-1 px-2 sm:px-3 py-2 border border-gray-300 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent min-h-[44px]"
-                  />
-                  <button
-                    type="submit"
-                    disabled={!userPhone}
-                    className="px-3 py-2 bg-teal-600 hover:bg-teal-700 disabled:bg-gray-300 text-white rounded-lg text-xs sm:text-sm font-semibold transition-colors min-h-[44px] min-w-[44px]"
-                  >
-                    OK
-                  </button>
-                </div>
-              </form>
-            </div>
-          )}
-
-          {/* Input Area */}
-          <div className="border-t border-gray-200 p-3 sm:p-4 bg-white flex-shrink-0 space-y-2">
-            <div className="flex gap-2 flex-col sm:flex-row">
-              <button
-                onClick={handleShiftToWhatsApp}
-                className="flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold text-xs sm:text-sm transition-colors min-h-[44px] flex-1"
-              >
-                <Phone className="w-4 h-4" />
-                WhatsApp
-              </button>
-              <button
-                onClick={() => setShowPhoneInput(!showPhoneInput)}
-                className="flex-1 px-3 sm:px-4 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg font-semibold text-xs sm:text-sm transition-colors min-h-[44px]"
-              >
-                {showPhoneInput ? "Cancel" : "Phone"}
-              </button>
-            </div>
-
-            <form onSubmit={handleSendMessage} className="flex gap-2">
-              <input
-                type="text"
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                placeholder="Message..."
-                className="flex-1 px-3 py-2.5 border border-gray-300 rounded-lg text-xs sm:text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent min-h-[44px]"
-                disabled={loading}
-              />
-              <button
-                type="submit"
-                disabled={loading || !userInput.trim()}
-                className="px-3 py-2.5 bg-teal-600 hover:bg-teal-700 disabled:bg-gray-300 text-white rounded-lg transition-colors flex items-center justify-center min-h-[44px] min-w-[44px]"
-              >
-                <Send className="w-4 h-4" />
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-    </>
+        <path d="M380.9 97.1C339 55.1 283.5 32 224.1 32c-61.4 0-118 23.1-160.8 65.1C21.5 138.5 0 196.6 0 257.1c0 30.9 8.4 60.4 24.3 86.6L1 458.8c-1.6 6.5 4.8 11.8 11 9.8l118.3-24.4c25.2 12.9 54.3 19.8 84 19.8h.8c61.4 0 118-23.1 160.8-65.1C427.2 391.6 448 333.5 448 273c0-60.8-20.3-118.9-67.1-175.9zM224.1 399.5c-26.4 0-52.8-7-75.7-20.3l-5.6-3.3-70.1 14.4 14.5-68.3-3.7-5.8C68.6 290.5 60 261.7 60 232.7c0-104.5 84.9-189.7 189.4-189.7 50.4 0 99.3 19.5 135.5 54.6s55.5 79.5 55.5 129.8c0 104.7-84.9 190-180.3 190zM323.2 295.5c-5.9-3-33.4-16.8-38.6-18.7-5.2-1.9-9-2.8-12.8 2.9-3.8 5.7-14.7 18.7-18 22.5-3.3 3.8-6.6 4.3-12.5 1.4-5.9-2.9-24.9-9.2-47.5-29.3-17.6-15.6-29.4-34.9-32.9-40.8-3.4-5.9-0.4-9.1 2.6-12.1 2.7-2.7 5.9-7.1 8.9-10.7 3-3.6 4-6.2 6-10.3 2-4.1 1-7.7-0.5-10.8-1.5-3.1-12.8-31.2-17.7-42.7-4.7-11.1-9.5-9.6-12.8-9.8-3.3-.2-7.1-.2-10.9-.2-3.8 0-9.9 1.4-15.1 7.1-5.2 5.7-19.8 19.4-19.8 47.3 0 27.9 20.3 54.9 23.2 58.7 2.9 3.8 40.1 61.2 97.1 85.8 13.6 5.9 24.2 9.4 32.4 12 6.8 2.6 13 2.5 17.9 1.5 5.5-1.1 16.8-6.9 19.2-13.5 2.4-6.6 2.4-12.3 1.7-13.5-.7-1.2-2.6-1.9-5.5-3z" />
+      </svg>
+    </button>
   );
 }

@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { CheckCircle, Printer, ArrowLeft } from "lucide-react";
 import Navbar from "@/components/storefront/Navbar";
 import Footer from "@/components/storefront/Footer";
@@ -106,7 +107,13 @@ function ThankYouContent() {
         >
           <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-100">
             <div>
-              <h2 className="text-xl font-bold text-gray-900">Arcure Pharma</h2>
+              <Image
+                src="/logo-arcure.jpg"
+                alt="Arcure Pharma"
+                width={140}
+                height={36}
+                className="h-9 w-auto object-contain mb-1"
+              />
               <p className="text-gray-500 text-sm">Order Invoice</p>
             </div>
             <div className="text-right">

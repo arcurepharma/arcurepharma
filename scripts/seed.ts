@@ -16,7 +16,7 @@ async function main() {
 
   await db
     .insert(settings)
-    .values({ key: "whatsapp_number", value: "923001234567" })
+    .values({ key: "whatsapp_number", value: "933162647620" })
     .onConflictDoNothing();
 
   const defaultSettings = await db.select().from(settings);

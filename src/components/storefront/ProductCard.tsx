@@ -152,7 +152,7 @@ export default function ProductCard({ product }: { product: Product }) {
             href={`/product/${product.id}`}
             className="relative flex h-full flex-col"
           >
-            {/* Image container */}
+            {/* Image container - Fixed for mobile */}
             <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
               {gallery.slice(0, 2).map((img, i) => (
                 <Image
@@ -162,7 +162,7 @@ export default function ProductCard({ product }: { product: Product }) {
                   fill
                   priority={i === 0}
                   sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  className={`object-cover transition-all duration-700 group-hover:scale-110 ${
+                  className={`object-contain transition-all duration-700 group-hover:scale-105 p-2 sm:p-4 ${
                     i === 0
                       ? "opacity-100"
                       : "opacity-0 group-hover:opacity-100"

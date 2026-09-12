@@ -13,7 +13,6 @@ import OurClients from "@/components/storefront/OurClients";
 import DealsStrip from "@/components/storefront/DealsStrip";
 import PressLogos from "@/components/storefront/PressLogos";
 import Footer from "@/components/storefront/Footer";
-import WhatsAppWidget from "@/components/storefront/WhatsAppWidget";
 import { useReveal } from "@/lib/useReveal";
 import { Sparkles } from "lucide-react";
 
@@ -69,7 +68,7 @@ export default function HomePage() {
             <div className="section-divider mt-6" />
           </div>
 
-          {/* Products Grid */}
+          {/* Products Grid - Fixed for mobile */}
           <div>
             {loading ? (
               <div className="flex justify-center py-20">
@@ -88,7 +87,7 @@ export default function HomePage() {
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
                 {products.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
@@ -107,7 +106,6 @@ export default function HomePage() {
       <Testimonials />
       <PressLogos />
       <Footer />
-      <WhatsAppWidget />
     </main>
   );
 }

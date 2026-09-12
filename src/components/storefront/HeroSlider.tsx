@@ -115,10 +115,10 @@ export default function HeroSlider() {
             <div className="absolute inset-0 flex items-center">
               <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 w-full">
                 <div className="max-w-2xl">
-                  {/* Badge - Glassmorphism */}
+                  {/* Badge - Enhanced Glassmorphism */}
                   <div
                     key={`badge-${i}-${current}`}
-                    className={`inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-white/20 backdrop-blur-xl rounded-full border border-white/40 shadow-lg shadow-white/10 mb-3 sm:mb-6 text-[11px] sm:text-sm ${
+                    className={`water-morphism glass-glow inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full mb-3 sm:mb-6 text-[11px] sm:text-sm ${
                       i === current ? "animate-fade-in-up" : "opacity-0"
                     }`}
                   >
@@ -154,7 +154,7 @@ export default function HeroSlider() {
                     </p>
                   )}
 
-                  {/* CTA Buttons - Water Morphism */}
+                  {/* CTA Buttons - Enhanced Water Morphism */}
                   <div
                     key={`cta-${i}-${current}`}
                     className={`flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-4 ${
@@ -164,14 +164,14 @@ export default function HeroSlider() {
                   >
                     <Link
                       href="/#products"
-                      className="inline-flex items-center justify-center gap-1.5 sm:gap-2.5 px-4 sm:px-8 py-2.5 sm:py-4 bg-gradient-to-br from-white to-white/90 text-teal-700 text-xs sm:text-sm font-bold rounded-full shadow-2xl shadow-white/30 hover:shadow-3xl hover:shadow-white/40 hover:scale-105 transition-all duration-300 min-h-[44px] backdrop-blur-sm border border-white/50"
+                      className="glass-glow inline-flex items-center justify-center gap-1.5 sm:gap-2.5 px-4 sm:px-8 py-2.5 sm:py-4 bg-gradient-to-br from-white via-white/95 to-white/90 text-teal-700 text-xs sm:text-sm font-bold rounded-full shadow-[0_0_60px_rgba(255,255,255,0.4),0_20px_40px_rgba(20,184,166,0.2)] hover:shadow-[0_0_80px_rgba(255,255,255,0.5),0_25px_50px_rgba(20,184,166,0.3)] hover:scale-105 transition-all duration-300 min-h-[44px] backdrop-blur-sm border border-white/60 hover:border-white/80"
                     >
                       Shop Now
                       <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </Link>
                     <Link
                       href="/#about"
-                      className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-8 py-2.5 sm:py-4 bg-white/20 backdrop-blur-xl text-white text-xs sm:text-sm font-semibold rounded-full border border-white/40 hover:bg-white/30 hover:border-white/50 transition-all duration-300 min-h-[44px] shadow-lg shadow-white/10 hover:shadow-white/20"
+                      className="water-morphism glass-glow inline-flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-8 py-2.5 sm:py-4 text-white text-xs sm:text-sm font-semibold rounded-full hover:scale-105 transition-all duration-300 min-h-[44px]"
                     >
                       Learn More
                     </Link>
@@ -221,14 +221,14 @@ export default function HeroSlider() {
         <>
           <button
             onClick={prev}
-            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-xl hover:bg-white/35 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 border border-white/40 shadow-lg shadow-white/10 min-h-[44px] min-w-[44px] sm:min-h-[56px] sm:min-w-[56px]"
+            className="glassmorphism-card glass-glow absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 min-h-[44px] min-w-[44px] sm:min-h-[56px] sm:min-w-[56px]"
             aria-label="Previous slide"
           >
             <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </button>
           <button
             onClick={next}
-            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-14 sm:h-14 bg-white/20 backdrop-blur-xl hover:bg-white/35 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 border border-white/40 shadow-lg shadow-white/10 min-h-[44px] min-w-[44px] sm:min-h-[56px] sm:min-w-[56px]"
+            className="glassmorphism-card glass-glow absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 min-h-[44px] min-w-[44px] sm:min-h-[56px] sm:min-w-[56px]"
             aria-label="Next slide"
           >
             <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />

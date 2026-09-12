@@ -147,7 +147,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <>
       <div className="group relative h-full">
-        <div className="relative h-full rounded-2xl bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-xl overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_25px_60px_-10px_rgba(20,184,166,0.15)] shadow-lg shadow-black/5 ring-1 ring-white/60 hover:ring-white/80 hover:backdrop-blur-2xl border border-white/50 hover:border-white/70">
+        <div className="glassmorphism-card water-morphism relative h-full rounded-2xl overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_25px_60px_-10px_rgba(20,184,166,0.25),0_0_80px_rgba(255,255,255,0.2)] shadow-lg ring-1 ring-white/60 hover:ring-white/90">
           <Link
             href={`/product/${product.id}`}
             className="relative flex h-full flex-col"

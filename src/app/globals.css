@@ -1,0 +1,356 @@
+@import "tailwindcss";
+
+/* ---------- Theme: Leaf Green (default) ---------- */
+:root,
+html[data-theme="green"] {
+  --color-teal-50: #f0fdf4;
+  --color-teal-100: #dcfce7;
+  --color-teal-200: #bbf7d0;
+  --color-teal-300: #86efac;
+  --color-teal-400: #4ade80;
+  --color-teal-500: #22c55e;
+  --color-teal-600: #16a34a;
+  --color-teal-700: #15803d;
+  --color-teal-800: #166534;
+  --color-teal-900: #14532d;
+
+  --color-green-50: #f0fdf4;
+  --color-green-100: #dcfce7;
+  --color-green-200: #bbf7d0;
+  --color-green-300: #86efac;
+  --color-green-400: #4ade80;
+  --color-green-500: #22c55e;
+  --color-green-600: #16a34a;
+  --color-green-700: #15803d;
+  --color-green-800: #166534;
+  --color-green-900: #14532d;
+}
+
+/* ---------- Theme: Navy Blue ---------- */
+html[data-theme="navy"] {
+  --color-teal-50: #eef3f9;
+  --color-teal-100: #d9e3f2;
+  --color-teal-200: #b2c6e3;
+  --color-teal-300: #7f9fc9;
+  --color-teal-400: #4f78ae;
+  --color-teal-500: #2f5a94;
+  --color-teal-600: #1f407a;
+  --color-teal-700: #16315f;
+  --color-teal-800: #122647;
+  --color-teal-900: #0b1a31;
+
+  --color-green-50: #eef3f9;
+  --color-green-100: #d9e3f2;
+  --color-green-200: #b2c6e3;
+  --color-green-300: #7f9fc9;
+  --color-green-400: #4f78ae;
+  --color-green-500: #2f5a94;
+  --color-green-600: #1f407a;
+  --color-green-700: #16315f;
+  --color-green-800: #122647;
+  --color-green-900: #0b1a31;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.7s ease-out forwards;
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.6s ease-out forwards;
+}
+
+/* ---------- Custom cursor (glow + smooth trail) ---------- */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 9999px;
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--color-teal-400);
+  box-shadow: 0 0 12px var(--color-teal-400),
+    0 0 24px color-mix(in srgb, var(--color-teal-400) 60%, transparent);
+  transform: translate(-50%, -50%);
+}
+
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  border: 2px solid color-mix(in srgb, var(--color-teal-400) 50%, transparent);
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
+}
+
+.cursor-ring.is-hovering {
+  width: 64px;
+  height: 64px;
+  border-color: var(--color-teal-600);
+  background: color-mix(in srgb, var(--color-teal-400) 8%, transparent);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* ---------- Scroll reveal ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  transform: translateX(-50px);
+}
+.reveal-right {
+  transform: translateX(50px);
+}
+.reveal-scale {
+  transform: scale(0.9);
+}
+
+/* ---------- Smooth theme switching ---------- */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 0.35s ease, border-color 0.35s ease,
+    color 0.35s ease, box-shadow 0.35s ease, fill 0.2s ease !important;
+}
+
+/* ---------- Floating / ambient animations ---------- */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-teal-400) 40%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 14px transparent;
+  }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-montserrat), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--color-white, #ffffff);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-montserrat), inherit;
+  }
+}
+
+/* Hide default cursor only on fine-pointer devices when custom cursor is active */
+@media (pointer: fine) {
+  body.custom-cursor-active,
+  body.custom-cursor-active * {
+    cursor: none !important;
+  }
+}
+
+/* ---------- Announcement bar ---------- */
+.announcement-bar {
+  background: linear-gradient(90deg, var(--color-teal-600), var(--color-teal-700), var(--color-teal-600));
+  background-size: 200% 100%;
+  animation: shimmer 8s linear infinite;
+}
+
+/* ---------- Hero section ---------- */
+.hero-gradient-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.3) 40%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+}
+
+.hero-text-shadow {
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- Product card hover effects ---------- */
+.product-card-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card-shine::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  transform: rotate(30deg) translateX(-100%);
+  transition: transform 0.8s ease;
+  pointer-events: none;
+}
+
+.product-card-shine:hover::after {
+  transform: rotate(30deg) translateX(100%);
+}
+
+/* ---------- Review card ---------- */
+.review-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.review-card::before {
+  content: "\201C";
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  font-size: 120px;
+  font-family: Georgia, serif;
+  color: var(--color-teal-100);
+  line-height: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------- Glass effect ---------- */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ---------- Section divider ---------- */
+.section-divider {
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-teal-400), var(--color-teal-600));
+  border-radius: 999px;
+  margin: 0 auto;
+}
+
+/* ---------- Stats counter ---------- */
+.stat-counter {
+  background: linear-gradient(135deg, var(--color-teal-50), white);
+  border: 2px solid var(--color-teal-100);
+}
+
+/* ---------- Scrollbar styling ---------- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-teal-400);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-teal-600);
+}
+
+/* ---------- Selection color ---------- */
+::selection {
+  background: color-mix(in srgb, var(--color-teal-400) 30%, transparent);
+  color: var(--color-teal-900);
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}

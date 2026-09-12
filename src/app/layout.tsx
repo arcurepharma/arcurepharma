@@ -3,7 +3,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import CustomCursor from "@/components/storefront/CustomCursor";
-import ChatBot from "@/components/storefront/ChatBot";
+import WhatsAppWidget from "@/components/storefront/WhatsAppWidget";
 import ComparisonDrawer from "@/components/storefront/ComparisonDrawer";
 import NewsletterPopup from "@/components/storefront/NewsletterPopup";
 import MobileBottomNav from "@/components/storefront/MobileBottomNav";
@@ -77,7 +77,7 @@ export default function RootLayout({
         <ThemeInit />
         <ThemeProvider>
           <CustomCursor />
-          <ChatBot />
+          <WhatsAppWidget />
           <ComparisonDrawer />
           <LiveViewers />
           <NewsletterPopup />

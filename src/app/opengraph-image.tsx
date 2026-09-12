@@ -11,7 +11,7 @@ export const contentType = "image/png";
 
 export default async function OpengraphImage() {
   const logoBuffer = await readFile(
-    path.join(process.cwd(), "public", "logo-arcure.jpg")
+    path.join(process.cwd(), "public", "logo-arcure.png")
   );
   const logoBase64 = logoBuffer.toString("base64");
   const logoDataUrl = `data:image/jpeg;base64,${logoBase64}`;

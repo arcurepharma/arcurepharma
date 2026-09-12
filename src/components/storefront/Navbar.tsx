@@ -73,7 +73,7 @@ export default function Navbar() {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0 group">
               <Image
-                src="/logo-arcure.jpg"
+                src="/logo-arcure.png"
                 alt="Arcure Pharma"
                 width={180}
                 height={45}

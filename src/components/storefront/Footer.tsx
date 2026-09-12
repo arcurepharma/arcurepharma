@@ -68,7 +68,7 @@ export default function Footer() {
             <div className="lg:col-span-1">
               <div className="flex items-center gap-2 mb-4">
                 <Image
-                  src="/logo-arcure.jpg"
+                  src="/logo-arcure.png"
                   alt="Arcure Pharma"
                   width={160}
                   height={40}

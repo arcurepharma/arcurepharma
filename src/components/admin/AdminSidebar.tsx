@@ -56,7 +56,7 @@ export default function AdminSidebar() {
       <div className="p-4 flex items-center gap-3 border-b border-gray-800">
         {collapsed ? (
           <Image
-            src="/logo-arcure.jpg"
+            src="/logo-arcure.png"
             alt="Arcure Pharma"
             width={80}
             height={40}
@@ -64,7 +64,7 @@ export default function AdminSidebar() {
           />
         ) : (
           <Image
-            src="/logo-arcure.jpg"
+            src="/logo-arcure.png"
             alt="Arcure Pharma"
             width={140}
             height={40}

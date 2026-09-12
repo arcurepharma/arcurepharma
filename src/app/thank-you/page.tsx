@@ -108,7 +108,7 @@ function ThankYouContent() {
           <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-100">
             <div>
               <Image
-                src="/logo-arcure.jpg"
+                src="/logo-arcure.png"
                 alt="Arcure Pharma"
                 width={140}
                 height={36}

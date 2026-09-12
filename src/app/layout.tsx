@@ -5,7 +5,6 @@ import { Toaster } from "react-hot-toast";
 import CustomCursor from "@/components/storefront/CustomCursor";
 import WhatsAppWidget from "@/components/storefront/WhatsAppWidget";
 import NewsletterPopup from "@/components/storefront/NewsletterPopup";
-import MobileBottomNav from "@/components/storefront/MobileBottomNav";
 import ThemeInit from "@/components/storefront/ThemeInit";
 import { ThemeProvider } from "@/lib/ThemeProvider";
 
@@ -77,7 +76,6 @@ export default function RootLayout({
           <CustomCursor />
           <WhatsAppWidget />
           <NewsletterPopup />
-          <MobileBottomNav />
           <Toaster
             position="top-center"
             toastOptions={{

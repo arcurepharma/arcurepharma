@@ -8,7 +8,6 @@ import {
   Eye,
   PlayCircle,
   ShoppingCart,
-  Heart,
   X,
   Minus,
   ShieldCheck,
@@ -37,24 +36,9 @@ export default function ProductCard({ product }: { product: Product }) {
     new Set([product.imageUrl, ...(product.images || [])])
   ).filter(Boolean) as string[];
 
-  const [wishlisted, setWishlisted] = useState(false);
   const [quickView, setQuickView] = useState(false);
   const [activeImg, setActiveImg] = useState(product.imageUrl);
   const [qty, setQty] = useState(1);
-
-  useEffect(() => {
-    const t = window.setTimeout(() => {
-      try {
-        const list = JSON.parse(
-          localStorage.getItem("arcure-wishlist") || "[]"
-        ) as string[];
-        setWishlisted(list.includes(product.id));
-      } catch {
-        /* ignore */
-      }
-    }, 0);
-    return () => window.clearTimeout(t);
-  }, [product.id]);
 
   useEffect(() => {
     if (!quickView) return;
@@ -79,25 +63,6 @@ export default function ProductCard({ product }: { product: Product }) {
       imageUrl: product.imageUrl,
     });
     toast.success(`${product.title} added to cart!`);
-  };
-
-  const toggleWishlist = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    try {
-      const list = JSON.parse(
-        localStorage.getItem("arcure-wishlist") || "[]"
-      ) as string[];
-      const exists = list.includes(product.id);
-      const next = exists
-        ? list.filter((id) => id !== product.id)
-        : [...list, product.id];
-      localStorage.setItem("arcure-wishlist", JSON.stringify(next));
-      setWishlisted(!exists);
-      toast.success(exists ? "Removed from wishlist" : "Added to wishlist");
-    } catch {
-      /* ignore */
-    }
   };
 
   const openQuickView = (e: React.MouseEvent) => {
@@ -162,21 +127,6 @@ export default function ProductCard({ product }: { product: Product }) {
                 )}
               </div>
 
-              {/* Wishlist */}
-              <button
-                onClick={toggleWishlist}
-                aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
-                className={`absolute top-2 sm:top-3 right-2 sm:right-3 z-10 w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center backdrop-blur-sm shadow-md transition-all duration-300 active:scale-90 min-h-[44px] min-w-[44px] sm:min-h-[36px] sm:min-w-[36px] ${
-                  wishlisted
-                    ? "bg-red-500/95 text-white hover:bg-red-600"
-                    : "bg-white/95 text-gray-500 hover:text-red-500 hover:scale-110"
-                }`}
-              >
-                <Heart
-                  className={`w-4 h-4 ${wishlisted ? "fill-white" : ""}`}
-                />
-              </button>
-
               {/* Image counter */}
               {gallery.length > 1 && (
                 <span className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 z-10 px-2 sm:px-2.5 py-0.5 sm:py-1 bg-black/50 backdrop-blur-sm text-white text-[9px] sm:text-[10px] font-medium rounded-md">
@@ -194,15 +144,6 @@ export default function ProductCard({ product }: { product: Product }) {
                   Quick View
                 </button>
               </div>
-
-              {/* Quick add - on mobile shown on long press, desktop on hover */}
-              <button
-                onClick={handleAdd}
-                aria-label="Add to cart"
-                className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 z-10 w-10 h-10 sm:w-11 sm:h-11 bg-teal-600 text-white rounded-full flex items-center justify-center shadow-lg opacity-100 sm:opacity-0 sm:translate-y-2 sm:group-hover:opacity-100 sm:group-hover:translate-y-0 transition-all duration-300 hover:bg-teal-700 hover:scale-110 active:scale-95 min-h-[44px] min-w-[44px]"
-              >
-                <Plus className="w-5 h-5 sm:w-6 sm:h-6" />
-              </button>
             </div>
 
             {/* Content */}

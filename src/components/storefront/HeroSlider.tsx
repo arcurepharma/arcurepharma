@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 
 interface Slide {
@@ -62,11 +62,6 @@ export default function HeroSlider() {
     setCurrent((c) => (c + 1) % slides.length);
   }, [slides.length]);
 
-  const prev = useCallback(() => {
-    if (slides.length === 0) return;
-    setCurrent((c) => (c - 1 + slides.length) % slides.length);
-  }, [slides.length]);
-
   useEffect(() => {
     if (slides.length <= 1) return;
     const timer = setInterval(next, duration);
@@ -85,7 +80,7 @@ export default function HeroSlider() {
   }
 
   return (
-    <section className="relative h-64 sm:h-80 md:h-96 lg:h-[85vh] overflow-hidden bg-gray-900 mt-[64px] lg:mt-[72px]">
+    <section className="relative aspect-[19/8] sm:h-80 md:h-96 lg:h-[85vh] overflow-hidden bg-gray-900 mt-[64px] lg:mt-[72px]">
       <div className="relative w-full h-full">
         {slides.map((slide, i) => (
           <div
@@ -114,19 +109,6 @@ export default function HeroSlider() {
             <div className="absolute inset-0 flex items-center">
               <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 w-full">
                 <div className="max-w-2xl">
-                  {/* Badge */}
-                  <div
-                    key={`badge-${i}-${current}`}
-                    className={`inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-white/15 backdrop-blur-sm rounded-full border border-white/20 mb-3 sm:mb-6 text-[11px] sm:text-sm ${
-                      i === current ? "animate-fade-in-up" : "opacity-0"
-                    }`}
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                    <span className="text-white/90 font-medium">
-                      Pakistan&apos;s Trusted Pharmacy
-                    </span>
-                  </div>
-
                   {/* Title */}
                   {slide.title && (
                     <h2
@@ -192,40 +174,22 @@ export default function HeroSlider() {
         </div>
       </div>
 
-      {/* Navigation arrows */}
+      {/* Dot indicators */}
       {slides.length > 1 && (
-        <>
-          <button
-            onClick={prev}
-            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-14 sm:h-14 bg-white/10 backdrop-blur-sm hover:bg-white/25 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 border border-white/20 min-h-[44px] min-w-[44px] sm:min-h-[56px] sm:min-w-[56px]"
-            aria-label="Previous slide"
-          >
-            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-          </button>
-          <button
-            onClick={next}
-            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 sm:w-14 sm:h-14 bg-white/10 backdrop-blur-sm hover:bg-white/25 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 border border-white/20 min-h-[44px] min-w-[44px] sm:min-h-[56px] sm:min-w-[56px]"
-            aria-label="Next slide"
-          >
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-          </button>
-
-          {/* Dot indicators */}
-          <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3 z-20">
-            {slides.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrent(i)}
-                aria-label={`Go to slide ${i + 1}`}
-                className={`h-1.5 sm:h-2 rounded-full transition-all duration-500 ${
-                  i === current
-                    ? "w-6 sm:w-10 bg-white shadow-[0_0_12px_rgba(255,255,255,0.5)]"
-                    : "w-1.5 sm:w-2 bg-white/40 hover:bg-white/60"
-                }`}
-              />
-            ))}
-          </div>
-        </>
+        <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3 z-20">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`h-1.5 sm:h-2 rounded-full transition-all duration-500 ${
+                i === current
+                  ? "w-6 sm:w-10 bg-white shadow-[0_0_12px_rgba(255,255,255,0.5)]"
+                  : "w-1.5 sm:w-2 bg-white/40 hover:bg-white/60"
+              }`}
+            />
+          ))}
+        </div>
       )}
     </section>
   );

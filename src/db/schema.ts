@@ -191,18 +191,4 @@ export const inventory = pgTable("inventory", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-// WhatsApp chat history
-export const chatHistory = pgTable("chat_history", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  sessionId: varchar("session_id", { length: 255 }).notNull(),
-  userPhone: varchar("user_phone", { length: 50 }).notNull(),
-  userName: varchar("user_name", { length: 255 }).default(""),
-  userEmail: varchar("user_email", { length: 255 }).default(""),
-  messages: jsonb("messages").$type<{role: string, content: string, timestamp: string}[]>().default([]),
-  orderId: uuid("order_id").references(() => orders.id, { onDelete: "set null" }),
-  status: varchar("status", { length: 50 }).default("Active").notNull(), // Active, Completed, Transferred
-  conversationType: varchar("conversation_type", { length: 50 }).default("Support").notNull(), // Support, OrderTracking, ProductInfo
-  shiftedToWhatsApp: integer("shifted_to_whatsapp").default(0).notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+

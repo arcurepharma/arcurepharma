@@ -37,7 +37,7 @@ export const translations = {
     placeOrder: "Place Order",
     
     // Trust badges
-    genuineProducts: "100% Genuine",
+// hello
     fastDelivery: "Fast Delivery",
     securePayment: "Secure Payment",
     moneyBack: "Money Back Guarantee",

@@ -4,12 +4,7 @@ import { ShieldCheck, Truck, Award, HeadphonesIcon, RefreshCcw, CreditCard } fro
 
 export default function TrustBadges() {
   const badges = [
-    {
-      icon: ShieldCheck,
-      title: "100% Genuine",
-      description: "Authentic products guaranteed",
-      color: "teal",
-    },
+   
     {
       icon: Truck,
       title: "Fast Delivery",

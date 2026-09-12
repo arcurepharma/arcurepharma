@@ -4,8 +4,7 @@ import { Newspaper, Star, Award, ShieldCheck } from "lucide-react";
 import { useReveal } from "@/lib/useReveal";
 
 const TRUSTED_BY = [
-  { name: "100+ Pharmacies", icon: ShieldCheck },
-  { name: "10,000+ Customers", icon: Star },
+  { name: "1000+ Customers", icon: Star },
   { name: "Dermatologist Approved", icon: Award },
   { name: "FDA Certified", icon: ShieldCheck },
   { name: "ISO Certified", icon: Award },

@@ -144,7 +144,7 @@ export default function HeroSlider() {
                     style={{ animationDelay: "0.55s" }}
                   >
                     {[
-                      { label: "100% Genuine", icon: "✓" },
+                     
                       { label: "Fast Delivery", icon: "🚚" },
                       { label: "Expert Approved", icon: "★" },
                     ].map((badge) => (

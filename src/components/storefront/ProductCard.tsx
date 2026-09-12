@@ -176,10 +176,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
                 {/* Trust row */}
                 <div className="mt-2 sm:mt-3 flex items-center gap-2 sm:gap-3 text-[9px] sm:text-[10px] font-medium text-gray-400 flex-wrap">
-                  <span className="flex items-center gap-0.5 sm:gap-1 whitespace-nowrap">
-                    <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-500 flex-shrink-0" />
-                    100% Genuine
-                  </span>
+                 
                   <span className="hidden sm:flex items-center gap-1 whitespace-nowrap">
                     <Truck className="w-3.5 h-3.5 text-teal-600 flex-shrink-0" />
                     Fast Delivery
@@ -307,10 +304,7 @@ export default function ProductCard({ product }: { product: Product }) {
                 </div>
 
                 <div className="border-t border-dashed border-gray-100 pt-4 sm:pt-5 flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 text-xs font-medium text-gray-500">
-                  <span className="flex items-center gap-1.5">
-                    <ShieldCheck className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                    100% Genuine
-                  </span>
+                  
                   <span className="flex items-center gap-1.5">
                     <Truck className="w-4 h-4 text-teal-600 flex-shrink-0" />
                     Fast Delivery

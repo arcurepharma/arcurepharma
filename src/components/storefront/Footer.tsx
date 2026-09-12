@@ -41,7 +41,7 @@ export default function Footer() {
             <div className="grid grid-cols-2 gap-4">
               {[
                 { value: "5,000+", label: "Happy Customers" },
-                { value: "100+", label: "Products" },
+          
                 { value: "4.9", label: "Average Rating" },
                 { value: "24/7", label: "Customer Support" },
               ].map((stat) => (

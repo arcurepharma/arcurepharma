@@ -18,30 +18,8 @@ export const paymentMethods: PaymentConfig[] = [
     icon: "💵",
     fees: 0,
   },
-  {
-    method: "JazzCash",
-    enabled: true,
-    label: "JazzCash",
-    description: "Pay securely via JazzCash mobile wallet",
-    icon: "📱",
-    fees: 0,
-  },
-  {
-    method: "EasyPaisa",
-    enabled: true,
-    label: "EasyPaisa",
-    description: "Pay using EasyPaisa account",
-    icon: "💳",
-    fees: 0,
-  },
-  {
-    method: "Card",
-    enabled: true,
-    label: "Credit/Debit Card",
-    description: "Secure payment with your card",
-    icon: "💳",
-    fees: 0,
-  },
+  
+ 
 ];
 
 export function getPaymentMethod(method: PaymentMethod): PaymentConfig | undefined {

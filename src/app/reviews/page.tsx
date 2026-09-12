@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Star, Quote, BadgeCheck, ShieldCheck, MessageSquareQuote, Users } from "lucide-react";
+import { Star, Quote, ShieldCheck, MessageSquareQuote, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/storefront/Navbar";
@@ -228,12 +228,7 @@ export default function ReviewsPage() {
               <div className="hidden sm:block w-px h-10 bg-white/20" />
               <div className="flex items-center gap-3">
                 <ShieldCheck className="w-8 h-8 text-emerald-300" />
-                <div>
-                  <span className="block text-2xl font-bold text-white">
-                    100%
-                  </span>
-                  <p className="text-teal-100/80 text-xs">Genuine customers</p>
-                </div>
+              
               </div>
             </div>
           )}
@@ -353,10 +348,6 @@ function TextReviewCard({
       <div className="relative">
         <div className="flex items-center justify-between mb-4">
           <Stars rating={review.rating} />
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-teal-50 text-teal-700 text-[11px] font-semibold rounded-full">
-            <BadgeCheck className="w-3.5 h-3.5" />
-            Verified
-          </span>
         </div>
         <p className="text-gray-600 leading-relaxed mb-6 min-h-24">
           &ldquo;{review.text}&rdquo;
@@ -373,7 +364,6 @@ function TextReviewCard({
             <p className="font-semibold text-gray-800 text-sm">
               {review.name}
             </p>
-            <p className="text-gray-500 text-xs">{review.role || "Customer"}</p>
           </div>
         </div>
       </div>
@@ -406,10 +396,6 @@ function ImageReviewCard({
           <span className="px-3 py-1.5 bg-white/95 backdrop-blur-sm rounded-full shadow-sm">
             <Stars rating={review.rating} size="w-3.5 h-3.5" />
           </span>
-          <span className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-teal-600/90 backdrop-blur-sm text-white text-[11px] font-semibold rounded-full">
-            <BadgeCheck className="w-3.5 h-3.5" />
-            Verified
-          </span>
         </div>
       </div>
       <div className="p-6">
@@ -427,9 +413,6 @@ function ImageReviewCard({
           <div>
             <p className="font-semibold text-gray-800 text-sm">
               {review.name}
-            </p>
-            <p className="text-gray-500 text-xs">
-              {review.role || "Customer"}
             </p>
           </div>
         </div>

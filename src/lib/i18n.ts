@@ -78,7 +78,6 @@ export const translations = {
     placeOrder: "آرڈر کریں",
     
     // Trust badges
-    genuineProducts: "100% اصلی",
     fastDelivery: "تیز ترسیل",
     securePayment: "محفوظ ادائیگی",
     moneyBack: "رقم کی واپسی کی ضمانت",

@@ -23,18 +23,8 @@ export default function TrustBadges() {
       description: "Expert customer care always",
       color: "orange",
     },
-    {
-      icon: RefreshCcw,
-      title: "Easy Returns",
-      description: "30-day money-back guarantee",
-      color: "green",
-    },
-    {
-      icon: CreditCard,
-      title: "Secure Payment",
-      description: "Multiple payment options",
-      color: "pink",
-    },
+
+ 
   ];
 
   const colorClasses: Record<string, { bg: string; icon: string; border: string }> = {

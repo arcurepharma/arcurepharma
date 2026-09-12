@@ -40,9 +40,9 @@ export default function Footer() {
 
             <div className="grid grid-cols-2 gap-4">
               {[
-                { value: "5,000+", label: "Happy Customers" },
+                { value: "1,000+", label: "Happy Customers" },
           
-                { value: "4.9", label: "Average Rating" },
+                { value: "4.0", label: "Average Rating" },
                 { value: "24/7", label: "Customer Support" },
               ].map((stat) => (
                 <div
@@ -106,7 +106,7 @@ export default function Footer() {
                 {[
                   { href: "/", label: "Home" },
                   { href: "/#products", label: "Products" },
-                  { href: "/reviews", label: "Testimonials" },
+                  { href: "/reviews", label: "Reviews" },
                   { href: "/#about", label: "About Us" },
                   { href: "/checkout", label: "Checkout" },
                 ].map((link) => (

@@ -260,14 +260,6 @@ html.theme-transition *::after {
   }
 }
 
-/* Hide default cursor only on fine-pointer devices when custom cursor is active */
-@media (pointer: fine) {
-  body.custom-cursor-active,
-  body.custom-cursor-active * {
-    cursor: none !important;
-  }
-}
-
 /* ---------- Hero section ---------- */
 .hero-gradient-overlay {
   background: linear-gradient(

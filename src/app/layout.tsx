@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import CustomCursor from "@/components/storefront/CustomCursor";
 import WhatsAppWidget from "@/components/storefront/WhatsAppWidget";
 import NewsletterPopup from "@/components/storefront/NewsletterPopup";
 import ThemeInit from "@/components/storefront/ThemeInit";
@@ -73,7 +72,6 @@ export default function RootLayout({
       <body className={`${montserrat.variable} antialiased`}>
         <ThemeInit />
         <ThemeProvider>
-          <CustomCursor />
           <WhatsAppWidget />
           <NewsletterPopup />
           <Toaster

@@ -1,13 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db, isDbConfigured } from "@/db";
 import { products } from "@/db/schema";
+import { sql } from "drizzle-orm";
 
 export async function GET() {
   if (!isDbConfigured) {
     return NextResponse.json([]);
   }
   try {
-    const allProducts = await db.select().from(products);
+    const allProducts = await db
+      .select()
+      .from(products)
+      .orderBy(
+        sql`CASE WHEN ${products.category} = 'Skin Care' THEN 0 ELSE 1 END`,
+        products.createdAt
+      );
     return NextResponse.json(allProducts);
   } catch {
     return NextResponse.json(

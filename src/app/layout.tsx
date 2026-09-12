@@ -4,7 +4,6 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import CustomCursor from "@/components/storefront/CustomCursor";
 import WhatsAppWidget from "@/components/storefront/WhatsAppWidget";
-import ComparisonDrawer from "@/components/storefront/ComparisonDrawer";
 import NewsletterPopup from "@/components/storefront/NewsletterPopup";
 import MobileBottomNav from "@/components/storefront/MobileBottomNav";
 import LiveViewers from "@/components/storefront/LiveViewers";
@@ -78,7 +77,6 @@ export default function RootLayout({
         <ThemeProvider>
           <CustomCursor />
           <WhatsAppWidget />
-          <ComparisonDrawer />
           <LiveViewers />
           <NewsletterPopup />
           <MobileBottomNav />

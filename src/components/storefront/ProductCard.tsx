@@ -147,7 +147,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <>
       <div className="group relative h-full">
-        <div className="relative h-full rounded-2xl bg-white overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] shadow-[0_4px_20px_-5px_rgba(0,0,0,0.08)] ring-1 ring-gray-100">
+        <div className="relative h-full rounded-2xl bg-gradient-to-br from-white/90 to-white/70 backdrop-blur-xl overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_25px_60px_-10px_rgba(20,184,166,0.15)] shadow-lg shadow-black/5 ring-1 ring-white/60 hover:ring-white/80 hover:backdrop-blur-2xl border border-white/50 hover:border-white/70">
           <Link
             href={`/product/${product.id}`}
             className="relative flex h-full flex-col"
@@ -241,8 +241,8 @@ export default function ProductCard({ product }: { product: Product }) {
               </button>
             </div>
 
-            {/* Content */}
-            <div className="relative flex flex-1 flex-col p-3 sm:p-5">
+            {/* Content - Glassmorphism */}
+            <div className="relative flex flex-1 flex-col p-3 sm:p-5 bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-lg border-t border-white/10">
               <h3 className="font-bold text-gray-900 text-sm sm:text-[15px] mb-1 sm:mb-1.5 line-clamp-1 group-hover:text-teal-700 transition-colors">
                 {product.title}
               </h3>
@@ -251,7 +251,7 @@ export default function ProductCard({ product }: { product: Product }) {
               </p>
 
               <div className="mt-auto">
-                <div className="flex items-end justify-between gap-2 sm:gap-3 pt-2 sm:pt-3 border-t border-gray-100">
+                <div className="flex items-end justify-between gap-2 sm:gap-3 pt-2 sm:pt-3 border-t border-white/20">
                   <div>
                     <p className="text-[8px] sm:text-[9px] uppercase tracking-wider text-gray-400 font-semibold mb-0.5">
                       Price
@@ -262,7 +262,7 @@ export default function ProductCard({ product }: { product: Product }) {
                   </div>
                   <button
                     onClick={handleAdd}
-                    className="flex items-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-[13px] font-semibold rounded-lg sm:rounded-xl transition-all active:scale-95 shadow-md shadow-teal-600/20 min-h-[44px] flex-shrink-0"
+                    className="flex items-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-br from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white text-xs sm:text-[13px] font-semibold rounded-lg sm:rounded-xl transition-all active:scale-95 shadow-lg shadow-teal-600/30 hover:shadow-teal-600/50 backdrop-blur-sm border border-teal-400/50 min-h-[44px] flex-shrink-0"
                   >
                     <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     <span className="hidden sm:inline">Add</span>

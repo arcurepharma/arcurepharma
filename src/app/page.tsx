@@ -9,7 +9,7 @@ import BundleDeals from "@/components/storefront/BundleDeals";
 import RecentlyViewed from "@/components/storefront/RecentlyViewed";
 import Testimonials from "@/components/storefront/Testimonials";
 import VisionPanel from "@/components/storefront/VisionPanel";
-import ResultsTrust from "@/components/storefront/ResultsTrust";
+import OurClients from "@/components/storefront/OurClients";
 import DealsStrip from "@/components/storefront/DealsStrip";
 import PressLogos from "@/components/storefront/PressLogos";
 import Footer from "@/components/storefront/Footer";
@@ -98,7 +98,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <ResultsTrust />
+      <OurClients />
       <TrustBadges />
       <BundleDeals />
       <VisionPanel />

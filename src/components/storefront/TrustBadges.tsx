@@ -44,7 +44,7 @@ export default function TrustBadges() {
             Why Choose Arcure Pharma?
           </h2>
           <p className="text-gray-500 text-lg max-w-2xl mx-auto">
-            Your health and satisfaction are our top priorities
+          Products designed to help you achieve healthier, smoother and more radiant-looking skin.
           </p>
         </div>
 

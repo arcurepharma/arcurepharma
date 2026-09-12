@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Building2, Users } from "lucide-react";
 import { useReveal } from "@/lib/useReveal";
 
@@ -43,22 +44,71 @@ export default function OurClients() {
         <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-white to-transparent z-10" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-white to-transparent z-10" />
 
-        <div className="flex items-center gap-4 animate-clients-marquee">
-          {[...CLIENTS, ...CLIENTS].map((name, i) => (
-            <div
-              key={i}
-              className="flex items-center gap-3 px-6 sm:px-8 py-4 sm:py-5 bg-white rounded-2xl border border-gray-100 shadow-sm whitespace-nowrap min-w-max"
-            >
-              <div className="w-9 h-9 sm:w-11 sm:h-11 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl flex items-center justify-center shrink-0">
-                <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-              </div>
-              <span className="font-semibold text-gray-800 text-sm sm:text-base">
-                {name}
-              </span>
-            </div>
-          ))}
+        <div className="flex overflow-hidden">
+          <MarqueeTrack />
         </div>
       </div>
     </section>
+  );
+}
+
+function MarqueeTrack() {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    let raf = 0;
+    let x = 0;
+    let last = performance.now();
+    const speed = 50;
+
+    const step = (now: number) => {
+      const dt = Math.min((now - last) / 1000, 0.1);
+      last = now;
+      x -= speed * dt;
+      const groupWidth = track.scrollWidth / 2;
+      if (x <= -groupWidth) {
+        x += groupWidth;
+      }
+      track.style.transform = `translateX(${x}px)`;
+      raf = requestAnimationFrame(step);
+    };
+
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  return (
+    <div
+      ref={trackRef}
+      className="flex w-max"
+      style={{ willChange: "transform" }}
+    >
+      <div className="flex items-center gap-4 pr-4 shrink-0">
+        {CLIENTS.map((name) => (
+          <ClinicChip key={name} name={name} />
+        ))}
+      </div>
+      <div className="flex items-center gap-4 pr-4 shrink-0" aria-hidden="true">
+        {CLIENTS.map((name) => (
+          <ClinicChip key={name} name={name} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ClinicChip({ name }: { name: string }) {
+  return (
+    <div className="flex items-center gap-3 px-6 sm:px-8 py-4 sm:py-5 bg-white rounded-2xl border border-gray-100 shadow-sm whitespace-nowrap min-w-max">
+      <div className="w-9 h-9 sm:w-11 sm:h-11 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl flex items-center justify-center shrink-0">
+        <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+      </div>
+      <span className="font-semibold text-gray-800 text-sm sm:text-base">
+        {name}
+      </span>
+    </div>
   );
 }

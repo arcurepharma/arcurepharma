@@ -11,10 +11,10 @@ export const contentType = "image/png";
 
 export default async function OpengraphImage() {
   const logoBuffer = await readFile(
-    path.join(process.cwd(), "public", "logo-arcure.png")
+    path.join(process.cwd(), "public", "logo-arcure-og.png")
   );
   const logoBase64 = logoBuffer.toString("base64");
-  const logoDataUrl = `data:image/jpeg;base64,${logoBase64}`;
+  const logoDataUrl = `data:image/png;base64,${logoBase64}`;
 
   return new ImageResponse(
     (
@@ -36,10 +36,8 @@ export default async function OpengraphImage() {
           alt="Arcure Pharma"
           style={{
             width: "140px",
-            height: "auto",
+            height: "46px",
             marginBottom: "28px",
-            borderRadius: "16px",
-            background: "rgba(255,255,255,0.92)",
             objectFit: "contain",
           }}
         />

@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/lib/ThemeProvider";
 const montserrat = Montserrat({
   subsets: ["latin"],
   display: "swap",
+  preload: false,
   variable: "--font-montserrat",
 });
 

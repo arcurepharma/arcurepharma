@@ -10,7 +10,6 @@ import {
   ShoppingCart,
   X,
   Minus,
-  ShieldCheck,
   Truck,
   BadgeCheck,
 } from "lucide-react";
@@ -114,11 +113,6 @@ export default function ProductCard({ product }: { product: Product }) {
 
               {/* Top badges */}
               <div className="absolute top-2 sm:top-3 left-2 sm:left-3 z-10 flex flex-col gap-1.5 sm:gap-2">
-                {product.category && (
-                  <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 bg-white/95 backdrop-blur-sm text-teal-700 text-[10px] sm:text-[11px] font-semibold rounded-md sm:rounded-lg shadow-sm">
-                    {product.category}
-                  </span>
-                )}
                 {product.videoUrl && (
                   <span className="inline-flex items-center gap-0.5 sm:gap-1 px-2 sm:px-2.5 py-1 bg-teal-600/95 backdrop-blur-sm text-white text-[9px] sm:text-[10px] font-semibold rounded-md sm:rounded-lg shadow-sm">
                     <PlayCircle className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
@@ -147,27 +141,32 @@ export default function ProductCard({ product }: { product: Product }) {
             </div>
 
             {/* Content */}
-            <div className="relative flex flex-1 flex-col p-3 sm:p-5">
-              <h3 className="font-bold text-gray-900 text-sm sm:text-[15px] mb-1 sm:mb-1.5 line-clamp-1 group-hover:text-teal-700 transition-colors">
+            <div className="relative flex flex-1 flex-col p-2 sm:p-5">
+              {product.category && (
+                <p className="text-[10px] sm:text-[11px] font-semibold text-teal-600 mb-0.5 sm:mb-1 truncate">
+                  {product.category}
+                </p>
+              )}
+              <h3 className="font-bold text-gray-900 text-[13px] sm:text-[15px] mb-1 sm:mb-1.5 line-clamp-1 group-hover:text-teal-700 transition-colors">
                 {product.title}
               </h3>
-              <p className="text-gray-500 text-xs sm:text-[12px] leading-snug line-clamp-2 mb-3 sm:mb-4">
+              <p className="text-gray-500 text-[11px] sm:text-[12px] leading-snug line-clamp-2 mb-2 sm:mb-4">
                 {product.description || "No description available"}
               </p>
 
               <div className="mt-auto">
-                <div className="flex items-end justify-between gap-2 sm:gap-3 pt-2 sm:pt-3 border-t border-gray-100">
+                <div className="flex items-end justify-between gap-2 sm:gap-3 pt-1.5 sm:pt-3 border-t border-gray-100">
                   <div>
                     <p className="text-[8px] sm:text-[9px] uppercase tracking-wider text-gray-400 font-semibold mb-0.5">
                       Price
                     </p>
-                    <span className="text-lg sm:text-xl font-extrabold text-teal-700 leading-none">
+                    <span className="text-base sm:text-xl font-extrabold text-teal-700 leading-none">
                       {formatPrice(product.price)}
                     </span>
                   </div>
                   <button
                     onClick={handleAdd}
-                    className="flex items-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-2 sm:py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-[13px] font-semibold rounded-lg sm:rounded-xl transition-all active:scale-95 shadow-md shadow-teal-600/20 min-h-[44px] flex-shrink-0"
+                    className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2.5 bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-[13px] font-semibold rounded-lg sm:rounded-xl transition-all active:scale-95 shadow-md shadow-teal-600/20 min-h-[36px] sm:min-h-[44px] flex-shrink-0"
                   >
                     <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     <span className="hidden sm:inline">Add</span>

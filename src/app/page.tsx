@@ -46,23 +46,23 @@ export default function HomePage() {
       <HeroSlider />
 
       {/* Products Section */}
-      <section id="products" className="py-20 lg:py-28 bg-white">
+      <section id="products" className="py-10 lg:py-28 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
             ref={productsHeaderRef}
-            className={`text-center mb-12 reveal ${productsHeaderVisible ? "is-visible" : ""}`}
+            className={`text-center mb-8 lg:mb-12 reveal ${productsHeaderVisible ? "is-visible" : ""}`}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-teal-50 text-teal-700 text-sm font-semibold rounded-full mb-4">
-              <Sparkles className="w-4 h-4" />
+            <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 bg-teal-50 text-teal-700 text-xs sm:text-sm font-semibold rounded-full mb-3 sm:mb-4">
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
               Our Products
             </span>
-            <h2 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-4">
+            <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 mb-2 sm:mb-4">
               Quality Health Products
             </h2>
-            <p className="text-gray-500 mt-3 max-w-xl mx-auto text-lg">
+            <p className="text-gray-500 mt-2 sm:mt-3 max-w-xl mx-auto text-sm sm:text-lg">
               Browse our wide range of trusted medicated products
             </p>
-            <div className="section-divider mt-6" />
+            <div className="section-divider mt-3 sm:mt-6" />
           </div>
 
           {loading ? (

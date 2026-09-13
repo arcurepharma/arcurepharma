@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Minus, Plus, ShoppingCart, ArrowLeft, Star, PlayCircle } from "lucide-react";
 import Navbar from "@/components/storefront/Navbar";
 import Footer from "@/components/storefront/Footer";
+import ResultsSection from "@/components/storefront/ResultsSection";
 import { useCartStore } from "@/store/cart";
 import { formatPrice } from "@/lib/utils";
 import toast from "react-hot-toast";
@@ -234,6 +235,7 @@ export default function ProductDetailPage() {
         </div>
       </div>
 
+      <ResultsSection />
       <Footer />
     </main>
   );

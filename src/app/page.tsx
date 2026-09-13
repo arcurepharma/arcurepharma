@@ -8,6 +8,7 @@ import TrustBadges from "@/components/storefront/TrustBadges";
 import RecentlyViewed from "@/components/storefront/RecentlyViewed";
 import VisionPanel from "@/components/storefront/VisionPanel";
 import OurClients from "@/components/storefront/OurClients";
+import InstagramReels from "@/components/storefront/InstagramReels";
 import PressLogos from "@/components/storefront/PressLogos";
 import Footer from "@/components/storefront/Footer";
 import { useReveal } from "@/lib/useReveal";
@@ -91,6 +92,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      <InstagramReels />
       <OurClients />
       <TrustBadges />
       <VisionPanel />

@@ -70,7 +70,7 @@ export default function HeroSlider() {
 
   if (loading) {
     return (
-      <section className="relative h-[60vh] lg:h-[80vh] bg-teal-600 flex items-center justify-center mt-[64px] lg:mt-[72px]">
+      <section className="relative w-full h-[60vh] lg:h-[80vh] bg-teal-600 flex items-center justify-center mt-[64px] lg:mt-[72px]">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto" />
           <p className="text-white/70 mt-4 text-sm">Loading...</p>
@@ -80,8 +80,8 @@ export default function HeroSlider() {
   }
 
   return (
-    <section className="relative aspect-[19/8] sm:h-80 md:h-96 lg:h-[85vh] overflow-hidden bg-gray-900 mt-[64px] lg:mt-[72px]">
-      <div className="relative w-full h-full">
+    <section className="relative w-full aspect-[19/8] sm:h-72 md:h-96 lg:h-[75vh] overflow-hidden bg-gray-900 mt-[64px] lg:mt-[72px]">
+      <div className="absolute inset-0">
         {slides.map((slide, i) => (
           <div
             key={slide.id}
@@ -90,26 +90,26 @@ export default function HeroSlider() {
             }`}
           >
             <Image
-              src={slide.imageUrl}
+              src={`${slide.imageUrl}${
+                slide.imageUrl.includes("?") ? "&" : "?"
+              }tr=w-1920,q-80`}
               alt={slide.title || "Arcure Pharma"}
               fill
               sizes="100vw"
-              className="object-cover transition-transform duration-[8000ms] ease-out"
-              style={{
-                transform: i === current ? "scale(1.05)" : "scale(1)",
-              }}
               priority={i === 0}
               quality={85}
+              className="object-cover scale-[1.04] transition-transform duration-[8000ms] ease-out"
+              draggable={false}
             />
 
-            {/* Gradient overlay */}
+            {/* Dark gradient overlay to mask any light edges */}
+            <div className="absolute inset-0 bg-gradient-to-r from-gray-900/35 via-transparent to-gray-900/35" />
             <div className="absolute inset-0 hero-gradient-overlay" />
 
             {/* Content */}
             <div className="absolute inset-0 flex items-center">
               <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 w-full">
                 <div className="max-w-2xl">
-                  {/* Title */}
                   {slide.title && (
                     <h2
                       key={`title-${i}-${current}`}
@@ -122,7 +122,6 @@ export default function HeroSlider() {
                     </h2>
                   )}
 
-                  {/* Subtitle */}
                   {slide.subtitle && (
                     <p
                       key={`sub-${i}-${current}`}
@@ -135,29 +134,26 @@ export default function HeroSlider() {
                     </p>
                   )}
 
-                  {/* Trust badges */}
                   <div
                     key={`trust-${i}-${current}`}
                     className={`hidden sm:flex items-center gap-4 md:gap-6 mt-6 md:mt-10 ${
                       i === current ? "animate-fade-in-up" : "opacity-0"
                     }`}
                     style={{ animationDelay: "0.55s" }}
-                  >
-                    
-                  </div>
+                  />
                 </div>
               </div>
             </div>
           </div>
         ))}
+      </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-4 sm:bottom-8 right-4 sm:right-8 hidden lg:flex flex-col items-center gap-2 text-white/50 animate-bounce z-20">
-          <span className="text-[10px] uppercase tracking-[0.2em] font-medium">
-            Scroll
-          </span>
-          <ChevronDown className="w-4 h-4" />
-        </div>
+      {/* Scroll indicator */}
+      <div className="absolute bottom-4 sm:bottom-8 right-4 sm:right-8 hidden lg:flex flex-col items-center gap-2 text-white/50 animate-bounce z-20">
+        <span className="text-[10px] uppercase tracking-[0.2em] font-medium">
+          Scroll
+        </span>
+        <ChevronDown className="w-4 h-4" />
       </div>
 
       {/* Dot indicators */}

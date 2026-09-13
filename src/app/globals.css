@@ -1,33 +1,7 @@
 @import "tailwindcss";
 
-/* ---------- Theme: Leaf Green (default) ---------- */
-:root,
-html[data-theme="green"] {
-  --color-teal-50: #f0fdf4;
-  --color-teal-100: #dcfce7;
-  --color-teal-200: #bbf7d0;
-  --color-teal-300: #86efac;
-  --color-teal-400: #4ade80;
-  --color-teal-500: #22c55e;
-  --color-teal-600: #16a34a;
-  --color-teal-700: #15803d;
-  --color-teal-800: #166534;
-  --color-teal-900: #14532d;
-
-  --color-green-50: #f0fdf4;
-  --color-green-100: #dcfce7;
-  --color-green-200: #bbf7d0;
-  --color-green-300: #86efac;
-  --color-green-400: #4ade80;
-  --color-green-500: #22c55e;
-  --color-green-600: #16a34a;
-  --color-green-700: #15803d;
-  --color-green-800: #166534;
-  --color-green-900: #14532d;
-}
-
-/* ---------- Theme: Navy Blue ---------- */
-html[data-theme="navy"] {
+/* ---------- Theme: Navy Blue (default) ---------- */
+:root {
   --color-teal-50: #eef3f9;
   --color-teal-100: #d9e3f2;
   --color-teal-200: #b2c6e3;

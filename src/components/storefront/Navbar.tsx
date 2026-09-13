@@ -4,9 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { ShoppingCart, Menu, X, User, LogOut, Package, Leaf, Anchor } from "lucide-react";
+import { ShoppingCart, Menu, X, User, LogOut, Package } from "lucide-react";
 import { useCartStore } from "@/store/cart";
-import { useTheme } from "@/lib/ThemeProvider";
 
 interface NavUser {
   id: string;
@@ -56,7 +55,6 @@ export default function Navbar() {
   ];
 
   const userInitial = (user?.name || user?.email || "U").charAt(0).toUpperCase();
-  const { theme, toggleTheme } = useTheme();
 
   return (
     <>
@@ -98,36 +96,6 @@ export default function Navbar() {
 
             {/* Right side */}
             <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-3">
-              {/* Theme toggle */}
-              <button
-                onClick={toggleTheme}
-                title={theme === "green" ? "Switch to Navy Blue" : "Switch to Leaf Green"}
-                suppressHydrationWarning
-                aria-label="Toggle theme"
-                className="flex items-center rounded-full bg-gray-100 border border-gray-200 p-1 cursor-pointer transition-colors min-h-[36px] sm:min-h-[44px] shrink-0"
-              >
-                <span
-                  className={`flex items-center justify-center gap-1 rounded-full px-1.5 sm:px-2.5 py-1 text-[10px] sm:text-xs font-bold transition-all ${
-                    theme === "green"
-                      ? "bg-teal-600 text-white shadow"
-                      : "text-gray-500 hover:text-teal-700"
-                  }`}
-                >
-                  <Leaf className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                  <span className="hidden sm:inline">Green</span>
-                </span>
-                <span
-                  className={`flex items-center justify-center gap-1 rounded-full px-1.5 sm:px-2.5 py-1 text-[10px] sm:text-xs font-bold transition-all ${
-                    theme === "navy"
-                      ? "bg-[#1f407a] text-white shadow"
-                      : "text-gray-500 hover:text-[#1f407a]"
-                  }`}
-                >
-                  <Anchor className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                  <span className="hidden sm:inline">Navy</span>
-                </span>
-              </button>
-
               {/* User */}
               {user ? (
                 <div className="relative">

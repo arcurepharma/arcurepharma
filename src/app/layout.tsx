@@ -3,7 +3,6 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import WhatsAppWidget from "@/components/storefront/WhatsAppWidget";
-import NewsletterPopup from "@/components/storefront/NewsletterPopup";
 import ThemeInit from "@/components/storefront/ThemeInit";
 import { ThemeProvider } from "@/lib/ThemeProvider";
 
@@ -74,7 +73,6 @@ export default function RootLayout({
         <ThemeInit />
         <ThemeProvider>
           <WhatsAppWidget />
-          <NewsletterPopup />
           <Toaster
             position="top-center"
             toastOptions={{

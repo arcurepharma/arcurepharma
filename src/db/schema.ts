@@ -89,6 +89,7 @@ export const reviews = pgTable("reviews", {
   text: text("text").notNull(),
   imageUrl: text("image_url"),
   order: integer("order").default(0).notNull(),
+  approved: integer("approved").default(1).notNull(), // 1 = approved (visible), 0 = pending
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

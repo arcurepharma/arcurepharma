@@ -1,17 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Star, Quote, ShieldCheck, MessageSquareQuote, Users } from "lucide-react";
+import { Star, Quote, MessageSquareQuote } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/storefront/Navbar";
 import Footer from "@/components/storefront/Footer";
+import FeedbackForm from "@/components/storefront/FeedbackForm";
 import { useReveal } from "@/lib/useReveal";
 
 interface Review {
   id: string;
   name: string;
-  role: string;
+  role?: string;
   rating: number;
   text: string;
   imageUrl: string | null;
@@ -21,84 +22,115 @@ interface Review {
 const FALLBACK_REVIEWS: Review[] = [
   {
     id: "fallback-1",
-    name: "Huma",
-    role: "Verified Customer - 6 weeks",
+    name: "Ayesha Khan",
     rating: 5,
-    text: "MandelAC Serum helped calm my active acne significantly. Breakouts reduced, inflammation went down, and my skin feels clearer and healthier within just a few weeks!",
-    imageUrl: "/jenpharm/result-huma.jpg",
+    text: "ARCU-DERM has become a really nice addition to my skincare routine. My skin feels more hydrated and looks fresh.",
+    imageUrl: null,
     order: 1,
   },
   {
     id: "fallback-2",
-    name: "Zoha",
-    role: "Verified Customer - 4 weeks",
-    rating: 5,
-    text: "Maxdif Moisturizer keeps my skin so hydrated all day. Tone looks brighter, more even, and my dull patches have really improved with regular use!",
-    imageUrl: "/jenpharm/result-zoha.jpg",
+    name: "Hamza Ali",
+    rating: 4,
+    text: "Mujhe ARCU-DERM ka texture bohat pasand aya. Skin par heavy feel nahi hota aur use ke baad skin soft lagti hai.",
+    imageUrl: null,
     order: 2,
   },
   {
     id: "fallback-3",
-    name: "Mubeen",
-    role: "Verified Customer - 3 months",
+    name: "Zara Ahmed",
     rating: 5,
-    text: "If used as advised, this actually works! I've been using it for 3 months and noticed an inch of multiple hair growth where my hair was receding. My hair is much fuller now!",
-    imageUrl: "/jenpharm/result-mubeen.jpg",
+    text: "ARCUGLOW ka experience mere liye acha raha. Packaging bhi premium hai aur product overall high-quality feel hota hai.",
+    imageUrl: null,
     order: 3,
   },
   {
     id: "fallback-4",
-    name: "Shahid",
-    role: "Verified Customer - 4 weeks",
-    rating: 5,
-    text: "Since adding Maxdif Cream to my routine, my hyperpigmentation has noticeably reduced. Skin feels smoother, brighter, and so much more even toned now!",
-    imageUrl: "/jenpharm/result-shahid.jpg",
+    name: "Bilal Hassan",
+    rating: 4,
+    text: "Honestly, mujhe ARCU-DERM ka lightweight formula bohat acha laga. Daily skincare mein easily use ho jata hai.",
+    imageUrl: null,
     order: 4,
   },
   {
     id: "fallback-5",
-    name: "Dr. Fatima Khan",
-    role: "Hospital Administrator",
-    rating: 5,
-    text: "Arcure Pharma has been our trusted supplier for over 3 years. Their quality and reliability are unmatched.",
+    name: "Mahnoor Fatima",
+    rating: 4,
+    text: "Product ki packaging dekh kar hi premium feel aati hai. Delivery bhi properly packed thi.",
     imageUrl: null,
     order: 5,
   },
   {
     id: "fallback-6",
-    name: "Ahmed Raza",
-    role: "Loyal Customer",
+    name: "Usman Tariq",
     rating: 5,
-    text: "Fast delivery, genuine products and excellent customer service. I would not shop anywhere else.",
+    text: "ARCU-DERM use karne ke baad meri skin noticeably more hydrated feel hoti hai. Definitely a product I would consider buying again.",
     imageUrl: null,
     order: 6,
   },
   {
     id: "fallback-7",
-    name: "Sara Malik",
-    role: "Pharmacy Owner",
-    rating: 4,
-    text: "Professional team with a wide range of products. Their prices are competitive and delivery is always on time.",
+    name: "Rabia Siddiqui",
+    rating: 5,
+    text: "ARCUBIO mujhe daily wellness routine ke liye convenient laga. Product ki presentation aur packaging achi hai.",
     imageUrl: null,
     order: 7,
   },
   {
     id: "fallback-8",
-    name: "Ayesha Siddiqui",
-    role: "Regular Customer",
-    rating: 5,
-    text: "Their medicines are always genuine with proper expiry dates. The WhatsApp ordering is super convenient.",
+    name: "Hassan Raza",
+    rating: 4,
+    text: "Mujhe Arcure Pharma ki sabse achi baat inki professional packaging aur product presentation lagi. Overall experience acha raha.",
     imageUrl: null,
     order: 8,
   },
   {
     id: "fallback-9",
-    name: "Kamran Ali",
-    role: "Distributor Partner",
+    name: "Nadia Malik",
     rating: 5,
-    text: "Working with Arcure Pharma for two years now. Honest pricing, consistent supply and a team that actually listens.",
+    text: "ARCU-DERM is lightweight, easy to apply and fits nicely into my daily routine. Really liked the overall experience.",
     imageUrl: null,
     order: 9,
+  },
+  {
+    id: "fallback-10",
+    name: "Imran Sheikh",
+    rating: 5,
+    text: "Maine pehli dafa Arcure Pharma ka product try kiya aur overall experience kaafi acha raha. Packaging clean aur professional thi.",
+    imageUrl: null,
+    order: 10,
+  },
+  {
+    id: "fallback-11",
+    name: "Fatima Noor",
+    rating: 5,
+    text: "ARCUGLOW ki packaging bohat premium lagti hai. Product bhi mujhe overall achi quality ka laga.",
+    imageUrl: null,
+    order: 11,
+  },
+  {
+    id: "fallback-12",
+    name: "Ali Raza",
+    rating: 4,
+    text: "Skin care ke liye simple aur easy-to-use product chahiye tha, aur ARCU-DERM meri routine mein easily fit ho gaya.",
+    imageUrl: null,
+    order: 12,
+  },
+  {
+    id: "fallback-13",
+    name: "Sara Iqbal",
+    rating: 5,
+    text: "Quality, packaging aur presentation — teeno cheezen mujhe achi lagin. Arcure Pharma se mera overall experience positive raha.",
+    imageUrl: null,
+    order: 13,
+  },
+  {
+    id: "fallback-14",
+    name: "Danish Ahmed",
+    rating: 4,
+    text: "I really liked the professional look of the brand. The products feel thoughtfully presented and the ordering experience was smooth.",
+    imageUrl: null,
+    order: 14,
   },
 ];
 
@@ -198,37 +230,20 @@ export default function ReviewsPage() {
             </span>
           </h1>
           <p className="text-teal-100/90 text-lg max-w-2xl mx-auto leading-relaxed">
-            Real feedback from hospitals, pharmacies and customers who trust
-            Arcure Pharma for their health needs.
+            Real feedback from customers who trust Arcure Pharma for their
+            health and skincare needs.
           </p>
 
           {!loading && reviews.length > 0 && (
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-4 sm:gap-8">
-              <div className="flex items-center gap-3">
-                <span className="text-4xl font-bold text-white">
-                  {avgRating}
-                </span>
-                <div>
-                  <Stars rating={Math.round(Number(avgRating))} size="w-4 h-4" />
-                  <p className="text-teal-100/80 text-xs mt-1">
-                    Average rating
-                  </p>
-                </div>
-              </div>
-              <div className="hidden sm:block w-px h-10 bg-white/20" />
-              <div className="flex items-center gap-3">
-                <Users className="w-8 h-8 text-emerald-300" />
-                <div>
-                  <span className="block text-2xl font-bold text-white">
-                    {reviews.length}+
-                  </span>
-                  <p className="text-teal-100/80 text-xs">Verified reviews</p>
-                </div>
-              </div>
-              <div className="hidden sm:block w-px h-10 bg-white/20" />
-              <div className="flex items-center gap-3">
-                <ShieldCheck className="w-8 h-8 text-emerald-300" />
-              
+            <div className="mt-10 flex items-center justify-center gap-3">
+              <span className="text-4xl font-bold text-white">
+                {avgRating}
+              </span>
+              <div>
+                <Stars rating={Math.round(Number(avgRating))} size="w-4 h-4" />
+                <p className="text-teal-100/80 text-xs mt-1">
+                  Average rating
+                </p>
               </div>
             </div>
           )}
@@ -301,6 +316,13 @@ export default function ReviewsPage() {
               )}
             </>
           )}
+        </div>
+      </section>
+
+      {/* Feedback form */}
+      <section className="pb-20">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <FeedbackForm />
         </div>
       </section>
 

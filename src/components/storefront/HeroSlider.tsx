@@ -143,21 +143,7 @@ export default function HeroSlider() {
                     }`}
                     style={{ animationDelay: "0.55s" }}
                   >
-                    {[
-                     
-                      { label: "Fast Delivery", icon: "🚚" },
-                      { label: "Expert Approved", icon: "★" },
-                    ].map((badge) => (
-                      <div
-                        key={badge.label}
-                        className="flex items-center gap-2 text-white/70"
-                      >
-                        <span className="text-sm">{badge.icon}</span>
-                        <span className="text-xs font-medium">
-                          {badge.label}
-                        </span>
-                      </div>
-                    ))}
+                    
                   </div>
                 </div>
               </div>

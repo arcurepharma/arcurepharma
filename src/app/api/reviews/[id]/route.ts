@@ -35,7 +35,7 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { name, role, rating, text, imageUrl, order } = body;
+    const { name, role, rating, text, imageUrl, order, approved } = body;
 
     const clampedRating =
       rating !== undefined
@@ -51,6 +51,7 @@ export async function PUT(
         ...(text !== undefined && { text }),
         ...(imageUrl !== undefined && { imageUrl }),
         ...(order !== undefined && { order }),
+        ...(approved !== undefined && { approved: approved ? 1 : 0 }),
       })
       .where(eq(reviews.id, id))
       .returning();

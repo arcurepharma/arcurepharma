@@ -75,8 +75,8 @@ export default function FeedbackForm() {
   if (submitted) {
     return (
       <div className="bg-white rounded-3xl border border-gray-100 p-8 lg:p-12 text-center shadow-sm">
-        <div className="w-16 h-16 bg-teal-50 rounded-full flex items-center justify-center mx-auto mb-5">
-          <CheckCircle2 className="w-8 h-8 text-teal-600" />
+        <div className="w-16 h-16 bg-[#fdf4f7] rounded-full flex items-center justify-center mx-auto mb-5">
+          <CheckCircle2 className="w-8 h-8 text-[#a83866]" />
         </div>
         <h3 className="text-xl font-bold text-gray-900 mb-2">
           Thank you, {name.trim()}!
@@ -88,7 +88,7 @@ export default function FeedbackForm() {
         </p>
         <button
           onClick={() => setSubmitted(false)}
-          className="px-6 py-3 bg-teal-600 text-white text-sm font-semibold rounded-xl hover:bg-teal-700 transition-colors"
+          className="px-6 py-3 bg-[#a83866] text-white text-sm font-semibold rounded-xl hover:bg-[#8a2a52] transition-colors"
         >
           Write another review
         </button>
@@ -102,7 +102,7 @@ export default function FeedbackForm() {
       className="bg-white rounded-3xl border border-gray-100 p-8 lg:p-12 shadow-sm"
     >
       <div className="flex items-center gap-3 mb-2">
-        <div className="w-10 h-10 bg-gradient-to-br from-teal-600 to-emerald-600 rounded-xl flex items-center justify-center">
+        <div className="w-10 h-10 bg-gradient-to-br from-[#a83866] to-[#c85882] rounded-xl flex items-center justify-center">
           <Send className="w-5 h-5 text-white" />
         </div>
         <h3 className="text-xl lg:text-2xl font-bold text-gray-900">
@@ -125,7 +125,7 @@ export default function FeedbackForm() {
             onChange={(e) => setName(e.target.value)}
             placeholder="e.g. Ahmed Ali"
             maxLength={MAX_NAME}
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-gray-900 outline-none"
+            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#a83866] focus:border-transparent transition-all text-gray-900 outline-none"
           />
           <p className="text-[11px] text-gray-400 mt-1">
             {name.length}/{MAX_NAME}
@@ -172,7 +172,7 @@ export default function FeedbackForm() {
             placeholder="Share your experience — what did you order and how was it?"
             rows={5}
             maxLength={MAX_TEXT}
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all text-gray-900 outline-none resize-none"
+            className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#a83866] focus:border-transparent transition-all text-gray-900 outline-none resize-none"
           />
           <p
             className={`text-[11px] mt-1 ${
@@ -204,7 +204,7 @@ export default function FeedbackForm() {
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-teal-600 to-emerald-600 text-white font-semibold rounded-xl hover:from-teal-700 hover:to-emerald-700 transition-all active:scale-95 shadow-lg shadow-teal-600/25 disabled:opacity-70 disabled:cursor-not-allowed"
+          className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-gradient-to-r from-[#a83866] to-[#c85882] text-white font-semibold rounded-xl hover:from-[#8a2a52] hover:to-[#a83866] transition-all active:scale-95 shadow-lg shadow-[#a83866]/25 disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {submitting ? (
             <>

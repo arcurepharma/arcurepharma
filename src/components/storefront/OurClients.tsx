@@ -26,7 +26,7 @@ export default function OurClients() {
           ref={headerRef}
           className={`text-center mb-12 reveal ${headerVisible ? "is-visible" : ""}`}
         >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-teal-50 text-teal-700 text-sm font-semibold rounded-full mb-4">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#fdf4f7] text-[#a83866] text-sm font-semibold rounded-full mb-4">
             <Users className="w-4 h-4" />
             Our Clients
           </span>
@@ -103,7 +103,7 @@ function MarqueeTrack() {
 function ClinicChip({ name }: { name: string }) {
   return (
     <div className="flex items-center gap-3 px-6 sm:px-8 py-4 sm:py-5 bg-white rounded-2xl border border-gray-100 shadow-sm whitespace-nowrap min-w-max">
-      <div className="w-9 h-9 sm:w-11 sm:h-11 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl flex items-center justify-center shrink-0">
+      <div className="w-9 h-9 sm:w-11 sm:h-11 bg-gradient-to-br from-[#c85882] to-[#a83866] rounded-xl flex items-center justify-center shrink-0">
         <Building2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
       </div>
       <span className="font-semibold text-gray-800 text-sm sm:text-base">

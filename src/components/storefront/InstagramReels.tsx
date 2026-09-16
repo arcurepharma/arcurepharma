@@ -52,10 +52,10 @@ export default function InstagramReels() {
   }, []);
 
   return (
-    <section id="social-proof" className="py-10 lg:py-28 bg-gradient-to-b from-teal-50/60 to-white">
+    <section id="social-proof" className="py-10 lg:py-28 bg-gradient-to-b from-[#fdf4f7]/60 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 lg:mb-12">
-          <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 bg-teal-600 text-white text-xs sm:text-sm font-semibold rounded-full mb-3 sm:mb-4">
+          <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 bg-[#a83866] text-white text-xs sm:text-sm font-semibold rounded-full mb-3 sm:mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d={IG_PATH} />
             </svg>
@@ -63,7 +63,7 @@ export default function InstagramReels() {
           </span>
           <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 mb-2 sm:mb-4">
             What People Say About
-            <span className="block sm:inline bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent">
+            <span className="block sm:inline bg-gradient-to-r from-[#a83866] to-[#e07aa0] bg-clip-text text-transparent">
               {" "}
               Arcure Pharma
             </span>
@@ -79,7 +79,7 @@ export default function InstagramReels() {
           {REELS.map((reel, i) => (
             <div key={i}>
               <div
-                className="rounded-2xl overflow-hidden bg-white shadow-lg shadow-teal-600/5 ring-1 ring-gray-100"
+                className="rounded-2xl overflow-hidden bg-white shadow-lg shadow-[#a83866]/5 ring-1 ring-gray-100"
                 dangerouslySetInnerHTML={{ __html: embedHtml(reel.permalink) }}
               />
               <div className="flex items-center justify-between mt-3 px-1">
@@ -87,7 +87,7 @@ export default function InstagramReels() {
                   href={reel.permalink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-teal-600 transition-colors"
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-[#a83866] transition-colors"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

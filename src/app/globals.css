@@ -1,28 +1,28 @@
 @import "tailwindcss";
 
-/* ---------- Theme: Navy Blue (default) ---------- */
+/* ---------- Theme: Mauve / Rose (Arcure Pharma) ---------- */
 :root {
-  --color-teal-50: #eef3f9;
-  --color-teal-100: #d9e3f2;
-  --color-teal-200: #b2c6e3;
-  --color-teal-300: #7f9fc9;
-  --color-teal-400: #4f78ae;
-  --color-teal-500: #2f5a94;
-  --color-teal-600: #1f407a;
-  --color-teal-700: #16315f;
-  --color-teal-800: #122647;
-  --color-teal-900: #0b1a31;
+  --color-teal-50:  #fdf4f7;
+  --color-teal-100: #fae3ec;
+  --color-teal-200: #f4c5d6;
+  --color-teal-300: #eca0bb;
+  --color-teal-400: #e07aa0;
+  --color-teal-500: #c85882;
+  --color-teal-600: #a83866;
+  --color-teal-700: #8a2a52;
+  --color-teal-800: #6b1f3e;
+  --color-teal-900: #44122a;
 
-  --color-green-50: #eef3f9;
-  --color-green-100: #d9e3f2;
-  --color-green-200: #b2c6e3;
-  --color-green-300: #7f9fc9;
-  --color-green-400: #4f78ae;
-  --color-green-500: #2f5a94;
-  --color-green-600: #1f407a;
-  --color-green-700: #16315f;
-  --color-green-800: #122647;
-  --color-green-900: #0b1a31;
+  --color-green-50:  #fdf4f7;
+  --color-green-100: #fae3ec;
+  --color-green-200: #f4c5d6;
+  --color-green-300: #eca0bb;
+  --color-green-400: #e07aa0;
+  --color-green-500: #c85882;
+  --color-green-600: #a83866;
+  --color-green-700: #8a2a52;
+  --color-green-800: #6b1f3e;
+  --color-green-900: #44122a;
 }
 
 html {

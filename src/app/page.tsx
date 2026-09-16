@@ -3,17 +3,19 @@
 import { useEffect, useState } from "react";
 import Navbar from "@/components/storefront/Navbar";
 import HeroSlider from "@/components/storefront/HeroSlider";
-import ProductCard from "@/components/storefront/ProductCard";
 import TrustBadges from "@/components/storefront/TrustBadges";
-import RecentlyViewed from "@/components/storefront/RecentlyViewed";
-import VisionPanel from "@/components/storefront/VisionPanel";
+import CategorySection from "@/components/storefront/CategorySection";
+import PromoBanner from "@/components/storefront/PromoBanner";
+import ProductCard from "@/components/storefront/ProductCard";
+import InstagramReels from "@/components/storefront/InstagramReels";
 import OurClients from "@/components/storefront/OurClients";
 import ResultsSection from "@/components/storefront/ResultsSection";
-import InstagramReels from "@/components/storefront/InstagramReels";
+import VisionPanel from "@/components/storefront/VisionPanel";
 import PressLogos from "@/components/storefront/PressLogos";
+import RecentlyViewed from "@/components/storefront/RecentlyViewed";
 import Footer from "@/components/storefront/Footer";
+import BottomTrustBar from "@/components/storefront/BottomTrustBar";
 import { useReveal } from "@/lib/useReveal";
-import { Sparkles } from "lucide-react";
 
 interface Product {
   id: string;
@@ -24,67 +26,70 @@ interface Product {
   description: string;
   benefits?: string[];
   ingredients?: string;
+  images?: string[];
+  videoUrl?: string | null;
 }
 
 export default function HomePage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const { ref: headerRef, visible: headerVisible } = useReveal();
 
   useEffect(() => {
     fetch("/api/products")
       .then((r) => r.json())
-      .then((data) => {
-        setProducts(Array.isArray(data) ? data : []);
-        setLoading(false);
-      })
+      .then((data) => { setProducts(Array.isArray(data) ? data : []); setLoading(false); })
       .catch(() => setLoading(false));
   }, []);
 
-  const { ref: productsHeaderRef, visible: productsHeaderVisible } = useReveal();
-
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-white">
       <Navbar />
+
+      {/* 1. Hero */}
       <HeroSlider />
 
-      {/* Products Section */}
-      <section id="products" className="py-10 lg:py-28 bg-white">
+      {/* 2. Trust badges strip */}
+      <TrustBadges />
+
+      {/* 3. Shop by Category */}
+      <CategorySection />
+
+      {/* 4. Promo Banner */}
+      <PromoBanner />
+
+      {/* 5. Best Sellers */}
+      <section id="products" className="py-12 lg:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section header */}
           <div
-            ref={productsHeaderRef}
-            className={`text-center mb-8 lg:mb-12 reveal ${productsHeaderVisible ? "is-visible" : ""}`}
+            ref={headerRef}
+            className={`flex items-center justify-between mb-8 lg:mb-10 reveal ${headerVisible ? "is-visible" : ""}`}
           >
-            <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 bg-teal-50 text-teal-700 text-xs sm:text-sm font-semibold rounded-full mb-3 sm:mb-4">
-              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
-              Our Products
-            </span>
-            <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 mb-2 sm:mb-4">
-              Quality Health Products
-            </h2>
-            <p className="text-gray-500 mt-2 sm:mt-3 max-w-xl mx-auto text-sm sm:text-lg">
-              Browse our wide range of trusted medicated products
-            </p>
-            <div className="section-divider mt-3 sm:mt-6" />
+            <div>
+              <h2 className="text-xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+                Best Sellers
+              </h2>
+              <div className="w-10 h-[3px] bg-[#a83866] rounded-full mt-2" />
+            </div>
+            <a
+              href="/#products"
+              className="text-[#a83866] hover:text-[#8a2a52] text-sm font-bold uppercase tracking-wide transition-colors"
+            >
+              View All →
+            </a>
           </div>
 
           {loading ? (
             <div className="flex justify-center py-20">
-              <div className="text-center">
-                <div className="w-12 h-12 border-4 border-teal-200 border-t-teal-600 rounded-full animate-spin mx-auto" />
-                <p className="text-gray-400 mt-4 text-sm">Loading products...</p>
-              </div>
+              <div className="w-10 h-10 border-4 border-[#fae3ec] border-t-[#a83866] rounded-full animate-spin" />
             </div>
           ) : products.length === 0 ? (
-            <div className="text-center py-20">
-              <div className="w-20 h-20 bg-teal-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Sparkles className="w-8 h-8 text-teal-400" />
-              </div>
-              <p className="text-gray-400 text-lg">
-                No products available yet
-              </p>
+            <div className="text-center py-20 text-gray-400 text-lg">
+              No products available yet
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
               {products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -93,13 +98,28 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* 6. Bottom trust bar — FREE SHIPPING, EASY RETURNS, etc. */}
+      <BottomTrustBar />
+
+      {/* 7. Instagram / Social proof */}
       <InstagramReels />
+
+      {/* 7. What Our Clients Say */}
       <OurClients />
+
+      {/* 8. Results */}
       <ResultsSection />
-      <TrustBadges />
+
+      {/* 9. Vision / Why us */}
       <VisionPanel />
-      <RecentlyViewed />
+
+      {/* 10. Press / Certifications */}
       <PressLogos />
+
+      {/* 11. Recently Viewed */}
+      <RecentlyViewed />
+
+      {/* 12. Footer (includes About) */}
       <Footer />
     </main>
   );

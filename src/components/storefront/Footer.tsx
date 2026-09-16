@@ -12,12 +12,12 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-teal-50 text-teal-700 text-sm font-semibold rounded-full mb-4">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#fdf4f7] text-[#a83866] text-sm font-semibold rounded-full mb-4">
                 About Us
               </span>
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 Your Trusted Online{" "}
-                <span className="text-teal-600">Pharmacy</span>
+                <span className="text-[#a83866]">Pharmacy</span>
               </h2>
               <p className="text-gray-600 leading-relaxed text-lg mb-6">
                 Arcure Pharma is dedicated to providing high-quality medicated
@@ -31,7 +31,7 @@ export default function Footer() {
               </p>
               <Link
                 href="/#products"
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold rounded-full transition-all hover:shadow-lg hover:shadow-teal-600/25 active:scale-95"
+                className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-[#a83866] hover:bg-[#8a2a52] text-white text-sm font-semibold rounded-full transition-all hover:shadow-lg hover:shadow-[#a83866]/25 active:scale-95"
               >
                 Explore Products
                 <ArrowRight className="w-4 h-4" />
@@ -41,7 +41,6 @@ export default function Footer() {
             <div className="grid grid-cols-2 gap-4">
               {[
                 { value: "1,000+", label: "Happy Customers" },
-          
                 { value: "4.0", label: "Average Rating" },
                 { value: "24/7", label: "Customer Support" },
               ].map((stat) => (
@@ -49,7 +48,7 @@ export default function Footer() {
                   key={stat.label}
                   className="bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-md transition-shadow border border-gray-100"
                 >
-                  <p className="text-2xl lg:text-3xl font-extrabold text-teal-600 mb-1">
+                  <p className="text-2xl lg:text-3xl font-extrabold text-[#a83866] mb-1">
                     {stat.value}
                   </p>
                   <p className="text-gray-500 text-sm">{stat.label}</p>
@@ -90,7 +89,7 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 bg-gray-800 hover:bg-teal-600 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
+                    className="w-10 h-10 bg-gray-800 hover:bg-[#a83866] rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
                     aria-label={social.label}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill={social.filled ? "currentColor" : "none"} stroke={social.filled ? "none" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={social.path} /></svg>
@@ -115,7 +114,7 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-gray-400 hover:text-teal-400 text-sm transition-colors flex items-center gap-2 group"
+                      className="text-gray-400 hover:text-[#e07aa0] text-sm transition-colors flex items-center gap-2 group"
                     >
                       <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                       {link.label}
@@ -132,23 +131,23 @@ export default function Footer() {
               </h4>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3 text-gray-400 text-sm">
-                  <MapPin className="w-4 h-4 text-teal-400 shrink-0 mt-0.5" />
+                  <MapPin className="w-4 h-4 text-[#e07aa0] shrink-0 mt-0.5" />
                   <span>Plot No. E99/B, Site Super Highway, Karachi, Pakistan</span>
                 </li>
                 <li className="flex items-center gap-3 text-gray-400 text-sm">
-                  <Phone className="w-4 h-4 text-teal-400 shrink-0" />
-                  <a href="tel:+923341169999" className="hover:text-teal-400 transition-colors">
+                  <Phone className="w-4 h-4 text-[#e07aa0] shrink-0" />
+                  <a href="tel:+923341169999" className="hover:text-[#e07aa0] transition-colors">
                     +92 334 116 9999
                   </a>
                 </li>
                 <li className="flex items-center gap-3 text-gray-400 text-sm">
-                  <Mail className="w-4 h-4 text-teal-400 shrink-0" />
-                  <a href="mailto:info@arcurepharma.com" className="hover:text-teal-400 transition-colors">
+                  <Mail className="w-4 h-4 text-[#e07aa0] shrink-0" />
+                  <a href="mailto:info@arcurepharma.com" className="hover:text-[#e07aa0] transition-colors">
                     info@arcurepharma.com
                   </a>
                 </li>
                 <li className="flex items-center gap-3 text-gray-400 text-sm">
-                  <Clock className="w-4 h-4 text-teal-400 shrink-0" />
+                  <Clock className="w-4 h-4 text-[#e07aa0] shrink-0" />
                   <span>Mon - Sat: 9:00 AM - 9:00 PM</span>
                 </li>
               </ul>
@@ -166,11 +165,11 @@ export default function Footer() {
                 <input
                   type="email"
                   placeholder="Your email address"
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-teal-500 transition-colors"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#a83866] transition-colors"
                 />
                 <button
                   type="submit"
-                  className="w-full px-4 py-3 bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold rounded-xl transition-all active:scale-95"
+                  className="w-full px-4 py-3 bg-[#a83866] hover:bg-[#8a2a52] text-white text-sm font-semibold rounded-xl transition-all active:scale-95"
                 >
                   Subscribe
                 </button>
@@ -178,7 +177,7 @@ export default function Footer() {
               <div className="mt-6">
                 <Link
                   href="#"
-                  className="text-gray-500 hover:text-teal-400 text-xs transition-colors"
+                  className="text-gray-500 hover:text-[#e07aa0] text-xs transition-colors"
                 >
                   Privacy Policy
                 </Link>
@@ -195,7 +194,7 @@ export default function Footer() {
             </p>
             <p className="text-gray-600 text-xs">
               Created by{" "}
-              <span className="text-teal-400 font-semibold">Muhammad Ayan</span>
+              <span className="text-[#e07aa0] font-semibold">Muhammad Ayan</span>
             </p>
           </div>
         </div>

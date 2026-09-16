@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { ChevronDown } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Slide {
   id: string;
@@ -15,20 +15,20 @@ const FALLBACK_SLIDES: Slide[] = [
   {
     id: "fallback-1",
     imageUrl: "/arcure/Arcu_Gleam_Seerom.jpeg",
-    title: "Premium Skincare Solutions",
-    subtitle: "ARCUDERM CS Serum - Restorative care for glowing, healthy skin",
+    title: "Radiant Skin.\nReal Confidence.",
+    subtitle: "Clean beauty that nourishes, enhances and empowers you.",
   },
   {
     id: "fallback-2",
     imageUrl: "/arcure/Arcu_Gleam_Seerom2.jpeg",
-    title: "ARCU GLEAM Face Wash",
-    subtitle: "Deep cleanse, oil control, and hydration boost for clear, fresh skin",
+    title: "ARCU GLEAM\nFace Wash",
+    subtitle: "Deep cleanse, oil control, and hydration boost for clear, fresh skin.",
   },
   {
     id: "fallback-3",
     imageUrl: "/arcure/Arcu_Gleam_Seerom3.jpeg",
-    title: "Complete Health & Wellness",
-    subtitle: "ARCU-CAL K2 + Mida-D - Strong bones, better immunity, better you",
+    title: "Complete Health\n& Wellness",
+    subtitle: "Strong bones, better immunity, better you.",
   },
 ];
 
@@ -46,7 +46,7 @@ export default function HeroSlider() {
       .then(([slidesData, settingsData]) => {
         const apiSlides = Array.isArray(slidesData) ? slidesData : [];
         setSlides(apiSlides.length > 0 ? apiSlides : FALLBACK_SLIDES);
-        if (settingsData && settingsData.slider_duration) {
+        if (settingsData?.slider_duration) {
           setDuration(Number(settingsData.slider_duration) * 1000);
         }
         setLoading(false);
@@ -58,8 +58,11 @@ export default function HeroSlider() {
   }, []);
 
   const next = useCallback(() => {
-    if (slides.length === 0) return;
-    setCurrent((c) => (c + 1) % slides.length);
+    setCurrent((c) => (c + 1) % (slides.length || 1));
+  }, [slides.length]);
+
+  const prev = useCallback(() => {
+    setCurrent((c) => (c - 1 + (slides.length || 1)) % (slides.length || 1));
   }, [slides.length]);
 
   useEffect(() => {
@@ -68,106 +71,84 @@ export default function HeroSlider() {
     return () => clearInterval(timer);
   }, [next, slides.length, duration]);
 
+  const displaySlides = slides.length > 0 ? slides : FALLBACK_SLIDES;
+
   if (loading) {
     return (
-      <section className="relative w-full h-[60vh] lg:h-[80vh] bg-teal-600 flex items-center justify-center mt-[64px] lg:mt-[72px]">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-white/30 border-t-white rounded-full animate-spin mx-auto" />
-          <p className="text-white/70 mt-4 text-sm">Loading...</p>
-        </div>
+      <section className="relative w-full h-[260px] sm:h-[380px] lg:h-[500px] bg-[#f5e6ed] mt-[94px] lg:mt-[102px] flex items-center justify-center">
+        <div className="w-10 h-10 border-4 border-[#a83866]/20 border-t-[#a83866] rounded-full animate-spin" />
       </section>
     );
   }
 
   return (
-    <section className="relative w-full aspect-[19/8] sm:h-72 md:h-96 lg:h-[75vh] overflow-hidden bg-gray-900 mt-[64px] lg:mt-[72px]">
-      <div className="absolute inset-0">
-        {slides.map((slide, i) => (
-          <div
-            key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              i === current ? "opacity-100 z-10" : "opacity-0 z-0"
-            }`}
-          >
-            <Image
-              src={`${slide.imageUrl}${
-                slide.imageUrl.includes("?") ? "&" : "?"
-              }tr=w-1920,q-80`}
-              alt={slide.title || "Arcure Pharma"}
-              fill
-              sizes="100vw"
-              priority={i === 0}
-              quality={85}
-              className="object-cover scale-[1.04] transition-transform duration-[8000ms] ease-out"
-              draggable={false}
-            />
+    <section className="relative w-full h-[260px] sm:h-[380px] lg:h-[500px] mt-[94px] lg:mt-[102px] overflow-hidden bg-gray-100">
 
-            {/* Dark gradient overlay to mask any light edges */}
-            <div className="absolute inset-0 bg-gradient-to-r from-gray-900/35 via-transparent to-gray-900/35" />
-            <div className="absolute inset-0 hero-gradient-overlay" />
+      {/* ── Slides ── */}
+      {displaySlides.map((s, i) => (
+        <div
+          key={s.id}
+          className={`absolute inset-0 transition-opacity duration-700 ${
+            i === current ? "opacity-100 z-10" : "opacity-0 z-0"
+          }`}
+        >
+          {/* Full-width background image */}
+          <Image
+            src={s.imageUrl}
+            alt={s.title || "Arcure Pharma"}
+            fill
+            sizes="100vw"
+            priority={i === 0}
+            className="object-cover object-center"
+          />
 
-            {/* Content */}
-            <div className="absolute inset-0 flex items-center">
-              <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 w-full">
-                <div className="max-w-2xl">
-                  {slide.title && (
-                    <h2
-                      key={`title-${i}-${current}`}
-                      className={`text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-extrabold text-white leading-[1.1] mb-2 sm:mb-6 hero-text-shadow ${
-                        i === current ? "animate-fade-in-up" : "opacity-0"
-                      }`}
-                      style={{ animationDelay: "0.1s" }}
-                    >
-                      {slide.title}
-                    </h2>
-                  )}
+          {/* Gradient overlay — left side so text is readable */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent" />
 
-                  {slide.subtitle && (
-                    <p
-                      key={`sub-${i}-${current}`}
-                      className={`text-xs sm:text-sm md:text-lg lg:text-xl text-white/85 leading-snug sm:leading-relaxed mb-3 sm:mb-8 max-w-lg line-clamp-2 sm:line-clamp-none ${
-                        i === current ? "animate-fade-in-up" : "opacity-0"
-                      }`}
-                      style={{ animationDelay: "0.25s" }}
-                    >
-                      {slide.subtitle}
+          {/* Text overlay — only if title exists */}
+          {s.title && (
+            <div className={`absolute inset-0 flex items-center ${i === current ? "animate-fade-in-up" : "opacity-0"}`}>
+              <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full">
+                <div className="max-w-xs sm:max-w-sm lg:max-w-md">
+                  <p className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] text-white/80 mb-2">
+                    ARCURE PHARMA
+                  </p>
+                  <h1 className="text-xl sm:text-3xl lg:text-5xl font-extrabold text-white leading-[1.1] mb-3 sm:mb-4 whitespace-pre-line drop-shadow-lg">
+                    {s.title}
+                  </h1>
+                  {s.subtitle && (
+                    <p className="text-white/85 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6 max-w-xs drop-shadow">
+                      {s.subtitle}
                     </p>
                   )}
-
-                  <div
-                    key={`trust-${i}-${current}`}
-                    className={`hidden sm:flex items-center gap-4 md:gap-6 mt-6 md:mt-10 ${
-                      i === current ? "animate-fade-in-up" : "opacity-0"
-                    }`}
-                    style={{ animationDelay: "0.55s" }}
-                  />
+                  <Link
+                    href="/#products"
+                    className="inline-flex items-center px-5 sm:px-7 py-2.5 sm:py-3 bg-[#a83866] hover:bg-[#8a2a52] text-white font-bold text-xs sm:text-sm rounded-md transition-all hover:shadow-lg active:scale-95"
+                  >
+                    Shop Now
+                  </Link>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          )}
+        </div>
+      ))}
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-4 sm:bottom-8 right-4 sm:right-8 hidden lg:flex flex-col items-center gap-2 text-white/50 animate-bounce z-20">
-        <span className="text-[10px] uppercase tracking-[0.2em] font-medium">
-          Scroll
-        </span>
-        <ChevronDown className="w-4 h-4" />
-      </div>
+      {/* ── Prev / Next arrows ── */}
+      {/* arrows removed */}
 
-      {/* Dot indicators */}
-      {slides.length > 1 && (
-        <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-3 z-20">
-          {slides.map((_, i) => (
+      {/* ── Dot indicators ── */}
+      {displaySlides.length > 1 && (
+        <div className="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2 z-20">
+          {displaySlides.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrent(i)}
               aria-label={`Go to slide ${i + 1}`}
-              className={`h-1.5 sm:h-2 rounded-full transition-all duration-500 ${
+              className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${
                 i === current
-                  ? "w-6 sm:w-10 bg-white shadow-[0_0_12px_rgba(255,255,255,0.5)]"
-                  : "w-1.5 sm:w-2 bg-white/40 hover:bg-white/60"
+                  ? "w-5 sm:w-6 bg-white"
+                  : "w-1.5 sm:w-2 bg-white/50 hover:bg-white/80"
               }`}
             />
           ))}

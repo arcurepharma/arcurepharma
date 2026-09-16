@@ -6,17 +6,35 @@ import { useReveal } from "@/lib/useReveal";
 const results = [
   {
     id: 1,
-    name: "User 1",
-    before: "/results/result-1-before.jpg",
-    after: "/results/result-1-after.jpg",
-    description: "Forehead acne cleared significantly after consistent use",
+    label: "Before",
+    image: "/results/result-1-before.jpg",
+    tag: "BEFORE",
+    tagColor: "bg-gray-700",
+    border: "border-gray-200",
   },
   {
     id: 2,
-    name: "User 2",
-    before: "/results/result-2-before.jpg",
-    after: "/results/result-2-after.jpg",
-    description: "Severe cheek breakouts visibly reduced within weeks",
+    label: "After",
+    image: "/results/result-1-after.jpg",
+    tag: "AFTER",
+    tagColor: "bg-[#a83866]",
+    border: "border-[#fae3ec]",
+  },
+  {
+    id: 3,
+    label: "Before",
+    image: "/results/result-2-before.jpg",
+    tag: "BEFORE",
+    tagColor: "bg-gray-700",
+    border: "border-gray-200",
+  },
+  {
+    id: 4,
+    label: "After",
+    image: "/results/result-2-after.jpg",
+    tag: "AFTER",
+    tagColor: "bg-[#a83866]",
+    border: "border-[#fae3ec]",
   },
 ];
 
@@ -24,110 +42,68 @@ export default function ResultsSection() {
   const { ref, visible } = useReveal();
 
   return (
-    <section className="py-16 lg:py-24 bg-gradient-to-b from-white to-teal-50/40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-14 lg:py-20 bg-gradient-to-b from-white to-[#fdf4f7]">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
         {/* Header */}
         <div
           ref={ref}
-          className={`text-center mb-12 lg:mb-16 reveal ${visible ? "is-visible" : ""}`}
+          className={`text-center mb-10 reveal ${visible ? "is-visible" : ""}`}
         >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-teal-50 text-teal-700 text-xs sm:text-sm font-semibold rounded-full mb-4">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#fdf4f7] text-[#a83866] text-xs sm:text-sm font-semibold rounded-full mb-4 border border-[#fae3ec]">
             ✨ Real People, Real Results
           </span>
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
             Before &amp; After Results
           </h2>
-          <p className="text-gray-500 max-w-xl mx-auto text-sm sm:text-lg">
-            See the transformation our customers have experienced with consistent use of our products.
+          <p className="text-gray-400 max-w-md mx-auto text-sm">
+            See the transformation our customers have experienced.
           </p>
-          <div className="w-16 h-1 bg-teal-500 rounded-full mx-auto mt-6" />
+          <div className="w-12 h-1 bg-[#a83866] rounded-full mx-auto mt-4" />
         </div>
 
-        {/* Results Grid */}
-        <div className="space-y-16 lg:space-y-20">
-          {results.map((result, index) => (
-            <div
-              key={result.id}
-              className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-12 ${
-                index % 2 !== 0 ? "lg:flex-row-reverse" : ""
-              }`}
-            >
-              {/* Before */}
-              <div className="w-full lg:w-1/2 flex flex-col items-center">
-                <div className="relative w-full max-w-sm rounded-2xl overflow-hidden shadow-lg border border-red-100">
-                  <div className="absolute top-3 left-3 z-10 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
-                    BEFORE
-                  </div>
-                  <Image
-                    src={result.before}
-                    alt={`${result.name} before`}
-                    width={500}
-                    height={500}
-                    className="w-full h-72 sm:h-80 object-cover"
-                  />
+        {/* 4 images in one horizontal row */}
+        <div className="grid grid-cols-4 gap-3 sm:gap-5 lg:gap-6">
+          {results.map((r) => (
+            <div key={r.id} className="flex flex-col items-center gap-2">
+              {/* Round image */}
+              <div className={`relative w-full aspect-square rounded-full overflow-hidden border-4 ${r.border} shadow-md`}>
+                <Image
+                  src={r.image}
+                  alt={r.label}
+                  fill
+                  sizes="(max-width: 640px) 25vw, (max-width: 1024px) 20vw, 200px"
+                  className="object-cover"
+                />
+                {/* Tag badge */}
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+                  <span className={`${r.tagColor} text-white text-[8px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap shadow`}>
+                    {r.tag}
+                  </span>
                 </div>
               </div>
-
-              {/* Arrow / Divider */}
-              <div className="flex flex-col items-center justify-center gap-3 shrink-0">
-                <div className="hidden lg:flex flex-col items-center gap-2">
-                  <div className="w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center shadow-md">
-                    <svg
-                      className="w-5 h-5 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13 7l5 5m0 0l-5 5m5-5H6"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <div className="lg:hidden w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center shadow-md rotate-90">
-                  <svg
-                    className="w-5 h-5 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 7l5 5m0 0l-5 5m5-5H6"
-                    />
-                  </svg>
-                </div>
-                <p className="text-xs text-gray-400 font-medium text-center max-w-[100px]">
-                  {result.description}
-                </p>
-              </div>
-
-              {/* After */}
-              <div className="w-full lg:w-1/2 flex flex-col items-center">
-                <div className="relative w-full max-w-sm rounded-2xl overflow-hidden shadow-lg border border-teal-100">
-                  <div className="absolute top-3 left-3 z-10 bg-teal-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
-                    AFTER
-                  </div>
-                  <Image
-                    src={result.after}
-                    alt={`${result.name} after`}
-                    width={500}
-                    height={500}
-                    className="w-full h-72 sm:h-80 object-cover"
-                  />
-                </div>
-              </div>
+              {/* Label */}
+              <p className={`text-[10px] sm:text-xs font-bold uppercase tracking-wider ${
+                r.tag === "AFTER" ? "text-[#a83866]" : "text-gray-500"
+              }`}>
+                {r.label}
+              </p>
             </div>
           ))}
         </div>
 
-        {/* Bottom note */}
-        <p className="text-center text-xs text-gray-400 mt-12">
+        {/* Arrow indicators between pairs */}
+        <div className="flex justify-around mt-1 px-[12.5%]">
+          {[0, 1].map((i) => (
+            <div key={i} className="flex items-center gap-1 text-[#a83866]">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </div>
+          ))}
+        </div>
+
+        <p className="text-center text-[10px] sm:text-xs text-gray-400 mt-6">
           * Individual results may vary. Consistent use as directed is recommended.
         </p>
       </div>

@@ -151,7 +151,7 @@ export default function CheckoutPage() {
             <p className="text-gray-500 text-lg mb-4">Your cart is empty</p>
             <Link
               href="/#products"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 text-white rounded-xl hover:bg-teal-700 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#a83866] text-white rounded-xl hover:bg-[#8a2a52] transition-colors"
             >
               Browse Products
             </Link>
@@ -178,7 +178,7 @@ export default function CheckoutPage() {
                         <h3 className="font-medium text-gray-800 text-sm truncate">
                           {item.title}
                         </h3>
-                        <p className="text-teal-600 font-semibold text-sm">
+                        <p className="text-[#a83866] font-semibold text-sm">
                           {formatPrice(item.price)}
                         </p>
                       </div>
@@ -233,7 +233,7 @@ export default function CheckoutPage() {
                         onChange={(e) =>
                           setForm({ ...form, name: e.target.value })
                         }
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#a83866]"
                         placeholder="John Doe"
                         required
                       />
@@ -248,7 +248,7 @@ export default function CheckoutPage() {
                         onChange={(e) =>
                           setForm({ ...form, email: e.target.value })
                         }
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#a83866]"
                         placeholder="john@example.com"
                         required
                       />
@@ -265,7 +265,7 @@ export default function CheckoutPage() {
                       onChange={(e) =>
                         setForm({ ...form, phone: e.target.value })
                       }
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#a83866]"
                       placeholder="+92 300 1234567"
                       required
                     />
@@ -281,7 +281,7 @@ export default function CheckoutPage() {
                       onChange={(e) =>
                         setForm({ ...form, password: e.target.value })
                       }
-                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#a83866]"
                       placeholder="Optional password"
                     />
                   </div>
@@ -297,7 +297,7 @@ export default function CheckoutPage() {
                         onChange={(e) =>
                           setForm({ ...form, houseNo: e.target.value })
                         }
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#a83866]"
                         placeholder="42"
                         required
                       />
@@ -312,7 +312,7 @@ export default function CheckoutPage() {
                         onChange={(e) =>
                           setForm({ ...form, street: e.target.value })
                         }
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#a83866]"
                         placeholder="Main Boulevard, Sector 5"
                         required
                       />
@@ -330,7 +330,7 @@ export default function CheckoutPage() {
                         onChange={(e) =>
                           setForm({ ...form, landmark: e.target.value })
                         }
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#a83866]"
                         placeholder="Near City Hospital"
                         required
                       />
@@ -345,7 +345,7 @@ export default function CheckoutPage() {
                         onChange={(e) =>
                           setForm({ ...form, postalCode: e.target.value })
                         }
-                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#a83866]"
                         placeholder="75500"
                         required
                       />
@@ -387,7 +387,7 @@ export default function CheckoutPage() {
                 <div className="border-t border-gray-100 pt-4 mt-4">
                   <div className="flex justify-between">
                     <span className="font-bold text-gray-900">Total</span>
-                    <span className="font-bold text-teal-700 text-xl">
+                    <span className="font-bold text-[#a83866] text-xl">
                       {formatPrice(total)}
                     </span>
                   </div>
@@ -396,7 +396,7 @@ export default function CheckoutPage() {
                   type="submit"
                   form="checkout-form"
                   disabled={submitting}
-                  className="w-full mt-6 py-3.5 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-xl transition-all disabled:opacity-50 text-center"
+                  className="w-full mt-6 py-3.5 bg-[#a83866] hover:bg-[#8a2a52] text-white font-medium rounded-xl transition-all disabled:opacity-50 text-center"
                 >
                   {submitting ? "Placing Order..." : "Place Order"}
                 </button>

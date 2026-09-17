@@ -56,15 +56,9 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── Announcement Bar ── */}
-      <div className="fixed top-0 left-0 right-0 z-[60] bg-[#a83866] text-white text-[11px] sm:text-xs text-center py-1.5 px-4 font-medium">
-        🚚 Free Shipping on orders over Rs.999 &nbsp;|&nbsp; Use code:{" "}
-        <span className="font-extrabold">GLOW15</span> for 15% OFF
-      </div>
-
       {/* ── Main Header ── */}
       <header
-        className={`fixed left-0 right-0 z-50 top-[30px] transition-all duration-300 bg-white ${
+        className={`fixed left-0 right-0 z-50 top-0 transition-all duration-300 bg-white ${
           scrolled ? "shadow-md" : "shadow-sm border-b border-gray-100"
         }`}
       >

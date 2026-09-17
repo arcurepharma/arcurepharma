@@ -75,14 +75,14 @@ export default function HeroSlider() {
 
   if (loading) {
     return (
-      <section className="relative w-full h-[260px] sm:h-[380px] lg:h-[500px] bg-[#f5e6ed] mt-[94px] lg:mt-[102px] flex items-center justify-center">
+      <section className="relative w-full h-[260px] sm:h-[380px] lg:h-[500px] bg-[#f5e6ed] mt-[64px] lg:mt-[68px] flex items-center justify-center">
         <div className="w-10 h-10 border-4 border-[#a83866]/20 border-t-[#a83866] rounded-full animate-spin" />
       </section>
     );
   }
 
   return (
-    <section className="relative w-full h-[260px] sm:h-[380px] lg:h-[500px] mt-[94px] lg:mt-[102px] overflow-hidden bg-gray-100">
+    <section className="relative w-full h-[260px] sm:h-[380px] lg:h-[500px] mt-[64px] lg:mt-[68px] overflow-hidden bg-gray-100">
 
       {/* ── Slides ── */}
       {displaySlides.map((s, i) => (

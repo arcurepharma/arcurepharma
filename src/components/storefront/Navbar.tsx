@@ -70,10 +70,10 @@ export default function Navbar() {
               <Image
                 src="/logo-arcure.png"
                 alt="Arcure Pharma"
-                width={160}
-                height={40}
+                width={210}
+                height={52}
                 priority
-                className="h-8 sm:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                className="h-11 sm:h-13 lg:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
               />
             </Link>
 

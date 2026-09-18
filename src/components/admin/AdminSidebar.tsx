@@ -58,17 +58,17 @@ export default function AdminSidebar() {
           <Image
             src="/logo-arcure.png"
             alt="Arcure Pharma"
-            width={80}
-            height={40}
-            className="h-9 w-auto object-contain mx-auto"
+            width={90}
+            height={45}
+            className="h-11 w-auto object-contain mx-auto"
           />
         ) : (
           <Image
             src="/logo-arcure.png"
             alt="Arcure Pharma"
-            width={140}
-            height={40}
-            className="h-9 w-auto object-contain"
+            width={170}
+            height={45}
+            className="h-11 w-auto object-contain"
           />
         )}
       </div>

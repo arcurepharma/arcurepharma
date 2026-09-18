@@ -28,6 +28,7 @@ interface Product {
   description?: string;
   videoUrl?: string | null;
   images?: string[];
+  isActive?: number;
 }
 
 export default function ProductCard({ product }: { product: Product }) {
@@ -36,6 +37,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const [quickView, setQuickView] = useState(false);
   const [activeImg, setActiveImg] = useState(product.imageUrl);
   const [qty, setQty] = useState(1);
+  const isOutOfStock = product.isActive === 0;
 
   const gallery = Array.from(
     new Set([product.imageUrl, ...(product.images || [])])
@@ -93,10 +95,19 @@ export default function ProductCard({ product }: { product: Product }) {
               priority={i === 0}
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               className={`object-contain transition-all duration-700 group-hover:scale-105 ${
-                i === 0 ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-              }`}
+                isOutOfStock ? "opacity-60 grayscale" : ""
+              } ${i === 0 ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
             />
           ))}
+
+          {/* Out of Stock overlay */}
+          {isOutOfStock && (
+            <div className="absolute inset-0 flex items-center justify-center z-10">
+              <span className="bg-gray-800/80 text-white text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-full tracking-wider">
+                OUT OF STOCK
+              </span>
+            </div>
+          )}
 
           {/* Heart button — top right */}
           <button
@@ -153,9 +164,14 @@ export default function ProductCard({ product }: { product: Product }) {
           {/* ADD TO CART — full width mauve */}
           <button
             onClick={handleAdd}
-            className="mt-auto w-full flex items-center justify-center gap-1.5 py-2 sm:py-2.5 bg-[#a83866] hover:bg-[#8a2a52] text-white text-[10px] sm:text-xs font-bold rounded-md transition-all active:scale-[0.98] tracking-wide"
+            disabled={isOutOfStock}
+            className={`mt-auto w-full flex items-center justify-center gap-1.5 py-2 sm:py-2.5 text-[10px] sm:text-xs font-bold rounded-md transition-all active:scale-[0.98] tracking-wide ${
+              isOutOfStock
+                ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                : "bg-[#a83866] hover:bg-[#8a2a52] text-white"
+            }`}
           >
-            ADD TO CART
+            {isOutOfStock ? "OUT OF STOCK" : "ADD TO CART"}
           </button>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Eye, ChevronDown } from "lucide-react";
+import { Eye, ChevronDown, MapPin } from "lucide-react";
 import toast from "react-hot-toast";
 
 interface Order {
@@ -17,6 +17,7 @@ interface Order {
   deliveryFee: string;
   totalAmount: string;
   status: string;
+  notes: string | null;
   createdAt: string;
 }
 
@@ -117,7 +118,17 @@ export default function AdminOrdersPage() {
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-800">
                       <div>{order.customerName || order.customerEmail}</div>
-                      <div className="text-xs text-gray-400">{order.customerEmail}</div>
+                      <div className="text-xs text-gray-400">{order.customerPhone}</div>
+                      {order.notes && order.notes.includes("Maps:") && (
+                        <a
+                          href={order.notes.split("Maps: ")[1]?.split(" ")[0]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 mt-1 text-[10px] font-bold text-blue-600 hover:text-blue-800"
+                        >
+                          <MapPin className="w-3 h-3" /> View Location
+                        </a>
+                      )}
                     </td>
                     <td className="px-6 py-4 text-sm font-medium text-gray-900">
                       Rs. {Number(order.totalAmount).toFixed(0)}

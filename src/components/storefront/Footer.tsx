@@ -60,7 +60,7 @@ export default function Footer() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white">
+      <footer className="bg-[#44122a] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             {/* Brand */}
@@ -69,9 +69,9 @@ export default function Footer() {
                 <Image
                   src="/logo-arcure.png"
                   alt="Arcure Pharma"
-                  width={160}
-                  height={40}
-                  className="h-10 w-auto object-contain"
+                  width={260}
+                  height={65}
+                  className="h-16 w-auto object-contain"
                 />
               </div>
               <p className="text-gray-400 text-sm leading-relaxed mb-6">
@@ -89,7 +89,7 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 bg-gray-800 hover:bg-[#a83866] rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
+                    className="w-10 h-10 bg-[#6b1f3e] hover:bg-[#a83866] rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
                     aria-label={social.label}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill={social.filled ? "currentColor" : "none"} stroke={social.filled ? "none" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={social.path} /></svg>
@@ -165,7 +165,7 @@ export default function Footer() {
                 <input
                   type="email"
                   placeholder="Your email address"
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#a83866] transition-colors"
+                  className="w-full px-4 py-3 bg-[#6b1f3e] border border-[#8a2a52] rounded-xl text-white text-sm placeholder-[#eca0bb] focus:outline-none focus:border-[#e07aa0] transition-colors"
                 />
                 <button
                   type="submit"
@@ -187,12 +187,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-gray-800">
+        <div className="border-t border-[#6b1f3e]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-gray-500 text-sm text-center sm:text-left">
+            <p className="text-[#eca0bb] text-sm text-center sm:text-left">
               &copy; {new Date().getFullYear()} Arcure Pharma. All rights reserved.
             </p>
-            <p className="text-gray-600 text-xs">
+            <p className="text-[#eca0bb]/60 text-xs">
               Created by{" "}
               <span className="text-[#e07aa0] font-semibold">Muhammad Ayan</span>
             </p>

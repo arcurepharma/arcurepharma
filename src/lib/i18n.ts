@@ -38,7 +38,6 @@ export const translations = {
     
     // Trust badges
 // hello
-    fastDelivery: "Fast Delivery",
     securePayment: "Secure Payment",
     moneyBack: "Money Back Guarantee",
   },
@@ -78,7 +77,6 @@ export const translations = {
     placeOrder: "Ø¢Ø±ÚˆØ± Ú©Ø±ÛŒÚº",
     
     // Trust badges
-    fastDelivery: "ØªÛŒØ² ØªØ±Ø³ÛŒÙ„",
     securePayment: "Ù…Ø­ÙÙˆØ¸ Ø§Ø¯Ø§Ø¦ÛŒÚ¯ÛŒ",
     moneyBack: "Ø±Ù‚Ù… Ú©ÛŒ ÙˆØ§Ù¾Ø³ÛŒ Ú©ÛŒ Ø¶Ù…Ø§Ù†Øª",
   },

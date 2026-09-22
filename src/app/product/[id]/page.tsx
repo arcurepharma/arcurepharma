@@ -12,7 +12,7 @@ import {
   BadgeCheck,
   Truck,
   ShieldCheck,
-  Minus,
+Minus,
   Plus,
   PlayCircle,
   Droplets,
@@ -279,24 +279,6 @@ export default function ProductDetailPage() {
             >
               <Zap className="w-4 h-4" /> Buy Now
             </button>
-
-            {/* Trust chips */}
-            <div className="grid grid-cols-2 gap-3 mb-8">
-              <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-xl">
-                <Truck className="w-5 h-5 text-[#d460d6]" />
-                <div>
-                  <p className="text-xs font-bold text-gray-800">Fast Delivery</p>
-                  <p className="text-[10px] text-gray-400">Across Pakistan in 2-4 days</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-xl">
-                <ShieldCheck className="w-5 h-5 text-[#d460d6]" />
-                <div>
-                  <p className="text-xs font-bold text-gray-800">100% Genuine</p>
-                  <p className="text-[10px] text-gray-400">Authentic products guaranteed</p>
-                </div>
-              </div>
-            </div>
 
             {benefits.length > 0 && (
               <div className="mb-8">

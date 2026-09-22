@@ -1,6 +1,6 @@
 "use client";
 
-import { ShieldCheck, Heart, Truck, Stethoscope, Pill, Clock } from "lucide-react";
+import { ShieldCheck, Heart, Stethoscope, Pill, Clock } from "lucide-react";
 import { useReveal } from "@/lib/useReveal";
 
 export default function VisionPanel() {
@@ -17,11 +17,6 @@ export default function VisionPanel() {
       icon: <Heart className="w-6 h-6" />,
       title: "Health First",
       text: "Committed to making healthcare accessible and affordable for everyone across Pakistan.",
-    },
-    {
-      icon: <Truck className="w-6 h-6" />,
-      title: "Fast Delivery",
-      text: "Reliable doorstep delivery ensuring your medications and health products reach you on time.",
     },
     {
       icon: <Stethoscope className="w-6 h-6" />,

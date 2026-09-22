@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     template: "%s | Arcure Pharma",
   },
   description:
-    "Arcure Pharma provides dermatologically approved medicated products. Buy skincare, haircare & health products with fast doorstep delivery across Pakistan. Quality you can trust.",
+    "Arcure Pharma provides dermatologically approved medicated products. Buy skincare, haircare & health products with doorstep delivery across Pakistan. Quality you can trust.",
   keywords: [
     "pharmacy",
     "online pharmacy Pakistan",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     siteName: "Arcure Pharma",
     title: "Arcure Pharma - Your Trusted Online Pharmacy in Pakistan",
     description:
-      "Quality medicated products delivered to your doorstep. Skincare, haircare & health essentials with fast delivery across Pakistan.",
+      "Quality medicated products delivered to your doorstep. Skincare, haircare & health essentials across Pakistan.",
   },
   twitter: {
     card: "summary_large_image",

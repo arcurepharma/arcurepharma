@@ -13,7 +13,6 @@ import {
   Minus,
   PlayCircle,
   BadgeCheck,
-  Truck,
 } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import { formatPrice } from "@/lib/utils";
@@ -250,10 +249,6 @@ export default function ProductCard({ product }: { product: Product }) {
                   >
                     <ShoppingCart className="w-4 h-4" /> Add to Cart
                   </button>
-                </div>
-
-                <div className="flex items-center gap-2 text-xs text-gray-400">
-                  <Truck className="w-4 h-4 text-[#fcb8fd]" /> Fast Delivery across Pakistan
                 </div>
 
                 <Link

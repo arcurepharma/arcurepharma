@@ -59,7 +59,7 @@ async function main() {
       name: "Ahmed Raza",
       role: "Loyal Customer",
       rating: 5,
-      text: "Fast delivery, genuine products and excellent customer service. I would not shop anywhere else.",
+      text: "Genuine products and excellent customer service. I would not shop anywhere else.",
       order: 2,
     },
     {

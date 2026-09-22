@@ -74,7 +74,7 @@ export default async function OpengraphImage() {
             marginTop: "12px",
           }}
         >
-          Quality medicated products â€¢ Fast doorstep delivery
+          Quality medicated products • Doorstep delivery
         </div>
       </div>
     ),

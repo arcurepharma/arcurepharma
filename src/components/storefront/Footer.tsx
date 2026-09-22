@@ -21,7 +21,7 @@ export default function Footer() {
               </h2>
               <p className="text-gray-600 leading-relaxed text-lg mb-6">
                 Arcure Pharma is dedicated to providing high-quality medicated products
-                with the convenience of online ordering and fast doorstep delivery.
+                with the convenience of online ordering and doorstep delivery.
                 With years of experience in the healthcare industry, we ensure every
                 product meets rigorous quality standards.
               </p>

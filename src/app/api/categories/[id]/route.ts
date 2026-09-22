@@ -1,112 +1,78 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
-import { categories } from "@/db/schema";
-import { eq, and, ne } from "drizzle-orm";
+import { users } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import {
+  hashPassword,
+  createSession,
+  SESSION_COOKIE,
+} from "@/lib/auth";
 
-export async function GET(
-  _request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function POST(request: NextRequest) {
   try {
-    const { id } = await params;
-    const category = await db
-      .select()
-      .from(categories)
-      .where(eq(categories.id, id))
-      .limit(1);
+    const body = await request.json();
+    const { name, email, phone, password } = body;
 
-    if (!category.length) {
+    if (!email || !password) {
       return NextResponse.json(
-        { error: "Category not found" },
-        { status: 404 }
+        { error: "Email and password are required" },
+        { status: 400 }
       );
     }
-
-    return NextResponse.json(category[0]);
-  } catch {
-    return NextResponse.json(
-      { error: "Failed to fetch category" },
-      { status: 500 }
-    );
-  }
-}
-
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const { id } = await params;
-    const body = await request.json();
-    const { name } = body;
-
-    if (!name || !String(name).trim()) {
+    if (password.length < 6) {
       return NextResponse.json(
-        { error: "Category name is required" },
+        { error: "Password must be at least 6 characters" },
         { status: 400 }
       );
     }
 
-    const cleanName = String(name).trim();
-
-    const duplicate = await db
-      .select({ id: categories.id })
-      .from(categories)
-      .where(and(eq(categories.name, cleanName), ne(categories.id, id)))
+    const existing = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email.toLowerCase()))
       .limit(1);
 
-    if (duplicate.length) {
+    if (existing.length) {
       return NextResponse.json(
-        { error: "This category already exists" },
+        { error: "An account with this email already exists" },
         { status: 409 }
       );
     }
 
-    const updated = await db
-      .update(categories)
-      .set({ name: cleanName })
-      .where(eq(categories.id, id))
+    const passwordHash = await hashPassword(password);
+    const newUser = await db
+      .insert(users)
+      .values({ name: name || "", email: email.toLowerCase(), phone: phone || "", passwordHash })
       .returning();
 
-    if (!updated.length) {
-      return NextResponse.json(
-        { error: "Category not found" },
-        { status: 404 }
-      );
-    }
+    const token = await createSession(newUser[0].id);
+    const response = NextResponse.json(
+      {
+        user: {
+          id: newUser[0].id,
+          name: newUser[0].name,
+          email: newUser[0].email,
+          phone: newUser[0].phone,
+        },
+      },
+      { status: 201 }
+    );
+    response.cookies.set(SESSION_COOKIE, token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
+    });
 
-    return NextResponse.json(updated[0]);
+    return response;
   } catch {
     return NextResponse.json(
-      { error: "Failed to update category" },
+      { error: "Failed to create account" },
       { status: 500 }
     );
   }
 }
 
-export async function DELETE(
-  _request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const { id } = await params;
-    const deleted = await db
-      .delete(categories)
-      .where(eq(categories.id, id))
-      .returning();
 
-    if (!deleted.length) {
-      return NextResponse.json(
-        { error: "Category not found" },
-        { status: 404 }
-      );
-    }
 
-    return NextResponse.json({ message: "Category deleted" });
-  } catch {
-    return NextResponse.json(
-      { error: "Failed to delete category" },
-      { status: 500 }
-    );
-  }
-}

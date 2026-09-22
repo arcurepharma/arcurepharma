@@ -31,3 +31,6 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(
 
   return { ref, visible };
 }
+
+
+

@@ -41,7 +41,7 @@ export default function VisionPanel() {
   ];
 
   return (
-    <section className="py-12 lg:py-16 bg-gradient-to-br from-[#a83866] via-[#8a2a52] to-[#6b1f3e] relative overflow-hidden">
+    <section className="py-12 lg:py-16 bg-gradient-to-br from-[#fcb8fd] via-[#d460d6] to-[#a83aaa] relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
@@ -87,3 +87,6 @@ export default function VisionPanel() {
     </section>
   );
 }
+
+
+

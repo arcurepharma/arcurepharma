@@ -133,3 +133,6 @@ export default function WishlistPage() {
     </main>
   );
 }
+
+
+

@@ -15,13 +15,13 @@ export default function PressLogos() {
   const { ref: headerRef, visible: headerVisible } = useReveal();
 
   return (
-    <section className="py-14 lg:py-20 bg-gradient-to-br from-[#fdf4f7] via-white to-[#fdf4f7]">
+    <section className="py-14 lg:py-20 bg-gradient-to-br from-[#fff5fe] via-white to-[#fff5fe]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           ref={headerRef}
           className={`text-center mb-10 reveal ${headerVisible ? "is-visible" : ""}`}
         >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#fae3ec] text-[#8a2a52] text-sm font-semibold rounded-full mb-4">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#fde8fc] text-[#d460d6] text-sm font-semibold rounded-full mb-4">
             <Newspaper className="w-4 h-4" />
             Trusted & Certified
           </span>
@@ -34,15 +34,15 @@ export default function PressLogos() {
         </div>
 
         {/* Trust Badges */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6">
+        <div className="flex flex-wrap justify-center gap-4 lg:gap-6">
           {TRUSTED_BY.map((item, i) => {
             const Icon = item.icon;
             return (
               <div
                 key={i}
-                className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-2 border-gray-100 hover:border-[#fae3ec] group"
+                className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-2 border-gray-100 hover:border-[#fde8fc] group w-[calc(50%-8px)] sm:w-[calc(33%-11px)] lg:w-44"
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-[#c85882] to-[#a83866] rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-12 h-12 bg-gradient-to-br from-[#fcb8fd] to-[#fcb8fd] rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
                   <Icon className="w-6 h-6 text-white" />
                 </div>
                 <p className="text-sm font-bold text-gray-900 text-center leading-snug">
@@ -56,10 +56,12 @@ export default function PressLogos() {
         {/* Additional Trust Statement */}
         <div className="mt-12 text-center">
           <p className="text-gray-700 font-medium">
-            Serving Pakistan with <span className="text-[#a83866] font-bold">Premium Healthcare Products</span> since 2020
+            Serving Pakistan with <span className="text-[#fcb8fd] font-bold">Premium Healthcare Products</span> since 2020
           </p>
         </div>
       </div>
     </section>
   );
 }
+
+

@@ -95,7 +95,7 @@ export default function ConversationsPage() {
       });
 
       if (response.ok) {
-        alert("✅ Conversation shifted to WhatsApp");
+        alert("âœ… Conversation shifted to WhatsApp");
         loadConversations();
       }
     } catch (error) {
@@ -284,3 +284,6 @@ export default function ConversationsPage() {
     </div>
   );
 }
+
+
+

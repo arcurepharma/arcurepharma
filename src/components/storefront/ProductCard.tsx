@@ -81,10 +81,10 @@ export default function ProductCard({ product }: { product: Product }) {
 
   return (
     <>
-      {/* ─── Card ─── */}
+      {/* â”€â”€â”€ Card â”€â”€â”€ */}
       <div className="group relative flex flex-col bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100">
 
-        {/* Image area — white bg, image contained, heart top-right */}
+        {/* Image area â€” white bg, image contained, heart top-right */}
         <Link href={`/product/${product.id}`} className="relative block aspect-square overflow-hidden bg-white">
           {gallery.slice(0, 2).map((img, i) => (
             <Image
@@ -109,7 +109,7 @@ export default function ProductCard({ product }: { product: Product }) {
             </div>
           )}
 
-          {/* Heart button — top right */}
+          {/* Heart button â€” top right */}
           <button
             onClick={(e) => { e.preventDefault(); e.stopPropagation(); setWished((w) => !w); }}
             aria-label="Wishlist"
@@ -117,34 +117,34 @@ export default function ProductCard({ product }: { product: Product }) {
           >
             <Heart
               className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors drop-shadow-sm ${
-                wished ? "fill-[#a83866] text-[#a83866]" : "fill-white text-gray-300 stroke-gray-300"
+                wished ? "fill-[#fcb8fd] text-[#fcb8fd]" : "fill-white text-gray-300 stroke-gray-300"
               }`}
             />
           </button>
 
           {/* Video badge */}
           {product.videoUrl && (
-            <span className="absolute top-2 left-2 z-10 inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-[#a83866]/90 text-white text-[9px] font-semibold rounded-md">
+            <span className="absolute top-2 left-2 z-10 inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-[#fcb8fd]/90 text-white text-[9px] font-semibold rounded-md">
               <PlayCircle className="w-2.5 h-2.5" /> Video
             </span>
           )}
 
-          {/* Quick view — desktop hover */}
+          {/* Quick view â€” desktop hover */}
           <div className="hidden sm:flex absolute inset-x-0 bottom-0 z-10 justify-center pb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <button
               onClick={openQuickView}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-white/95 text-gray-800 text-[11px] font-bold rounded-full shadow-lg hover:bg-[#a83866] hover:text-white transition-colors border border-gray-100"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-white/95 text-gray-800 text-[11px] font-bold rounded-full shadow-lg hover:bg-[#fcb8fd] hover:text-white transition-colors border border-gray-100"
             >
               <Eye className="w-3 h-3" /> Quick View
             </button>
           </div>
         </Link>
 
-        {/* Body — text content */}
+        {/* Body â€” text content */}
         <div className="flex flex-col flex-1 px-3 sm:px-4 pt-3 pb-3 sm:pb-4">
 
           {/* Title */}
-          <h3 className="font-semibold text-gray-800 text-xs sm:text-sm leading-snug line-clamp-2 mb-1.5 group-hover:text-[#a83866] transition-colors">
+          <h3 className="font-semibold text-gray-800 text-xs sm:text-sm leading-snug line-clamp-2 mb-1.5 group-hover:text-[#fcb8fd] transition-colors">
             {product.title}
           </h3>
 
@@ -161,14 +161,14 @@ export default function ProductCard({ product }: { product: Product }) {
             {formatPrice(product.price)}
           </p>
 
-          {/* ADD TO CART — full width mauve */}
+          {/* ADD TO CART â€” full width mauve */}
           <button
             onClick={handleAdd}
             disabled={isOutOfStock}
             className={`mt-auto w-full flex items-center justify-center gap-1.5 py-2 sm:py-2.5 text-[10px] sm:text-xs font-bold rounded-md transition-all active:scale-[0.98] tracking-wide ${
               isOutOfStock
                 ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                : "bg-[#a83866] hover:bg-[#8a2a52] text-white"
+                : "bg-[#fcb8fd] hover:bg-[#e8a0f0] text-[#6b1f6d]"
             }`}
           >
             {isOutOfStock ? "OUT OF STOCK" : "ADD TO CART"}
@@ -176,7 +176,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
       </div>
 
-      {/* ─── Quick View Modal ─── */}
+      {/* â”€â”€â”€ Quick View Modal â”€â”€â”€ */}
       {quickView && (
         <div className="fixed inset-0 z-[120] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setQuickView(false)} />
@@ -190,10 +190,10 @@ export default function ProductCard({ product }: { product: Product }) {
             </button>
             <div className="grid grid-cols-1 md:grid-cols-2">
               {/* Image */}
-              <div className="relative aspect-square md:min-h-[440px] bg-[#fdf4f7] rounded-tl-2xl rounded-bl-2xl overflow-hidden">
+              <div className="relative aspect-square md:min-h-[440px] bg-[#fff5fe] rounded-tl-2xl rounded-bl-2xl overflow-hidden">
                 <Image src={activeImg} alt={product.title} fill sizes="50vw" className="object-contain p-6" />
                 {product.category && (
-                  <span className="absolute top-4 left-4 px-3 py-1 bg-white text-[#a83866] text-xs font-bold rounded-full shadow-sm">
+                  <span className="absolute top-4 left-4 px-3 py-1 bg-white text-[#fcb8fd] text-xs font-bold rounded-full shadow-sm">
                     {product.category}
                   </span>
                 )}
@@ -204,7 +204,7 @@ export default function ProductCard({ product }: { product: Product }) {
                         key={i}
                         onClick={() => setActiveImg(img)}
                         className={`relative w-10 h-10 rounded-lg overflow-hidden ring-2 transition-all ${
-                          activeImg === img ? "ring-[#a83866] scale-105" : "ring-white/30 hover:ring-white"
+                          activeImg === img ? "ring-[#fcb8fd] scale-105" : "ring-white/30 hover:ring-white"
                         }`}
                       >
                         <Image src={img} alt="" fill sizes="40px" className="object-cover" />
@@ -216,7 +216,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
               {/* Details */}
               <div className="flex flex-col p-6 md:p-8">
-                <span className="inline-flex items-center gap-1.5 self-start px-3 py-1 bg-[#fdf4f7] text-[#a83866] text-xs font-bold rounded-full mb-4">
+                <span className="inline-flex items-center gap-1.5 self-start px-3 py-1 bg-[#fff5fe] text-[#fcb8fd] text-xs font-bold rounded-full mb-4">
                   <BadgeCheck className="w-3.5 h-3.5" /> Verified Product
                 </span>
                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">{product.title}</h2>
@@ -246,14 +246,14 @@ export default function ProductCard({ product }: { product: Product }) {
                   </div>
                   <button
                     onClick={addFromQuickView}
-                    className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#a83866] hover:bg-[#8a2a52] text-white font-bold text-sm rounded-xl transition-all active:scale-95 shadow-lg shadow-[#a83866]/20"
+                    className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#fcb8fd] hover:bg-[#e8a0f0] text-[#6b1f6d] font-bold text-sm rounded-xl transition-all active:scale-95 shadow-lg shadow-[#fcb8fd]/20"
                   >
                     <ShoppingCart className="w-4 h-4" /> Add to Cart
                   </button>
                 </div>
 
                 <div className="flex items-center gap-2 text-xs text-gray-400">
-                  <Truck className="w-4 h-4 text-[#a83866]" /> Fast Delivery across Pakistan
+                  <Truck className="w-4 h-4 text-[#fcb8fd]" /> Fast Delivery across Pakistan
                 </div>
 
                 <Link
@@ -271,3 +271,6 @@ export default function ProductCard({ product }: { product: Product }) {
     </>
   );
 }
+
+
+

@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
     const trimmedName = String(name || "").trim();
     const trimmedText = String(text || "").trim();
 
-    // Boundary validation — the "feedback collector bot" guard rails.
+    // Boundary validation â€” the "feedback collector bot" guard rails.
     if (!trimmedName) {
       return NextResponse.json(
         { error: "Name is required" },
@@ -131,3 +131,5 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+

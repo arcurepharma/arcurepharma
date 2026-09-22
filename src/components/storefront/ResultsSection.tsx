@@ -17,8 +17,8 @@ const results = [
     label: "After",
     image: "/results/result-1-after.jpg",
     tag: "AFTER",
-    tagColor: "bg-[#a83866]",
-    border: "border-[#fae3ec]",
+    tagColor: "bg-[#fcb8fd]",
+    border: "border-[#fde8fc]",
   },
   {
     id: 3,
@@ -33,8 +33,8 @@ const results = [
     label: "After",
     image: "/results/result-2-after.jpg",
     tag: "AFTER",
-    tagColor: "bg-[#a83866]",
-    border: "border-[#fae3ec]",
+    tagColor: "bg-[#fcb8fd]",
+    border: "border-[#fde8fc]",
   },
 ];
 
@@ -42,7 +42,7 @@ export default function ResultsSection() {
   const { ref, visible } = useReveal();
 
   return (
-    <section className="py-14 lg:py-20 bg-gradient-to-b from-white to-[#fdf4f7]">
+    <section className="py-14 lg:py-20 bg-gradient-to-b from-white to-[#fff5fe]">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
@@ -50,8 +50,8 @@ export default function ResultsSection() {
           ref={ref}
           className={`text-center mb-10 reveal ${visible ? "is-visible" : ""}`}
         >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#fdf4f7] text-[#a83866] text-xs sm:text-sm font-semibold rounded-full mb-4 border border-[#fae3ec]">
-            ✨ Real People, Real Results
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#fff5fe] text-[#fcb8fd] text-xs sm:text-sm font-semibold rounded-full mb-4 border border-[#fde8fc]">
+            âœ¨ Real People, Real Results
           </span>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
             Before &amp; After Results
@@ -59,7 +59,7 @@ export default function ResultsSection() {
           <p className="text-gray-400 max-w-md mx-auto text-sm">
             See the transformation our customers have experienced.
           </p>
-          <div className="w-12 h-1 bg-[#a83866] rounded-full mx-auto mt-4" />
+          <div className="w-12 h-1 bg-[#fcb8fd] rounded-full mx-auto mt-4" />
         </div>
 
         {/* 4 images in one horizontal row */}
@@ -84,7 +84,7 @@ export default function ResultsSection() {
               </div>
               {/* Label */}
               <p className={`text-[10px] sm:text-xs font-bold uppercase tracking-wider ${
-                r.tag === "AFTER" ? "text-[#a83866]" : "text-gray-500"
+                r.tag === "AFTER" ? "text-[#fcb8fd]" : "text-gray-500"
               }`}>
                 {r.label}
               </p>
@@ -95,7 +95,7 @@ export default function ResultsSection() {
         {/* Arrow indicators between pairs */}
         <div className="flex justify-around mt-1 px-[12.5%]">
           {[0, 1].map((i) => (
-            <div key={i} className="flex items-center gap-1 text-[#a83866]">
+            <div key={i} className="flex items-center gap-1 text-[#fcb8fd]">
               <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
@@ -110,3 +110,6 @@ export default function ResultsSection() {
     </section>
   );
 }
+
+
+

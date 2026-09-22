@@ -15,7 +15,7 @@ export const paymentMethods: PaymentConfig[] = [
     enabled: true,
     label: "Cash on Delivery",
     description: "Pay when you receive your order",
-    icon: "💵",
+    icon: "ðŸ’µ",
     fees: 0,
   },
   
@@ -84,3 +84,6 @@ export async function processCardPayment(amount: number, cardData: any, orderDat
     message: "Payment successful",
   };
 }
+
+
+

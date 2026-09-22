@@ -66,13 +66,13 @@ function getDefaultResponse(userMessage: string): string {
     message.includes("hi") ||
     message.includes("assalam")
   ) {
-    return `👋 Welcome to Arcure Pharma Support!
+    return `ðŸ‘‹ Welcome to Arcure Pharma Support!
 
 I'm here to help you with:
-1️⃣ Product Information
-2️⃣ Order Tracking
-3️⃣ Payment Options
-4️⃣ General Questions
+1ï¸âƒ£ Product Information
+2ï¸âƒ£ Order Tracking
+3ï¸âƒ£ Payment Options
+4ï¸âƒ£ General Questions
 
 How can I assist you today?`;
   }
@@ -84,7 +84,7 @@ How can I assist you today?`;
     message.includes("gleam") ||
     message.includes("k2")
   ) {
-    return `🏥 Our Popular Products:
+    return `ðŸ¥ Our Popular Products:
 
 1. ARCUDERM CS Serum - Rs. 2,999 (Anti-aging, Hydrating)
 2. ARCU GLEAM Face Wash - Rs. 1,499 (Gentle cleanser)
@@ -100,24 +100,24 @@ Which product would you like to know more about?`;
     message.includes("rupee") ||
     message.includes("payment")
   ) {
-    return `💳 Payment Options:
+    return `ðŸ’³ Payment Options:
 
-✅ Cash on Delivery (COD)
-✅ JazzCash/EasyPaisa
-✅ Credit/Debit Card
-✅ Bank Transfer
+âœ… Cash on Delivery (COD)
+âœ… JazzCash/EasyPaisa
+âœ… Credit/Debit Card
+âœ… Bank Transfer
 
 All payments are secure and encrypted.`;
   }
 
   if (message.includes("track") || message.includes("order")) {
-    return `📦 Order Tracking:
+    return `ðŸ“¦ Order Tracking:
 
 To track your order, please provide your Order ID or Email. Our team will help you with real-time updates.`;
   }
 
   if (message.includes("prescription") || message.includes("doctor")) {
-    return `📋 Prescription Verification:
+    return `ðŸ“‹ Prescription Verification:
 
 For prescription-required products, please share:
 - Your prescription (image/PDF)
@@ -128,23 +128,23 @@ Our team will verify within 24 hours.`;
   }
 
   if (message.includes("help") || message.includes("contact")) {
-    return `📞 Need More Help?
+    return `ðŸ“ž Need More Help?
 
 For urgent matters, contact us:
-📱 WhatsApp: 03162647620
-📧 Email: support@arcurepharma.com
+ðŸ“± WhatsApp: 03162647620
+ðŸ“§ Email: support@arcurepharma.com
 
 Our team is available 24/7!`;
   }
 
-  return `✨ Thanks for your interest in Arcure Pharma!
+  return `âœ¨ Thanks for your interest in Arcure Pharma!
 
 I can help you with:
-🏥 Product details
-💳 Payment information
-📦 Order tracking
-📋 Prescription verification
-📞 Customer support
+ðŸ¥ Product details
+ðŸ’³ Payment information
+ðŸ“¦ Order tracking
+ðŸ“‹ Prescription verification
+ðŸ“ž Customer support
 
 Just ask me about any of these topics!`;
 }
@@ -263,3 +263,6 @@ export async function GET(request: Request) {
     );
   }
 }
+
+
+

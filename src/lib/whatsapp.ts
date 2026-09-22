@@ -13,12 +13,12 @@ let isConnecting = false;
 
 export async function connectWhatsApp() {
   if (sock && sock.user) {
-    console.log("✅ WhatsApp already connected");
+    console.log("âœ… WhatsApp already connected");
     return sock;
   }
 
   if (isConnecting) {
-    console.log("⏳ WhatsApp connection in progress...");
+    console.log("â³ WhatsApp connection in progress...");
     return new Promise((resolve) => {
       const interval = setInterval(() => {
         if (sock && sock.user) {
@@ -48,7 +48,7 @@ export async function connectWhatsApp() {
       const { connection, lastDisconnect, isNewLogin } = update;
 
       if (isNewLogin) {
-        console.log("✅ New WhatsApp login detected");
+        console.log("âœ… New WhatsApp login detected");
       }
 
       if (connection === "close") {
@@ -57,7 +57,7 @@ export async function connectWhatsApp() {
           DisconnectReason.loggedOut;
 
         console.log(
-          "❌ WhatsApp connection closed:",
+          "âŒ WhatsApp connection closed:",
           lastDisconnect?.error,
           "Reconnecting:",
           shouldReconnect
@@ -71,7 +71,7 @@ export async function connectWhatsApp() {
           }, 3000);
         }
       } else if (connection === "open") {
-        console.log("✅ WhatsApp connected successfully");
+        console.log("âœ… WhatsApp connected successfully");
         isConnecting = false;
       }
     });
@@ -81,7 +81,7 @@ export async function connectWhatsApp() {
       try {
         const message = m.messages[0];
         if (!message.key.fromMe && message.message) {
-          console.log("📨 New message from:", message.key.remoteJid);
+          console.log("ðŸ“¨ New message from:", message.key.remoteJid);
           // Handle incoming messages here
         }
       } catch (error) {
@@ -91,7 +91,7 @@ export async function connectWhatsApp() {
 
     return sock;
   } catch (error) {
-    console.error("❌ Failed to connect WhatsApp:", error);
+    console.error("âŒ Failed to connect WhatsApp:", error);
     isConnecting = false;
     throw error;
   }
@@ -112,10 +112,10 @@ export async function sendWhatsAppMessage(
       : `${phoneNumber}@s.whatsapp.net`;
 
     await sock.sendMessage(jid, { text: message });
-    console.log(`✅ Message sent to ${phoneNumber}`);
+    console.log(`âœ… Message sent to ${phoneNumber}`);
     return true;
   } catch (error) {
-    console.error(`❌ Failed to send message to ${phoneNumber}:`, error);
+    console.error(`âŒ Failed to send message to ${phoneNumber}:`, error);
     return false;
   }
 }
@@ -127,3 +127,6 @@ export function getWhatsAppSocket(): WASocket | null {
 export function isWhatsAppConnected(): boolean {
   return sock !== null && sock.user !== null;
 }
+
+
+

@@ -64,7 +64,7 @@ export default function AdminReviewsPage() {
         body: JSON.stringify({ approved: true }),
       });
       if (res.ok) {
-        toast.success("Review approved — now visible on the storefront");
+        toast.success("Review approved â€” now visible on the storefront");
         setReviews((prev) =>
           prev.map((r) => (r.id === review.id ? { ...r, approved: 1 } : r))
         );
@@ -166,7 +166,7 @@ export default function AdminReviewsPage() {
           <p className="text-gray-500">
             {filter === "pending"
               ? "No pending reviews right now. Great!"
-              : "No reviews yet. Add your first review — text or with a picture!"}
+              : "No reviews yet. Add your first review â€” text or with a picture!"}
           </p>
         </div>
       ) : (
@@ -227,7 +227,7 @@ export default function AdminReviewsPage() {
                     {review.role && (
                       <span className="text-gray-400 font-normal">
                         {" "}
-                        · {review.role}
+                        Â· {review.role}
                       </span>
                     )}
                   </h3>
@@ -277,3 +277,5 @@ export default function AdminReviewsPage() {
     </div>
   );
 }
+
+

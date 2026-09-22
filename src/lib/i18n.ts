@@ -44,46 +44,49 @@ export const translations = {
   },
   ur: {
     // Navigation
-    home: "ہوم",
-    products: "مصنوعات",
-    about: "ہمارے بارے میں",
-    contact: "رابطہ",
-    cart: "کارٹ",
-    account: "اکاؤنٹ",
+    home: "ÛÙˆÙ…",
+    products: "Ù…ØµÙ†ÙˆØ¹Ø§Øª",
+    about: "ÛÙ…Ø§Ø±Û’ Ø¨Ø§Ø±Û’ Ù…ÛŒÚº",
+    contact: "Ø±Ø§Ø¨Ø·Û",
+    cart: "Ú©Ø§Ø±Ù¹",
+    account: "Ø§Ú©Ø§Ø¤Ù†Ù¹",
     
     // Common
-    search: "تلاش کریں",
-    filter: "فلٹر",
-    sort: "ترتیب دیں",
-    addToCart: "کارٹ میں شامل کریں",
-    buyNow: "ابھی خریدیں",
-    viewDetails: "تفصیلات دیکھیں",
-    learnMore: "مزید جانیں",
+    search: "ØªÙ„Ø§Ø´ Ú©Ø±ÛŒÚº",
+    filter: "ÙÙ„Ù¹Ø±",
+    sort: "ØªØ±ØªÛŒØ¨ Ø¯ÛŒÚº",
+    addToCart: "Ú©Ø§Ø±Ù¹ Ù…ÛŒÚº Ø´Ø§Ù…Ù„ Ú©Ø±ÛŒÚº",
+    buyNow: "Ø§Ø¨Ú¾ÛŒ Ø®Ø±ÛŒØ¯ÛŒÚº",
+    viewDetails: "ØªÙØµÛŒÙ„Ø§Øª Ø¯ÛŒÚ©Ú¾ÛŒÚº",
+    learnMore: "Ù…Ø²ÛŒØ¯ Ø¬Ø§Ù†ÛŒÚº",
     
     // Product
-    price: "قیمت",
-    category: "زمرہ",
-    inStock: "دستیاب ہے",
-    outOfStock: "دستیاب نہیں",
-    description: "تفصیل",
-    benefits: "فوائد",
-    ingredients: "اجزاء",
-    howToUse: "استعمال کا طریقہ",
+    price: "Ù‚ÛŒÙ…Øª",
+    category: "Ø²Ù…Ø±Û",
+    inStock: "Ø¯Ø³ØªÛŒØ§Ø¨ ÛÛ’",
+    outOfStock: "Ø¯Ø³ØªÛŒØ§Ø¨ Ù†ÛÛŒÚº",
+    description: "ØªÙØµÛŒÙ„",
+    benefits: "ÙÙˆØ§Ø¦Ø¯",
+    ingredients: "Ø§Ø¬Ø²Ø§Ø¡",
+    howToUse: "Ø§Ø³ØªØ¹Ù…Ø§Ù„ Ú©Ø§ Ø·Ø±ÛŒÙ‚Û",
     
     // Checkout
-    checkout: "چیک آؤٹ",
-    subtotal: "ذیلی کل",
-    shipping: "ترسیل",
-    total: "کل رقم",
-    placeOrder: "آرڈر کریں",
+    checkout: "Ú†ÛŒÚ© Ø¢Ø¤Ù¹",
+    subtotal: "Ø°ÛŒÙ„ÛŒ Ú©Ù„",
+    shipping: "ØªØ±Ø³ÛŒÙ„",
+    total: "Ú©Ù„ Ø±Ù‚Ù…",
+    placeOrder: "Ø¢Ø±ÚˆØ± Ú©Ø±ÛŒÚº",
     
     // Trust badges
-    fastDelivery: "تیز ترسیل",
-    securePayment: "محفوظ ادائیگی",
-    moneyBack: "رقم کی واپسی کی ضمانت",
+    fastDelivery: "ØªÛŒØ² ØªØ±Ø³ÛŒÙ„",
+    securePayment: "Ù…Ø­ÙÙˆØ¸ Ø§Ø¯Ø§Ø¦ÛŒÚ¯ÛŒ",
+    moneyBack: "Ø±Ù‚Ù… Ú©ÛŒ ÙˆØ§Ù¾Ø³ÛŒ Ú©ÛŒ Ø¶Ù…Ø§Ù†Øª",
   },
 };
 
 export function translate(key: keyof typeof translations.en, lang: Language): string {
   return translations[lang][key] || translations.en[key];
 }
+
+
+

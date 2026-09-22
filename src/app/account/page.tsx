@@ -221,7 +221,7 @@ export default function AccountPage() {
                   value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                  placeholder="••••••••"
+                  placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                   required
                 />
               </div>
@@ -270,7 +270,7 @@ export default function AccountPage() {
                   </div>
                   <div className="min-w-0">
                     <p className="font-medium text-gray-800 text-sm truncate">
-                      {user.name || "—"}
+                      {user.name || "â€”"}
                     </p>
                     <p className="text-gray-400 text-xs truncate">
                       {user.email}
@@ -376,3 +376,6 @@ export default function AccountPage() {
     </main>
   );
 }
+
+
+

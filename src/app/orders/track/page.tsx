@@ -144,7 +144,7 @@ export default function OrderTrackingPage() {
             </div>
             {error && (
               <p className="mt-3 text-sm text-red-600 flex items-center gap-2">
-                <span>⚠️</span> {error}
+                <span>âš ï¸</span> {error}
               </p>
             )}
           </form>
@@ -302,7 +302,7 @@ export default function OrderTrackingPage() {
           {!order && !loading && (
             <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 text-center">
               <p className="text-sm text-blue-800">
-                💡 <span className="font-semibold">Demo:</span> Try tracking number{" "}
+                ðŸ’¡ <span className="font-semibold">Demo:</span> Try tracking number{" "}
                 <code className="px-2 py-1 bg-blue-100 rounded font-mono">
                   demo123
                 </code>{" "}
@@ -317,3 +317,6 @@ export default function OrderTrackingPage() {
     </main>
   );
 }
+
+
+

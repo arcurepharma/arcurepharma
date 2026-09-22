@@ -14,8 +14,11 @@ export default function LanguageSwitcher() {
         aria-label="Switch language"
       >
         <Globe className="w-4 h-4" />
-        <span>{language === "en" ? "EN" : "اردو"}</span>
+        <span>{language === "en" ? "EN" : "Ø§Ø±Ø¯Ùˆ"}</span>
       </button>
     </div>
   );
 }
+
+
+

@@ -13,10 +13,10 @@ import { formatPrice } from "@/lib/utils";
 import toast from "react-hot-toast";
 
 const PAYMENT_METHODS = [
-  { id: "COD",          label: "Cash on Delivery", desc: "Pay when your order arrives", icon: "💵", available: true },
-  { id: "JazzCash",    label: "JazzCash",          desc: "Coming soon",                icon: "📱", available: false },
-  { id: "EasyPaisa",   label: "EasyPaisa",         desc: "Coming soon",                icon: "💳", available: false },
-  { id: "BankTransfer",label: "Bank Transfer",      desc: "Coming soon",                icon: "🏦", available: false },
+  { id: "COD",          label: "Cash on Delivery", desc: "Pay when your order arrives", icon: "ðŸ’µ", available: true },
+  { id: "JazzCash",    label: "JazzCash",          desc: "Coming soon",                icon: "ðŸ“±", available: false },
+  { id: "EasyPaisa",   label: "EasyPaisa",         desc: "Coming soon",                icon: "ðŸ’³", available: false },
+  { id: "BankTransfer",label: "Bank Transfer",      desc: "Coming soon",                icon: "ðŸ¦", available: false },
 ];
 
 // address mode: null = not chosen yet | "gps" = using location | "manual" = typing
@@ -49,7 +49,7 @@ export default function CheckoutPage() {
   const subtotal = getTotalPrice();
   const total    = subtotal + Number(deliveryFee);
 
-  // ── GPS detect ──
+  // â”€â”€ GPS detect â”€â”€
   const detectLocation = () => {
     if (!navigator.geolocation) {
       toast.error("Geolocation not supported");
@@ -92,7 +92,7 @@ export default function CheckoutPage() {
         }
         setAddressMode("gps");
         setDetecting(false);
-        toast.success("📍 Location detected!");
+        toast.success("ðŸ“ Location detected!");
       },
       (err) => {
         const msg =
@@ -107,7 +107,7 @@ export default function CheckoutPage() {
     );
   };
 
-  // ── Submit ──
+  // â”€â”€ Submit â”€â”€
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (items.length === 0)       { toast.error("Your cart is empty!"); return; }
@@ -179,7 +179,7 @@ export default function CheckoutPage() {
     setSubmitting(false);
   };
 
-  const inp = "w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#a83866] focus:border-transparent transition-all";
+  const inp = "w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#fcb8fd] focus:border-transparent transition-all";
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -194,13 +194,13 @@ export default function CheckoutPage() {
           <div className="text-center py-20 bg-white rounded-2xl border border-gray-100">
             <ShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
             <p className="text-gray-500 text-lg mb-4">Your cart is empty</p>
-            <Link href="/#products" className="inline-flex items-center gap-2 px-6 py-3 bg-[#a83866] text-white rounded-xl hover:bg-[#8a2a52] transition-colors">
+            <Link href="/#products" className="inline-flex items-center gap-2 px-6 py-3 bg-[#fcb8fd] text-white rounded-xl hover:bg-[#d460d6] transition-colors">
               Browse Products
             </Link>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* ── Left ── */}
+            {/* â”€â”€ Left â”€â”€ */}
             <div className="lg:col-span-2 space-y-6">
 
               {/* Cart */}
@@ -214,7 +214,7 @@ export default function CheckoutPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="font-medium text-gray-800 text-sm truncate">{item.title}</h3>
-                        <p className="text-[#a83866] font-semibold text-sm">{formatPrice(item.price)}</p>
+                        <p className="text-[#fcb8fd] font-semibold text-sm">{formatPrice(item.price)}</p>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="w-7 h-7 flex items-center justify-center bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"><Minus className="w-3.5 h-3.5" /></button>
@@ -233,7 +233,7 @@ export default function CheckoutPage() {
                 <h2 className="font-bold text-gray-900 mb-5">Delivery Information</h2>
                 <form id="checkout-form" onSubmit={handleSubmit} className="space-y-4">
 
-                  {/* Contact fields — always visible */}
+                  {/* Contact fields â€” always visible */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
@@ -257,7 +257,7 @@ export default function CheckoutPage() {
                     </div>
                   </div>
 
-                  {/* ── Address method chooser ── */}
+                  {/* â”€â”€ Address method chooser â”€â”€ */}
                   <div className="pt-2">
                     <p className="text-sm font-semibold text-gray-800 mb-3">Delivery Address *</p>
 
@@ -269,15 +269,15 @@ export default function CheckoutPage() {
                           type="button"
                           onClick={detectLocation}
                           disabled={detectingLocation}
-                          className="flex flex-col items-center gap-3 p-5 border-2 border-[#fae3ec] bg-[#fdf4f7] hover:border-[#a83866] rounded-2xl transition-all group disabled:opacity-60"
+                          className="flex flex-col items-center gap-3 p-5 border-2 border-[#fde8fc] bg-[#fff5fe] hover:border-[#fcb8fd] rounded-2xl transition-all group disabled:opacity-60"
                         >
                           {detectingLocation
-                            ? <Loader2 className="w-8 h-8 text-[#a83866] animate-spin" />
-                            : <MapPin className="w-8 h-8 text-[#a83866] group-hover:scale-110 transition-transform" />
+                            ? <Loader2 className="w-8 h-8 text-[#fcb8fd] animate-spin" />
+                            : <MapPin className="w-8 h-8 text-[#fcb8fd] group-hover:scale-110 transition-transform" />
                           }
                           <div className="text-center">
                             <p className="font-bold text-gray-800 text-sm">
-                              {detectingLocation ? "Detecting…" : "Use My Location"}
+                              {detectingLocation ? "Detectingâ€¦" : "Use My Location"}
                             </p>
                             <p className="text-xs text-gray-400 mt-0.5">Auto-detect via GPS</p>
                           </div>
@@ -287,9 +287,9 @@ export default function CheckoutPage() {
                         <button
                           type="button"
                           onClick={() => setAddressMode("manual")}
-                          className="flex flex-col items-center gap-3 p-5 border-2 border-gray-200 bg-white hover:border-[#a83866] rounded-2xl transition-all group"
+                          className="flex flex-col items-center gap-3 p-5 border-2 border-gray-200 bg-white hover:border-[#fcb8fd] rounded-2xl transition-all group"
                         >
-                          <PencilLine className="w-8 h-8 text-gray-500 group-hover:text-[#a83866] group-hover:scale-110 transition-all" />
+                          <PencilLine className="w-8 h-8 text-gray-500 group-hover:text-[#fcb8fd] group-hover:scale-110 transition-all" />
                           <div className="text-center">
                             <p className="font-bold text-gray-800 text-sm">Enter Manually</p>
                             <p className="text-xs text-gray-400 mt-0.5">Type your address</p>
@@ -298,7 +298,7 @@ export default function CheckoutPage() {
                       </div>
                     )}
 
-                    {/* ── GPS mode confirmed ── */}
+                    {/* â”€â”€ GPS mode confirmed â”€â”€ */}
                     {addressMode === "gps" && (
                       <div className="space-y-3">
                         <div className="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-xl">
@@ -342,7 +342,7 @@ export default function CheckoutPage() {
                       </div>
                     )}
 
-                    {/* ── Manual mode ── */}
+                    {/* â”€â”€ Manual mode â”€â”€ */}
                     {addressMode === "manual" && (
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
@@ -350,9 +350,9 @@ export default function CheckoutPage() {
                           <button
                             type="button"
                             onClick={() => setAddressMode(null)}
-                            className="text-xs text-[#a83866] hover:underline font-medium"
+                            className="text-xs text-[#fcb8fd] hover:underline font-medium"
                           >
-                            ← Back
+                            â† Back
                           </button>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -395,8 +395,8 @@ export default function CheckoutPage() {
                         !method.available
                           ? "opacity-50 cursor-not-allowed border-gray-100 bg-gray-50"
                           : paymentMethod === method.id
-                          ? "border-[#a83866] bg-[#fdf4f7]"
-                          : "border-gray-200 hover:border-[#a83866]/40 bg-white"
+                          ? "border-[#fcb8fd] bg-[#fff5fe]"
+                          : "border-gray-200 hover:border-[#fcb8fd]/40 bg-white"
                       }`}
                     >
                       <span className="text-2xl">{method.icon}</span>
@@ -410,7 +410,7 @@ export default function CheckoutPage() {
                         </span>
                       )}
                       {method.available && paymentMethod === method.id && (
-                        <div className="w-5 h-5 rounded-full bg-[#a83866] flex items-center justify-center shrink-0">
+                        <div className="w-5 h-5 rounded-full bg-[#fcb8fd] flex items-center justify-center shrink-0">
                           <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                           </svg>
@@ -422,14 +422,14 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* ── Summary ── */}
+            {/* â”€â”€ Summary â”€â”€ */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-2xl border border-gray-100 p-6 sticky top-24">
                 <h2 className="font-bold text-gray-900 mb-4">Order Summary</h2>
                 <div className="space-y-2.5 mb-5">
                   {items.map((item) => (
                     <div key={item.id} className="flex justify-between text-sm">
-                      <span className="text-gray-600 truncate mr-2">{item.title} × {item.quantity}</span>
+                      <span className="text-gray-600 truncate mr-2">{item.title} Ã— {item.quantity}</span>
                       <span className="font-medium text-gray-800 shrink-0">{formatPrice(Number(item.price) * item.quantity)}</span>
                     </div>
                   ))}
@@ -451,17 +451,17 @@ export default function CheckoutPage() {
                 <div className="border-t border-gray-100 pt-4 mt-3">
                   <div className="flex justify-between">
                     <span className="font-bold text-gray-900">Total</span>
-                    <span className="font-bold text-[#a83866] text-xl">{formatPrice(total)}</span>
+                    <span className="font-bold text-[#fcb8fd] text-xl">{formatPrice(total)}</span>
                   </div>
                 </div>
                 <button
                   type="submit"
                   form="checkout-form"
                   disabled={submitting}
-                  className="w-full mt-5 py-3.5 bg-[#a83866] hover:bg-[#8a2a52] text-white font-bold rounded-xl transition-all disabled:opacity-50 text-sm tracking-wide"
+                  className="w-full mt-5 py-3.5 bg-[#fcb8fd] hover:bg-[#e8a0f0] text-[#6b1f6d] font-bold rounded-xl transition-all disabled:opacity-50 text-sm tracking-wide"
                 >
                   {submitting
-                    ? <span className="flex items-center justify-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> Placing Order…</span>
+                    ? <span className="flex items-center justify-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> Placing Orderâ€¦</span>
                     : "Place Order"}
                 </button>
               </div>
@@ -472,3 +472,6 @@ export default function CheckoutPage() {
     </main>
   );
 }
+
+
+

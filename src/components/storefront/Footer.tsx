@@ -12,12 +12,12 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#fdf4f7] text-[#a83866] text-sm font-semibold rounded-full mb-4">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#fff5fe] text-[#fcb8fd] text-sm font-semibold rounded-full mb-4">
                 About Us
               </span>
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 Your Trusted Online{" "}
-                <span className="text-[#a83866]">Pharmacy</span>
+                <span className="text-[#fcb8fd]">Pharmacy</span>
               </h2>
               <p className="text-gray-600 leading-relaxed text-lg mb-6">
                 Arcure Pharma is dedicated to providing high-quality medicated
@@ -31,7 +31,7 @@ export default function Footer() {
               </p>
               <Link
                 href="/#products"
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-[#a83866] hover:bg-[#8a2a52] text-white text-sm font-semibold rounded-full transition-all hover:shadow-lg hover:shadow-[#a83866]/25 active:scale-95"
+                className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-[#fcb8fd] hover:bg-[#e8a0f0] text-[#6b1f6d] text-sm font-semibold rounded-full transition-all hover:shadow-lg hover:shadow-[#fcb8fd]/25 active:scale-95"
               >
                 Explore Products
                 <ArrowRight className="w-4 h-4" />
@@ -48,7 +48,7 @@ export default function Footer() {
                   key={stat.label}
                   className="bg-white rounded-2xl p-6 text-center shadow-sm hover:shadow-md transition-shadow border border-gray-100"
                 >
-                  <p className="text-2xl lg:text-3xl font-extrabold text-[#a83866] mb-1">
+                  <p className="text-2xl lg:text-3xl font-extrabold text-[#fcb8fd] mb-1">
                     {stat.value}
                   </p>
                   <p className="text-gray-500 text-sm">{stat.label}</p>
@@ -60,7 +60,7 @@ export default function Footer() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#44122a] text-white">
+      <footer className="bg-[#6b1f6d] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             {/* Brand */}
@@ -89,7 +89,7 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-10 h-10 bg-[#6b1f3e] hover:bg-[#a83866] rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
+                    className="w-10 h-10 bg-[#a83aaa] hover:bg-[#fcb8fd] rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110"
                     aria-label={social.label}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill={social.filled ? "currentColor" : "none"} stroke={social.filled ? "none" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={social.path} /></svg>
@@ -114,7 +114,7 @@ export default function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-gray-400 hover:text-[#e07aa0] text-sm transition-colors flex items-center gap-2 group"
+                      className="text-gray-400 hover:text-[#f472d0] text-sm transition-colors flex items-center gap-2 group"
                     >
                       <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                       {link.label}
@@ -131,23 +131,23 @@ export default function Footer() {
               </h4>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3 text-gray-400 text-sm">
-                  <MapPin className="w-4 h-4 text-[#e07aa0] shrink-0 mt-0.5" />
+                  <MapPin className="w-4 h-4 text-[#f472d0] shrink-0 mt-0.5" />
                   <span>Plot No. E99/B, Site Super Highway, Karachi, Pakistan</span>
                 </li>
                 <li className="flex items-center gap-3 text-gray-400 text-sm">
-                  <Phone className="w-4 h-4 text-[#e07aa0] shrink-0" />
-                  <a href="tel:+923341169999" className="hover:text-[#e07aa0] transition-colors">
+                  <Phone className="w-4 h-4 text-[#f472d0] shrink-0" />
+                  <a href="tel:+923341169999" className="hover:text-[#f472d0] transition-colors">
                     +92 334 116 9999
                   </a>
                 </li>
                 <li className="flex items-center gap-3 text-gray-400 text-sm">
-                  <Mail className="w-4 h-4 text-[#e07aa0] shrink-0" />
-                  <a href="mailto:info@arcurepharma.com" className="hover:text-[#e07aa0] transition-colors">
+                  <Mail className="w-4 h-4 text-[#f472d0] shrink-0" />
+                  <a href="mailto:info@arcurepharma.com" className="hover:text-[#f472d0] transition-colors">
                     info@arcurepharma.com
                   </a>
                 </li>
                 <li className="flex items-center gap-3 text-gray-400 text-sm">
-                  <Clock className="w-4 h-4 text-[#e07aa0] shrink-0" />
+                  <Clock className="w-4 h-4 text-[#f472d0] shrink-0" />
                   <span>Mon - Sat: 9:00 AM - 9:00 PM</span>
                 </li>
               </ul>
@@ -165,11 +165,11 @@ export default function Footer() {
                 <input
                   type="email"
                   placeholder="Your email address"
-                  className="w-full px-4 py-3 bg-[#6b1f3e] border border-[#8a2a52] rounded-xl text-white text-sm placeholder-[#eca0bb] focus:outline-none focus:border-[#e07aa0] transition-colors"
+                  className="w-full px-4 py-3 bg-[#a83aaa] border border-[#d460d6] rounded-xl text-white text-sm placeholder-[#f896e8] focus:outline-none focus:border-[#f472d0] transition-colors"
                 />
                 <button
                   type="submit"
-                  className="w-full px-4 py-3 bg-[#a83866] hover:bg-[#8a2a52] text-white text-sm font-semibold rounded-xl transition-all active:scale-95"
+                  className="w-full px-4 py-3 bg-[#fcb8fd] hover:bg-[#e8a0f0] text-[#6b1f6d] text-sm font-semibold rounded-xl transition-all active:scale-95"
                 >
                   Subscribe
                 </button>
@@ -177,7 +177,7 @@ export default function Footer() {
               <div className="mt-6">
                 <Link
                   href="#"
-                  className="text-gray-500 hover:text-[#e07aa0] text-xs transition-colors"
+                  className="text-gray-500 hover:text-[#f472d0] text-xs transition-colors"
                 >
                   Privacy Policy
                 </Link>
@@ -187,14 +187,14 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-[#6b1f3e]">
+        <div className="border-t border-[#a83aaa]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-[#eca0bb] text-sm text-center sm:text-left">
+            <p className="text-[#f896e8] text-sm text-center sm:text-left">
               &copy; {new Date().getFullYear()} Arcure Pharma. All rights reserved.
             </p>
-            <p className="text-[#eca0bb]/60 text-xs">
+            <p className="text-[#f896e8]/60 text-xs">
               Created by{" "}
-              <span className="text-[#e07aa0] font-semibold">Muhammad Ayan</span>
+              <span className="text-[#f472d0] font-semibold">Muhammad Ayan</span>
             </p>
           </div>
         </div>
@@ -202,3 +202,6 @@ export default function Footer() {
     </>
   );
 }
+
+
+

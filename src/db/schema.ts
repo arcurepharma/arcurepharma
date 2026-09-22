@@ -207,3 +207,6 @@ export const chatHistory = pgTable("chat_history", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+
+

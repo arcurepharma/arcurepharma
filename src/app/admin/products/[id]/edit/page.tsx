@@ -1,18 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import AdminImagePicker from "@/components/admin/AdminImagePicker";
 
-export default function EditProductPage() {
+export default function NewProductPage() {
   const router = useRouter();
-  const params = useParams();
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [fetching, setFetching] = useState(true);
   const [categories, setCategories] = useState<string[]>(["General"]);
   const [images, setImages] = useState<string[]>([]);
   const [coverIndex, setCoverIndex] = useState(0);
@@ -26,34 +24,17 @@ export default function EditProductPage() {
   });
 
   useEffect(() => {
-    Promise.all([
-      fetch(`/api/products/${params.id}`).then((r) => r.json()),
-      fetch("/api/categories").then((r) => r.json()),
-    ]).then(([data, catData]) => {
-      const names = Array.isArray(catData)
-        ? catData.map((c: { name: string }) => c.name)
-        : [];
-      const catList = Array.from(new Set(["General", ...names]));
-      const existingImages =
-        data.images && Array.isArray(data.images) ? data.images : [];
-      setCategories(catList);
-      setImages(existingImages);
-      setForm({
-        title: data.title || "",
-        price: data.price || "",
-        description: data.description || "",
-        category:
-          data.category && catList.includes(data.category)
-            ? data.category
-            : "General",
-        imageUrl: data.imageUrl || "",
-        videoUrl: data.videoUrl || "",
-      });
-      const coverIdx = existingImages.indexOf(data.imageUrl);
-      setCoverIndex(coverIdx >= 0 ? coverIdx : 0);
-      setFetching(false);
-    });
-  }, [params.id]);
+    fetch("/api/categories")
+      .then((r) => r.json())
+      .then((data) => {
+        const names = Array.isArray(data)
+          ? data.map((c: { name: string }) => c.name)
+          : [];
+        const list = Array.from(new Set(["General", ...names]));
+        setCategories(list);
+      })
+      .catch(() => {});
+  }, []);
 
   const addImages = (urls: string[]) => {
     setImages((prev) => {
@@ -88,32 +69,28 @@ export default function EditProductPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.title || !form.price || !form.imageUrl) {
+      toast.error("Please fill all required fields and upload an image");
+      return;
+    }
     setLoading(true);
     try {
-      const res = await fetch(`/api/products/${params.id}`, {
-        method: "PUT",
+      const res = await fetch("/api/products", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, images }),
       });
       if (res.ok) {
-        toast.success("Product updated!");
+        toast.success("Product created!");
         router.push("/admin/products");
       } else {
-        toast.error("Failed to update");
+        toast.error("Failed to create product");
       }
     } catch {
-      toast.error("Failed to update");
+      toast.error("Failed to create product");
     }
     setLoading(false);
   };
-
-  if (fetching) {
-    return (
-      <div className="flex justify-center py-20">
-        <div className="w-8 h-8 border-4 border-teal-200 border-t-teal-600 rounded-full animate-spin" />
-      </div>
-    );
-  }
 
   return (
     <div className="max-w-2xl">
@@ -124,12 +101,12 @@ export default function EditProductPage() {
         <ArrowLeft className="w-4 h-4" /> Back to Products
       </Link>
 
-      <h1 className="text-2xl font-bold text-gray-900 mb-8">Edit Product</h1>
+      <h1 className="text-2xl font-bold text-gray-900 mb-8">Add New Product</h1>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-100 p-8 space-y-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Product Images
+            Product Images *
           </label>
           <AdminImagePicker
             images={images}
@@ -143,30 +120,38 @@ export default function EditProductPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Title *
+          </label>
           <input
             type="text"
             value={form.title}
             onChange={(e) => setForm({ ...form, title: e.target.value })}
             className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+            placeholder="e.g., Paracetamol 500mg"
             required
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Price (Rs.)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Price (Rs.) *
+            </label>
             <input
               type="number"
               value={form.price}
               onChange={(e) => setForm({ ...form, price: e.target.value })}
               className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              placeholder="250"
               min="0"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Category
+            </label>
             <select
               value={form.category}
               onChange={(e) => setForm({ ...form, category: e.target.value })}
@@ -182,12 +167,15 @@ export default function EditProductPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Description
+          </label>
           <textarea
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
             rows={3}
             className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+            placeholder="Brief description of the product..."
           />
         </div>
 
@@ -213,9 +201,12 @@ export default function EditProductPage() {
           disabled={loading || uploading}
           className="w-full py-3 bg-teal-600 text-white font-medium rounded-xl hover:bg-teal-700 transition-colors disabled:opacity-50"
         >
-          {loading ? "Saving..." : "Save Changes"}
+          {loading ? "Creating..." : "Create Product"}
         </button>
       </form>
     </div>
   );
 }
+
+
+

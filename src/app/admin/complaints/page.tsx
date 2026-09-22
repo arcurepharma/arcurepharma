@@ -145,7 +145,7 @@ export default function AdminComplaintsPage() {
                       )}
                     </td>
                     <td className="px-6 py-4 text-sm font-mono text-gray-600">
-                      {complaint.orderId || "—"}
+                      {complaint.orderId || "â€”"}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-600 max-w-xs">
                       {complaint.message}
@@ -192,3 +192,5 @@ export default function AdminComplaintsPage() {
     </div>
   );
 }
+
+

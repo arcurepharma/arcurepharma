@@ -1,57 +1,61 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
-import { orders } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { complaints } from "@/db/schema";
+import { desc } from "drizzle-orm";
 
-export async function GET(
-  _request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function GET() {
   try {
-    const { id } = await params;
-    const order = await db
+    const allComplaints = await db
       .select()
-      .from(orders)
-      .where(eq(orders.id, id))
-      .limit(1);
-
-    if (!order.length) {
-      return NextResponse.json({ error: "Order not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(order[0]);
+      .from(complaints)
+      .orderBy(desc(complaints.createdAt));
+    return NextResponse.json(allComplaints);
   } catch {
     return NextResponse.json(
-      { error: "Failed to fetch order" },
+      { error: "Failed to fetch complaints" },
       { status: 500 }
     );
   }
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function POST(request: NextRequest) {
   try {
-    const { id } = await params;
     const body = await request.json();
-    const { status } = body;
+    const { name, email, orderId, subject, message } = body;
 
-    const updated = await db
-      .update(orders)
-      .set({ status })
-      .where(eq(orders.id, id))
+    if (!email || !message) {
+      return NextResponse.json(
+        { error: "Email and message are required" },
+        { status: 400 }
+      );
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      return NextResponse.json(
+        { error: "Please provide a valid email address" },
+        { status: 400 }
+      );
+    }
+
+    const newComplaint = await db
+      .insert(complaints)
+      .values({
+        name: name || "",
+        email,
+        orderId: orderId || "",
+        subject: subject || "",
+        message,
+      })
       .returning();
 
-    if (!updated.length) {
-      return NextResponse.json({ error: "Order not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(updated[0]);
+    return NextResponse.json(newComplaint[0], { status: 201 });
   } catch {
     return NextResponse.json(
-      { error: "Failed to update order" },
+      { error: "Failed to submit complaint" },
       { status: 500 }
     );
   }
 }
+
+

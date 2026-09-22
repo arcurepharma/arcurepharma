@@ -1,94 +1,65 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/db";
-import { reviews } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { db, isDbConfigured } from "@/db";
+import { products } from "@/db/schema";
+import { sql } from "drizzle-orm";
 
-export async function GET(
-  _request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function GET() {
+  if (!isDbConfigured) {
+    return NextResponse.json([]);
+  }
   try {
-    const { id } = await params;
-    const review = await db
+    const allProducts = await db
       .select()
-      .from(reviews)
-      .where(eq(reviews.id, id))
-      .limit(1);
-
-    if (!review.length) {
-      return NextResponse.json({ error: "Review not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(review[0]);
+      .from(products)
+      .orderBy(
+        sql`CASE WHEN ${products.category} = 'Skincare' THEN 0 ELSE 1 END`,
+        products.createdAt
+      );
+    return NextResponse.json(allProducts);
   } catch {
     return NextResponse.json(
-      { error: "Failed to fetch review" },
+      { error: "Failed to fetch products" },
       { status: 500 }
     );
   }
 }
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function POST(request: NextRequest) {
   try {
-    const { id } = await params;
     const body = await request.json();
-    const { name, role, rating, text, imageUrl, order, approved } = body;
+    const { title, price, description, category, imageUrl, images, videoUrl } =
+      body;
 
-    const clampedRating =
-      rating !== undefined
-        ? Math.min(5, Math.max(1, Math.round(Number(rating) || 5)))
-        : undefined;
+    if (!title || !price || !imageUrl) {
+      return NextResponse.json(
+        { error: "Title, price, and image are required" },
+        { status: 400 }
+      );
+    }
 
-    const updated = await db
-      .update(reviews)
-      .set({
-        ...(name !== undefined && { name }),
-        ...(role !== undefined && { role }),
-        ...(clampedRating !== undefined && { rating: clampedRating }),
-        ...(text !== undefined && { text }),
-        ...(imageUrl !== undefined && { imageUrl }),
-        ...(order !== undefined && { order }),
-        ...(approved !== undefined && { approved: approved ? 1 : 0 }),
+    const imagesArr = Array.isArray(images) ? images : [];
+
+    const newProduct = await db
+      .insert(products)
+      .values({
+        title,
+        price: String(price),
+        description,
+        category,
+        imageUrl,
+        images: imagesArr.length ? imagesArr : [imageUrl],
+        videoUrl: videoUrl || null,
       })
-      .where(eq(reviews.id, id))
       .returning();
 
-    if (!updated.length) {
-      return NextResponse.json({ error: "Review not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(updated[0]);
+    return NextResponse.json(newProduct[0], { status: 201 });
   } catch {
     return NextResponse.json(
-      { error: "Failed to update review" },
+      { error: "Failed to create product" },
       { status: 500 }
     );
   }
 }
 
-export async function DELETE(
-  _request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const { id } = await params;
-    const deleted = await db
-      .delete(reviews)
-      .where(eq(reviews.id, id))
-      .returning();
 
-    if (!deleted.length) {
-      return NextResponse.json({ error: "Review not found" }, { status: 404 });
-    }
 
-    return NextResponse.json({ message: "Review deleted" });
-  } catch {
-    return NextResponse.json(
-      { error: "Failed to delete review" },
-      { status: 500 }
-    );
-  }
-}

@@ -117,7 +117,7 @@ export default function AdminProductsPage() {
                     </div>
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-600">
-                    {product.category || "—"}
+                    {product.category || "â€”"}
                   </td>
                   <td className="px-6 py-4 text-sm font-medium text-gray-900">
                     {formatPrice(product.price)}
@@ -155,3 +155,6 @@ function Package(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+
+

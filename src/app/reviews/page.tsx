@@ -120,7 +120,7 @@ const FALLBACK_REVIEWS: Review[] = [
     id: "fallback-13",
     name: "Sara Iqbal",
     rating: 5,
-    text: "Quality, packaging aur presentation — teeno cheezen mujhe achi lagin. Arcure Pharma se mera overall experience positive raha.",
+    text: "Quality, packaging aur presentation â€” teeno cheezen mujhe achi lagin. Arcure Pharma se mera overall experience positive raha.",
     imageUrl: null,
     order: 13,
   },
@@ -442,3 +442,5 @@ function ImageReviewCard({
     </div>
   );
 }
+
+

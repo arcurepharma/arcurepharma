@@ -75,7 +75,7 @@ export default function PaymentMethodSelector({
       {selectedMethod === "COD" && (
         <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mt-4">
           <p className="text-sm text-blue-800">
-            <span className="font-semibold">💡 Cash on Delivery:</span> Pay when
+            <span className="font-semibold">ðŸ’¡ Cash on Delivery:</span> Pay when
             you receive your order. Please keep exact change ready for smooth
             delivery.
           </p>
@@ -86,7 +86,7 @@ export default function PaymentMethodSelector({
       {(selectedMethod === "JazzCash" || selectedMethod === "EasyPaisa") && (
         <div className="bg-teal-50 border border-teal-200 rounded-xl p-4 mt-4">
           <p className="text-sm text-teal-800">
-            <span className="font-semibold">📱 Mobile Wallet:</span> You'll be
+            <span className="font-semibold">ðŸ“± Mobile Wallet:</span> You'll be
             redirected to complete payment securely. Make sure you have the{" "}
             {selectedMethod} app installed.
           </p>
@@ -95,3 +95,6 @@ export default function PaymentMethodSelector({
     </div>
   );
 }
+
+
+

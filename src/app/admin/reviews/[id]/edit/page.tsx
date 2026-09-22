@@ -1,18 +1,16 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { useRouter, useParams } from "next/navigation";
-import { ArrowLeft, Star, X, ImageIcon } from "lucide-react";
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { Upload, ArrowLeft, Star, X, ImageIcon } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 
-export default function EditReviewPage() {
+export default function NewReviewPage() {
   const router = useRouter();
-  const params = useParams();
   const fileRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
-  const [fetching, setFetching] = useState(true);
   const [form, setForm] = useState({
     name: "",
     role: "",
@@ -21,22 +19,6 @@ export default function EditReviewPage() {
     imageUrl: "",
     order: 0,
   });
-
-  useEffect(() => {
-    fetch(`/api/reviews/${params.id}`)
-      .then((r) => r.json())
-      .then((data) => {
-        setForm({
-          name: data.name || "",
-          role: data.role || "",
-          rating: data.rating || 5,
-          text: data.text || "",
-          imageUrl: data.imageUrl || "",
-          order: data.order || 0,
-        });
-        setFetching(false);
-      });
-  }, [params.id]);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -66,30 +48,22 @@ export default function EditReviewPage() {
     }
     setLoading(true);
     try {
-      const res = await fetch(`/api/reviews/${params.id}`, {
-        method: "PUT",
+      const res = await fetch("/api/reviews", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
       if (res.ok) {
-        toast.success("Review updated!");
+        toast.success("Review added!");
         router.push("/admin/reviews");
       } else {
-        toast.error("Failed to update");
+        toast.error("Failed to create review");
       }
     } catch {
-      toast.error("Failed to update");
+      toast.error("Failed to create review");
     }
     setLoading(false);
   };
-
-  if (fetching) {
-    return (
-      <div className="flex justify-center py-20">
-        <div className="w-8 h-8 border-4 border-teal-200 border-t-teal-600 rounded-full animate-spin" />
-      </div>
-    );
-  }
 
   return (
     <div className="max-w-2xl">
@@ -100,15 +74,16 @@ export default function EditReviewPage() {
         <ArrowLeft className="w-4 h-4" /> Back to Reviews
       </Link>
 
-      <h1 className="text-2xl font-bold text-gray-900 mb-8">Edit Review</h1>
+      <h1 className="text-2xl font-bold text-gray-900 mb-8">Add New Review</h1>
 
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-2xl border border-gray-100 p-8 space-y-6"
       >
+        {/* Optional photo - makes it a picture review card */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Photo
+            Photo (optional)
           </label>
           <div
             onClick={() => fileRef.current?.click()}
@@ -150,6 +125,10 @@ export default function EditReviewPage() {
             onChange={handleImageUpload}
             className="hidden"
           />
+          <p className="text-xs text-gray-400 mt-2">
+            Reviews with a photo appear as image cards, like a product card.
+            Reviews without one show as text cards.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -162,6 +141,7 @@ export default function EditReviewPage() {
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              placeholder="e.g., Dr. Fatima Khan"
             />
           </div>
 
@@ -174,6 +154,7 @@ export default function EditReviewPage() {
               value={form.role}
               onChange={(e) => setForm({ ...form, role: e.target.value })}
               className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+              placeholder="e.g., Hospital Administrator"
             />
           </div>
         </div>
@@ -215,6 +196,7 @@ export default function EditReviewPage() {
             onChange={(e) => setForm({ ...form, text: e.target.value })}
             rows={4}
             className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+            placeholder="What did this customer say about your products / service?"
           />
         </div>
 
@@ -239,9 +221,11 @@ export default function EditReviewPage() {
           disabled={loading || uploading}
           className="w-full py-3 bg-teal-600 text-white font-medium rounded-xl hover:bg-teal-700 transition-colors disabled:opacity-50"
         >
-          {loading ? "Saving..." : "Save Changes"}
+          {loading ? "Adding..." : "Add Review"}
         </button>
       </form>
     </div>
   );
 }
+
+

@@ -169,7 +169,7 @@ export default function PrescriptionsPage() {
                     <div className="space-y-1">
                       {prescription.productNames.map((name, i) => (
                         <p key={i} className="text-sm text-gray-700">
-                          • {name}
+                          â€¢ {name}
                         </p>
                       ))}
                     </div>
@@ -362,3 +362,6 @@ export default function PrescriptionsPage() {
     </div>
   );
 }
+
+
+

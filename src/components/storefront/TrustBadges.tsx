@@ -39,8 +39,8 @@ export default function TrustBadges() {
                   i < badges.length - 1 ? "border-r border-gray-100" : ""
                 }`}
               >
-                <div className="shrink-0 w-10 h-10 rounded-full bg-[#fdf4f7] flex items-center justify-center">
-                  <Icon className="w-5 h-5 text-[#a83866]" />
+                <div className="shrink-0 w-10 h-10 rounded-full bg-[#fff5fe] flex items-center justify-center">
+                  <Icon className="w-5 h-5 text-[#fcb8fd]" />
                 </div>
                 <div>
                   <p className="text-[13px] font-bold text-gray-800 leading-tight">
@@ -58,3 +58,6 @@ export default function TrustBadges() {
     </section>
   );
 }
+
+
+

@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
 
     const order = newOrder[0];
 
-    // Send notification email — fire and forget (don't block the response)
+    // Send notification email â€” fire and forget (don't block the response)
     sendOrderNotificationEmail({
       orderId: order.id,
       customerName: customerName || "",
@@ -92,3 +92,6 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+
+

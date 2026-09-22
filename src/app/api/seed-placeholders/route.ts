@@ -3,7 +3,7 @@ import { db } from "@/db";
 import { products } from "@/db/schema";
 
 const PLACEHOLDERS = [
-  // ── Face Wash (existing) ──
+  // â”€â”€ Face Wash (existing) â”€â”€
   {
     id: "20000000-0000-4000-8000-000000000001",
     title: "ARCU GLEAM Gentle Cleanser",
@@ -26,7 +26,7 @@ const PLACEHOLDERS = [
     sku: "AOW-P02",
     isActive: 0,
   },
-  // ── Serums (existing) ──
+  // â”€â”€ Serums (existing) â”€â”€
   {
     id: "20000000-0000-4000-8000-000000000004",
     title: "ARCUDERM Brightening Serum",
@@ -49,7 +49,7 @@ const PLACEHOLDERS = [
     sku: "AHB-P05",
     isActive: 0,
   },
-  // ── Moisturizers (NEW) ──
+  // â”€â”€ Moisturizers (NEW) â”€â”€
   {
     id: "20000000-0000-4000-8000-000000000007",
     title: "ARCUDERM Daily Moisturizer",
@@ -72,7 +72,7 @@ const PLACEHOLDERS = [
     sku: "ANR-P08",
     isActive: 0,
   },
-  // ── Sunblock (NEW) ──
+  // â”€â”€ Sunblock (NEW) â”€â”€
   {
     id: "20000000-0000-4000-8000-000000000009",
     title: "ARCURE SPF 50 Sunblock",
@@ -107,3 +107,6 @@ export async function POST() {
     return NextResponse.json({ error: String(err) }, { status: 500 });
   }
 }
+
+
+

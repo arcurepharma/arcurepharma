@@ -75,16 +75,16 @@ export default function HeroSlider() {
 
   if (loading) {
     return (
-      <section className="relative w-full h-[260px] sm:h-[380px] lg:h-[500px] bg-[#f5e6ed] mt-[64px] lg:mt-[68px] flex items-center justify-center">
-        <div className="w-10 h-10 border-4 border-[#a83866]/20 border-t-[#a83866] rounded-full animate-spin" />
+      <section className="relative w-full bg-[#f5e6ed] mt-[64px] lg:mt-[68px] flex items-center justify-center" style={{aspectRatio: '16/7'}}>
+        <div className="w-10 h-10 border-4 border-[#fcb8fd]/20 border-t-[#fcb8fd] rounded-full animate-spin" />
       </section>
     );
   }
 
   return (
-    <section className="relative w-full h-[260px] sm:h-[380px] lg:h-[500px] mt-[64px] lg:mt-[68px] overflow-hidden bg-gray-100">
+    <section className="relative w-full mt-[64px] lg:mt-[68px] overflow-hidden bg-gray-100" style={{aspectRatio: '16/7', minHeight: '180px'}}>
 
-      {/* ── Slides ── */}
+      {/* â”€â”€ Slides â”€â”€ */}
       {displaySlides.map((s, i) => (
         <div
           key={s.id}
@@ -102,10 +102,10 @@ export default function HeroSlider() {
             className="object-cover object-center"
           />
 
-          {/* Gradient overlay — left side so text is readable */}
+          {/* Gradient overlay â€” left side so text is readable */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent" />
 
-          {/* Text overlay — only if title exists */}
+          {/* Text overlay â€” only if title exists */}
           {s.title && (
             <div className={`absolute inset-0 flex items-center ${i === current ? "animate-fade-in-up" : "opacity-0"}`}>
               <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full">
@@ -123,7 +123,7 @@ export default function HeroSlider() {
                   )}
                   <Link
                     href="/#products"
-                    className="inline-flex items-center px-5 sm:px-7 py-2.5 sm:py-3 bg-[#a83866] hover:bg-[#8a2a52] text-white font-bold text-xs sm:text-sm rounded-md transition-all hover:shadow-lg active:scale-95"
+                    className="inline-flex items-center px-5 sm:px-7 py-2.5 sm:py-3 bg-[#fcb8fd] hover:bg-[#e8a0f0] text-[#6b1f6d] font-bold text-xs sm:text-sm rounded-md transition-all hover:shadow-lg active:scale-95"
                   >
                     Shop Now
                   </Link>
@@ -134,10 +134,10 @@ export default function HeroSlider() {
         </div>
       ))}
 
-      {/* ── Prev / Next arrows ── */}
+      {/* â”€â”€ Prev / Next arrows â”€â”€ */}
       {/* arrows removed */}
 
-      {/* ── Dot indicators ── */}
+      {/* â”€â”€ Dot indicators â”€â”€ */}
       {displaySlides.length > 1 && (
         <div className="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2 z-20">
           {displaySlides.map((_, i) => (
@@ -157,3 +157,6 @@ export default function HeroSlider() {
     </section>
   );
 }
+
+
+

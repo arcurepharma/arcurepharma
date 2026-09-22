@@ -1,59 +1,86 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
-import { settings } from "@/db/schema";
+import { sliders } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
-export async function GET() {
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const allSettings = await db.select().from(settings);
-    const settingsMap: Record<string, string> = {};
-    allSettings.forEach((s) => {
-      settingsMap[s.key] = s.value;
-    });
-    return NextResponse.json(settingsMap);
-  } catch {
-    return NextResponse.json(
-      { error: "Failed to fetch settings" },
-      { status: 500 }
-    );
-  }
-}
-
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { key, value } = body;
-
-    if (!key || value === undefined) {
-      return NextResponse.json(
-        { error: "Key and value are required" },
-        { status: 400 }
-      );
-    }
-
-    const existing = await db
+    const { id } = await params;
+    const result = await db
       .select()
-      .from(settings)
-      .where(eq(settings.key, key))
+      .from(sliders)
+      .where(eq(sliders.id, id))
       .limit(1);
 
-    if (existing.length) {
-      await db
-        .update(settings)
-        .set({ value: String(value) })
-        .where(eq(settings.key, key));
-    } else {
-      await db.insert(settings).values({ key, value: String(value) });
+    if (!result.length) {
+      return NextResponse.json({ error: "Slider not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ key, value: String(value) });
+    return NextResponse.json(result[0]);
   } catch {
     return NextResponse.json(
-      { error: "Failed to update setting" },
+      { error: "Failed to fetch slider" },
       { status: 500 }
     );
   }
 }
 
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const { id } = await params;
+    const body = await request.json();
+    const { imageUrl, title, subtitle, order } = body;
 
+    const existing = await db
+      .select({ id: sliders.id })
+      .from(sliders)
+      .where(eq(sliders.id, id))
+      .limit(1);
 
+    if (!existing.length) {
+      return NextResponse.json({ error: "Slider not found" }, { status: 404 });
+    }
+
+    const updated = await db
+      .update(sliders)
+      .set({
+        imageUrl: imageUrl !== undefined ? imageUrl : undefined,
+        title: title !== undefined ? title : undefined,
+        subtitle: subtitle !== undefined ? subtitle : undefined,
+        order: order !== undefined ? Number(order) : undefined,
+      })
+      .where(eq(sliders.id, id))
+      .returning();
+
+    return NextResponse.json(updated[0]);
+  } catch {
+    return NextResponse.json(
+      { error: "Failed to update slider" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const { id } = await params;
+    const existing = await db
+      .select({ id: sliders.id })
+      .from(sliders)
+      .where(eq(sliders.id, id))
+      .limit(1);
+
+    if (!existing.length) {
+      return NextResponse.json({ error: "Slider not found" }, { status: 404 });
+    }
+
+    await db.delete(sliders).where(eq(sliders.id, id));
+
+    return NextResponse.json({ success: true });
+  } catch {
+    return NextResponse.json(
+      { error: "Failed to delete slider" },
+      { status: 500 }
+    );
+  }
+}

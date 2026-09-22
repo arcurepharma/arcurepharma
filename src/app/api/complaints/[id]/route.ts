@@ -1,63 +1,88 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
-import { categories } from "@/db/schema";
-import { asc, eq } from "drizzle-orm";
+import { complaints } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
-export async function GET() {
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const allCategories = await db
+    const { id } = await params;
+    const result = await db
       .select()
-      .from(categories)
-      .orderBy(asc(categories.name));
-    return NextResponse.json(allCategories);
+      .from(complaints)
+      .where(eq(complaints.id, id))
+      .limit(1);
+
+    if (!result.length) {
+      return NextResponse.json({ error: "Complaint not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(result[0]);
   } catch {
     return NextResponse.json(
-      { error: "Failed to fetch categories" },
+      { error: "Failed to fetch complaint" },
       { status: 500 }
     );
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     const body = await request.json();
-    const { name } = body;
+    const { status } = body;
 
-    if (!name || !String(name).trim()) {
+    if (!status) {
       return NextResponse.json(
-        { error: "Category name is required" },
+        { error: "Missing status" },
         { status: 400 }
       );
     }
 
-    const cleanName = String(name).trim();
-
     const existing = await db
-      .select({ id: categories.id })
-      .from(categories)
-      .where(eq(categories.name, cleanName))
+      .select({ id: complaints.id })
+      .from(complaints)
+      .where(eq(complaints.id, id))
       .limit(1);
 
-    if (existing.length) {
-      return NextResponse.json(
-        { error: "This category already exists" },
-        { status: 409 }
-      );
+    if (!existing.length) {
+      return NextResponse.json({ error: "Complaint not found" }, { status: 404 });
     }
 
-    const newCategory = await db
-      .insert(categories)
-      .values({ name: cleanName })
+    const updated = await db
+      .update(complaints)
+      .set({ status: String(status) })
+      .where(eq(complaints.id, id))
       .returning();
 
-    return NextResponse.json(newCategory[0], { status: 201 });
+    return NextResponse.json(updated[0]);
   } catch {
     return NextResponse.json(
-      { error: "Failed to create category" },
+      { error: "Failed to update complaint" },
       { status: 500 }
     );
   }
 }
 
+export async function DELETE(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const { id } = await params;
+    const existing = await db
+      .select({ id: complaints.id })
+      .from(complaints)
+      .where(eq(complaints.id, id))
+      .limit(1);
 
+    if (!existing.length) {
+      return NextResponse.json({ error: "Complaint not found" }, { status: 404 });
+    }
 
+    await db.delete(complaints).where(eq(complaints.id, id));
+
+    return NextResponse.json({ success: true });
+  } catch {
+    return NextResponse.json(
+      { error: "Failed to delete complaint" },
+      { status: 500 }
+    );
+  }
+}

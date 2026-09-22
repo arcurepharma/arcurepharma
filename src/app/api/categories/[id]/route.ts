@@ -1,78 +1,88 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
-import { users } from "@/db/schema";
+import { categories } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import {
-  hashPassword,
-  createSession,
-  SESSION_COOKIE,
-} from "@/lib/auth";
 
-export async function POST(request: NextRequest) {
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const body = await request.json();
-    const { name, email, phone, password } = body;
-
-    if (!email || !password) {
-      return NextResponse.json(
-        { error: "Email and password are required" },
-        { status: 400 }
-      );
-    }
-    if (password.length < 6) {
-      return NextResponse.json(
-        { error: "Password must be at least 6 characters" },
-        { status: 400 }
-      );
-    }
-
-    const existing = await db
+    const { id } = await params;
+    const result = await db
       .select()
-      .from(users)
-      .where(eq(users.email, email.toLowerCase()))
+      .from(categories)
+      .where(eq(categories.id, id))
       .limit(1);
 
-    if (existing.length) {
-      return NextResponse.json(
-        { error: "An account with this email already exists" },
-        { status: 409 }
-      );
+    if (!result.length) {
+      return NextResponse.json({ error: "Category not found" }, { status: 404 });
     }
 
-    const passwordHash = await hashPassword(password);
-    const newUser = await db
-      .insert(users)
-      .values({ name: name || "", email: email.toLowerCase(), phone: phone || "", passwordHash })
-      .returning();
-
-    const token = await createSession(newUser[0].id);
-    const response = NextResponse.json(
-      {
-        user: {
-          id: newUser[0].id,
-          name: newUser[0].name,
-          email: newUser[0].email,
-          phone: newUser[0].phone,
-        },
-      },
-      { status: 201 }
-    );
-    response.cookies.set(SESSION_COOKIE, token, {
-      httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7,
-    });
-
-    return response;
+    return NextResponse.json(result[0]);
   } catch {
     return NextResponse.json(
-      { error: "Failed to create account" },
+      { error: "Failed to fetch category" },
       { status: 500 }
     );
   }
 }
 
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const { id } = await params;
+    const body = await request.json();
+    const { name } = body;
 
+    if (!name || !String(name).trim()) {
+      return NextResponse.json(
+        { error: "Category name is required" },
+        { status: 400 }
+      );
+    }
 
+    const existing = await db
+      .select({ id: categories.id })
+      .from(categories)
+      .where(eq(categories.id, id))
+      .limit(1);
+
+    if (!existing.length) {
+      return NextResponse.json({ error: "Category not found" }, { status: 404 });
+    }
+
+    const updated = await db
+      .update(categories)
+      .set({ name: String(name).trim() })
+      .where(eq(categories.id, id))
+      .returning();
+
+    return NextResponse.json(updated[0]);
+  } catch {
+    return NextResponse.json(
+      { error: "Failed to update category" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    const { id } = await params;
+    const existing = await db
+      .select({ id: categories.id })
+      .from(categories)
+      .where(eq(categories.id, id))
+      .limit(1);
+
+    if (!existing.length) {
+      return NextResponse.json({ error: "Category not found" }, { status: 404 });
+    }
+
+    await db.delete(categories).where(eq(categories.id, id));
+
+    return NextResponse.json({ success: true });
+  } catch {
+    return NextResponse.json(
+      { error: "Failed to delete category" },
+      { status: 500 }
+    );
+  }
+}

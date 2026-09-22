@@ -6,12 +6,7 @@ const items = [
   {
     icon: Truck,
     title: "Free Shipping",
-    desc: "On orders over Rs.999",
-  },
-  {
-    icon: RotateCcw,
-    title: "Easy Returns",
-    desc: "15 days return policy",
+    desc: "On orders over Rs.2999",
   },
   {
     icon: ShieldCheck,

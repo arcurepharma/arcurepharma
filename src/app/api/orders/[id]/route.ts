@@ -1,61 +1,71 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
-import { complaints } from "@/db/schema";
-import { desc } from "drizzle-orm";
+import { orders } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
-export async function GET() {
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    const allComplaints = await db
-      .select()
-      .from(complaints)
-      .orderBy(desc(complaints.createdAt));
-    return NextResponse.json(allComplaints);
+    const { id } = await params;
+    const result = await db.select().from(orders).where(eq(orders.id, id)).limit(1);
+
+    if (!result.length) {
+      return NextResponse.json({ error: "Order not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(result[0]);
   } catch {
     return NextResponse.json(
-      { error: "Failed to fetch complaints" },
+      { error: "Failed to fetch order" },
       { status: 500 }
     );
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     const body = await request.json();
-    const { name, email, orderId, subject, message } = body;
+    const { status, trackingNumber } = body;
 
-    if (!email || !message) {
+    if (!status) {
       return NextResponse.json(
-        { error: "Email and message are required" },
+        { error: "Missing status" },
         { status: 400 }
       );
     }
 
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-      return NextResponse.json(
-        { error: "Please provide a valid email address" },
-        { status: 400 }
-      );
+    const now = new Date().toISOString();
+    const result = await db
+      .select()
+      .from(orders)
+      .where(eq(orders.id, id))
+      .limit(1);
+
+    if (!result.length) {
+      return NextResponse.json({ error: "Order not found" }, { status: 404 });
     }
 
-    const newComplaint = await db
-      .insert(complaints)
-      .values({
-        name: name || "",
-        email,
-        orderId: orderId || "",
-        subject: subject || "",
-        message,
+    const order = result[0];
+    const history = Array.isArray(order.statusHistory) ? order.statusHistory : [];
+    const updated = await db
+      .update(orders)
+      .set({
+        status,
+        trackingNumber: trackingNumber || order.trackingNumber,
+        statusHistory: [
+          ...history,
+          { status, timestamp: now, note: "" },
+        ],
+        updatedAt: new Date(),
       })
+      .where(eq(orders.id, id))
       .returning();
 
-    return NextResponse.json(newComplaint[0], { status: 201 });
+    return NextResponse.json(updated[0]);
   } catch {
     return NextResponse.json(
-      { error: "Failed to submit complaint" },
+      { error: "Failed to update order" },
       { status: 500 }
     );
   }
 }
-
-

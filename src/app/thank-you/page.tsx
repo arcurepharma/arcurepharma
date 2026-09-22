@@ -19,7 +19,9 @@ interface OrderData {
   id: string;
   customerEmail: string;
   customerPhone: string;
+  customerPhone2?: string;
   customerName: string;
+  customerLastName?: string;
   address: string;
   landmark: string;
   postalCode: string;
@@ -72,6 +74,7 @@ function ThankYouContent() {
 
   const items = Array.isArray(order.items) ? order.items : [];
   const subtotal = items.reduce((sum: number, item: OrderItem) => sum + Number(item.price) * item.quantity, 0);
+  const fullName = [order.customerName, order.customerLastName].filter(Boolean).join(" ");
 
   return (
     <>
@@ -126,9 +129,10 @@ function ThankYouContent() {
             <div className="grid grid-cols-2 gap-6 mb-6 pb-6 border-b border-gray-100">
               <div>
                 <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Customer</h3>
-                {order.customerName && <p className="text-sm font-semibold text-gray-800">{order.customerName}</p>}
+                {fullName && <p className="text-sm font-semibold text-gray-800">{fullName}</p>}
                 <p className="text-sm text-gray-500">{order.customerEmail}</p>
                 <p className="text-sm text-gray-500">{order.customerPhone}</p>
+                {order.customerPhone2 && <p className="text-sm text-gray-500">Secondary: {order.customerPhone2}</p>}
                 <p className="text-sm text-gray-500 mt-1">Payment: <span className="font-medium text-gray-700">{order.paymentMethod || "COD"}</span></p>
               </div>
               <div>

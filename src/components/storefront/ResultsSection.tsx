@@ -42,7 +42,7 @@ export default function ResultsSection() {
   const { ref, visible } = useReveal();
 
   return (
-    <section className="py-14 lg:py-20 bg-gradient-to-b from-white to-[#fff5fe]">
+    <section className="py-14 lg:py-20 bg-gradient-to-b from-transparent to-[#feeeff]/40">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}

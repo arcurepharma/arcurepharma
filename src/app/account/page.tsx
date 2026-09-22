@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import Link from "next/link";
 import {
   Package,
@@ -47,12 +49,15 @@ const statusStyles: Record<string, string> = {
   Delivered: "bg-green-100 text-green-700",
 };
 
-export default function AccountPage() {
+function AccountContent() {
   const [user, setUser] = useState<User | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [mode, setMode] = useState<"login" | "register">("login");
   const [authLoading, setAuthLoading] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/account";
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -104,6 +109,10 @@ export default function AccountPage() {
         toast.success(mode === "login" ? "Welcome back!" : "Account created!");
         setForm({ name: "", email: "", phone: "", password: "" });
         loadOrders();
+        // Redirect back to checkout or wherever they came from
+        if (redirectTo !== "/account") {
+          router.push(redirectTo);
+        }
       } else {
         toast.error(data.error || "Authentication failed");
       }
@@ -374,6 +383,21 @@ export default function AccountPage() {
 
       <Footer />
     </main>
+  );
+}
+
+export default function AccountPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen bg-gray-50">
+        <Navbar />
+        <div className="flex justify-center items-center pt-48">
+          <div className="w-10 h-10 border-4 border-teal-200 border-t-teal-600 rounded-full animate-spin" />
+        </div>
+      </main>
+    }>
+      <AccountContent />
+    </Suspense>
   );
 }
 

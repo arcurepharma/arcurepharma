@@ -58,8 +58,8 @@ export default function Navbar() {
     <>
       {/* â”€â”€ Main Header â”€â”€ */}
       <header
-        className={`fixed left-0 right-0 z-50 top-0 transition-all duration-300 bg-white ${
-          scrolled ? "shadow-md" : "shadow-sm border-b border-gray-100"
+        className={`fixed left-0 right-0 z-50 top-0 transition-all duration-300 glass-nav ${
+          scrolled ? "shadow-lg shadow-pink-100/50" : ""
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -10,7 +10,7 @@ export default function PromoBanner() {
         <div className="grid grid-cols-1 lg:grid-cols-2 overflow-hidden rounded-2xl shadow-lg min-h-[260px] lg:min-h-[340px]">
 
           {/* Left â€” promo text */}
-          <div className="bg-[#fcb8fd] px-8 sm:px-12 py-10 sm:py-14 flex flex-col justify-center">
+          <div className="px-8 sm:px-12 py-10 sm:py-14 flex flex-col justify-center" style={{background:'linear-gradient(135deg,rgba(252,184,253,0.9),rgba(232,85,216,0.8))',backdropFilter:'blur(20px)',WebkitBackdropFilter:'blur(20px)'}}>
             <p className="text-white/70 text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] mb-3">
               Limited Time Offer
             </p>

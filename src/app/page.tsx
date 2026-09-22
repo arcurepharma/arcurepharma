@@ -76,7 +76,7 @@ function HomeContent() {
             </div>
             {activeCategory && (
               <a href="/#products" className="text-[#fcb8fd] hover:text-[#d460d6] text-sm font-bold transition-colors">
-                View All â†’
+                View All 
               </a>
             )}
           </div>

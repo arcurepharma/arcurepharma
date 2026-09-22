@@ -17,8 +17,10 @@ interface OrderItem {
 interface OrderEmailData {
   orderId: string;
   customerName: string;
+  customerLastName?: string;
   customerEmail: string;
   customerPhone: string;
+  customerPhone2?: string;
   address: string;
   landmark?: string;
   postalCode?: string;
@@ -41,6 +43,8 @@ export async function sendOrderNotificationEmail(order: OrderEmailData) {
     )
     .join("");
 
+  const fullName = [order.customerName, order.customerLastName].filter(Boolean).join(" ") || "—";
+
   const html = `
 <!DOCTYPE html>
 <html>
@@ -60,9 +64,9 @@ export async function sendOrderNotificationEmail(order: OrderEmailData) {
       <!-- Customer Info -->
       <h2 style="color:#fcb8fd;font-size:15px;margin:0 0 12px;border-bottom:2px solid #fde8fc;padding-bottom:6px;">Customer Details</h2>
       <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
-        <tr><td style="padding:5px 0;color:#888;font-size:13px;width:130px;">Name</td><td style="padding:5px 0;font-size:13px;font-weight:bold;">${order.customerName || "â€”"}</td></tr>
+<tr><td style="padding:5px 0;color:#888;font-size:13px;width:130px;">Name</td><td style="padding:5px 0;font-size:13px;font-weight:bold;">${fullName}</td></tr>
         <tr><td style="padding:5px 0;color:#888;font-size:13px;">Email</td><td style="padding:5px 0;font-size:13px;">${order.customerEmail}</td></tr>
-        <tr><td style="padding:5px 0;color:#888;font-size:13px;">Phone</td><td style="padding:5px 0;font-size:13px;">${order.customerPhone}</td></tr>
+        <tr><td style="padding:5px 0;color:#888;font-size:13px;">Phone</td><td style="padding:5px 0;font-size:13px;">${order.customerPhone}${order.customerPhone2 ? ", " + order.customerPhone2 : ""}</td></tr>
         <tr><td style="padding:5px 0;color:#888;font-size:13px;">Address</td><td style="padding:5px 0;font-size:13px;">${order.address}${order.landmark ? ", " + order.landmark : ""}${order.postalCode ? " - " + order.postalCode : ""}</td></tr>
         <tr><td style="padding:5px 0;color:#888;font-size:13px;">Payment</td><td style="padding:5px 0;font-size:13px;">${order.paymentMethod || "COD"}</td></tr>
       </table>

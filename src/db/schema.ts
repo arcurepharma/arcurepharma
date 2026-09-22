@@ -44,6 +44,8 @@ export const orders = pgTable("orders", {
   customerEmail: varchar("customer_email", { length: 255 }).notNull(),
   customerPhone: varchar("customer_phone", { length: 50 }).notNull(),
   customerName: varchar("customer_name", { length: 255 }).default(""),
+  customerLastName: varchar("customer_last_name", { length: 255 }).default(""),
+  customerPhone2: varchar("customer_phone2", { length: 50 }).default(""),
   address: text("address").notNull(),
   landmark: varchar("landmark", { length: 255 }).default(""),
   postalCode: varchar("postal_code", { length: 20 }).default(""),

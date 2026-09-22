@@ -82,7 +82,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <>
       {/* â”€â”€â”€ Card â”€â”€â”€ */}
-      <div className="group relative flex flex-col bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+      <div className="group relative flex flex-col glass-card rounded-xl overflow-hidden hover:shadow-lg hover:shadow-pink-200/50 transition-all duration-300 hover:-translate-y-1">
 
         {/* Image area â€” white bg, image contained, heart top-right */}
         <Link href={`/product/${product.id}`} className="relative block aspect-square overflow-hidden bg-white">

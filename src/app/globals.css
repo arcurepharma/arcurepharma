@@ -1,28 +1,34 @@
 @import "tailwindcss";
 
-/* ---------- Theme: Light Pink #fcb8fd (Arcure Pharma) ---------- */
+/* ---------- Theme: Glassmorphism Light Pink (Arcure Pharma) ---------- */
 :root {
-  --color-teal-50:  #fff5fe;
-  --color-teal-100: #fde8fc;
-  --color-teal-200: #fcb8fd;
-  --color-teal-300: #f896e8;
-  --color-teal-400: #f472d0;
-  --color-teal-500: #e040b0;
-  --color-teal-600: #fcb8fd;
-  --color-teal-700: #d460d6;
-  --color-teal-800: #a83aaa;
-  --color-teal-900: #6b1f6d;
+  --color-teal-50:  #fff8ff;
+  --color-teal-100: #feeeff;
+  --color-teal-200: #fdd6fc;
+  --color-teal-300: #fbb8fd;
+  --color-teal-400: #f896f0;
+  --color-teal-500: #f472e8;
+  --color-teal-600: #e855d8;
+  --color-teal-700: #c73ab8;
+  --color-teal-800: #9e2590;
+  --color-teal-900: #6b1262;
 
-  --color-green-50:  #fff5fe;
-  --color-green-100: #fde8fc;
-  --color-green-200: #fcb8fd;
-  --color-green-300: #f896e8;
-  --color-green-400: #f472d0;
-  --color-green-500: #e040b0;
-  --color-green-600: #fcb8fd;
-  --color-green-700: #d460d6;
-  --color-green-800: #a83aaa;
-  --color-green-900: #6b1f6d;
+  --color-green-50:  #fff8ff;
+  --color-green-100: #feeeff;
+  --color-green-200: #fdd6fc;
+  --color-green-300: #fbb8fd;
+  --color-green-400: #f896f0;
+  --color-green-500: #f472e8;
+  --color-green-600: #e855d8;
+  --color-green-700: #c73ab8;
+  --color-green-800: #9e2590;
+  --color-green-900: #6b1262;
+
+  /* Glassmorphism tokens */
+  --glass-bg:        rgba(255, 230, 255, 0.35);
+  --glass-border:    rgba(255, 180, 255, 0.45);
+  --glass-shadow:    0 8px 32px rgba(232, 85, 216, 0.12);
+  --glass-blur:      blur(16px);
 }
 
 html {
@@ -203,7 +209,8 @@ html.theme-transition *::after {
 @layer base {
   body {
     font-family: var(--font-montserrat), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: var(--color-white, #ffffff);
+    background: linear-gradient(135deg, #fff8ff 0%, #feeeff 50%, #fff0fe 100%);
+    background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -280,6 +287,24 @@ html.theme-transition *::after {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ---------- Glassmorphism card ---------- */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+/* ---------- Glassmorphism navbar ---------- */
+.glass-nav {
+  background: rgba(255, 240, 255, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 180, 255, 0.3);
+  box-shadow: 0 4px 24px rgba(232, 85, 216, 0.08);
 }
 
 /* ---------- Section divider ---------- */

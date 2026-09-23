@@ -10,9 +10,8 @@ import {
   Star,
   ShoppingCart,
   BadgeCheck,
-  Truck,
   ShieldCheck,
-Minus,
+  Minus,
   Plus,
   PlayCircle,
   Droplets,
@@ -25,6 +24,7 @@ import FooterOnly from "@/components/storefront/FooterOnly";
 import { useCartStore } from "@/store/cart";
 import { formatPrice } from "@/lib/utils";
 import toast from "react-hot-toast";
+import WhatsAppBuyButton from "@/components/storefront/WhatsAppBuyButton";
 
 interface Product {
   id: string;
@@ -85,7 +85,6 @@ export default function ProductDetailPage() {
 
   useEffect(() => {
     if (!id) return;
-    setLoading(true);
     fetch(`/api/products/${id}`)
       .then((r) => r.json())
       .then((data) => {
@@ -152,7 +151,7 @@ export default function ProductDetailPage() {
     { icon: FileText, title: "Description", text: product.description || "No description available." },
     { icon: Droplets, title: "Key Ingredients", text: product.ingredients || "Not specified." },
     { icon: Zap, title: "How to Use", text: product.howToUse || "Follow the directions provided with the product." },
-    { icon: AlertCircle, title: "Warnings", text: product.warnings || "Read label instructions before use. Keep out of reach of children." },
+    
   ].filter((s) => s.text && s.text !== "Not specified.");
 
   return (
@@ -275,10 +274,14 @@ export default function ProductDetailPage() {
             <button
               onClick={handleBuyNow}
               disabled={isOutOfStock}
-              className="w-full flex items-center justify-center gap-2 py-3.5 bg-gray-900 hover:bg-gray-700 text-white font-bold text-sm rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed mb-6"
+              className="w-full flex items-center justify-center gap-2 py-3.5 bg-gray-900 hover:bg-gray-700 text-white font-bold text-sm rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed mb-3"
             >
               <Zap className="w-4 h-4" /> Buy Now
             </button>
+
+            <div className="mb-6">
+              <WhatsAppBuyButton product={product} qty={qty} />
+            </div>
 
             {benefits.length > 0 && (
               <div className="mb-8">

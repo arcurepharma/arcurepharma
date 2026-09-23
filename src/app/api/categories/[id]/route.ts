@@ -29,7 +29,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
   try {
     const { id } = await params;
     const body = await request.json();
-    const { name } = body;
+    const { name, imageUrl } = body;
 
     if (!name || !String(name).trim()) {
       return NextResponse.json(
@@ -50,7 +50,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
 
     const updated = await db
       .update(categories)
-      .set({ name: String(name).trim() })
+      .set({ name: String(name).trim(), imageUrl: imageUrl || null })
       .where(eq(categories.id, id))
       .returning();
 

@@ -2,10 +2,12 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import Navbar from "@/components/storefront/Navbar";
 import HeroSlider from "@/components/storefront/HeroSlider";
 import TrustBadges from "@/components/storefront/TrustBadges";
 import CategorySection from "@/components/storefront/CategorySection";
+import DealsSection from "@/components/storefront/DealsSection";
 import PromoBanner from "@/components/storefront/PromoBanner";
 import ProductCard from "@/components/storefront/ProductCard";
 import InstagramReels from "@/components/storefront/InstagramReels";
@@ -45,13 +47,19 @@ function HomeContent() {
       .catch(() => setLoading(false));
   }, []);
 
+  const DEAL_CATEGORIES = ["Deals", "Deals & Bundles", "Deal", "Bundle"];
+  const isDealCategory = (c?: string) => DEAL_CATEGORIES.includes(c?.trim() || "");
+
   const filtered = activeCategory
     ? products.filter((p) =>
+        !isDealCategory(p.category) &&
         p.category?.trim().toLowerCase() === activeCategory.trim().toLowerCase()
       )
-    : products;
+    : products.filter((p) => !isDealCategory(p.category));
 
-  const allCategories = Array.from(new Set(products.map((p) => p.category).filter(Boolean)));
+  const allCategories = Array.from(
+    new Set(products.filter((p) => !isDealCategory(p.category)).map((p) => p.category).filter(Boolean))
+  );
 
   return (
     <main className="min-h-screen bg-white">
@@ -75,16 +83,16 @@ function HomeContent() {
               <div className="w-10 h-[3px] bg-[#fcb8fd] rounded-full mt-2" />
             </div>
             {activeCategory && (
-              <a href="/#products" className="text-[#fcb8fd] hover:text-[#d460d6] text-sm font-bold transition-colors">
+              <Link href="/#products" className="text-[#fcb8fd] hover:text-[#d460d6] text-sm font-bold transition-colors">
                 View All 
-              </a>
+              </Link>
             )}
           </div>
 
           {/* Category filter pills */}
           {allCategories.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-8">
-              <a
+              <Link
                 href="/#products"
                 className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all ${
                   !activeCategory
@@ -93,9 +101,9 @@ function HomeContent() {
                 }`}
               >
                 All
-              </a>
+              </Link>
               {allCategories.map((cat) => (
-                <a
+                <Link
                   key={cat}
                   href={`/?category=${encodeURIComponent(cat)}#products`}
                   className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all ${
@@ -105,7 +113,7 @@ function HomeContent() {
                   }`}
                 >
                   {cat}
-                </a>
+                </Link>
               ))}
             </div>
           )}
@@ -117,9 +125,9 @@ function HomeContent() {
           ) : filtered.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-gray-400 text-lg mb-4">No products in this category yet</p>
-              <a href="/#products" className="text-[#fcb8fd] font-bold text-sm hover:underline">
+              <Link href="/#products" className="text-[#fcb8fd] font-bold text-sm hover:underline">
                 View all products â†’
-              </a>
+              </Link>
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
@@ -130,6 +138,8 @@ function HomeContent() {
           )}
         </div>
       </section>
+
+      <DealsSection />
 
       <BottomTrustBar />
       <InstagramReels />

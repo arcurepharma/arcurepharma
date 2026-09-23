@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   ArrowLeft, Minus, Plus, Trash2, ShoppingBag, Truck,
-  MapPin, Loader2, WifiOff, PencilLine, CheckCircle2, LogIn,
+  MapPin, Loader2, WifiOff, PencilLine, CheckCircle2,
 } from "lucide-react";
 import Navbar from "@/components/storefront/Navbar";
 import { useCartStore, CartItem } from "@/store/cart";
@@ -115,7 +115,6 @@ export default function CheckoutPage() {
   // ── Submit ──
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) { toast.error("Please login first"); return; }
     if (items.length === 0) { toast.error("Your cart is empty!"); return; }
     if (!form.firstName) { toast.error("Please enter your first name"); return; }
     if (!form.lastName)  { toast.error("Please enter your last name"); return; }
@@ -137,7 +136,7 @@ export default function CheckoutPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          customerEmail: form.email || user.email,
+          customerEmail: form.email || user?.email || "",
           customerPhone: form.phone,
           customerPhone2: form.phone2,
           customerName:  form.firstName.trim(),
@@ -180,64 +179,7 @@ export default function CheckoutPage() {
     );
   }
 
-  // ── NOT LOGGED IN — show login wall ──
-  if (!user) {
-    return (
-      <main className="min-h-screen">
-        <Navbar />
-        <div className="max-w-md mx-auto px-4 pt-32 pb-20">
-          <div className="glass-card rounded-3xl p-8 text-center">
-            {/* Icon */}
-            <div className="w-20 h-20 rounded-full bg-[#fde8fc] flex items-center justify-center mx-auto mb-6">
-              <LogIn className="w-9 h-9 text-[#e855d8]" />
-            </div>
-
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Login Required</h1>
-            <p className="text-gray-500 text-sm mb-8 leading-relaxed">
-              Please sign in to your account to place an order.<br />
-              This helps you track your orders and view order history.
-            </p>
-
-            {/* Cart preview */}
-            {items.length > 0 && (
-              <div className="bg-white/60 rounded-xl p-4 mb-6 text-left border border-pink-100/60">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Your Cart ({items.length} items)</p>
-                <div className="space-y-2">
-                  {items.slice(0, 3).map((item) => (
-                    <div key={item.id} className="flex justify-between text-sm">
-                      <span className="text-gray-700 truncate mr-2">{item.title} × {item.quantity}</span>
-                      <span className="text-[#e855d8] font-semibold shrink-0">{formatPrice(Number(item.price) * item.quantity)}</span>
-                    </div>
-                  ))}
-                  {items.length > 3 && (
-                    <p className="text-xs text-gray-400">+{items.length - 3} more items</p>
-                  )}
-                </div>
-                <div className="border-t border-pink-100 mt-3 pt-3 flex justify-between font-bold text-sm">
-                  <span>Total</span>
-                  <span className="text-[#e855d8]">{formatPrice(subtotal + Number(deliveryFee))}</span>
-                </div>
-              </div>
-            )}
-
-            <Link
-              href={`/account?redirect=/checkout`}
-              className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#e855d8] hover:bg-[#c73ab8] text-white font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-[#e855d8]/25 active:scale-95 text-sm"
-            >
-              <LogIn className="w-4 h-4" />
-              Sign In to Continue
-            </Link>
-
-            <Link href="/" className="block mt-4 text-sm text-gray-400 hover:text-gray-600 transition-colors">
-              ← Continue Shopping
-            </Link>
-          </div>
-        </div>
-      </main>
-    );
-  }
-
-  // ── LOGGED IN — show checkout ──
+  // ── Checkout ──
   return (
     <main className="min-h-screen">
       <Navbar />
@@ -247,7 +189,11 @@ export default function CheckoutPage() {
         </Link>
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Checkout</h1>
         <p className="text-sm text-gray-500 mb-8">
-          Ordering as <span className="font-semibold text-[#e855d8]">{user.name || user.email}</span>
+          {user ? (
+            <>Ordering as <span className="font-semibold text-[#e855d8]">{user.name || user.email}</span></>
+          ) : (
+            <>Checkout as <span className="font-semibold text-[#e855d8]">Guest</span></>
+          )}
         </p>
 
         {items.length === 0 ? (

@@ -23,16 +23,9 @@ async function main() {
   console.log("Default settings:", defaultSettings);
 
   const defaultCategories = [
-    "General",
-    "Pain Relief",
-    "Vitamins",
-    "Antibiotics",
-    "Skincare",
-    "Baby Care",
-    "First Aid",
-    "Cough & Cold",
-    "Diabetes Care",
-    "Digestive Health",
+    "Skin Care",
+    "Supplements",
+    "Deals",
   ];
 
   for (const name of defaultCategories) {
@@ -173,7 +166,7 @@ async function main() {
       title: "ARCUDERM CS Serum",
       price: "2999",
       description: "Restorative care for glowing, healthy skin. Salicylic Acid + Vitamin C + Hyaluronic Acid - Dermatologist formulated.",
-      category: "Skincare",
+      category: "Skin Care",
       imageUrl: "/arcure/arcuderm-serum.png",
       images: ["/arcure/Arcu_Gleam_Seerom.jpeg", "/arcure/arcuderm-serum.png"],
       benefits: ["Protects & Strengthens", "Brightens & Revives", "Hydrates & Repairs", "Clearer & Smoother"],
@@ -188,7 +181,7 @@ async function main() {
       title: "ARCU GLEAM Face Wash",
       price: "1499",
       description: "Deep clean, oil control, hydration boost. For clear, fresh & healthy skin. Suitable for acne-prone skin.",
-      category: "Skincare",
+      category: "Skin Care",
       imageUrl: "/arcure/arcu-gleam.jpeg",
       images: ["/arcure/arcu-gleam.jpeg", "/arcure/Arcu_Gleam_Seerom2.jpeg"],
       benefits: ["Deep Cleanses", "Oil Control", "Hydration Boost", "Natural Glow"],
@@ -218,7 +211,7 @@ async function main() {
       title: "Mida-D Vitamin D3",
       price: "1799",
       description: "High Strength Vitamin D3 200,000 IU for daily wellness. Supports strong bones, immunity & overall well-being.",
-      category: "Vitamins",
+      category: "Supplements",
       imageUrl: "/arcure/mida-d.png",
       images: ["/arcure/mida-d.png"],
       benefits: ["Vitamin D3 200,000 IU", "Immune Support", "Omega Fish Oil", "More Energy"],

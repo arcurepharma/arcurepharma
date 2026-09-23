@@ -17,6 +17,7 @@ import {
 import { useCartStore } from "@/store/cart";
 import { formatPrice } from "@/lib/utils";
 import toast from "react-hot-toast";
+import WhatsAppBuyButton from "./WhatsAppBuyButton";
 
 interface Product {
   id: string;
@@ -160,18 +161,21 @@ export default function ProductCard({ product }: { product: Product }) {
             {formatPrice(product.price)}
           </p>
 
-          {/* ADD TO CART â€” full width mauve */}
-          <button
-            onClick={handleAdd}
-            disabled={isOutOfStock}
-            className={`mt-auto w-full flex items-center justify-center gap-1.5 py-2 sm:py-2.5 text-[10px] sm:text-xs font-bold rounded-md transition-all active:scale-[0.98] tracking-wide ${
-              isOutOfStock
-                ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                : "bg-[#fcb8fd] hover:bg-[#e8a0f0] text-[#6b1f6d]"
-            }`}
-          >
-            {isOutOfStock ? "OUT OF STOCK" : "ADD TO CART"}
-          </button>
+          {/* ADD TO CART + WhatsApp */}
+          <div className="mt-auto space-y-1.5">
+            <button
+              onClick={handleAdd}
+              disabled={isOutOfStock}
+              className={`w-full flex items-center justify-center gap-1.5 py-2 sm:py-2.5 text-[10px] sm:text-xs font-bold rounded-md transition-all active:scale-[0.98] tracking-wide ${
+                isOutOfStock
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  : "bg-[#fcb8fd] hover:bg-[#e8a0f0] text-[#6b1f6d]"
+              }`}
+            >
+              {isOutOfStock ? "OUT OF STOCK" : "ADD TO CART"}
+            </button>
+            <WhatsAppBuyButton product={product} />
+          </div>
         </div>
       </div>
 

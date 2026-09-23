@@ -12,7 +12,7 @@ export async function GET() {
       .select()
       .from(products)
       .orderBy(
-        sql`CASE WHEN ${products.category} = 'Skincare' THEN 0 ELSE 1 END`,
+        sql`CASE WHEN ${products.category} = 'Skin Care' THEN 0 WHEN ${products.category} = 'Supplements' THEN 1 ELSE 2 END`,
         products.createdAt
       );
     return NextResponse.json(allProducts);

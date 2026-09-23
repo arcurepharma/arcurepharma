@@ -1,29 +1,36 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, Pencil, Trash2, Check, X, Tags } from "lucide-react";
+import { Image as ImageIcon, Save } from "lucide-react";
 import toast from "react-hot-toast";
+import AdminImagePicker from "@/components/admin/AdminImagePicker";
 
 interface Category {
   id: string;
   name: string;
+  imageUrl?: string | null;
   createdAt: string;
 }
+
+const FIXED_ORDER = ["Skin Care", "Supplements"];
 
 export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
-  const [newName, setNewName] = useState("");
-  const [creating, setCreating] = useState(false);
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [editingName, setEditingName] = useState("");
-  const [saving, setSaving] = useState(false);
+  const [savingId, setSavingId] = useState<string | null>(null);
+  const [uploadingId, setUploadingId] = useState<string | null>(null);
 
   const fetchCategories = () => {
     fetch("/api/categories")
       .then((r) => r.json())
       .then((data) => {
-        setCategories(Array.isArray(data) ? data : []);
+        const list = Array.isArray(data) ? data : [];
+        const sorted = [...list].sort((a, b) => {
+          const ai = FIXED_ORDER.indexOf(a.name);
+          const bi = FIXED_ORDER.indexOf(b.name);
+          return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+        });
+        setCategories(sorted);
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -33,207 +40,127 @@ export default function AdminCategoriesPage() {
     fetchCategories();
   }, []);
 
-  const handleCreate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newName.trim()) {
-      toast.error("Enter a category name");
-      return;
-    }
-    setCreating(true);
+  const updateImage = (id: string, urls: string[]) => {
+    setCategories((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, imageUrl: urls[0] || null } : c))
+    );
+  };
+
+  const removeImage = (id: string) => {
+    setCategories((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, imageUrl: null } : c))
+    );
+  };
+
+  const handleSave = async (cat: Category) => {
+    setSavingId(cat.id);
     try {
-      const res = await fetch("/api/categories", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: newName }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        toast.success(`Category "${data.name}" created`);
-        setNewName("");
-        fetchCategories();
-      } else {
-        toast.error(data.error || "Failed to create category");
-      }
-    } catch {
-      toast.error("Failed to create category");
-    }
-    setCreating(false);
-  };
-
-  const startEdit = (cat: Category) => {
-    setEditingId(cat.id);
-    setEditingName(cat.name);
-  };
-
-  const cancelEdit = () => {
-    setEditingId(null);
-    setEditingName("");
-  };
-
-  const handleUpdate = async (id: string) => {
-    if (!editingName.trim()) {
-      toast.error("Enter a category name");
-      return;
-    }
-    setSaving(true);
-    try {
-      const res = await fetch(`/api/categories/${id}`, {
+      const res = await fetch(`/api/categories/${cat.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: editingName }),
+        body: JSON.stringify({ name: cat.name, imageUrl: cat.imageUrl || null }),
       });
       const data = await res.json();
       if (res.ok) {
-        toast.success("Category updated");
-        cancelEdit();
-        fetchCategories();
+        toast.success(`${cat.name} image saved`);
       } else {
-        toast.error(data.error || "Failed to update category");
+        toast.error(data.error || "Failed to save category");
       }
     } catch {
-      toast.error("Failed to update category");
+      toast.error("Failed to save category");
     }
-    setSaving(false);
+    setSavingId(null);
   };
 
-  const handleDelete = async (id: string, name: string) => {
-    if (!confirm(`Delete category "${name}"? Products in this category will keep their label.`))
-      return;
-    try {
-      const res = await fetch(`/api/categories/${id}`, { method: "DELETE" });
-      if (res.ok) {
-        toast.success("Category deleted");
-        setCategories((prev) => prev.filter((c) => c.id !== id));
-      } else {
-        toast.error("Failed to delete category");
-      }
-    } catch {
-      toast.error("Failed to delete category");
-    }
-  };
+  if (loading) {
+    return (
+      <div className="flex justify-center py-20">
+        <div className="w-8 h-8 border-4 border-teal-200 border-t-teal-600 rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div>
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Categories</h1>
         <p className="text-gray-500 text-sm mt-1">
-          Create, edit and manage product categories
+          Upload a display image for each category. These tiles show on the storefront in a 50/50 layout.
         </p>
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 p-6 mb-6">
-        <h2 className="font-bold text-gray-900 mb-4">Add New Category</h2>
-        <form onSubmit={handleCreate} className="flex gap-3">
-          <input
-            type="text"
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
-            className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-            placeholder="e.g., Diabetes Care"
-          />
-          <button
-            type="submit"
-            disabled={creating}
-            className="flex items-center gap-2 px-5 py-3 bg-teal-600 text-white text-sm font-medium rounded-xl hover:bg-teal-700 transition-colors disabled:opacity-50 shrink-0"
-          >
-            <Plus className="w-4 h-4" />
-            Add Category
-          </button>
-        </form>
-      </div>
-
-      {loading ? (
-        <div className="flex justify-center py-20">
-          <div className="w-8 h-8 border-4 border-teal-200 border-t-teal-600 rounded-full animate-spin" />
-        </div>
-      ) : categories.length === 0 ? (
+      {categories.length === 0 ? (
         <div className="text-center py-20 bg-white rounded-2xl border border-gray-100">
-          <Tags className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-          <p className="text-gray-500">No categories yet. Add your first category!</p>
+          <ImageIcon className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+          <p className="text-gray-500">No categories yet.</p>
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-gray-50">
-                <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {categories.map((cat) => (
+            <div
+              key={cat.id}
+              className="bg-white rounded-2xl border border-gray-100 overflow-hidden"
+            >
+              <div className="p-5 border-b border-gray-100 flex items-center justify-between">
+                <div>
+                  <h2 className="font-bold text-gray-900">{cat.name}</h2>
+                  <p className="text-gray-400 text-xs mt-0.5">
+                    50% tile on storefront
+                  </p>
+                </div>
+                <span className="px-2.5 py-1 bg-teal-50 text-teal-700 text-xs font-semibold rounded-full">
                   Category
-                </th>
-                <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">
-                  Created
-                </th>
-                <th className="text-right text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {categories.map((cat) => (
-                <tr key={cat.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4">
-                    {editingId === cat.id ? (
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="text"
-                          value={editingName}
-                          onChange={(e) => setEditingName(e.target.value)}
-                          className="flex-1 max-w-xs px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                          autoFocus
-                        />
-                        <button
-                          onClick={() => handleUpdate(cat.id)}
-                          disabled={saving}
-                          className="p-2 text-teal-600 hover:bg-teal-50 rounded-lg transition-all"
-                          title="Save"
-                        >
-                          <Check className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={cancelEdit}
-                          className="p-2 text-gray-400 hover:bg-gray-100 rounded-lg transition-all"
-                          title="Cancel"
-                        >
-                          <X className="w-4 h-4" />
-                        </button>
-                      </div>
-                    ) : (
-                      <span className="font-medium text-gray-900 text-sm">
-                        {cat.name}
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-500">
-                    {new Date(cat.createdAt).toLocaleDateString()}
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    {editingId === cat.id ? (
-                      <span className="text-gray-300 text-sm">Editing...</span>
-                    ) : (
-                      <div className="flex items-center justify-end gap-2">
-                        <button
-                          onClick={() => startEdit(cat)}
-                          className="p-2 text-gray-400 hover:text-teal-600 hover:bg-teal-50 rounded-lg transition-all"
-                        >
-                          <Pencil className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(cat.id, cat.name)}
-                          className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                </span>
+              </div>
+
+              <div className="p-5 space-y-5">
+                <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gray-100">
+                  {cat.imageUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={cat.imageUrl}
+                      alt={cat.name}
+                      className="w-full h-full object-contain bg-gray-100"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center text-gray-400">
+                      <ImageIcon className="w-8 h-8 mb-2" />
+                      <span className="text-xs">No image uploaded yet</span>
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <p className="text-xs font-medium text-gray-500 mb-2">
+                    Category image (shown on homepage)
+                  </p>
+                  <AdminImagePicker
+                    images={cat.imageUrl ? [cat.imageUrl] : []}
+                    coverIndex={0}
+                    uploading={uploadingId === cat.id}
+                    onUploadingChange={(v) =>
+                      setUploadingId(v ? cat.id : null)
+                    }
+                    onAdd={(urls) => updateImage(cat.id, urls)}
+                    onRemove={() => removeImage(cat.id)}
+                    onSetCover={() => {}}
+                    compact
+                  />
+                </div>
+
+                <button
+                  onClick={() => handleSave(cat)}
+                  disabled={savingId === cat.id}
+                  className="flex items-center gap-2 px-5 py-2.5 bg-teal-600 text-white text-sm font-medium rounded-xl hover:bg-teal-700 transition-colors disabled:opacity-50"
+                >
+                  <Save className="w-4 h-4" />
+                  {savingId === cat.id ? "Saving..." : "Save Image"}
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>
   );
 }
-
-
-

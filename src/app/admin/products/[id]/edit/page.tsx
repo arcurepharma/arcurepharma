@@ -1,15 +1,30 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import AdminImagePicker from "@/components/admin/AdminImagePicker";
 
-export default function NewProductPage() {
+interface ProductData {
+  id: string;
+  title: string;
+  price: string;
+  description?: string;
+  category?: string;
+  imageUrl: string;
+  videoUrl?: string | null;
+  images?: string[];
+}
+
+export default function EditProductPage() {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const params = useParams<{ id: string }>();
+  const id = String(params?.id || "");
+
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [categories, setCategories] = useState<string[]>(["General"]);
   const [images, setImages] = useState<string[]>([]);
@@ -22,6 +37,34 @@ export default function NewProductPage() {
     imageUrl: "",
     videoUrl: "",
   });
+
+  useEffect(() => {
+    if (!id) return;
+    fetch(`/api/products/${id}`)
+      .then((r) => r.json())
+      .then((data: ProductData) => {
+        setForm({
+          title: data.title || "",
+          price: data.price || "",
+          description: data.description || "",
+          category: data.category || "General",
+          imageUrl: data.imageUrl || "",
+          videoUrl: data.videoUrl || "",
+        });
+        const imgs = Array.isArray(data.images) && data.images.length
+          ? data.images
+          : data.imageUrl
+            ? [data.imageUrl]
+            : [];
+        setImages(imgs);
+        setCoverIndex(0);
+        setLoading(false);
+      })
+      .catch(() => {
+        toast.error("Failed to load product");
+        router.push("/admin/products");
+      });
+  }, [id, router]);
 
   useEffect(() => {
     fetch("/api/categories")
@@ -73,24 +116,32 @@ export default function NewProductPage() {
       toast.error("Please fill all required fields and upload an image");
       return;
     }
-    setLoading(true);
+    setSaving(true);
     try {
-      const res = await fetch("/api/products", {
-        method: "POST",
+      const res = await fetch(`/api/products/${id}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, images }),
       });
       if (res.ok) {
-        toast.success("Product created!");
+        toast.success("Product updated!");
         router.push("/admin/products");
       } else {
-        toast.error("Failed to create product");
+        toast.error("Failed to update product");
       }
     } catch {
-      toast.error("Failed to create product");
+      toast.error("Failed to update product");
     }
-    setLoading(false);
+    setSaving(false);
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-20">
+        <div className="w-8 h-8 border-4 border-teal-200 border-t-teal-600 rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-2xl">
@@ -101,7 +152,7 @@ export default function NewProductPage() {
         <ArrowLeft className="w-4 h-4" /> Back to Products
       </Link>
 
-      <h1 className="text-2xl font-bold text-gray-900 mb-8">Add New Product</h1>
+      <h1 className="text-2xl font-bold text-gray-900 mb-8">Edit Product</h1>
 
       <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-100 p-8 space-y-6">
         <div>
@@ -198,15 +249,12 @@ export default function NewProductPage() {
 
         <button
           type="submit"
-          disabled={loading || uploading}
+          disabled={saving || uploading}
           className="w-full py-3 bg-teal-600 text-white font-medium rounded-xl hover:bg-teal-700 transition-colors disabled:opacity-50"
         >
-          {loading ? "Creating..." : "Create Product"}
+          {saving ? "Saving..." : "Save Changes"}
         </button>
       </form>
     </div>
   );
 }
-
-
-

@@ -87,7 +87,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
         benefits: benefits !== undefined ? benefits : undefined,
         ingredients: ingredients !== undefined ? ingredients : undefined,
         howToUse: howToUse !== undefined ? howToUse : undefined,
-        warnings: warnings !== undefined ? warnings : undefined,
+        // warnings: warnings !== undefined ? warnings : undefined,
         isPrescriptionRequired:
           isPrescriptionRequired !== undefined ? Number(isPrescriptionRequired) : undefined,
         sku: sku !== undefined ? sku : undefined,

@@ -21,7 +21,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name } = body;
+    const { name, imageUrl } = body;
 
     if (!name || !String(name).trim()) {
       return NextResponse.json(
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
 
     const newCategory = await db
       .insert(categories)
-      .values({ name: cleanName })
+      .values({ name: cleanName, imageUrl: imageUrl || null })
       .returning();
 
     return NextResponse.json(newCategory[0], { status: 201 });

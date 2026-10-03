@@ -78,7 +78,7 @@ function HomeContent() {
           >
             <div>
               <h2 className="text-xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
-                {activeCategory ? activeCategory : "Best Sellers"}
+                {activeCategory ? activeCategory : "Featured Products"}
               </h2>
               <div className="w-10 h-[3px] bg-[#865105] rounded-full mt-2" />
             </div>

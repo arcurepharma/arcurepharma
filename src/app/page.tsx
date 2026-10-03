@@ -80,7 +80,7 @@ function HomeContent() {
               <h2 className="text-xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
                 {activeCategory ? activeCategory : "Best Sellers"}
               </h2>
-              <div className="w-10 h-[3px] bg-gradient-to-r from-[#c58a38] to-[#16a34a] rounded-full mt-2" />
+              <div className="w-10 h-[3px] bg-[#865105] rounded-full mt-2" />
             </div>
             {activeCategory && (
               <Link href="/#products" className="text-[#16a34a] hover:text-[#15803d] text-sm font-bold transition-colors">
@@ -94,10 +94,10 @@ function HomeContent() {
             <div className="flex flex-wrap gap-2 mb-8">
               <Link
                 href="/#products"
-                className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all ${
+                className={`px-5 py-1.5 rounded-full text-xs sm:text-sm font-semibold border transition-all ${
                   !activeCategory
-                    ? "bg-[#16a34a] text-white border-[#16a34a]"
-                    : "bg-white text-gray-600 border-gray-200 hover:border-[#16a34a] hover:text-[#16a34a]"
+                    ? "bg-[#815a1f] text-white border-[#815a1f] shadow-sm"
+                    : "bg-white text-gray-700 border-gray-300 hover:border-[#815a1f] hover:text-[#815a1f]"
                 }`}
               >
                 All
@@ -106,10 +106,10 @@ function HomeContent() {
                 <Link
                   key={cat}
                   href={`/?category=${encodeURIComponent(cat)}#products`}
-                  className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all ${
+                  className={`px-5 py-1.5 rounded-full text-xs sm:text-sm font-semibold border transition-all ${
                     activeCategory === cat
-                      ? "bg-[#16a34a] text-white border-[#16a34a]"
-                      : "bg-white text-gray-600 border-gray-200 hover:border-[#16a34a] hover:text-[#16a34a]"
+                      ? "bg-[#815a1f] text-white border-[#815a1f] shadow-sm"
+                      : "bg-white text-gray-700 border-gray-300 hover:border-[#815a1f] hover:text-[#815a1f]"
                   }`}
                 >
                   {cat}

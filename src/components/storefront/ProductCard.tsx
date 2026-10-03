@@ -82,10 +82,10 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <>
       {/* â”€â”€â”€ Card â”€â”€â”€ */}
-      <div className="group relative flex flex-col glass-card rounded-xl overflow-hidden hover:shadow-lg hover:shadow-green-200/50 transition-all duration-300 hover:-translate-y-1">
+      <div className="group relative flex flex-col bg-white rounded-2xl overflow-hidden border border-[#ede2d1]/80 hover:shadow-lg hover:border-[#c58a38]/40 transition-all duration-300 hover:-translate-y-1">
 
         {/* Image area â€” white bg, image contained, heart top-right */}
-        <Link href={`/product/${product.id}`} className="relative block aspect-square overflow-hidden bg-white">
+        <Link href={`/product/${product.id}`} className="relative block aspect-square overflow-hidden bg-white p-3 sm:p-4">
           {gallery.slice(0, 2).map((img, i) => (
             <Image
               key={i}
@@ -117,7 +117,7 @@ export default function ProductCard({ product }: { product: Product }) {
           >
             <Heart
               className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors drop-shadow-sm ${
-                wished ? "fill-[#16a34a] text-[#16a34a]" : "fill-white text-gray-300 stroke-gray-300"
+                wished ? "fill-red-500 text-red-500" : "fill-none text-gray-400 stroke-gray-400 hover:text-red-500"
               }`}
             />
           </button>
@@ -144,7 +144,7 @@ export default function ProductCard({ product }: { product: Product }) {
         <div className="flex flex-col flex-1 px-3 sm:px-4 pt-3 pb-3 sm:pb-4">
 
           {/* Title */}
-          <h3 className="font-semibold text-gray-800 text-xs sm:text-sm leading-snug line-clamp-2 mb-1.5 group-hover:text-[#16a34a] transition-colors">
+          <h3 className="font-semibold text-gray-800 text-xs sm:text-sm leading-snug line-clamp-2 mb-1.5 group-hover:text-[#99611a] transition-colors">
             {product.title}
           </h3>
 
@@ -153,7 +153,7 @@ export default function ProductCard({ product }: { product: Product }) {
             {[1,2,3,4,5].map((s) => (
               <Star key={s} className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-yellow-400 text-yellow-400" />
             ))}
-            <span className="text-[9px] sm:text-[10px] text-gray-400 ml-1">(32)</span>
+            <span className="text-[11px] text-gray-500 ml-1">(32)</span>
           </div>
 
           {/* Price */}

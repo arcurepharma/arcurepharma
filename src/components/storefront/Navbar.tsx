@@ -147,7 +147,7 @@ export default function Navbar() {
               ) : (
                 <Link
                   href="/account"
-                  className="hidden sm:flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 bg-[#16a34a] hover:bg-[#15803d] text-white text-xs sm:text-sm font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-[#16a34a]/25 active:scale-95"
+                  className="hidden sm:flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 bg-[#865105] hover:bg-[#6f4204] text-white text-xs sm:text-sm font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-[#865105]/25 active:scale-95"
                 >
                   <User className="w-4 h-4" />
                   <span>Sign In</span>

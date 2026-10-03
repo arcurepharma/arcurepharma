@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { db, isDbConfigured } from "@/db";
 import { products } from "@/db/schema";
 import { sql } from "drizzle-orm";
@@ -15,7 +15,11 @@ export async function GET() {
         sql`CASE WHEN ${products.category} = 'Skin Care' THEN 0 WHEN ${products.category} = 'Supplements' THEN 1 ELSE 2 END`,
         products.createdAt
       );
-    return NextResponse.json(allProducts);
+    const mapped = allProducts.map((p) => ({
+      ...p,
+      formula: p.ingredients || "",
+    }));
+    return NextResponse.json(mapped);
   } catch {
     return NextResponse.json(
       { error: "Failed to fetch products" },
@@ -27,8 +31,17 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { title, price, description, category, imageUrl, images, videoUrl } =
-      body;
+    const {
+      title,
+      price,
+      description,
+      category,
+      imageUrl,
+      images,
+      videoUrl,
+      formula,
+      ingredients,
+    } = body;
 
     if (!title || !price || !imageUrl) {
       return NextResponse.json(
@@ -38,6 +51,7 @@ export async function POST(request: NextRequest) {
     }
 
     const imagesArr = Array.isArray(images) ? images : [];
+    const formulaVal = (formula !== undefined ? formula : ingredients) || "";
 
     const newProduct = await db
       .insert(products)
@@ -49,10 +63,14 @@ export async function POST(request: NextRequest) {
         imageUrl,
         images: imagesArr.length ? imagesArr : [imageUrl],
         videoUrl: videoUrl || null,
+        ingredients: formulaVal,
       })
       .returning();
 
-    return NextResponse.json(newProduct[0], { status: 201 });
+    return NextResponse.json(
+      { ...newProduct[0], formula: newProduct[0].ingredients || "" },
+      { status: 201 }
+    );
   } catch {
     return NextResponse.json(
       { error: "Failed to create product" },
@@ -60,6 +78,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
-
-

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -16,6 +16,7 @@ export default function NewProductPage() {
   const [coverIndex, setCoverIndex] = useState(0);
   const [form, setForm] = useState({
     title: "",
+    formula: "",
     price: "",
     description: "",
     category: "General",
@@ -128,9 +129,25 @@ export default function NewProductPage() {
             value={form.title}
             onChange={(e) => setForm({ ...form, title: e.target.value })}
             className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-            placeholder="e.g., Paracetamol 500mg"
+            placeholder="e.g., ArcuGleam Face Wash"
             required
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Formula (Active Ingredients - comma separated)
+          </label>
+          <input
+            type="text"
+            value={form.formula}
+            onChange={(e) => setForm({ ...form, formula: e.target.value })}
+            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+            placeholder="e.g. Salicylic Acid, Niacinamide"
+          />
+          <p className="mt-1 text-xs text-gray-400">
+            Comma-separated ingredients (e.g. <span className="font-semibold text-gray-600">Salicylic Acid, Niacinamide</span>). Displayed on product cards as a pill badge: <span className="font-semibold text-gray-600">Salicylic Acid + Niacinamide</span>.
+          </p>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -207,6 +224,3 @@ export default function NewProductPage() {
     </div>
   );
 }
-
-
-

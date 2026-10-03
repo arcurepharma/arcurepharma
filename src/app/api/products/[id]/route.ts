@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { products } from "@/db/schema";
 import { eq, sql } from "drizzle-orm";
@@ -7,8 +7,8 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
   try {
     const { id } = await params;
 
-const existing = await db
-      .select({ id: products.id, imageUrl: products.imageUrl })
+    const existing = await db
+      .select()
       .from(products)
       .where(eq(products.id, id))
       .limit(1);
@@ -23,7 +23,8 @@ const existing = await db
       .where(eq(products.id, id))
       .returning();
 
-    return NextResponse.json(updated[0]);
+    const product = updated[0];
+    return NextResponse.json({ ...product, formula: product.ingredients || "" });
   } catch {
     return NextResponse.json(
       { error: "Failed to fetch product" },
@@ -46,6 +47,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       videoUrl,
       benefits,
       ingredients,
+      formula,
       howToUse,
       warnings,
       isPrescriptionRequired,
@@ -69,6 +71,8 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
         ? []
         : undefined;
 
+    const formulaVal = formula !== undefined ? formula : ingredients;
+
     const updated = await db
       .update(products)
       .set({
@@ -85,7 +89,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
             : undefined,
         videoUrl: videoUrl !== undefined ? videoUrl : undefined,
         benefits: benefits !== undefined ? benefits : undefined,
-        ingredients: ingredients !== undefined ? ingredients : undefined,
+        ingredients: formulaVal !== undefined ? formulaVal : undefined,
         howToUse: howToUse !== undefined ? howToUse : undefined,
         // warnings: warnings !== undefined ? warnings : undefined,
         isPrescriptionRequired:
@@ -96,7 +100,8 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       .where(eq(products.id, id))
       .returning();
 
-    return NextResponse.json(updated[0]);
+    const prod = updated[0];
+    return NextResponse.json({ ...prod, formula: prod.ingredients || "" });
   } catch {
     return NextResponse.json(
       { error: "Failed to update product" },

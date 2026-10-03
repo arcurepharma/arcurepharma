@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -15,7 +15,7 @@ import {
   BadgeCheck,
 } from "lucide-react";
 import { useCartStore } from "@/store/cart";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, formatFormula } from "@/lib/utils";
 import toast from "react-hot-toast";
 import WhatsAppBuyButton from "./WhatsAppBuyButton";
 
@@ -29,6 +29,8 @@ interface Product {
   videoUrl?: string | null;
   images?: string[];
   isActive?: number;
+  formula?: string;
+  ingredients?: string;
 }
 
 export default function ProductCard({ product }: { product: Product }) {
@@ -39,81 +41,103 @@ export default function ProductCard({ product }: { product: Product }) {
   const [qty, setQty] = useState(1);
   const isOutOfStock = product.isActive === 0;
 
+  const formulaDisplay = formatFormula(product.formula || product.ingredients);
+
   const gallery = Array.from(
     new Set([product.imageUrl, ...(product.images || [])])
   ).filter(Boolean) as string[];
 
   useEffect(() => {
-    if (!quickView) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setQuickView(false);
-    };
-    document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [quickView]);
+    try {
+      const stored = JSON.parse(localStorage.getItem("arcure_wishlist") || "[]");
+      setWished(stored.some((p: { id: string }) => p.id === product.id));
+    } catch {}
+  }, [product.id]);
+
+  const toggleWish = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      const stored: Product[] = JSON.parse(
+        localStorage.getItem("arcure_wishlist") || "[]"
+      );
+      let updated: Product[];
+      if (wished) {
+        updated = stored.filter((p) => p.id !== product.id);
+        toast.success("Removed from wishlist");
+      } else {
+        updated = [...stored, product];
+        toast.success("Added to wishlist!");
+      }
+      localStorage.setItem("arcure_wishlist", JSON.stringify(updated));
+      window.dispatchEvent(new Event("wishlist-updated"));
+      setWished(!wished);
+    } catch {}
+  };
 
   const handleAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addItem({ id: product.id, title: product.title, price: product.price, imageUrl: product.imageUrl });
-    toast.success(`${product.title} added to cart!`);
+    if (isOutOfStock) return;
+    addItem({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      imageUrl: product.imageUrl,
+    });
+    toast.success("Added to cart!");
   };
 
   const openQuickView = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setQty(1);
     setActiveImg(product.imageUrl);
+    setQty(1);
     setQuickView(true);
   };
 
   const addFromQuickView = () => {
+    if (isOutOfStock) return;
     for (let i = 0; i < qty; i++) {
-      addItem({ id: product.id, title: product.title, price: product.price, imageUrl: product.imageUrl });
+      addItem({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        imageUrl: product.imageUrl,
+      });
     }
-    toast.success(`${qty} x ${product.title} added to cart!`);
+    toast.success(`Added ${qty} to cart!`);
     setQuickView(false);
   };
 
   return (
     <>
-      {/* â”€â”€â”€ Card â”€â”€â”€ */}
-      <div className="group relative flex flex-col bg-white rounded-2xl overflow-hidden border border-[#ede2d1]/80 hover:shadow-lg hover:border-[#c58a38]/40 transition-all duration-300 hover:-translate-y-1">
+      <div className="group relative flex flex-col bg-white rounded-2xl overflow-hidden border border-gray-100/80 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+        {/* Top media container */}
+        <Link href={`/product/${product.id}`} className="block relative aspect-square bg-[#fbf9f5] overflow-hidden">
+          <Image
+            src={product.imageUrl}
+            alt={product.title}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            className="object-contain p-4 sm:p-5 group-hover:scale-105 transition-transform duration-500 ease-out"
+            loading="lazy"
+          />
 
-        {/* Image area â€” white bg, image contained, heart top-right */}
-        <Link href={`/product/${product.id}`} className="relative block aspect-square overflow-hidden bg-white p-3 sm:p-4">
-          {gallery.slice(0, 2).map((img, i) => (
-            <Image
-              key={i}
-              src={img}
-              alt={product.title}
-              fill
-              priority={i === 0}
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className={`object-contain transition-all duration-700 group-hover:scale-105 ${
-                isOutOfStock ? "opacity-60 grayscale" : ""
-              } ${i === 0 ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
-            />
-          ))}
-
-          {/* Out of Stock overlay */}
+          {/* Out of stock overlay */}
           {isOutOfStock && (
-            <div className="absolute inset-0 flex items-center justify-center z-10">
-              <span className="bg-gray-800/80 text-white text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-full tracking-wider">
-                OUT OF STOCK
+            <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10">
+              <span className="bg-gray-900/90 text-white text-[10px] sm:text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                Out of Stock
               </span>
             </div>
           )}
 
-          {/* Heart button â€” top right */}
+          {/* Wishlist button */}
           <button
-            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setWished((w) => !w); }}
-            aria-label="Wishlist"
-            className="absolute top-2 right-2 z-10 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center transition-transform hover:scale-110 active:scale-95"
+            onClick={toggleWish}
+            aria-label="Add to wishlist"
+            className="absolute top-2 right-2 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:scale-110 active:scale-95 transition-all"
           >
             <Heart
               className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors drop-shadow-sm ${
@@ -129,7 +153,7 @@ export default function ProductCard({ product }: { product: Product }) {
             </span>
           )}
 
-          {/* Quick view â€” desktop hover */}
+          {/* Quick view button on desktop hover */}
           <div className="hidden sm:flex absolute inset-x-0 bottom-0 z-10 justify-center pb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <button
               onClick={openQuickView}
@@ -140,17 +164,25 @@ export default function ProductCard({ product }: { product: Product }) {
           </div>
         </Link>
 
-        {/* Body â€” text content */}
+        {/* Body content */}
         <div className="flex flex-col flex-1 px-3 sm:px-4 pt-3 pb-3 sm:pb-4">
-
           {/* Title */}
-          <h3 className="font-semibold text-gray-800 text-xs sm:text-sm leading-snug line-clamp-2 mb-1.5 group-hover:text-[#99611a] transition-colors">
+          <h3 className="font-bold text-gray-900 text-xs sm:text-sm leading-snug line-clamp-2 mb-1 group-hover:text-[#99611a] transition-colors">
             {product.title}
           </h3>
 
+          {/* Formula pill badge */}
+          {formulaDisplay && (
+            <div className="mb-1.5">
+              <span className="inline-block px-2 py-0.5 bg-[#fce7f3]/80 text-[#9d174d] text-[10px] sm:text-[11px] font-semibold rounded-md tracking-tight">
+                {formulaDisplay}
+              </span>
+            </div>
+          )}
+
           {/* Stars + review count */}
           <div className="flex items-center gap-0.5 mb-1.5">
-            {[1,2,3,4,5].map((s) => (
+            {[1, 2, 3, 4, 5].map((s) => (
               <Star key={s} className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-yellow-400 text-yellow-400" />
             ))}
             <span className="text-[11px] text-gray-500 ml-1">(32)</span>
@@ -172,6 +204,7 @@ export default function ProductCard({ product }: { product: Product }) {
                   : "bg-[#16a34a] hover:bg-[#15803d] text-white shadow-sm hover:shadow-md"
               }`}
             >
+              <ShoppingCart className="w-3.5 h-3.5" />
               {isOutOfStock ? "OUT OF STOCK" : "ADD TO CART"}
             </button>
             <WhatsAppBuyButton product={product} />
@@ -179,7 +212,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
       </div>
 
-      {/* â”€â”€â”€ Quick View Modal â”€â”€â”€ */}
+      {/* Quick View Modal */}
       {quickView && (
         <div className="fixed inset-0 z-[120] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setQuickView(false)} />
@@ -219,12 +252,19 @@ export default function ProductCard({ product }: { product: Product }) {
 
               {/* Details */}
               <div className="flex flex-col p-6 md:p-8">
-                <span className="inline-flex items-center gap-1.5 self-start px-3 py-1 bg-[#f0fdf4] text-[#16a34a] text-xs font-bold rounded-full mb-4">
+                <span className="inline-flex items-center gap-1.5 self-start px-3 py-1 bg-[#f0fdf4] text-[#16a34a] text-xs font-bold rounded-full mb-3">
                   <BadgeCheck className="w-3.5 h-3.5" /> Verified Product
                 </span>
-                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">{product.title}</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">{product.title}</h2>
+                {formulaDisplay && (
+                  <div className="mb-3">
+                    <span className="inline-block px-3 py-1 bg-[#fce7f3]/80 text-[#9d174d] text-xs font-semibold rounded-lg tracking-wide">
+                      {formulaDisplay}
+                    </span>
+                  </div>
+                )}
                 <div className="flex items-center gap-1 mb-3">
-                  {[1,2,3,4,5].map((s) => (
+                  {[1, 2, 3, 4, 5].map((s) => (
                     <Star key={s} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                   ))}
                   <span className="text-xs text-gray-400 ml-1">(5.0)</span>
@@ -270,6 +310,3 @@ export default function ProductCard({ product }: { product: Product }) {
     </>
   );
 }
-
-
-

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
@@ -22,7 +22,7 @@ import {
 import Navbar from "@/components/storefront/Navbar";
 import FooterOnly from "@/components/storefront/FooterOnly";
 import { useCartStore } from "@/store/cart";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice, formatFormula } from "@/lib/utils";
 import toast from "react-hot-toast";
 import WhatsAppBuyButton from "@/components/storefront/WhatsAppBuyButton";
 
@@ -36,7 +36,7 @@ interface Product {
   images?: string[];
   videoUrl?: string | null;
   benefits?: string[];
-  ingredients?: string;
+  ingredients?: string; formula?: string;
   howToUse?: string;
   warnings?: string;
   isPrescriptionRequired?: number;
@@ -144,7 +144,7 @@ export default function ProductDetailPage() {
     new Set([product.imageUrl, ...(product.images || [])])
   ).filter(Boolean) as string[];
 
-  const isOutOfStock = product.isActive === 0;
+  const isOutOfStock = product.isActive === 0; const formulaDisplay = formatFormula(product.formula || product.ingredients);
   const benefits = product.benefits || [];
 
   const infoSections = [
@@ -164,7 +164,7 @@ export default function ProductDetailPage() {
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
-          {/* ── Gallery ── */}
+          {/* â”€â”€ Gallery â”€â”€ */}
           <div>
             <div className="relative aspect-square bg-[#f0fdf4] rounded-3xl overflow-hidden border border-[#dcfce7]">
               {gallery.map((img, i) => (
@@ -210,7 +210,7 @@ export default function ProductDetailPage() {
             )}
           </div>
 
-          {/* ── Details ── */}
+          {/* â”€â”€ Details â”€â”€ */}
           <div>
             {product.category && (
               <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#f0fdf4] text-[#16a34a] text-xs font-bold rounded-full mb-3">
@@ -221,6 +221,13 @@ export default function ProductDetailPage() {
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
               {product.title}
             </h1>
+            {formulaDisplay && (
+              <div className="mb-3">
+                <span className="inline-block px-3 py-1 bg-[#fce7f3]/80 text-[#9d174d] text-xs sm:text-sm font-semibold rounded-lg tracking-wide">
+                  {formulaDisplay}
+                </span>
+              </div>
+            )}
 
             <div className="flex items-center gap-1.5 mb-4">
               <div className="flex">
@@ -298,7 +305,7 @@ export default function ProductDetailPage() {
           </div>
         </div>
 
-        {/* ── Info sections ── */}
+        {/* â”€â”€ Info sections â”€â”€ */}
         <div className="mt-14">
           <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 border-b-2 border-[#dcfce7] pb-3">
             Product Details
@@ -316,11 +323,11 @@ export default function ProductDetailPage() {
           </div>
         </div>
 
-        {/* ── Before & After Results ── */}
+        {/* â”€â”€ Before & After Results â”€â”€ */}
         <div className="mt-14">
           <div className="text-center mb-8">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#f0fdf4] text-[#16a34a] text-xs font-semibold rounded-full mb-4 border border-[#dcfce7]">
-              ✨ Real People, Real Results
+              âœ¨ Real People, Real Results
             </span>
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
               Before &amp; After Results
@@ -362,7 +369,7 @@ export default function ProductDetailPage() {
           </p>
         </div>
 
-        {/* ── Customer Reviews ── */}
+        {/* â”€â”€ Customer Reviews â”€â”€ */}
         {reviews.length > 0 && (
           <div className="mt-14">
             <div className="flex items-center justify-between mb-6 border-b-2 border-[#dcfce7] pb-3">
@@ -370,7 +377,7 @@ export default function ProductDetailPage() {
                 Customer Reviews
               </h2>
               <Link href="/reviews" className="text-[#16a34a] hover:text-[#16a34a] text-sm font-bold transition-colors">
-                View All →
+                View All â†’
               </Link>
             </div>
 

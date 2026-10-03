@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ---------- Theme: Arcure Pharma (Logo Green & Amber Gold) ---------- */
+/* ---------- Theme: Arcure Pharma Luxury Caramel & Cream ---------- */
 :root {
   --color-teal-50:  #f0fdf4;
   --color-teal-100: #dcfce7;
@@ -25,9 +25,9 @@
   --color-green-900: #14532d;
 
   /* Glassmorphism tokens */
-  --glass-bg:        rgba(255, 255, 255, 0.78);
-  --glass-border:    rgba(34, 197, 94, 0.18);
-  --glass-shadow:    0 8px 32px rgba(22, 163, 74, 0.08);
+  --glass-bg:        rgba(254, 251, 246, 0.88);
+  --glass-border:    rgba(197, 138, 56, 0.22);
+  --glass-shadow:    0 8px 32px rgba(110, 75, 25, 0.08);
   --glass-blur:      blur(16px);
 }
 
@@ -108,7 +108,7 @@ picture {
 .cursor-dot {
   width: 10px;
   height: 10px;
-  background: var(--color-teal-400);
+  background: #c58a38;
   box-shadow: 0 0 12px var(--color-teal-400),
     0 0 24px color-mix(in srgb, var(--color-teal-400) 60%, transparent);
   transform: translate(-50%, -50%);
@@ -209,7 +209,7 @@ html.theme-transition *::after {
 @layer base {
   body {
     font-family: var(--font-montserrat), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: linear-gradient(135deg, #f8fafc 0%, #f0fdf4 50%, #fefce8 100%);
+    background: linear-gradient(135deg, #fdfbf7 0%, #f7f1e7 45%, #ede2d1 100%);
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -300,18 +300,18 @@ html.theme-transition *::after {
 
 /* ---------- Glassmorphism navbar ---------- */
 .glass-nav {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(254, 251, 246, 0.96);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(22, 163, 74, 0.15);
-  box-shadow: 0 4px 24px rgba(22, 163, 74, 0.06);
+  border-bottom: 1px solid rgba(197, 138, 56, 0.20);
+  box-shadow: 0 4px 24px rgba(110, 75, 25, 0.06);
 }
 
 /* ---------- Section divider ---------- */
 .section-divider {
   width: 80px;
   height: 4px;
-  background: linear-gradient(90deg, #16a34a, #d97706);
+  background: linear-gradient(90deg, #c58a38, #16a34a);
   border-radius: 999px;
   margin: 0 auto;
 }
@@ -328,22 +328,22 @@ html.theme-transition *::after {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f7f1e7;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-teal-400);
+  background: #c58a38;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-teal-600);
+  background: #9e6e2e;
 }
 
 /* ---------- Selection color ---------- */
 ::selection {
-  background: color-mix(in srgb, var(--color-teal-400) 30%, transparent);
-  color: var(--color-teal-900);
+  background: rgba(197, 138, 56, 0.25);
+  color: #4a300a;
 }
 
 @media print {

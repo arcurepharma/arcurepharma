@@ -80,7 +80,7 @@ function HomeContent() {
               <h2 className="text-xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
                 {activeCategory ? activeCategory : "Best Sellers"}
               </h2>
-              <div className="w-10 h-[3px] bg-gradient-to-r from-[#16a34a] to-[#d97706] rounded-full mt-2" />
+              <div className="w-10 h-[3px] bg-gradient-to-r from-[#c58a38] to-[#16a34a] rounded-full mt-2" />
             </div>
             {activeCategory && (
               <Link href="/#products" className="text-[#16a34a] hover:text-[#15803d] text-sm font-bold transition-colors">

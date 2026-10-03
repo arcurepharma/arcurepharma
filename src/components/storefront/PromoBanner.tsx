@@ -31,7 +31,7 @@ export default function PromoBanner() {
           </div>
 
           {/* Right â€” product image */}
-          <div className="relative bg-[#f0fdf4] min-h-[220px] sm:min-h-[280px]">
+          <div className="relative bg-[#f7f1e7] border border-[#e2d1bc]/60 min-h-[220px] sm:min-h-[280px]">
             <Image
               src="/arcure/Arcu_Gleam_Seerom3.jpeg"
               alt="Arcure Pharma Best Sellers"
@@ -39,7 +39,7 @@ export default function PromoBanner() {
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#16a34a]/10 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#c58a38]/15 to-transparent" />
           </div>
 
         </div>

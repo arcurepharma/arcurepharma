@@ -32,8 +32,8 @@ export default function BottomTrustBar() {
                 key={i}
                 className="flex items-center gap-3 sm:px-6 lg:px-8"
               >
-                <div className="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#f0fdf4] flex items-center justify-center">
-                  <Icon className="w-5 h-5 text-[#16a34a]" strokeWidth={1.5} />
+                <div className="shrink-0 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#f7f1e7] border border-[#e2d1bc]/50 flex items-center justify-center">
+                  <Icon className="w-5 h-5 text-[#c58a38]" strokeWidth={1.5} />
                 </div>
                 <div>
                   <p className="text-[12px] sm:text-[13px] font-bold text-gray-800 leading-tight">

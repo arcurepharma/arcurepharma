@@ -42,7 +42,7 @@ export default function ResultsSection() {
   const { ref, visible } = useReveal();
 
   return (
-    <section className="py-14 lg:py-20 bg-gradient-to-b from-transparent to-[#f0fdf4]/50">
+    <section className="py-14 lg:py-20 bg-gradient-to-b from-transparent to-[#f7f1e7]/60">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
@@ -50,7 +50,7 @@ export default function ResultsSection() {
           ref={ref}
           className={`text-center mb-10 reveal ${visible ? "is-visible" : ""}`}
         >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#f0fdf4] text-[#16a34a] text-xs sm:text-sm font-semibold rounded-full mb-4 border border-[#dcfce7]">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#f7f1e7] text-[#9e6e2e] text-xs sm:text-sm font-semibold rounded-full mb-4 border border-[#e2d1bc]">
             âœ¨ Real People, Real Results
           </span>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
@@ -59,7 +59,7 @@ export default function ResultsSection() {
           <p className="text-gray-400 max-w-md mx-auto text-sm">
             See the transformation our customers have experienced.
           </p>
-          <div className="w-12 h-1 bg-[#16a34a] rounded-full mx-auto mt-4" />
+          <div className="w-12 h-1 bg-gradient-to-r from-[#c58a38] to-[#16a34a] rounded-full mx-auto mt-4" />
         </div>
 
         {/* 4 images in one horizontal row */}

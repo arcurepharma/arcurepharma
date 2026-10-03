@@ -13,6 +13,12 @@ interface Slide {
 
 const FALLBACK_SLIDES: Slide[] = [
   {
+    id: "fallback-caramel",
+    imageUrl: "/arcure/hero-caramel-banner.png",
+    title: "",
+    subtitle: "",
+  },
+  {
     id: "fallback-1",
     imageUrl: "/arcure/Arcu_Gleam_Seerom.jpeg",
     title: "Radiant Skin.\nReal Confidence.",

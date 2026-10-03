@@ -80,10 +80,10 @@ function HomeContent() {
               <h2 className="text-xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
                 {activeCategory ? activeCategory : "Best Sellers"}
               </h2>
-              <div className="w-10 h-[3px] bg-[#fcb8fd] rounded-full mt-2" />
+              <div className="w-10 h-[3px] bg-gradient-to-r from-[#16a34a] to-[#d97706] rounded-full mt-2" />
             </div>
             {activeCategory && (
-              <Link href="/#products" className="text-[#fcb8fd] hover:text-[#d460d6] text-sm font-bold transition-colors">
+              <Link href="/#products" className="text-[#16a34a] hover:text-[#15803d] text-sm font-bold transition-colors">
                 View All 
               </Link>
             )}
@@ -96,8 +96,8 @@ function HomeContent() {
                 href="/#products"
                 className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all ${
                   !activeCategory
-                    ? "bg-[#fcb8fd] text-white border-[#fcb8fd]"
-                    : "bg-white text-gray-600 border-gray-200 hover:border-[#fcb8fd] hover:text-[#fcb8fd]"
+                    ? "bg-[#16a34a] text-white border-[#16a34a]"
+                    : "bg-white text-gray-600 border-gray-200 hover:border-[#16a34a] hover:text-[#16a34a]"
                 }`}
               >
                 All
@@ -108,8 +108,8 @@ function HomeContent() {
                   href={`/?category=${encodeURIComponent(cat)}#products`}
                   className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all ${
                     activeCategory === cat
-                      ? "bg-[#fcb8fd] text-white border-[#fcb8fd]"
-                      : "bg-white text-gray-600 border-gray-200 hover:border-[#fcb8fd] hover:text-[#fcb8fd]"
+                      ? "bg-[#16a34a] text-white border-[#16a34a]"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-[#16a34a] hover:text-[#16a34a]"
                   }`}
                 >
                   {cat}
@@ -120,12 +120,12 @@ function HomeContent() {
 
           {loading ? (
             <div className="flex justify-center py-20">
-              <div className="w-10 h-10 border-4 border-[#fde8fc] border-t-[#fcb8fd] rounded-full animate-spin" />
+              <div className="w-10 h-10 border-4 border-[#dcfce7] border-t-[#16a34a] rounded-full animate-spin" />
             </div>
           ) : filtered.length === 0 ? (
             <div className="text-center py-20">
               <p className="text-gray-400 text-lg mb-4">No products in this category yet</p>
-              <Link href="/#products" className="text-[#fcb8fd] font-bold text-sm hover:underline">
+              <Link href="/#products" className="text-[#16a34a] font-bold text-sm hover:underline">
                 View all products â†’
               </Link>
             </div>

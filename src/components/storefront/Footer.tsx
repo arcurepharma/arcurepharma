@@ -12,12 +12,12 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/60 text-[#e855d8] text-sm font-semibold rounded-full mb-4 border border-pink-200/50 backdrop-blur-sm">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-white/60 text-[#16a34a] text-sm font-semibold rounded-full mb-4 border border-emerald-200/50 backdrop-blur-sm">
                 About Us
               </span>
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6 leading-tight">
                 Your Trusted Online{" "}
-                <span className="text-[#e855d8]">Pharmacy</span>
+                <span className="text-[#d97706]">Pharmacy</span>
               </h2>
               <p className="text-gray-600 leading-relaxed text-lg mb-6">
                 Arcure Pharma is dedicated to providing high-quality medicated products
@@ -31,7 +31,7 @@ export default function Footer() {
               </p>
               <Link
                 href="/#products"
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-[#e855d8] hover:bg-[#c73ab8] text-white text-sm font-semibold rounded-full transition-all hover:shadow-lg hover:shadow-[#e855d8]/25 active:scale-95"
+                className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-[#16a34a] hover:bg-[#15803d] text-white text-sm font-semibold rounded-full transition-all hover:shadow-lg hover:shadow-[#16a34a]/25 active:scale-95"
               >
                 Explore Products
                 <ArrowRight className="w-4 h-4" />
@@ -45,7 +45,7 @@ export default function Footer() {
                 { value: "24/7",   label: "Customer Support" },
               ].map((stat) => (
                 <div key={stat.label} className="glass-card rounded-2xl p-6 text-center hover:shadow-lg transition-shadow">
-                  <p className="text-2xl lg:text-3xl font-extrabold text-[#e855d8] mb-1">{stat.value}</p>
+                  <p className="text-2xl lg:text-3xl font-extrabold text-[#16a34a] mb-1">{stat.value}</p>
                   <p className="text-gray-600 text-sm">{stat.label}</p>
                 </div>
               ))}
@@ -55,7 +55,7 @@ export default function Footer() {
       </section>
 
       {/* Footer — same glassmorphism as website */}
-      <footer style={{ background: "linear-gradient(135deg, rgba(252,184,253,0.22) 0%, rgba(232,85,216,0.14) 100%)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", borderTop: "1px solid rgba(252,184,253,0.4)" }}>
+      <footer style={{ background: "linear-gradient(135deg, rgba(240,253,244,0.85) 0%, rgba(254,243,199,0.5) 100%)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", borderTop: "1px solid rgba(22,163,74,0.18)" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
 
@@ -74,7 +74,7 @@ export default function Footer() {
                   { label: "Instagram",href: "https://www.instagram.com/arcurepharma_official?stkn=OHFpc3VpaTVtZDN2", filled: false, path: "M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2z" },
                 ].map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label}
-                    className="w-10 h-10 bg-white/50 hover:bg-[#e855d8] text-[#e855d8] hover:text-white rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 border border-pink-200/60 backdrop-blur-sm"
+                    className="w-10 h-10 bg-white/50 hover:bg-[#16a34a] text-[#16a34a] hover:text-white rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 border border-emerald-200/60 backdrop-blur-sm"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill={s.filled ? "currentColor" : "none"} stroke={s.filled ? "none" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={s.path} /></svg>
                   </a>
@@ -94,7 +94,7 @@ export default function Footer() {
                   { href: "/checkout",  label: "Checkout" },
                 ].map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="text-gray-500 hover:text-[#e855d8] text-sm transition-colors flex items-center gap-2 group">
+                    <Link href={link.href} className="text-gray-500 hover:text-[#16a34a] text-sm transition-colors flex items-center gap-2 group">
                       <ArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                       {link.label}
                     </Link>
@@ -108,19 +108,19 @@ export default function Footer() {
               <h4 className="font-bold text-gray-800 mb-5 text-sm uppercase tracking-wider">Contact Info</h4>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3 text-gray-500 text-sm">
-                  <MapPin className="w-4 h-4 text-[#e855d8] shrink-0 mt-0.5" />
+                  <MapPin className="w-4 h-4 text-[#16a34a] shrink-0 mt-0.5" />
                   <span>Plot No. E99/B, Site Super Highway, Karachi, Pakistan</span>
                 </li>
                 <li className="flex items-center gap-3 text-gray-500 text-sm">
-                  <Phone className="w-4 h-4 text-[#e855d8] shrink-0" />
-                  <a href="tel:+923341169999" className="hover:text-[#e855d8] transition-colors">+92 334 116 9999</a>
+                  <Phone className="w-4 h-4 text-[#16a34a] shrink-0" />
+                  <a href="tel:+923341169999" className="hover:text-[#16a34a] transition-colors">+92 334 116 9999</a>
                 </li>
                 <li className="flex items-center gap-3 text-gray-500 text-sm">
-                  <Mail className="w-4 h-4 text-[#e855d8] shrink-0" />
-                  <a href="mailto:info@arcurepharma.com" className="hover:text-[#e855d8] transition-colors">info@arcurepharma.com</a>
+                  <Mail className="w-4 h-4 text-[#16a34a] shrink-0" />
+                  <a href="mailto:info@arcurepharma.com" className="hover:text-[#16a34a] transition-colors">info@arcurepharma.com</a>
                 </li>
                 <li className="flex items-center gap-3 text-gray-500 text-sm">
-                  <Clock className="w-4 h-4 text-[#e855d8] shrink-0" />
+                  <Clock className="w-4 h-4 text-[#16a34a] shrink-0" />
                   <span>Mon - Sat: 9:00 AM - 9:00 PM</span>
                 </li>
               </ul>
@@ -134,27 +134,27 @@ export default function Footer() {
                 <input
                   type="email"
                   placeholder="Your email address"
-                  className="w-full px-4 py-3 bg-white/60 border border-pink-200/60 rounded-xl text-gray-700 text-sm placeholder-gray-400 focus:outline-none focus:border-[#e855d8] transition-colors backdrop-blur-sm"
+                  className="w-full px-4 py-3 bg-white/60 border border-emerald-200/60 rounded-xl text-gray-700 text-sm placeholder-gray-400 focus:outline-none focus:border-[#16a34a] transition-colors backdrop-blur-sm"
                 />
-                <button type="submit" className="w-full px-4 py-3 bg-[#e855d8] hover:bg-[#c73ab8] text-white text-sm font-semibold rounded-xl transition-all active:scale-95">
+                <button type="submit" className="w-full px-4 py-3 bg-[#16a34a] hover:bg-[#15803d] text-white text-sm font-semibold rounded-xl transition-all active:scale-95">
                   Subscribe
                 </button>
               </form>
               <div className="mt-6">
-                <Link href="#" className="text-gray-400 hover:text-[#e855d8] text-xs transition-colors">Privacy Policy</Link>
+                <Link href="#" className="text-gray-400 hover:text-[#16a34a] text-xs transition-colors">Privacy Policy</Link>
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div style={{ borderTop: "1px solid rgba(232,85,216,0.2)" }}>
+        <div style={{ borderTop: "1px solid rgba(22,163,74,0.15)" }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-gray-500 text-sm text-center sm:text-left">
               &copy; {new Date().getFullYear()} Arcure Pharma. All rights reserved.
             </p>
             <p className="text-gray-400 text-xs">
-              Created by <span className="text-[#e855d8] font-semibold">Muhammad Ayan</span>
+              Created by <span className="text-[#16a34a] font-semibold">Muhammad Ayan</span>
             </p>
           </div>
         </div>

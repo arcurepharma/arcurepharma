@@ -59,7 +59,7 @@ export default function Navbar() {
       {/* â”€â”€ Main Header â”€â”€ */}
       <header
         className={`fixed left-0 right-0 z-50 top-0 transition-all duration-300 glass-nav ${
-          scrolled ? "shadow-lg shadow-pink-100/50" : ""
+          scrolled ? "shadow-lg shadow-green-100/50" : ""
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -85,12 +85,12 @@ export default function Navbar() {
                   href={link.href}
                   className={`relative px-4 py-2 text-[13px] font-semibold uppercase tracking-wide transition-colors group ${
                     pathname === link.href
-                      ? "text-[#fcb8fd]"
-                      : "text-gray-600 hover:text-[#fcb8fd]"
+                      ? "text-[#16a34a]"
+                      : "text-gray-600 hover:text-[#16a34a]"
                   }`}
                 >
                   {link.label}
-                  <span className={`absolute left-4 right-4 bottom-0 h-[2px] bg-[#fcb8fd] rounded-full transition-transform duration-300 origin-left ${
+                  <span className={`absolute left-4 right-4 bottom-0 h-[2px] bg-[#16a34a] rounded-full transition-transform duration-300 origin-left ${
                     pathname === link.href ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                   }`} />
                 </Link>
@@ -115,7 +115,7 @@ export default function Navbar() {
                     onClick={() => setUserOpen(!userOpen)}
                     className="flex items-center gap-1.5 px-2 py-1.5 bg-gray-50 hover:bg-gray-100 rounded-xl transition-colors border border-gray-100"
                   >
-                    <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-[#fcb8fd] to-[#fcb8fd] rounded-full flex items-center justify-center text-white text-[10px] font-bold">
+                    <div className="w-6 h-6 sm:w-7 sm:h-7 bg-gradient-to-br from-[#16a34a] to-[#15803d] rounded-full flex items-center justify-center text-white text-[10px] font-bold">
                       {userInitial}
                     </div>
                     <span className="hidden sm:block text-xs font-semibold text-gray-700 max-w-[55px] truncate">
@@ -131,9 +131,9 @@ export default function Navbar() {
                       <Link
                         href="/account"
                         onClick={() => setUserOpen(false)}
-                        className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-[#fff5fe] hover:text-[#fcb8fd] transition-colors"
+                        className="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-[#f0fdf4] hover:text-[#16a34a] transition-colors"
                       >
-                        <Package className="w-4 h-4 text-[#fcb8fd]" /> My Orders
+                        <Package className="w-4 h-4 text-[#16a34a]" /> My Orders
                       </Link>
                       <button
                         onClick={handleLogout}
@@ -147,7 +147,7 @@ export default function Navbar() {
               ) : (
                 <Link
                   href="/account"
-                  className="hidden sm:flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 bg-[#fcb8fd] hover:bg-[#e8a0f0] text-[#6b1f6d] text-xs sm:text-sm font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-[#fcb8fd]/25 active:scale-95"
+                  className="hidden sm:flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 bg-[#16a34a] hover:bg-[#15803d] text-white text-xs sm:text-sm font-bold rounded-xl transition-all hover:shadow-lg hover:shadow-[#16a34a]/25 active:scale-95"
                 >
                   <User className="w-4 h-4" />
                   <span>Sign In</span>
@@ -161,7 +161,7 @@ export default function Navbar() {
               >
                 <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
                 {mounted && totalItems > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 sm:w-5 sm:h-5 bg-[#fcb8fd] text-white text-[8px] sm:text-[10px] font-extrabold rounded-full flex items-center justify-center shadow-sm">
+                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 sm:w-5 sm:h-5 bg-[#d97706] text-white text-[8px] sm:text-[10px] font-extrabold rounded-full flex items-center justify-center shadow-sm">
                     {totalItems}
                   </span>
                 )}
@@ -186,7 +186,7 @@ export default function Navbar() {
                 <Link
                   href="/account"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-center gap-2 mb-3 px-4 py-3 bg-[#fcb8fd] hover:bg-[#e8a0f0] text-[#6b1f6d] rounded-xl font-bold text-sm transition-colors"
+                  className="flex items-center justify-center gap-2 mb-3 px-4 py-3 bg-[#16a34a] hover:bg-[#15803d] text-white rounded-xl font-bold text-sm transition-colors"
                 >
                   <User className="w-4 h-4" /> Sign In / Register
                 </Link>
@@ -196,14 +196,14 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="block px-4 py-3 text-gray-600 hover:bg-[#fff5fe] hover:text-[#fcb8fd] rounded-xl font-semibold text-sm transition-colors"
+                  className="block px-4 py-3 text-gray-600 hover:bg-[#f0fdf4] hover:text-[#16a34a] rounded-xl font-semibold text-sm transition-colors"
                 >
                   {link.label}
                 </Link>
               ))}
               {user && (
                 <>
-                  <Link href="/account" onClick={() => setIsOpen(false)} className="block px-4 py-3 text-gray-600 hover:bg-[#fff5fe] hover:text-[#fcb8fd] rounded-xl font-semibold text-sm transition-colors">
+                  <Link href="/account" onClick={() => setIsOpen(false)} className="block px-4 py-3 text-gray-600 hover:bg-[#f0fdf4] hover:text-[#16a34a] rounded-xl font-semibold text-sm transition-colors">
                     My Orders
                   </Link>
                   <button onClick={handleLogout} className="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl font-semibold text-sm transition-colors">

@@ -52,7 +52,7 @@ export default function RecentlyViewed() {
           </div>
           <Link
             href="/#products"
-            className="hidden sm:flex items-center gap-2 text-[#fcb8fd] hover:text-[#d460d6] font-semibold text-sm transition-colors"
+            className="hidden sm:flex items-center gap-2 text-[#16a34a] hover:text-[#15803d] font-semibold text-sm transition-colors"
           >
             View All Products
             <ArrowRight className="w-4 h-4" />
@@ -84,7 +84,7 @@ export default function RecentlyViewed() {
                 <h3 className="font-semibold text-gray-900 text-sm mb-2 line-clamp-2 group-hover:text-purple-700 transition-colors">
                   {product.title}
                 </h3>
-                <p className="text-lg font-bold text-[#fcb8fd]">
+                <p className="text-lg font-bold text-[#16a34a]">
                   {formatPrice(product.price)}
                 </p>
               </div>

@@ -15,13 +15,13 @@ export default function PressLogos() {
   const { ref: headerRef, visible: headerVisible } = useReveal();
 
   return (
-    <section className="py-14 lg:py-20 bg-gradient-to-br from-[#fff5fe] via-white to-[#fff5fe]">
+    <section className="py-14 lg:py-20 bg-gradient-to-br from-[#f0fdf4] via-white to-[#f0fdf4]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           ref={headerRef}
           className={`text-center mb-10 reveal ${headerVisible ? "is-visible" : ""}`}
         >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#fde8fc] text-[#d460d6] text-sm font-semibold rounded-full mb-4">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#dcfce7] text-[#16a34a] text-sm font-semibold rounded-full mb-4">
             <Newspaper className="w-4 h-4" />
             Trusted & Certified
           </span>
@@ -40,9 +40,9 @@ export default function PressLogos() {
             return (
               <div
                 key={i}
-                className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-2 border-gray-100 hover:border-[#fde8fc] group w-[calc(50%-8px)] sm:w-[calc(33%-11px)] lg:w-44"
+                className="flex flex-col items-center justify-center p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border-2 border-gray-100 hover:border-[#bbf7d0] group w-[calc(50%-8px)] sm:w-[calc(33%-11px)] lg:w-44"
               >
-                <div className="w-12 h-12 bg-gradient-to-br from-[#fcb8fd] to-[#fcb8fd] rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-12 h-12 bg-gradient-to-br from-[#16a34a] to-[#15803d] rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
                   <Icon className="w-6 h-6 text-white" />
                 </div>
                 <p className="text-sm font-bold text-gray-900 text-center leading-snug">
@@ -56,7 +56,7 @@ export default function PressLogos() {
         {/* Additional Trust Statement */}
         <div className="mt-12 text-center">
           <p className="text-gray-700 font-medium">
-            Serving Pakistan with <span className="text-[#fcb8fd] font-bold">Premium Healthcare Products</span> since 2020
+            Serving Pakistan with <span className="text-[#16a34a] font-bold">Premium Healthcare Products</span> since 2020
           </p>
         </div>
       </div>

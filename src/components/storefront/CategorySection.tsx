@@ -69,7 +69,7 @@ export default function CategorySection() {
           <h2 className="text-lg sm:text-2xl lg:text-3xl font-bold text-gray-900 uppercase tracking-widest">
             Shop By Category
           </h2>
-          <div className="w-10 h-[3px] bg-[#fcb8fd] rounded-full mx-auto mt-3" />
+          <div className="w-10 h-[3px] bg-gradient-to-r from-[#16a34a] to-[#d97706] rounded-full mx-auto mt-3" />
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:gap-10">

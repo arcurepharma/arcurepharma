@@ -23,7 +23,7 @@ export default function PromoBanner() {
             <div>
               <Link
                 href="/#products"
-                className="inline-flex items-center gap-2 px-7 py-3 border-2 border-white text-white font-bold text-xs sm:text-sm rounded-full hover:bg-white hover:text-[#fcb8fd] transition-all duration-300 active:scale-95 tracking-wider uppercase"
+                className="inline-flex items-center gap-2 px-7 py-3 border-2 border-white text-white font-bold text-xs sm:text-sm rounded-full hover:bg-white hover:text-[#16a34a] transition-all duration-300 active:scale-95 tracking-wider uppercase"
               >
                 Shop the Sale
               </Link>
@@ -31,7 +31,7 @@ export default function PromoBanner() {
           </div>
 
           {/* Right â€” product image */}
-          <div className="relative bg-[#fff5fe] min-h-[220px] sm:min-h-[280px]">
+          <div className="relative bg-[#f0fdf4] min-h-[220px] sm:min-h-[280px]">
             <Image
               src="/arcure/Arcu_Gleam_Seerom3.jpeg"
               alt="Arcure Pharma Best Sellers"
@@ -39,7 +39,7 @@ export default function PromoBanner() {
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#fcb8fd]/10 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#16a34a]/10 to-transparent" />
           </div>
 
         </div>

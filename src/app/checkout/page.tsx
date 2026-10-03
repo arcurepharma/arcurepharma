@@ -165,7 +165,7 @@ export default function CheckoutPage() {
     setSubmitting(false);
   };
 
-  const inp = "w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#e855d8] focus:border-transparent transition-all";
+  const inp = "w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#16a34a] focus:border-transparent transition-all";
 
   // ── Auth loading ──
   if (authLoading) {
@@ -173,7 +173,7 @@ export default function CheckoutPage() {
       <main className="min-h-screen">
         <Navbar />
         <div className="flex justify-center items-center pt-40">
-          <div className="w-10 h-10 border-4 border-[#fde8fc] border-t-[#e855d8] rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-[#dcfce7] border-t-[#16a34a] rounded-full animate-spin" />
         </div>
       </main>
     );
@@ -190,9 +190,9 @@ export default function CheckoutPage() {
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Checkout</h1>
         <p className="text-sm text-gray-500 mb-8">
           {user ? (
-            <>Ordering as <span className="font-semibold text-[#e855d8]">{user.name || user.email}</span></>
+            <>Ordering as <span className="font-semibold text-[#16a34a]">{user.name || user.email}</span></>
           ) : (
-            <>Checkout as <span className="font-semibold text-[#e855d8]">Guest</span></>
+            <>Checkout as <span className="font-semibold text-[#16a34a]">Guest</span></>
           )}
         </p>
 
@@ -200,7 +200,7 @@ export default function CheckoutPage() {
           <div className="text-center py-20 glass-card rounded-2xl">
             <ShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
             <p className="text-gray-500 text-lg mb-4">Your cart is empty</p>
-            <Link href="/#products" className="inline-flex items-center gap-2 px-6 py-3 bg-[#e855d8] text-white rounded-xl hover:bg-[#c73ab8] transition-colors">
+            <Link href="/#products" className="inline-flex items-center gap-2 px-6 py-3 bg-[#16a34a] text-white rounded-xl hover:bg-[#15803d] transition-colors">
               Browse Products
             </Link>
           </div>
@@ -220,7 +220,7 @@ export default function CheckoutPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="font-medium text-gray-800 text-sm truncate">{item.title}</h3>
-                        <p className="text-[#e855d8] font-semibold text-sm">{formatPrice(item.price)}</p>
+                        <p className="text-[#16a34a] font-semibold text-sm">{formatPrice(item.price)}</p>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="w-7 h-7 flex items-center justify-center bg-white/70 rounded-lg hover:bg-white transition-colors"><Minus className="w-3.5 h-3.5" /></button>
@@ -275,18 +275,18 @@ export default function CheckoutPage() {
                     {addressMode === null && (
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <button type="button" onClick={detectLocation} disabled={detectingLocation}
-                          className="flex flex-col items-center gap-3 p-5 border-2 border-[#fde8fc] bg-white/60 hover:border-[#e855d8] rounded-2xl transition-all group disabled:opacity-60"
+                          className="flex flex-col items-center gap-3 p-5 border-2 border-[#dcfce7] bg-white/60 hover:border-[#16a34a] rounded-2xl transition-all group disabled:opacity-60"
                         >
-                          {detectingLocation ? <Loader2 className="w-8 h-8 text-[#e855d8] animate-spin" /> : <MapPin className="w-8 h-8 text-[#e855d8] group-hover:scale-110 transition-transform" />}
+                          {detectingLocation ? <Loader2 className="w-8 h-8 text-[#16a34a] animate-spin" /> : <MapPin className="w-8 h-8 text-[#16a34a] group-hover:scale-110 transition-transform" />}
                           <div className="text-center">
                             <p className="font-bold text-gray-800 text-sm">{detectingLocation ? "Detecting…" : "Use My Location"}</p>
                             <p className="text-xs text-gray-400 mt-0.5">Auto-detect via GPS</p>
                           </div>
                         </button>
                         <button type="button" onClick={() => setAddressMode("manual")}
-                          className="flex flex-col items-center gap-3 p-5 border-2 border-gray-200 bg-white/60 hover:border-[#e855d8] rounded-2xl transition-all group"
+                          className="flex flex-col items-center gap-3 p-5 border-2 border-gray-200 bg-white/60 hover:border-[#16a34a] rounded-2xl transition-all group"
                         >
-                          <PencilLine className="w-8 h-8 text-gray-500 group-hover:text-[#e855d8] group-hover:scale-110 transition-all" />
+                          <PencilLine className="w-8 h-8 text-gray-500 group-hover:text-[#16a34a] group-hover:scale-110 transition-all" />
                           <div className="text-center">
                             <p className="font-bold text-gray-800 text-sm">Enter Manually</p>
                             <p className="text-xs text-gray-400 mt-0.5">Type your address</p>
@@ -321,7 +321,7 @@ export default function CheckoutPage() {
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
                           <p className="text-xs text-gray-500">Enter your delivery address below</p>
-                          <button type="button" onClick={() => setAddressMode(null)} className="text-xs text-[#e855d8] hover:underline font-medium">← Back</button>
+                          <button type="button" onClick={() => setAddressMode(null)} className="text-xs text-[#16a34a] hover:underline font-medium">← Back</button>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div>
@@ -358,8 +358,8 @@ export default function CheckoutPage() {
                       onClick={() => method.available && setPaymentMethod(method.id)}
                       className={`relative flex items-center gap-3 p-4 rounded-xl border-2 text-left transition-all ${
                         !method.available ? "opacity-50 cursor-not-allowed border-gray-100 bg-gray-50/50"
-                        : paymentMethod === method.id ? "border-[#e855d8] bg-[#fff5fe]"
-                        : "border-gray-200 hover:border-[#e855d8]/40 bg-white/60"
+                        : paymentMethod === method.id ? "border-[#16a34a] bg-[#f0fdf4]"
+                        : "border-gray-200 hover:border-[#16a34a]/40 bg-white/60"
                       }`}
                     >
                       <span className="text-2xl">{method.icon}</span>
@@ -369,7 +369,7 @@ export default function CheckoutPage() {
                       </div>
                       {!method.available && <span className="absolute top-2 right-2 flex items-center gap-1 text-[9px] font-bold text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded-full"><WifiOff className="w-2.5 h-2.5" /> Soon</span>}
                       {method.available && paymentMethod === method.id && (
-                        <div className="w-5 h-5 rounded-full bg-[#e855d8] flex items-center justify-center shrink-0">
+                        <div className="w-5 h-5 rounded-full bg-[#16a34a] flex items-center justify-center shrink-0">
                           <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                         </div>
                       )}
@@ -391,19 +391,19 @@ export default function CheckoutPage() {
                     </div>
                   ))}
                 </div>
-                <div className="border-t border-pink-100/60 pt-4 space-y-2">
+                <div className="border-t border-emerald-100/60 pt-4 space-y-2">
                   <div className="flex justify-between text-sm"><span className="text-gray-500">Subtotal</span><span className="text-gray-700">{formatPrice(subtotal)}</span></div>
                   <div className="flex justify-between text-sm"><span className="text-gray-500 flex items-center gap-1"><Truck className="w-4 h-4" /> Delivery</span><span className="text-gray-700">{formatPrice(deliveryFee)}</span></div>
                   <div className="flex justify-between text-sm"><span className="text-gray-500">Payment</span><span className="text-gray-700 font-medium">{paymentMethod}</span></div>
                 </div>
-                <div className="border-t border-pink-100/60 pt-4 mt-3">
+                <div className="border-t border-emerald-100/60 pt-4 mt-3">
                   <div className="flex justify-between">
                     <span className="font-bold text-gray-900">Total</span>
-                    <span className="font-bold text-[#e855d8] text-xl">{formatPrice(total)}</span>
+                    <span className="font-bold text-[#16a34a] text-xl">{formatPrice(total)}</span>
                   </div>
                 </div>
                 <button type="submit" form="checkout-form" disabled={submitting}
-                  className="w-full mt-5 py-3.5 bg-[#e855d8] hover:bg-[#c73ab8] text-white font-bold rounded-xl transition-all disabled:opacity-50 text-sm tracking-wide"
+                  className="w-full mt-5 py-3.5 bg-[#16a34a] hover:bg-[#15803d] text-white font-bold rounded-xl transition-all disabled:opacity-50 text-sm tracking-wide"
                 >
                   {submitting ? <span className="flex items-center justify-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> Placing Order…</span> : "Place Order"}
                 </button>

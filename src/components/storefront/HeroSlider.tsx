@@ -76,7 +76,7 @@ export default function HeroSlider() {
   if (loading) {
     return (
       <section className="relative w-full bg-[#f5e6ed] mt-[64px] lg:mt-[68px] flex items-center justify-center" style={{aspectRatio: '16/7'}}>
-        <div className="w-10 h-10 border-4 border-[#fcb8fd]/20 border-t-[#fcb8fd] rounded-full animate-spin" />
+        <div className="w-10 h-10 border-4 border-[#16a34a]/20 border-t-[#16a34a] rounded-full animate-spin" />
       </section>
     );
   }
@@ -123,7 +123,7 @@ export default function HeroSlider() {
                   )}
                   <Link
                     href="/#products"
-                    className="inline-flex items-center px-5 sm:px-7 py-2.5 sm:py-3 bg-[#fcb8fd] hover:bg-[#e8a0f0] text-[#6b1f6d] font-bold text-xs sm:text-sm rounded-md transition-all hover:shadow-lg active:scale-95"
+                    className="inline-flex items-center px-5 sm:px-7 py-2.5 sm:py-3 bg-[#16a34a] hover:bg-[#15803d] text-white font-bold text-xs sm:text-sm rounded-md transition-all hover:shadow-lg active:scale-95"
                   >
                     Shop Now
                   </Link>

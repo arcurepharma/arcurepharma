@@ -120,7 +120,7 @@ export default function ProductDetailPage() {
       <main className="min-h-screen bg-white">
         <Navbar />
         <div className="flex justify-center items-center pt-40">
-          <div className="w-10 h-10 border-4 border-[#fde8fc] border-t-[#fcb8fd] rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-[#dcfce7] border-t-[#16a34a] rounded-full animate-spin" />
         </div>
       </main>
     );
@@ -132,7 +132,7 @@ export default function ProductDetailPage() {
         <Navbar />
         <div className="max-w-2xl mx-auto px-4 pt-40 pb-20 text-center">
           <p className="text-gray-500 text-lg">Product not found</p>
-          <Link href="/" className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-[#fcb8fd] text-white rounded-xl hover:bg-[#d460d6] transition-colors">
+          <Link href="/" className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-[#16a34a] text-white rounded-xl hover:bg-[#15803d] transition-colors">
             <ArrowLeft className="w-4 h-4" /> Go Home
           </Link>
         </div>
@@ -159,14 +159,14 @@ export default function ProductDetailPage() {
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20">
-        <Link href="/#products" className="inline-flex items-center gap-2 text-gray-500 hover:text-[#d460d6] mb-6 text-sm transition-colors">
+        <Link href="/#products" className="inline-flex items-center gap-2 text-gray-500 hover:text-[#16a34a] mb-6 text-sm transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Products
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
           {/* ── Gallery ── */}
           <div>
-            <div className="relative aspect-square bg-[#fff5fe] rounded-3xl overflow-hidden border border-[#fde8fc]">
+            <div className="relative aspect-square bg-[#f0fdf4] rounded-3xl overflow-hidden border border-[#dcfce7]">
               {gallery.map((img, i) => (
                 <Image
                   key={i}
@@ -187,7 +187,7 @@ export default function ProductDetailPage() {
                 </div>
               )}
               {product.videoUrl && (
-                <span className="absolute top-4 left-4 z-10 inline-flex items-center gap-1 px-2.5 py-1 bg-[#fcb8fd]/90 text-white text-[10px] font-semibold rounded-lg backdrop-blur-sm">
+                <span className="absolute top-4 left-4 z-10 inline-flex items-center gap-1 px-2.5 py-1 bg-[#16a34a]/90 text-white text-[10px] font-semibold rounded-lg backdrop-blur-sm">
                   <PlayCircle className="w-3.5 h-3.5" /> Video Available
                 </span>
               )}
@@ -200,7 +200,7 @@ export default function ProductDetailPage() {
                     key={i}
                     onClick={() => setActiveImg(img)}
                     className={`relative w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${
-                      activeImg === img ? "border-[#fcb8fd] scale-105" : "border-gray-100 hover:border-[#fde8fc]"
+                      activeImg === img ? "border-[#16a34a] scale-105" : "border-gray-100 hover:border-[#dcfce7]"
                     }`}
                   >
                     <Image src={img} alt="" fill sizes="80px" className="object-cover" />
@@ -213,7 +213,7 @@ export default function ProductDetailPage() {
           {/* ── Details ── */}
           <div>
             {product.category && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#fff5fe] text-[#d460d6] text-xs font-bold rounded-full mb-3">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#f0fdf4] text-[#16a34a] text-xs font-bold rounded-full mb-3">
                 <BadgeCheck className="w-3.5 h-3.5" /> {product.category}
               </span>
             )}
@@ -265,7 +265,7 @@ export default function ProductDetailPage() {
               <button
                 onClick={handleAdd}
                 disabled={isOutOfStock}
-                className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-[#fcb8fd] hover:bg-[#e8a0f0] text-[#6b1f6d] font-bold text-sm rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#fcb8fd]/20"
+                className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-[#16a34a] hover:bg-[#15803d] text-white font-bold text-sm rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#16a34a]/20"
               >
                 <ShoppingCart className="w-4 h-4" /> {isOutOfStock ? "Out of Stock" : "Add to Cart"}
               </button>
@@ -288,7 +288,7 @@ export default function ProductDetailPage() {
                 <h2 className="font-bold text-gray-900 mb-3">Key Benefits</h2>
                 <div className="flex flex-wrap gap-2">
                   {benefits.map((b, i) => (
-                    <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#fff5fe] text-[#d460d6] text-xs font-semibold rounded-full border border-[#fde8fc]">
+                    <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#f0fdf4] text-[#16a34a] text-xs font-semibold rounded-full border border-[#dcfce7]">
                       <BadgeCheck className="w-3.5 h-3.5" /> {b}
                     </span>
                   ))}
@@ -300,14 +300,14 @@ export default function ProductDetailPage() {
 
         {/* ── Info sections ── */}
         <div className="mt-14">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 border-b-2 border-[#fde8fc] pb-3">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 border-b-2 border-[#dcfce7] pb-3">
             Product Details
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {infoSections.map((s, i) => (
               <div key={i} className="bg-white rounded-2xl border border-gray-100 p-6">
                 <div className="flex items-center gap-2 mb-3">
-                  <s.icon className="w-5 h-5 text-[#d460d6]" />
+                  <s.icon className="w-5 h-5 text-[#16a34a]" />
                   <h3 className="font-bold text-gray-900 text-sm">{s.title}</h3>
                 </div>
                 <p className="text-gray-500 text-sm leading-relaxed whitespace-pre-line">{s.text}</p>
@@ -319,7 +319,7 @@ export default function ProductDetailPage() {
         {/* ── Before & After Results ── */}
         <div className="mt-14">
           <div className="text-center mb-8">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#fff5fe] text-[#fcb8fd] text-xs font-semibold rounded-full mb-4 border border-[#fde8fc]">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#f0fdf4] text-[#16a34a] text-xs font-semibold rounded-full mb-4 border border-[#dcfce7]">
               ✨ Real People, Real Results
             </span>
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
@@ -328,7 +328,7 @@ export default function ProductDetailPage() {
             <p className="text-gray-400 text-sm">
               See the transformations our customers have experienced.
             </p>
-            <div className="w-12 h-1 bg-[#fcb8fd] rounded-full mx-auto mt-4" />
+            <div className="w-12 h-1 bg-[#16a34a] rounded-full mx-auto mt-4" />
           </div>
 
           <div className="grid grid-cols-2 gap-4 sm:gap-8 max-w-3xl mx-auto">
@@ -341,14 +341,14 @@ export default function ProductDetailPage() {
                       BEFORE
                     </span>
                   </div>
-                  <div className="relative aspect-square rounded-2xl overflow-hidden border-4 border-[#fde8fc]">
+                  <div className="relative aspect-square rounded-2xl overflow-hidden border-4 border-[#dcfce7]">
                     <Image src={r.after} alt="After" fill sizes="200px" className="object-cover" />
-                    <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-[#fcb8fd] text-white text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap shadow">
+                    <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-[#16a34a] text-white text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap shadow">
                       AFTER
                     </span>
                   </div>
                 </div>
-                <div className="flex justify-center text-[#fcb8fd]">
+                <div className="flex justify-center text-[#16a34a]">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
@@ -365,11 +365,11 @@ export default function ProductDetailPage() {
         {/* ── Customer Reviews ── */}
         {reviews.length > 0 && (
           <div className="mt-14">
-            <div className="flex items-center justify-between mb-6 border-b-2 border-[#fde8fc] pb-3">
+            <div className="flex items-center justify-between mb-6 border-b-2 border-[#dcfce7] pb-3">
               <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
                 Customer Reviews
               </h2>
-              <Link href="/reviews" className="text-[#fcb8fd] hover:text-[#d460d6] text-sm font-bold transition-colors">
+              <Link href="/reviews" className="text-[#16a34a] hover:text-[#16a34a] text-sm font-bold transition-colors">
                 View All →
               </Link>
             </div>
@@ -387,7 +387,7 @@ export default function ProductDetailPage() {
                         className="w-11 h-11 rounded-full object-cover"
                       />
                     ) : (
-                      <div className="w-11 h-11 rounded-full bg-[#fff5fe] text-[#fcb8fd] font-bold flex items-center justify-center text-lg shrink-0">
+                      <div className="w-11 h-11 rounded-full bg-[#f0fdf4] text-[#16a34a] font-bold flex items-center justify-center text-lg shrink-0">
                         {(review.name || "?").charAt(0).toUpperCase()}
                       </div>
                     )}

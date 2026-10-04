@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 import {
   LayoutDashboard,
   Package,
@@ -49,31 +48,46 @@ export default function AdminSidebar() {
 
   return (
     <aside
-      className={`bg-gray-900 text-white min-h-screen transition-all duration-300 flex flex-col ${
+      className={`sticky top-0 h-screen shrink-0 bg-gray-900 text-white transition-all duration-300 flex flex-col z-30 select-none ${
         collapsed ? "w-20" : "w-64"
       }`}
     >
-      <div className="p-4 flex items-center gap-3 border-b border-gray-800">
-        {collapsed ? (
-          <Image
-            src="/logo-arcure.png"
-            alt="Arcure Pharma"
-            width={90}
-            height={45}
-            className="h-11 w-auto object-contain mx-auto"
-          />
-        ) : (
-          <Image
-            src="/logo-arcure.png"
-            alt="Arcure Pharma"
-            width={170}
-            height={45}
-            className="h-11 w-auto object-contain"
-          />
+      {/* Top Header with Brand & Collapse Button */}
+      <div
+        className={`h-16 border-b border-gray-800 flex items-center shrink-0 ${
+          collapsed ? "justify-center px-2" : "justify-between px-4"
+        }`}
+      >
+        {!collapsed && (
+          <Link href="/admin" className="flex items-center">
+            <Image
+              src="/logo-arcure.png"
+              alt="Arcure Pharma"
+              width={140}
+              height={38}
+              className="h-8 w-auto object-contain"
+              priority
+            />
+          </Link>
         )}
+
+        <button
+          type="button"
+          onClick={() => setCollapsed(!collapsed)}
+          className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-xl transition-all"
+          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        >
+          {collapsed ? (
+            <ChevronRight className="w-5 h-5" />
+          ) : (
+            <ChevronLeft className="w-5 h-5" />
+          )}
+        </button>
       </div>
 
-      <nav className="flex-1 p-3 space-y-1">
+      {/* Navigation */}
+      <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
         {menuItems.map((item) => {
           const isActive =
             pathname === item.href ||
@@ -82,13 +96,13 @@ export default function AdminSidebar() {
             <Link
               key={item.href}
               href={item.href}
-className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${
-                  isActive
-                    ? "bg-teal-600 text-white"
-                    : "text-gray-400 hover:bg-gray-800 hover:text-white"
-                } ${collapsed ? "justify-center" : ""} ${
-                  item.href === "/admin/complaints" ? "relative" : ""
-                }`}
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                isActive
+                  ? "bg-teal-600 text-white shadow-sm"
+                  : "text-gray-400 hover:bg-gray-800 hover:text-white"
+              } ${collapsed ? "justify-center" : ""} ${
+                item.href === "/admin/complaints" ? "relative" : ""
+              }`}
               title={item.label}
             >
               <item.icon className="w-5 h-5 shrink-0" />
@@ -106,25 +120,6 @@ className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-al
           );
         })}
       </nav>
-
-      <div className="p-3 border-t border-gray-800">
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="w-full flex items-center justify-center gap-2 px-3 py-2 text-gray-400 hover:bg-gray-800 hover:text-white rounded-xl text-sm transition-all"
-        >
-          {collapsed ? (
-            <ChevronRight className="w-5 h-5" />
-          ) : (
-            <>
-              <ChevronLeft className="w-5 h-5" />
-              <span>Collapse</span>
-            </>
-          )}
-        </button>
-      </div>
     </aside>
   );
 }
-
-
-

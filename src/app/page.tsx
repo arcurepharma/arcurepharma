@@ -8,7 +8,6 @@ import HeroSlider from "@/components/storefront/HeroSlider";
 import TrustBadges from "@/components/storefront/TrustBadges";
 import CategorySection from "@/components/storefront/CategorySection";
 import DealsSection from "@/components/storefront/DealsSection";
-import PromoBanner from "@/components/storefront/PromoBanner";
 import ProductCard from "@/components/storefront/ProductCard";
 import InstagramReels from "@/components/storefront/InstagramReels";
 import OurClients from "@/components/storefront/OurClients";
@@ -67,7 +66,6 @@ function HomeContent() {
       <HeroSlider />
       <TrustBadges />
       <CategorySection />
-      <PromoBanner />
 
       {/* Products Section */}
       <section id="products" className="py-12 lg:py-20 bg-white">

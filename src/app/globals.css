@@ -353,3 +353,6 @@ html.theme-transition *::after {
 }
 
 
+button {
+  cursor: pointer !important;
+}

@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { Search, X } from "lucide-react";
 import Navbar from "@/components/storefront/Navbar";
 import HeroSlider from "@/components/storefront/HeroSlider";
 import TrustBadges from "@/components/storefront/TrustBadges";
@@ -37,6 +38,8 @@ function HomeContent() {
   const [loading, setLoading] = useState(true);
   const { ref: headerRef, visible: headerVisible } = useReveal();
   const searchParams = useSearchParams();
+  const rawQ = searchParams.get("q") || searchParams.get("search") || "";
+  const searchQuery = rawQ.trim().toLowerCase();
   const activeCategory = searchParams.get("category") || "";
 
   useEffect(() => {
@@ -46,15 +49,35 @@ function HomeContent() {
       .catch(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    if (rawQ) {
+      const el = document.getElementById("products");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [rawQ]);
+
   const DEAL_CATEGORIES = ["Deals", "Deals & Bundles", "Deal", "Bundle"];
   const isDealCategory = (c?: string) => DEAL_CATEGORIES.includes(c?.trim() || "");
 
-  const filtered = activeCategory
-    ? products.filter((p) =>
-        !isDealCategory(p.category) &&
-        p.category?.trim().toLowerCase() === activeCategory.trim().toLowerCase()
-      )
-    : products.filter((p) => !isDealCategory(p.category));
+  let filtered = products.filter((p) => !isDealCategory(p.category));
+
+  if (activeCategory) {
+    filtered = filtered.filter(
+      (p) => p.category?.trim().toLowerCase() === activeCategory.trim().toLowerCase()
+    );
+  }
+
+  if (searchQuery) {
+    filtered = filtered.filter((p) => {
+      const matchTitle = (p.title || "").toLowerCase().includes(searchQuery);
+      const matchCat = (p.category || "").toLowerCase().includes(searchQuery);
+      const matchDesc = (p.description || "").toLowerCase().includes(searchQuery);
+      const matchIngr = (p.ingredients || "").toLowerCase().includes(searchQuery);
+      return matchTitle || matchCat || matchDesc || matchIngr;
+    });
+  }
 
   const allCategories = Array.from(
     new Set(products.filter((p) => !isDealCategory(p.category)).map((p) => p.category).filter(Boolean))
@@ -75,14 +98,30 @@ function HomeContent() {
             className={`flex items-center justify-between mb-6 lg:mb-10 reveal ${headerVisible ? "is-visible" : ""}`}
           >
             <div>
-              <h2 className="text-xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
-                {activeCategory ? activeCategory : "Featured Products"}
-              </h2>
+              <div className="flex items-center gap-2">
+                {rawQ && <Search className="w-5 h-5 sm:w-6 sm:h-6 text-[#16a34a]" />}
+                <h2 className="text-xl sm:text-3xl lg:text-4xl font-bold text-gray-900">
+                  {rawQ
+                    ? `Results for "${rawQ}"`
+                    : activeCategory
+                    ? activeCategory
+                    : "Featured Products"}
+                </h2>
+              </div>
               <div className="w-10 h-[3px] bg-[#865105] rounded-full mt-2" />
+              {rawQ && (
+                <p className="text-xs sm:text-sm text-gray-500 mt-1">
+                  Found {filtered.length} matching product{filtered.length === 1 ? "" : "s"}
+                </p>
+              )}
             </div>
-            {activeCategory && (
-              <Link href="/#products" className="text-[#16a34a] hover:text-[#15803d] text-sm font-bold transition-colors">
-                View All 
+            {(activeCategory || rawQ) && (
+              <Link
+                href="/#products"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-gray-900 text-xs sm:text-sm font-bold rounded-xl transition-colors"
+              >
+                <X className="w-3.5 h-3.5" />
+                <span>Clear {rawQ ? "Search" : "Filter"}</span>
               </Link>
             )}
           </div>
@@ -122,9 +161,13 @@ function HomeContent() {
             </div>
           ) : filtered.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-gray-400 text-lg mb-4">No products in this category yet</p>
+              <p className="text-gray-400 text-lg mb-4">
+                {rawQ
+                  ? `No products found matching "${rawQ}"`
+                  : "No products in this category yet"}
+              </p>
               <Link href="/#products" className="text-[#16a34a] font-bold text-sm hover:underline">
-                View all products â†’
+                View all products &rarr;
               </Link>
             </div>
           ) : (

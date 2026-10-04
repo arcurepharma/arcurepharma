@@ -273,7 +273,7 @@ Bot: "💳 Payment Options:
 
 ```env
 # WhatsApp Settings
-OWNER_WHATSAPP_NUMBER=923162647620
+OWNER_WHATSAPP_NUMBER=923305115999
 WHATSAPP_AUTH_PATH=./whatsapp_auth
 WHATSAPP_BOT_NAME=Arcure Pharma Support
 

@@ -3,7 +3,9 @@ import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
 
 export const isDbConfigured = Boolean(
-  process.env.DATABASE_URL && process.env.DATABASE_URL.trim().length > 0
+  process.env.DATABASE_URL &&
+    process.env.DATABASE_URL.trim().length > 0 &&
+    !process.env.DATABASE_URL.includes("user:password@endpoint")
 );
 
 function createSql(): unknown {

@@ -1,30 +1,45 @@
-﻿import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/db";
+import { NextRequest, NextResponse } from "next/server";
+import { db, isDbConfigured } from "@/db";
 import { products } from "@/db/schema";
 import { eq, sql } from "drizzle-orm";
+import { DEFAULT_PRODUCTS } from "@/lib/default-products";
 
 export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
 
-    const existing = await db
-      .select()
-      .from(products)
-      .where(eq(products.id, id))
-      .limit(1);
+    if (isDbConfigured) {
+      try {
+        const existing = await db
+          .select()
+          .from(products)
+          .where(eq(products.id, id))
+          .limit(1);
 
-    if (!existing.length) {
-      return NextResponse.json({ error: "Product not found" }, { status: 404 });
+        if (existing.length) {
+          const updated = await db
+            .update(products)
+            .set({ views: sql`${products.views} + 1` })
+            .where(eq(products.id, id))
+            .returning();
+
+          const product = updated[0];
+          return NextResponse.json({ ...product, formula: product.ingredients || "" });
+        }
+      } catch {
+        // Fallback to default products below
+      }
     }
 
-    const updated = await db
-      .update(products)
-      .set({ views: sql`${products.views} + 1` })
-      .where(eq(products.id, id))
-      .returning();
+    // Fallback: check DEFAULT_PRODUCTS
+    const found = DEFAULT_PRODUCTS.find(
+      (p) => p.id === id || p.sku?.toLowerCase() === id.toLowerCase()
+    );
+    if (found) {
+      return NextResponse.json(found);
+    }
 
-    const product = updated[0];
-    return NextResponse.json({ ...product, formula: product.ingredients || "" });
+    return NextResponse.json({ error: "Product not found" }, { status: 404 });
   } catch {
     return NextResponse.json(
       { error: "Failed to fetch product" },

@@ -4,7 +4,7 @@ import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { CheckCircle, Printer, ArrowLeft } from "lucide-react";
+import { CheckCircle, Printer, ArrowLeft, Truck } from "lucide-react";
 import Navbar from "@/components/storefront/Navbar";
 import { formatPrice, formatDate } from "@/lib/utils";
 
@@ -177,12 +177,18 @@ function ThankYouContent() {
 
             <div className="text-center text-xs text-gray-400 pt-4 border-t border-gray-100">
               <p>Thank you for choosing <span className="text-[#16a34a] font-semibold">Arcure Pharma</span>!</p>
-              <p className="mt-1">For support: +92 334 116 9999 | arcurepharma3007@gmail.com</p>
+              <p className="mt-1">For support: +92 3305115999 | arcurepharma3007@gmail.com</p>
             </div>
           </div>
 
           {/* Action buttons â€” hidden on print */}
-          <div className="flex items-center justify-center gap-4 mt-8 no-print">
+          <div className="flex flex-wrap items-center justify-center gap-4 mt-8 no-print">
+            <Link
+              href={`/orders/track?id=${order.id}`}
+              className="flex items-center gap-2 px-6 py-3 bg-[#16a34a] text-white font-semibold rounded-xl hover:bg-[#15803d] transition-colors text-sm shadow-md"
+            >
+              <Truck className="w-4 h-4" /> Track Order
+            </Link>
             <button
               onClick={() => window.print()}
               className="flex items-center gap-2 px-6 py-3 bg-[#f0fdf4] text-[#16a34a] border border-[#dcfce7] font-semibold rounded-xl hover:bg-[#dcfce7] transition-colors text-sm"
@@ -191,7 +197,7 @@ function ThankYouContent() {
             </button>
             <Link
               href="/"
-              className="flex items-center gap-2 px-6 py-3 bg-[#16a34a] text-white font-semibold rounded-xl hover:bg-[#15803d] transition-colors text-sm"
+              className="flex items-center gap-2 px-6 py-3 bg-gray-100 text-gray-700 font-semibold rounded-xl hover:bg-gray-200 transition-colors text-sm"
             >
               <ArrowLeft className="w-4 h-4" /> Continue Shopping
             </Link>

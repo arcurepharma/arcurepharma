@@ -38,6 +38,18 @@ export const sliders = pgTable("sliders", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const reels = pgTable("reels", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  videoUrl: text("video_url").notNull(),
+  title: varchar("title", { length: 255 }).default(""),
+  creator: varchar("creator", { length: 255 }).default(""),
+  handle: varchar("handle", { length: 255 }).default("@arcurepharma"),
+  product: varchar("product", { length: 255 }).default(""),
+  order: integer("order").default(0).notNull(),
+  isActive: integer("is_active").default(1).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const orders = pgTable("orders", {
   id: uuid("id").defaultRandom().primaryKey(),
   userId: uuid("user_id"),

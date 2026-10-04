@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const FALLBACK_NUMBER = "923001234567";
+const FALLBACK_NUMBER = "923305115999";
 
 let cachedNumber: string | null = null;
 let inflight: Promise<string> | null = null;

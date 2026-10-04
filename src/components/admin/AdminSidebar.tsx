@@ -15,6 +15,7 @@ import {
   Tags,
   MessageSquareWarning,
   Star,
+  Video,
 } from "lucide-react";
 
 const menuItems = [
@@ -22,6 +23,7 @@ const menuItems = [
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/categories", label: "Categories", icon: Tags },
   { href: "/admin/sliders", label: "Sliders", icon: ImageIcon },
+  { href: "/admin/videos", label: "Videos", icon: Video },
   { href: "/admin/reviews", label: "Reviews", icon: Star },
   { href: "/admin/orders", label: "Orders", icon: ShoppingCart },
   { href: "/admin/complaints", label: "Complaints", icon: MessageSquareWarning },

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "30000000-0000-4000-8000-000000000001",
+    "videoUrl": "/videos/reels/arcure-influancer.mp4",
+    "title": "Arcure Expert Care Routine",
+    "creator": "Arcure Expert Care",
+    "handle": "@arcurepharma",
+    "product": "ARCUDERM CS Serum",
+    "order": 1,
+    "isActive": 1
+  },
+  {
+    "id": "30000000-0000-4000-8000-000000000002",
+    "videoUrl": "/videos/reels/arcure-influancer.1.mp4",
+    "title": "Dermatological Facial Wash",
+    "creator": "Dermatological Routine",
+    "handle": "@arcurepharma",
+    "product": "ARCU GLEAM Face Wash",
+    "order": 2,
+    "isActive": 1
+  },
+  {
+    "id": "30000000-0000-4000-8000-000000000003",
+    "videoUrl": "/videos/reels/arcure-influancer.2.mp4",
+    "title": "Radiance & Healthy Glow",
+    "creator": "Radiance & Glow",
+    "handle": "@arcurepharma",
+    "product": "Skin Care Essentials",
+    "order": 3,
+    "isActive": 1
+  },
+  {
+    "id": "30000000-0000-4000-8000-000000000004",
+    "videoUrl": "/videos/reels/arcure-influancer.3.mp4",
+    "title": "Daily Bone & Energy Support",
+    "creator": "Daily Health Journey",
+    "handle": "@arcurepharma",
+    "product": "ARCU-CAL K2 & Mida-D",
+    "order": 4,
+    "isActive": 1
+  }
+]

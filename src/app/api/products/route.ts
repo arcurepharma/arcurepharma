@@ -1,31 +1,60 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { db, isDbConfigured } from "@/db";
 import { products } from "@/db/schema";
 import { sql } from "drizzle-orm";
+import { DEFAULT_PRODUCTS } from "@/lib/default-products";
 
-export async function GET() {
-  if (!isDbConfigured) {
-    return NextResponse.json([]);
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const q = searchParams.get("q")?.toLowerCase().trim() || "";
+  const category = searchParams.get("category")?.toLowerCase().trim() || "";
+
+  let list: any[] = [];
+
+  if (isDbConfigured) {
+    try {
+      const allProducts = await db
+        .select()
+        .from(products)
+        .orderBy(
+          sql`CASE WHEN ${products.category} = 'Skin Care' THEN 0 WHEN ${products.category} = 'Supplements' THEN 1 ELSE 2 END`,
+          products.createdAt
+        );
+
+      if (allProducts && allProducts.length > 0) {
+        list = allProducts.map((p) => ({
+          ...p,
+          formula: p.ingredients || "",
+        }));
+      }
+    } catch {
+      // Fallback below
+    }
   }
-  try {
-    const allProducts = await db
-      .select()
-      .from(products)
-      .orderBy(
-        sql`CASE WHEN ${products.category} = 'Skin Care' THEN 0 WHEN ${products.category} = 'Supplements' THEN 1 ELSE 2 END`,
-        products.createdAt
-      );
-    const mapped = allProducts.map((p) => ({
-      ...p,
-      formula: p.ingredients || "",
-    }));
-    return NextResponse.json(mapped);
-  } catch {
-    return NextResponse.json(
-      { error: "Failed to fetch products" },
-      { status: 500 }
+
+  // If DB not configured or returned no items, use default products catalogue
+  if (!list || list.length === 0) {
+    list = DEFAULT_PRODUCTS;
+  }
+
+  if (category) {
+    list = list.filter(
+      (p) => (p.category || "").toLowerCase() === category
     );
   }
+
+  if (q) {
+    list = list.filter((p) => {
+      const matchTitle = (p.title || "").toLowerCase().includes(q);
+      const matchCat = (p.category || "").toLowerCase().includes(q);
+      const matchDesc = (p.description || "").toLowerCase().includes(q);
+      const matchIngr = (p.ingredients || p.formula || "").toLowerCase().includes(q);
+      const matchSku = (p.sku || "").toLowerCase().includes(q);
+      return matchTitle || matchCat || matchDesc || matchIngr || matchSku;
+    });
+  }
+
+  return NextResponse.json(list);
 }
 
 export async function POST(request: NextRequest) {

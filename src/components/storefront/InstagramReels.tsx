@@ -1,128 +1,473 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import {
+  Volume2,
+  VolumeX,
+  Play,
+  Pause,
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+} from "lucide-react";
 
-const REELS = [
+interface ReelItem {
+  id: string;
+  src: string;
+  handle: string;
+  creator: string;
+  product: string;
+}
+
+const INITIAL_REELS: ReelItem[] = [
   {
-    handle: "Arcure Pharma",
-    permalink:
-      "https://www.instagram.com/reel/DWjX_KhCGOk/?utm_source=ig_embed&utm_campaign=loading",
+    id: "reel-1",
+    src: "/videos/reels/arcure-influancer.mp4",
+    handle: "@arcurepharma",
+    creator: "Arcure Expert Care",
+    product: "ARCUDERM CS Serum",
   },
   {
-    handle: "Aiman Rana",
-    permalink:
-      "https://www.instagram.com/reel/DV6eTabAj6t/?utm_source=ig_embed&utm_campaign=loading",
+    id: "reel-2",
+    src: "/videos/reels/arcure-influancer.1.mp4",
+    handle: "@arcurepharma",
+    creator: "Dermatological Routine",
+    product: "ARCU GLEAM Face Wash",
   },
   {
-    handle: "Ifra Najam",
-    permalink:
-      "https://www.instagram.com/reel/DWY3WhIjJi_/?utm_source=ig_embed&utm_campaign=loading",
+    id: "reel-3",
+    src: "/videos/reels/arcure-influancer.2.mp4",
+    handle: "@arcurepharma",
+    creator: "Radiance & Glow",
+    product: "Skin Care Essentials",
+  },
+  {
+    id: "reel-4",
+    src: "/videos/reels/arcure-influancer.3.mp4",
+    handle: "@arcurepharma",
+    creator: "Daily Health Journey",
+    product: "ARCU-CAL K2 & Mida-D",
   },
 ];
 
 const IG_PATH =
   "M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2z";
 
-declare global {
-  interface Window {
-    instgrm?: {
-      Embeds: { process: () => void };
-    };
-  }
-}
-
-function embedHtml(permalink: string) {
-  return `<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="${permalink}" data-instgrm-version="14" style=" margin:1px auto; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"><a href="${permalink}" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank">View this post on Instagram</a></div></blockquote>`;
-}
-
 export default function InstagramReels() {
+  const [reels, setReels] = useState<ReelItem[]>(INITIAL_REELS);
+  const [mutedStates, setMutedStates] = useState<Record<string, boolean>>({
+    "reel-1": true,
+    "reel-2": true,
+    "reel-3": true,
+    "reel-4": true,
+  });
+
   useEffect(() => {
-    if (window.instgrm) {
-      window.instgrm.Embeds.process();
-      return;
-    }
-    const script = document.createElement("script");
-    script.async = true;
-    script.src = "https://www.instagram.com/embed.js";
-    script.onload = () => window.instgrm?.Embeds.process();
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
-    };
+    fetch("/api/reels")
+      .then((r) => r.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const mapped: ReelItem[] = data.map((d: any) => ({
+            id: d.id,
+            src: d.videoUrl || d.src,
+            handle: d.handle || "@arcurepharma",
+            creator: d.creator || "Arcure Creator",
+            product: d.product || "Arcure Formula",
+          }));
+          setReels(mapped);
+        }
+      })
+      .catch(() => {});
   }, []);
 
+  const [pausedStates, setPausedStates] = useState<Record<string, boolean>>({
+    "reel-1": false,
+    "reel-2": false,
+    "reel-3": false,
+    "reel-4": false,
+  });
+
+  const [activeSlide, setActiveSlide] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
+
+  // Autoplay videos safely when section is visible
+  useEffect(() => {
+    const playAllMuted = () => {
+      Object.values(videoRefs.current).forEach((video) => {
+        if (video) {
+          video.muted = true;
+          video.play().catch(() => {
+            // Browser autoplay policy catch
+          });
+        }
+      });
+    };
+
+    playAllMuted();
+
+    // Intersection observer to play/pause when in view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            playAllMuted();
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    const section = document.getElementById("social-proof");
+    if (section) observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Update active slide on carousel scroll
+  const handleCarouselScroll = () => {
+    if (!carouselRef.current) return;
+    const container = carouselRef.current;
+    const scrollLeft = container.scrollLeft;
+    const slideWidth = container.offsetWidth * 0.8;
+    const newIndex = Math.round(scrollLeft / slideWidth);
+    if (newIndex >= 0 && newIndex < reels.length) {
+      setActiveSlide(newIndex);
+    }
+  };
+
+  const scrollToSlide = (index: number) => {
+    if (!carouselRef.current) return;
+    const container = carouselRef.current;
+    const slide = container.children[index] as HTMLElement | undefined;
+    if (slide) {
+      slide.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+      setActiveSlide(index);
+    }
+  };
+
+  const handleToggleMute = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const video = videoRefs.current[id];
+    if (!video) return;
+
+    const nextMuted = !video.muted;
+    video.muted = nextMuted;
+
+    // If unmuting this video, mute all others to prevent audio clash
+    if (!nextMuted) {
+      Object.entries(videoRefs.current).forEach(([k, v]) => {
+        if (v && k !== id) {
+          v.muted = true;
+        }
+      });
+      setMutedStates((prev) => {
+        const next: Record<string, boolean> = {};
+        Object.keys(prev).forEach((key) => {
+          next[key] = key === id ? false : true;
+        });
+        return next;
+      });
+    } else {
+      setMutedStates((prev) => ({ ...prev, [id]: true }));
+    }
+  };
+
+  const handleTogglePlay = (id: string) => {
+    const video = videoRefs.current[id];
+    if (!video) return;
+
+    if (video.paused) {
+      video.play().then(() => {
+        setPausedStates((prev) => ({ ...prev, [id]: false }));
+      }).catch(() => {});
+    } else {
+      video.pause();
+      setPausedStates((prev) => ({ ...prev, [id]: true }));
+    }
+  };
+
   return (
-    <section id="social-proof" className="py-10 lg:py-28 bg-gradient-to-b from-[#f7f1e7]/60 to-[#fdfbf7]">
+    <section
+      id="social-proof"
+      className="py-12 lg:py-24 bg-gradient-to-b from-[#f7f1e7]/60 via-white to-[#fdfbf7] overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 lg:mb-12">
-          <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1 sm:py-1.5 bg-[#c58a38] text-white text-xs sm:text-sm font-semibold rounded-full mb-3 sm:mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Section Header */}
+        <div className="text-center mb-8 lg:mb-14">
+          <span className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 py-1.5 bg-[#c58a38] text-white text-xs sm:text-sm font-semibold rounded-full mb-3 sm:mb-4 shadow-sm shadow-[#c58a38]/20">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d={IG_PATH} />
             </svg>
-            Real Customers, Real Results
+            Real Influencers &bull; Real Results
           </span>
-          <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900 mb-2 sm:mb-4">
+
+          <h2 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-gray-900 tracking-tight mb-2 sm:mb-4">
             What People Say About
-            <span className="block sm:inline bg-gradient-to-r from-[#c58a38] to-[#9e6e2e] bg-clip-text text-transparent">
+            <span className="block sm:inline bg-gradient-to-r from-[#c58a38] via-[#a87428] to-[#16a34a] bg-clip-text text-transparent">
               {" "}
               Arcure Pharma
             </span>
           </h2>
-          <p className="text-gray-500 mt-2 sm:mt-3 max-w-xl mx-auto text-sm sm:text-lg">
-            Watch our customers share their genuine experiences with our
-            products
+
+          <p className="text-gray-600 mt-2 max-w-2xl mx-auto text-xs sm:text-base lg:text-lg font-medium">
+            Watch trusted creators and genuine customers share their daily skincare
+            transformations with Arcure Pharma formulas.
           </p>
-          <div className="section-divider mt-3 sm:mt-6" />
+
+          <div className="section-divider mt-4 sm:mt-6" />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 max-w-5xl mx-auto">
-          {REELS.map((reel, i) => (
-            <div key={i}>
-              <div
-                className="rounded-2xl overflow-hidden bg-white shadow-lg shadow-[#c58a38]/10 ring-1 ring-gray-100"
-                dangerouslySetInnerHTML={{ __html: embedHtml(reel.permalink) }}
-              />
-              <div className="flex items-center justify-between mt-3 px-1">
-                <a
-                  href={reel.permalink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-[#16a34a] transition-colors"
+          {/* ── Mobile Carousel Layout (md:hidden) ── */}
+        <div className="md:hidden">
+          <div
+            ref={carouselRef}
+            onScroll={handleCarouselScroll}
+            className="flex gap-3.5 sm:gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar px-4 sm:px-6 py-2"
+            style={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              WebkitOverflowScrolling: "touch",
+            }}
+          >
+            {reels.map((reel, idx) => {
+              const isMuted = mutedStates[reel.id] ?? true;
+              const isPaused = pausedStates[reel.id] ?? false;
+
+              return (
+                <div
+                  key={`mobile-${reel.id}`}
+                  onClick={() => handleTogglePlay(reel.id)}
+                  className="relative w-[78vw] sm:w-[65vw] max-w-[340px] shrink-0 snap-center aspect-[9/16] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl shadow-[#c58a38]/10 ring-1 ring-black/5 bg-slate-950 cursor-pointer group select-none"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="text-pink-500"
-                  >
-                    <path d={IG_PATH} />
-                  </svg>
-                  {reel.handle}
-                </a>
-                <span className="flex items-center gap-1.5 text-[11px] text-gray-400">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" />
-                  </svg>
-                  Tap speaker to unmute
-                </span>
-              </div>
+                  <video
+                    ref={(el) => {
+                      videoRefs.current[reel.id] = el;
+                    }}
+                    src={reel.src}
+                    autoPlay
+                    loop
+                    muted={isMuted}
+                    playsInline
+                    preload="auto"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+
+                  {/* Gradient shadow overlay for readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/20 pointer-events-none" />
+
+                  {/* Pause indicator icon */}
+                  {isPaused && (
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 animate-fade-in">
+                      <div className="w-14 h-14 bg-black/50 backdrop-blur-md rounded-full flex items-center justify-center text-white shadow-lg">
+                        <Play className="w-6 h-6 ml-1 fill-white" />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Top Badge */}
+                  <div className="absolute top-3.5 left-3.5 z-10">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-black/40 backdrop-blur-md text-white text-[11px] font-semibold rounded-full border border-white/10">
+                      <Sparkles className="w-3 h-3 text-[#c58a38]" />
+                      {reel.product}
+                    </span>
+                  </div>
+
+                  {/* Bottom Creator Info & Mute Button */}
+                  <div className="absolute bottom-3.5 left-3.5 right-3.5 flex items-end justify-between z-10 gap-2">
+                    <div className="min-w-0 pr-2">
+                      <p className="text-white text-xs font-bold truncate drop-shadow-sm">
+                        {reel.creator}
+                      </p>
+                      <p className="text-white/80 text-[11px] font-medium flex items-center gap-1 mt-0.5 drop-shadow-sm">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="12"
+                          height="12"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="text-pink-400"
+                        >
+                          <path d={IG_PATH} />
+                        </svg>
+                        {reel.handle}
+                      </p>
+                    </div>
+
+                    {/* Mute / Unmute Button */}
+                    <button
+                      type="button"
+                      onClick={(e) => handleToggleMute(reel.id, e)}
+                      aria-label={isMuted ? "Unmute video" : "Mute video"}
+                      className="shrink-0 p-2.5 bg-black/60 hover:bg-black/80 active:scale-90 text-white rounded-full backdrop-blur-md transition-all z-20 border border-white/15 shadow-md"
+                    >
+                      {isMuted ? (
+                        <VolumeX className="w-4 h-4 text-white" />
+                      ) : (
+                        <Volume2 className="w-4 h-4 text-[#16a34a] animate-pulse" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Carousel Pagination Dots & Navigation */}
+          <div className="flex items-center justify-center gap-3 mt-4">
+            <button
+              type="button"
+              onClick={() => scrollToSlide(Math.max(0, activeSlide - 1))}
+              disabled={activeSlide === 0}
+              aria-label="Previous reel"
+              className="p-1.5 rounded-full bg-white shadow-sm border border-gray-200 text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-50 active:scale-95 transition-all"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+
+            <div className="flex items-center gap-1.5">
+              {reels.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => scrollToSlide(i)}
+                  aria-label={`Go to reel ${i + 1}`}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    activeSlide === i
+                      ? "w-6 bg-[#c58a38]"
+                      : "w-2 bg-gray-300 hover:bg-gray-400"
+                  }`}
+                />
+              ))}
             </div>
-          ))}
+
+            <button
+              type="button"
+              onClick={() =>
+                scrollToSlide(Math.min(reels.length - 1, activeSlide + 1))
+              }
+              disabled={activeSlide === reels.length - 1}
+              aria-label="Next reel"
+              className="p-1.5 rounded-full bg-white shadow-sm border border-gray-200 text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-50 active:scale-95 transition-all"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
-        <p className="text-center text-xs text-gray-400 mt-8">
-          Videos auto-play muted. Tap the speaker on a video to unmute it.
+        {/* ── Desktop 4-Column Grid Layout (hidden md:grid) ── */}
+        <div className="hidden md:grid md:grid-cols-4 gap-4 lg:gap-6 max-w-6xl mx-auto">
+          {reels.map((reel) => {
+            const isMuted = mutedStates[reel.id] ?? true;
+            const isPaused = pausedStates[reel.id] ?? false;
+
+            return (
+              <div
+                key={`desktop-${reel.id}`}
+                onClick={() => handleTogglePlay(reel.id)}
+                className="relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-lg shadow-[#c58a38]/10 hover:shadow-2xl transition-all duration-500 cursor-pointer group bg-slate-950 aspect-[9/16] w-full border border-gray-100 ring-1 ring-black/5 select-none"
+              >
+                <video
+                  ref={(el) => {
+                    videoRefs.current[reel.id] = el;
+                  }}
+                  src={reel.src}
+                  autoPlay
+                  loop
+                  muted={isMuted}
+                  playsInline
+                  preload="auto"
+                  className="w-full h-full object-cover transition duration-700 group-hover:scale-105"
+                />
+
+                {/* Subtle dark gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/20 pointer-events-none transition-opacity duration-300" />
+
+                {/* Play/Pause center overlay when paused */}
+                {isPaused && (
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 animate-fade-in">
+                    <div className="w-14 h-14 bg-black/55 backdrop-blur-md rounded-full flex items-center justify-center text-white shadow-xl">
+                      <Play className="w-6 h-6 ml-1 fill-white" />
+                    </div>
+                  </div>
+                )}
+
+                {/* Product Pill Tag */}
+                <div className="absolute top-4 left-4 z-10">
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-black/40 backdrop-blur-md text-white text-xs font-semibold rounded-full border border-white/10 group-hover:bg-[#c58a38] transition-colors">
+                    <Sparkles className="w-3 h-3 text-[#c58a38] group-hover:text-white" />
+                    {reel.product}
+                  </span>
+                </div>
+
+                {/* Bottom Overlay: Creator info & Mute toggle */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between z-10 gap-2">
+                  <div className="min-w-0 pr-2">
+                    <p className="text-white text-sm font-bold truncate drop-shadow-md">
+                      {reel.creator}
+                    </p>
+                    <p className="text-white/80 text-xs font-medium flex items-center gap-1.5 mt-0.5 drop-shadow-md">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="13"
+                        height="13"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="text-pink-400"
+                      >
+                        <path d={IG_PATH} />
+                      </svg>
+                      {reel.handle}
+                    </p>
+                  </div>
+
+                  {/* Mute / Unmute Button */}
+                  <button
+                    type="button"
+                    onClick={(e) => handleToggleMute(reel.id, e)}
+                    aria-label={isMuted ? "Unmute video" : "Mute video"}
+                    className="shrink-0 p-2.5 bg-black/60 hover:bg-black/90 active:scale-95 text-white rounded-full backdrop-blur-md transition-all z-20 border border-white/20 shadow-lg group-hover:scale-110"
+                    title={isMuted ? "Click to unmute" : "Click to mute"}
+                  >
+                    {isMuted ? (
+                      <VolumeX className="w-4 h-4 text-white" />
+                    ) : (
+                      <Volume2 className="w-4 h-4 text-[#16a34a] animate-pulse" />
+                    )}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Footnote hint */}
+        <p className="text-center text-xs text-gray-400 mt-6 lg:mt-8">
+          Videos autoplay seamlessly muted. Tap the speaker icon to unmute or tap the video to pause.
         </p>
       </div>
     </section>
   );
 }
-
-

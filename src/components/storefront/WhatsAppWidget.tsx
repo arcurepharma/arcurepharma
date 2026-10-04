@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import WhatsAppGlyph from "./WhatsAppGlyph";
 
-const DEFAULT_WHATSAPP_NUMBER = "923001234567";
+const DEFAULT_WHATSAPP_NUMBER = "923305115999";
 
 export default function WhatsAppWidget() {
   const [whatsappNumber, setWhatsappNumber] = useState(DEFAULT_WHATSAPP_NUMBER);

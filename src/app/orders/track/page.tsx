@@ -523,7 +523,7 @@ function TrackingContent() {
             </div>
 
             <a
-              href={`https://wa.me/923162647620?text=${encodeURIComponent(
+              href={`https://wa.me/923305115999?text=${encodeURIComponent(
                 `Hello Arcure Pharma! I am tracking Order #${order.shortId || order.orderId} (Tracking: ${order.trackingNumber}). Can you please share an update?`
               )}`}
               target="_blank"
@@ -531,7 +531,7 @@ function TrackingContent() {
               className="px-6 py-3 bg-[#16a34a] hover:bg-[#15803d] text-white text-xs sm:text-sm font-bold rounded-xl shadow-md transition-all shrink-0 flex items-center gap-2 cursor-pointer"
             >
               <MessageCircle className="w-4 h-4" />
-              Chat on WhatsApp
+              Chat on WhatsApp (+92 330 5115999)
             </a>
           </div>
         </div>

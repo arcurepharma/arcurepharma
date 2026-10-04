@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, MapPin, ArrowRight, Clock } from "lucide-react";
+import { Mail, Phone, MapPin, ArrowRight, Clock, MessageCircle } from "lucide-react";
 
 export default function FooterOnly() {
   return (
@@ -117,15 +117,26 @@ export default function FooterOnly() {
               </li>
               <li className="flex items-center gap-3 text-gray-500 text-sm">
                 <Phone className="w-4 h-4 text-[#16a34a] shrink-0" />
-                <a href="tel:+923305115999" className="hover:text-[#16a34a] transition-colors">
-                  +92 3305115999
+                <a href="tel:+923305115999" className="hover:text-[#16a34a] transition-colors font-medium">
+                  +92 330 5115999
+                </a>
+              </li>
+              <li className="flex items-center gap-3 text-gray-500 text-sm">
+                <MessageCircle className="w-4 h-4 text-[#16a34a] shrink-0" />
+                <a
+                  href="https://wa.me/923305115999"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#16a34a] transition-colors font-medium"
+                >
+                  WhatsApp: +92 330 5115999
                 </a>
               </li>
               <li className="flex items-center gap-3 text-gray-500 text-sm">
                 <Mail className="w-4 h-4 text-[#16a34a] shrink-0" />
                 <a
                   href="mailto:info@arcurepharma.com"
-                  className="hover:text-[#16a34a] transition-colors"
+                  className="hover:text-[#16a34a] transition-colors font-medium"
                 >
                   info@arcurepharma.com
                 </a>

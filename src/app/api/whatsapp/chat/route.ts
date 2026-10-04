@@ -128,11 +128,13 @@ Our team will verify within 24 hours.`;
   }
 
   if (message.includes("help") || message.includes("contact")) {
-    return `ðŸ“ž Need More Help?
+    return `Need More Help?
 
 For urgent matters, contact us:
-ðŸ“± WhatsApp: 03305115999
-ðŸ“§ Email: support@arcurepharma.com
+📱 WhatsApp: +92 330 5115999
+📞 Phone: +92 330 5115999
+✉️ Email: info@arcurepharma.com
+🌐 Website: https://www.arcurepharma.com/
 
 Our team is available 24/7!`;
   }

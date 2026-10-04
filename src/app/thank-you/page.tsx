@@ -177,7 +177,14 @@ function ThankYouContent() {
 
             <div className="text-center text-xs text-gray-400 pt-4 border-t border-gray-100">
               <p>Thank you for choosing <span className="text-[#16a34a] font-semibold">Arcure Pharma</span>!</p>
-              <p className="mt-1">For support: +92 3305115999 | arcurepharma3007@gmail.com</p>
+              <p className="mt-1 flex flex-wrap items-center justify-center gap-2">
+                <span>For support:</span>
+                <a href="tel:+923305115999" className="text-[#16a34a] hover:underline font-semibold">+92 330 5115999</a>
+                <span>•</span>
+                <a href="https://wa.me/923305115999" target="_blank" rel="noopener noreferrer" className="text-[#16a34a] hover:underline font-semibold">WhatsApp</a>
+                <span>•</span>
+                <a href="mailto:info@arcurepharma.com" className="text-[#16a34a] hover:underline font-semibold">info@arcurepharma.com</a>
+              </p>
             </div>
           </div>
 

@@ -38,5 +38,16 @@
     "product": "ARCU-CAL K2 & Mida-D",
     "order": 4,
     "isActive": 1
+  },
+  {
+    "id": "d9eb8272-a84b-4808-bc91-eacfb42fb2e0",
+    "videoUrl": "/videos/reels/1791130867409-arcure-influancer.5.mp4",
+    "title": "arcure-influancer",
+    "creator": "Aiman Rana",
+    "handle": "@arcurepharma",
+    "product": "ARCUDERM CS Serum",
+    "order": 1,
+    "isActive": 1,
+    "createdAt": "2026-10-04T16:22:32.880Z"
   }
 ]

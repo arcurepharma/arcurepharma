@@ -16,8 +16,8 @@ async function main() {
 
   await db
     .insert(settings)
-    .values({ key: "whatsapp_number", value: "933162647620" })
-    .onConflictDoNothing();
+    .values({ key: "whatsapp_number", value: "923305115999" })
+    .onConflictDoUpdate({ target: settings.key, set: { value: "923305115999" } });
 
   const defaultSettings = await db.select().from(settings);
   console.log("Default settings:", defaultSettings);

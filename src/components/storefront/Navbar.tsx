@@ -13,9 +13,11 @@ import {
   Package,
   Search,
   Truck,
+  Mail,
 } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import SearchModal from "@/components/storefront/SearchModal";
+import WhatsAppGlyph from "@/components/storefront/WhatsAppGlyph";
 
 interface NavUser {
   id: string;
@@ -146,6 +148,19 @@ export default function Navbar() {
                 <Search className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 group-hover:scale-110" />
                 <span className="sr-only">Search products</span>
               </button>
+
+              {/* WhatsApp direct header button */}
+              <a
+                href="https://wa.me/923305115999"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Chat on WhatsApp"
+                title="Chat on WhatsApp (+92 330 5115999)"
+                className="hidden md:flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full hover:bg-green-50 text-green-600 hover:text-green-700 transition-all relative group"
+              >
+                <WhatsAppGlyph className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 group-hover:scale-110" />
+                <span className="sr-only">WhatsApp (+92 330 5115999)</span>
+              </a>
 
               {/* User */}
               {user ? (
@@ -291,6 +306,27 @@ export default function Navbar() {
                   </button>
                 </>
               )}
+
+              {/* Official Contact in mobile drawer */}
+              <div className="pt-3 mt-3 border-t border-gray-100 space-y-2">
+                <a
+                  href="https://wa.me/923305115999"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-center gap-2 px-4 py-2.5 bg-green-500 hover:bg-green-600 text-white rounded-xl font-bold text-xs sm:text-sm transition-colors shadow-sm"
+                >
+                  <WhatsAppGlyph className="w-4 h-4" />
+                  <span>WhatsApp: +92 330 5115999</span>
+                </a>
+                <a
+                  href="mailto:info@arcurepharma.com"
+                  className="flex items-center justify-center gap-2 px-4 py-2 text-gray-500 hover:text-[#16a34a] text-xs font-medium"
+                >
+                  <Mail className="w-3.5 h-3.5 text-[#16a34a]" />
+                  <span>info@arcurepharma.com</span>
+                </a>
+              </div>
             </div>
           </div>
         )}

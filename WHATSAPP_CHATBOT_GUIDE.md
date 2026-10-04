@@ -110,7 +110,7 @@ curl -X POST http://localhost:3000/api/whatsapp/connect
 
 ### **3. Configure Owner Number**
 - Edit `.env` file
-- Set: `OWNER_WHATSAPP_NUMBER=923162647620`
+- Set: `OWNER_WHATSAPP_NUMBER=923305115999`
 - Restart server
 
 ---
@@ -235,7 +235,7 @@ CREATE TABLE chat_history (
 ### **.env Variables**
 ```bash
 # WhatsApp
-OWNER_WHATSAPP_NUMBER=923162647620
+OWNER_WHATSAPP_NUMBER=923305115999
 WHATSAPP_AUTH_PATH=./whatsapp_auth
 WHATSAPP_BOT_NAME=Arcure Pharma Support
 

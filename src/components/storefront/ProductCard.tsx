@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -201,7 +201,7 @@ export default function ProductCard({ product }: { product: Product }) {
               className={`w-full flex items-center justify-center gap-1.5 py-2 sm:py-2.5 text-[10px] sm:text-xs font-bold rounded-md transition-all active:scale-[0.98] tracking-wide ${
                 isOutOfStock
                   ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-[#16a34a] hover:bg-[#15803d] text-white shadow-sm hover:shadow-md"
+                  : "bg-gradient-to-r from-[#c89d53] to-[#b3853b] hover:from-[#b58c48] hover:to-[#9c722e] text-white shadow-sm hover:shadow-md"
               }`}
             >
               <ShoppingCart className="w-3.5 h-3.5" />
@@ -289,7 +289,7 @@ export default function ProductCard({ product }: { product: Product }) {
                   </div>
                   <button
                     onClick={addFromQuickView}
-                    className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#16a34a] hover:bg-[#15803d] text-white shadow-sm hover:shadow-md font-bold text-sm rounded-xl transition-all active:scale-95 shadow-lg shadow-[#16a34a]/20"
+                    className="flex-1 flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-[#c89d53] to-[#b3853b] hover:from-[#b58c48] hover:to-[#9c722e] text-white font-bold text-sm rounded-xl transition-all active:scale-95 shadow-lg shadow-[#b3853b]/20"
                   >
                     <ShoppingCart className="w-4 h-4" /> Add to Cart
                   </button>

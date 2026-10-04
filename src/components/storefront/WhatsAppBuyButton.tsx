@@ -30,7 +30,7 @@ export default function WhatsAppBuyButton({
   return (
     <button
       onClick={handleClick}
-      className="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-bold rounded-lg transition-all active:scale-[0.98] tracking-wide uppercase bg-[#3a230a] hover:bg-[#281705] text-white rounded-lg py-2.5 shadow-sm"
+      className="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-bold rounded-lg transition-all active:scale-[0.98] tracking-wide uppercase bg-[#1d685b] hover:bg-[#154e44] text-white shadow-sm"
     >
       <WhatsAppGlyph className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
       BUY ON WHATSAPP

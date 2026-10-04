@@ -272,7 +272,7 @@ export default function ProductDetailPage() {
               <button
                 onClick={handleAdd}
                 disabled={isOutOfStock}
-                className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-[#16a34a] hover:bg-[#15803d] text-white font-bold text-sm rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#16a34a]/20"
+                className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-[#c89d53] to-[#b3853b] hover:from-[#b58c48] hover:to-[#9c722e] text-white font-bold text-sm rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#b3853b]/20"
               >
                 <ShoppingCart className="w-4 h-4" /> {isOutOfStock ? "Out of Stock" : "Add to Cart"}
               </button>

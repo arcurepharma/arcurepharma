@@ -31,7 +31,7 @@ export default function WishlistPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-transparent">
       <Navbar />
 
       <section className="py-20">

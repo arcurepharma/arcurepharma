@@ -131,7 +131,7 @@ function AccountContent() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-gray-50">
+      <main className="min-h-screen bg-transparent">
         <Navbar />
         <div className="flex justify-center items-center pt-48">
           <div className="w-10 h-10 border-4 border-teal-200 border-t-teal-600 rounded-full animate-spin" />
@@ -142,7 +142,7 @@ function AccountContent() {
 
   if (!user) {
     return (
-      <main className="min-h-screen bg-gray-50">
+      <main className="min-h-screen bg-transparent">
         <Navbar />
         <div className="max-w-md mx-auto px-4 pt-28 pb-20">
           <div className="text-center mb-8">
@@ -257,7 +257,7 @@ function AccountContent() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-transparent">
       <Navbar />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20">

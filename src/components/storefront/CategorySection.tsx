@@ -63,7 +63,7 @@ export default function CategorySection() {
   const firstTwo = categories.slice(0, 2);
 
   return (
-    <section className="py-8 lg:py-16 bg-white">
+    <section className="py-8 lg:py-16 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-6 lg:mb-10">
           <h2 className="text-lg sm:text-2xl lg:text-3xl font-bold text-gray-900 uppercase tracking-widest">

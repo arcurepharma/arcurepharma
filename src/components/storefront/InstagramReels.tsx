@@ -194,7 +194,7 @@ export default function InstagramReels() {
   return (
     <section
       id="social-proof"
-      className="py-12 lg:py-24 bg-gradient-to-b from-[#f7f1e7]/60 via-white to-[#fdfbf7] overflow-hidden"
+      className="py-12 lg:py-24 bg-transparent overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}

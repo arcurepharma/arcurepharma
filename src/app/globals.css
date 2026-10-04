@@ -2,7 +2,7 @@
 
 /* ---------- Theme: Arcure Pharma Luxury Caramel & Cream ---------- */
 :root {
-  --color-teal-50:  #f0fdf4;
+  --color-teal-50: #f0fdf4;
   --color-teal-100: #dcfce7;
   --color-teal-200: #bbf7d0;
   --color-teal-300: #86efac;
@@ -13,7 +13,7 @@
   --color-teal-800: #166534;
   --color-teal-900: #14532d;
 
-  --color-green-50:  #f0fdf4;
+  --color-green-50: #f0fdf4;
   --color-green-100: #dcfce7;
   --color-green-200: #bbf7d0;
   --color-green-300: #86efac;
@@ -25,20 +25,25 @@
   --color-green-900: #14532d;
 
   /* Glassmorphism tokens */
-  --glass-bg:        rgba(254, 251, 246, 0.88);
-  --glass-border:    rgba(197, 138, 56, 0.22);
-  --glass-shadow:    0 8px 32px rgba(110, 75, 25, 0.08);
-  --glass-blur:      blur(16px);
+  --glass-bg: rgba(254, 251, 246, 0.88);
+  --glass-border: rgba(197, 138, 56, 0.22);
+  --glass-shadow: 0 8px 32px rgba(110, 75, 25, 0.08);
+  --glass-blur: blur(16px);
 }
 
 html {
   scroll-behavior: smooth;
+  background-color: #fcfbf7;
+  /* Light luxury cream */
 }
 
 html,
 body {
   max-width: 100%;
   overflow-x: hidden;
+  background-color: #fcfbf7;
+  /* Light luxury cream */
+  color: #1a1a1a;
 }
 
 img,
@@ -53,6 +58,7 @@ picture {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -68,6 +74,7 @@ picture {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -83,6 +90,7 @@ picture {
     opacity: 0;
     transform: translateX(40px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -108,7 +116,7 @@ picture {
 .cursor-dot {
   width: 10px;
   height: 10px;
-  background: #c58a38;
+  background: #ebc999;
   box-shadow: 0 0 12px var(--color-teal-400),
     0 0 24px color-mix(in srgb, var(--color-teal-400) 60%, transparent);
   transform: translate(-50%, -50%);
@@ -129,7 +137,9 @@ picture {
   background: color-mix(in srgb, var(--color-teal-400) 8%, transparent);
 }
 
-@media (hover: none), (pointer: coarse) {
+@media (hover: none),
+(pointer: coarse) {
+
   .cursor-dot,
   .cursor-ring {
     display: none;
@@ -152,9 +162,11 @@ picture {
 .reveal-left {
   transform: translateX(-50px);
 }
+
 .reveal-right {
   transform: translateX(50px);
 }
+
 .reveal-scale {
   transform: scale(0.9);
 }
@@ -170,38 +182,49 @@ html.theme-transition *::after {
 
 /* ---------- Floating / ambient animations ---------- */
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-14px);
   }
 }
+
 .animate-float {
   animation: float 5s ease-in-out infinite;
 }
 
 @keyframes pulse-glow {
+
   0%,
   100% {
     box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-teal-400) 40%, transparent);
   }
+
   50% {
     box-shadow: 0 0 0 14px transparent;
   }
 }
+
 .animate-pulse-glow {
   animation: pulse-glow 2.5s ease-in-out infinite;
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .animate-shimmer {
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
 }
@@ -209,25 +232,29 @@ html.theme-transition *::after {
 @layer base {
   body {
     font-family: var(--font-montserrat), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: linear-gradient(135deg, #fdfbf7 0%, #f7f1e7 45%, #ede2d1 100%);
+    background-color: #c8a882;
+    background: #c8a882;
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-montserrat), inherit;
   }
 }
 
 /* ---------- Hero section ---------- */
 .hero-gradient-overlay {
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.7) 0%,
-    rgba(0, 0, 0, 0.3) 40%,
-    rgba(0, 0, 0, 0.1) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.3) 40%,
+      rgba(0, 0, 0, 0.1) 100%);
 }
 
 .hero-text-shadow {
@@ -247,12 +274,10 @@ html.theme-transition *::after {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%);
   transform: rotate(30deg) translateX(-100%);
   transition: transform 0.8s ease;
   pointer-events: none;
@@ -329,16 +354,16 @@ html.theme-transition *::after {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f7f1e7;
+  background: #f9e4bf;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c58a38;
+  background: hwb(35 82% 2%);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9e6e2e;
+  background: #f7e3c9;
 }
 
 /* ---------- Hide Scrollbar Utilities ---------- */
@@ -349,14 +374,16 @@ html.theme-transition *::after {
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none !important; /* IE and Edge */
-  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important;
+  /* IE and Edge */
+  scrollbar-width: none !important;
+  /* Firefox */
 }
 
 /* ---------- Selection color ---------- */
 ::selection {
-  background: rgba(197, 138, 56, 0.25);
-  color: #4a300a;
+  background: rgba(224, 170, 93, 0.25);
+  color: #f1cbaa;
 }
 
 @media print {

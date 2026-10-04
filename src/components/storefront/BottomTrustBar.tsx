@@ -22,9 +22,9 @@ const items = [
 
 export default function BottomTrustBar() {
   return (
-    <section className="bg-white border-t border-gray-100 py-5 sm:py-6">
+    <section className="bg-transparent border-t border-[#bfa07c]/40 py-5 sm:py-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-0 sm:divide-x sm:divide-gray-100">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-0 sm:divide-x sm:divide-[#bfa07c]/30">
           {items.map((item, i) => {
             const Icon = item.icon;
             return (

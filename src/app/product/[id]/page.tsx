@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
@@ -128,7 +128,7 @@ export default function ProductDetailPage() {
 
   if (!product) {
     return (
-      <main className="min-h-screen bg-white">
+      <main className="min-h-screen bg-transparent">
         <Navbar />
         <div className="max-w-2xl mx-auto px-4 pt-40 pb-20 text-center">
           <p className="text-gray-500 text-lg">Product not found</p>
@@ -155,7 +155,7 @@ export default function ProductDetailPage() {
   ].filter((s) => s.text && s.text !== "Not specified.");
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-transparent">
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20">

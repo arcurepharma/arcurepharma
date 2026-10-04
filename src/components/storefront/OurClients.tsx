@@ -20,7 +20,7 @@ export default function OurClients() {
   const { ref: headerRef, visible: headerVisible } = useReveal();
 
   return (
-    <section className="py-16 lg:py-24 bg-white overflow-hidden">
+    <section className="py-16 lg:py-24 bg-transparent overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           ref={headerRef}

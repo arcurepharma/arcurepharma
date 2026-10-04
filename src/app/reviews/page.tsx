@@ -206,7 +206,7 @@ export default function ReviewsPage() {
     : "0.0";
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-transparent">
       <Navbar />
 
       {/* Hero */}

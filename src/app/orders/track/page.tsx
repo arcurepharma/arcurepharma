@@ -542,7 +542,7 @@ function TrackingContent() {
 
 export default function OrderTrackingPage() {
   return (
-    <main className="min-h-screen bg-gray-50 flex flex-col justify-between">
+    <main className="min-h-screen bg-transparent flex flex-col justify-between">
       <Navbar />
       <div className="pt-20 sm:pt-24 flex-1">
         <Suspense

@@ -88,7 +88,7 @@ function ThankYouContent() {
         }
       `}</style>
 
-      <main className="min-h-screen bg-gray-50">
+      <main className="min-h-screen bg-transparent">
         <div className="no-print">
           <Navbar />
         </div>

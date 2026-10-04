@@ -33,7 +33,7 @@ export default function DealsSection() {
   if (products.length === 0) return null;
 
   return (
-    <section className="py-12 lg:py-20 bg-gradient-to-b from-[#fdfbf7] to-[#f7f1e7]">
+    <section className="py-12 lg:py-20 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 lg:mb-10">
           <div className="flex items-center justify-center gap-2">

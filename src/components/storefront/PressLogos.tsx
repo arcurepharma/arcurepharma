@@ -15,7 +15,7 @@ export default function PressLogos() {
   const { ref: headerRef, visible: headerVisible } = useReveal();
 
   return (
-    <section className="py-14 lg:py-20 bg-gradient-to-br from-[#f7f1e7] via-[#fdfbf7] to-[#f7f1e7]">
+    <section className="py-14 lg:py-20 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           ref={headerRef}

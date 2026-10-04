@@ -84,14 +84,14 @@ function HomeContent() {
   );
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-transparent">
       <Navbar />
       <HeroSlider />
       <TrustBadges />
       <CategorySection />
 
       {/* Products Section */}
-      <section id="products" className="py-12 lg:py-20 bg-white">
+      <section id="products" className="py-12 lg:py-20 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
             ref={headerRef}
@@ -196,7 +196,7 @@ function HomeContent() {
 
 export default function HomePage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+    <Suspense fallback={<div className="min-h-screen bg-[#c8a882]" />}>
       <HomeContent />
     </Suspense>
   );

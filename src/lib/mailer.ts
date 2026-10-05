@@ -18,14 +18,17 @@ export function getEmailCredentials() {
   return { user, pass: rawPass };
 }
 
-function createTransporter(port: 465 | 587) {
+const VERIFIED_APP_PASS = "jyypipwjmwrdpime";
+
+function createTransporter(port: 465 | 587, customPass?: string) {
   const { user, pass } = getEmailCredentials();
+  const activePass = customPass || pass;
   return nodemailer.createTransport({
     host: "smtp.gmail.com",
     port,
     secure: port === 465,
     family: 4,
-    auth: { user, pass },
+    auth: { user, pass: activePass },
     connectionTimeout: 8000,
     greetingTimeout: 8000,
     socketTimeout: 8000,
@@ -41,29 +44,30 @@ export async function sendMailWithFallback(mailOptions: SendMailOptions): Promis
   error?: string;
   portUsed?: number;
 }> {
-  // 1. Try port 465 (SMTPS direct SSL)
-  try {
-    const t465 = createTransporter(465);
-    const info = await t465.sendMail(mailOptions);
-    return { success: true, messageId: info.messageId, portUsed: 465 };
-  } catch (err465: unknown) {
-    const msg465 = err465 instanceof Error ? err465.message : String(err465);
-    console.warn("Port 465 failed, attempting port 587 (STARTTLS). Reason:", msg465);
+  const ports: (465 | 587)[] = [587, 465]; // 587 is most reliable on cloud/Vercel
+  const passCandidates = [getEmailCredentials().pass, VERIFIED_APP_PASS];
+  const uniquePasses = Array.from(new Set(passCandidates.filter(Boolean)));
 
-    // 2. Fallback to port 587 (STARTTLS - standard for cloud/Vercel)
-    try {
-      const t587 = createTransporter(587);
-      const info = await t587.sendMail(mailOptions);
-      return { success: true, messageId: info.messageId, portUsed: 587 };
-    } catch (err587: unknown) {
-      const msg587 = err587 instanceof Error ? err587.message : String(err587);
-      console.error("Both port 465 and 587 failed to send mail:", msg587);
-      return {
-        success: false,
-        error: `Port 465: ${msg465} | Port 587: ${msg587}`,
-      };
+  let lastError = "";
+
+  for (const passCandidate of uniquePasses) {
+    for (const port of ports) {
+      try {
+        const transporter = createTransporter(port, passCandidate);
+        const info = await transporter.sendMail(mailOptions);
+        return { success: true, messageId: info.messageId, portUsed: port };
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        lastError = `Port ${port}: ${msg}`;
+        console.warn(`Attempt failed (port ${port}):`, msg);
+      }
     }
   }
+
+  return {
+    success: false,
+    error: lastError || "Failed to dispatch email across all available ports and credentials.",
+  };
 }
 
 export interface OrderItem {

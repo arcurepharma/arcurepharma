@@ -143,9 +143,9 @@ export default function Navbar() {
                 onClick={() => setSearchOpen(true)}
                 aria-label="Search products"
                 title="Search products (Ctrl+K)"
-                className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full hover:bg-[#f0fdf4] text-gray-700 hover:text-[#16a34a] transition-all cursor-pointer relative group"
+                className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full hover:bg-blue-50 text-[#1e3a8a] hover:text-[#172554] transition-all cursor-pointer relative group"
               >
-                <Search className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 group-hover:scale-110" />
+                <Search className="w-4 h-4 sm:w-5 sm:h-5 text-[#1e3a8a] transition-transform duration-200 group-hover:scale-110" />
                 <span className="sr-only">Search products</span>
               </button>
 
@@ -220,9 +220,10 @@ export default function Navbar() {
               {/* Cart */}
               <Link
                 href="/checkout"
-                className="relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full hover:bg-gray-100 transition-colors"
+                aria-label="Checkout"
+                className="relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full hover:bg-blue-50 text-[#1e3a8a] hover:text-[#172554] transition-colors group"
               >
-                <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+                <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 text-[#1e3a8a] transition-transform duration-200 group-hover:scale-110" />
                 {mounted && totalItems > 0 && (
                   <span className="absolute -top-0.5 -right-0.5 w-4 h-4 sm:w-5 sm:h-5 bg-[#d97706] text-white text-[8px] sm:text-[10px] font-extrabold rounded-full flex items-center justify-center shadow-sm">
                     {totalItems}
@@ -262,9 +263,9 @@ export default function Navbar() {
                   setIsOpen(false);
                   setSearchOpen(true);
                 }}
-                className="w-full flex items-center gap-2.5 mb-2 px-4 py-3 bg-gray-50 hover:bg-[#f0fdf4] text-gray-700 hover:text-[#16a34a] border border-gray-200 hover:border-[#bbf7d0] rounded-xl font-bold text-sm transition-colors text-left cursor-pointer"
+                className="w-full flex items-center gap-2.5 mb-2 px-4 py-3 bg-gray-50 hover:bg-blue-50 text-gray-700 hover:text-[#1e3a8a] border border-gray-200 hover:border-blue-200 rounded-xl font-bold text-sm transition-colors text-left cursor-pointer"
               >
-                <Search className="w-4 h-4 text-[#16a34a]" />
+                <Search className="w-4 h-4 text-[#1e3a8a]" />
                 <span>Search Products &amp; Remedies</span>
               </button>
 

@@ -166,7 +166,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
         {/* Search Input Bar */}
         <div className="p-3 sm:p-4 border-b border-gray-100 bg-[#fdfcf9]/80">
           <div className="relative flex items-center">
-            <div className="absolute left-3.5 sm:left-4 flex items-center pointer-events-none text-[#16a34a]">
+            <div className="absolute left-3.5 sm:left-4 flex items-center pointer-events-none text-[#1e3a8a]">
               <Search className="w-5 h-5" />
             </div>
 
@@ -179,7 +179,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 setSelectedIndex(-1);
               }}
               placeholder="Search products, remedies, ingredients..."
-              className="w-full pl-11 sm:pl-12 pr-20 sm:pr-24 py-3 sm:py-3.5 bg-white rounded-xl sm:rounded-2xl border border-gray-200 text-sm sm:text-base text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#16a34a] focus:ring-4 focus:ring-[#16a34a]/10 transition-all font-medium shadow-xs"
+              className="w-full pl-11 sm:pl-12 pr-20 sm:pr-24 py-3 sm:py-3.5 bg-white rounded-xl sm:rounded-2xl border border-gray-200 text-sm sm:text-base text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#1e3a8a] focus:ring-4 focus:ring-[#1e3a8a]/10 transition-all font-medium shadow-xs"
             />
 
             <div className="absolute right-2 sm:right-3 flex items-center gap-1.5">

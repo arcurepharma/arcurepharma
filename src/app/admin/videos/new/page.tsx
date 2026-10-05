@@ -14,6 +14,7 @@ import {
   RotateCcw,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { uploadVideoFile } from "@/lib/video-upload";
 
 const SUGGESTED_PRODUCTS = [
   "ARCUDERM CS Serum",
@@ -52,39 +53,28 @@ export default function NewVideoPage() {
     }
 
     setUploading(true);
-    setUploadProgress(15);
+    setUploadProgress(5);
 
     try {
-      const fd = new FormData();
-      fd.append("file", file);
-      fd.append("folder", "arcurepharma/reels");
-
-      setUploadProgress(40);
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: fd,
+      const result = await uploadVideoFile(file, "arcurepharma/reels", (percent) => {
+        setUploadProgress(percent);
       });
 
-      setUploadProgress(85);
-      const data = await res.json();
-
-      if (data.url) {
+      if (result.url) {
         setForm((prev) => ({
           ...prev,
-          videoUrl: data.url,
+          videoUrl: result.url,
           title: prev.title || file.name.replace(/\.[^/.]+$/, ""),
         }));
         setUploadProgress(100);
         toast.success(
-          data.source === "imagekit"
+          result.source === "imagekit"
             ? "Uploaded to ImageKit CDN!"
             : "Video uploaded successfully!"
         );
-      } else {
-        toast.error(data.error || "Failed to upload video");
       }
-    } catch {
-      toast.error("Upload failed. Check your network or file size.");
+    } catch (err: any) {
+      toast.error(err.message || "Upload failed. Check your network or file size.");
     } finally {
       setUploading(false);
     }

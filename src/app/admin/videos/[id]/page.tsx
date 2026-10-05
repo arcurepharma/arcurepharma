@@ -12,6 +12,7 @@ import {
   Link as LinkIcon,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { uploadVideoFile } from "@/lib/video-upload";
 
 const SUGGESTED_PRODUCTS = [
   "ARCUDERM CS Serum",
@@ -80,38 +81,27 @@ export default function EditVideoPage() {
     }
 
     setUploading(true);
-    setUploadProgress(20);
+    setUploadProgress(5);
 
     try {
-      const fd = new FormData();
-      fd.append("file", file);
-      fd.append("folder", "arcurepharma/reels");
-
-      setUploadProgress(50);
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: fd,
+      const result = await uploadVideoFile(file, "arcurepharma/reels", (percent) => {
+        setUploadProgress(percent);
       });
 
-      setUploadProgress(85);
-      const data = await res.json();
-
-      if (data.url) {
+      if (result.url) {
         setForm((prev) => ({
           ...prev,
-          videoUrl: data.url,
+          videoUrl: result.url,
         }));
         setUploadProgress(100);
         toast.success(
-          data.source === "imagekit"
+          result.source === "imagekit"
             ? "New video uploaded to ImageKit CDN!"
             : "Video replaced successfully!"
         );
-      } else {
-        toast.error(data.error || "Failed to upload video");
       }
-    } catch {
-      toast.error("Upload failed");
+    } catch (err: any) {
+      toast.error(err.message || "Upload failed");
     } finally {
       setUploading(false);
     }

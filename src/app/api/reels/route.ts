@@ -9,7 +9,9 @@ export async function GET(request: NextRequest) {
     const items = showAll ? await getAllReels() : await getActiveReels();
     return NextResponse.json(items, {
       headers: {
-        "Cache-Control": "public, s-maxage=120, stale-while-revalidate=600",
+        "Cache-Control": showAll
+          ? "no-store, no-cache, must-revalidate"
+          : "public, s-maxage=10, stale-while-revalidate=60",
       },
     });
   } catch (error) {

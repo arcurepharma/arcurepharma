@@ -287,7 +287,11 @@ export default function ProductDetailPage() {
             </button>
 
             <div className="mb-6">
-              <WhatsAppBuyButton product={product} qty={qty} />
+              <WhatsAppBuyButton
+                product={product}
+                qty={qty}
+                className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#1d685b] hover:bg-[#154e44] text-white font-bold text-sm rounded-xl transition-all active:scale-95 shadow-sm px-4 uppercase tracking-wide"
+              />
             </div>
 
             {benefits.length > 0 && (

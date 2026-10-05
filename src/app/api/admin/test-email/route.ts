@@ -1,8 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sendOrderNotificationEmail } from "@/lib/mailer";
+import { sendOrderNotificationEmail, getEmailCredentials } from "@/lib/mailer";
 
 export async function GET(request: NextRequest) {
-  return handleTest(request);
+  const { user, pass } = getEmailCredentials();
+  const url = new URL(request.url);
+  // If ?send=1, execute the test email
+  if (url.searchParams.get("send") === "1") {
+    return handleTest(request);
+  }
+  return NextResponse.json({
+    status: "ok",
+    senderEmail: user,
+    passConfigured: Boolean(pass),
+    passLength: pass ? pass.length : 0,
+    hasEnvPass: Boolean(process.env.EMAIL_PASS),
+    hasEnvUser: Boolean(process.env.EMAIL_USER),
+  });
 }
 
 export async function POST(request: NextRequest) {
@@ -12,7 +25,10 @@ export async function POST(request: NextRequest) {
 async function handleTest(request: NextRequest) {
   try {
     const url = new URL(request.url);
-    const targetEmail = url.searchParams.get("to") || process.env.ADMIN_NOTIFICATION_EMAIL || "arcurepharma3007@gmail.com";
+    const targetEmail =
+      url.searchParams.get("to") ||
+      process.env.ADMIN_NOTIFICATION_EMAIL ||
+      "arcurepharma3007@gmail.com";
 
     const testOrder = {
       orderId: `TEST-${Date.now().toString().slice(-6)}`,
@@ -35,12 +51,13 @@ async function handleTest(request: NextRequest) {
       paymentMethod: "Cash on Delivery (Test)",
     };
 
-    const success = await sendOrderNotificationEmail(testOrder);
+    const result = await sendOrderNotificationEmail(testOrder);
 
-    if (success) {
+    if (result.success) {
       return NextResponse.json({
         success: true,
-        message: `Test order notification email successfully dispatched to ${targetEmail}`,
+        message: `Test order notification email successfully dispatched to ${targetEmail} (via Port ${result.portUsed || 465})`,
+        messageId: result.messageId,
         orderId: testOrder.orderId,
         timestamp: new Date().toISOString(),
       });
@@ -48,7 +65,9 @@ async function handleTest(request: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          error: "Failed to dispatch email. Check SMTP credentials or server logs.",
+          error:
+            result.error ||
+            "Failed to dispatch email. Check SMTP credentials or server logs.",
         },
         { status: 500 }
       );

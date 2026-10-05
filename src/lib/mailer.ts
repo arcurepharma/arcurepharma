@@ -1,24 +1,69 @@
-import nodemailer from "nodemailer";
+import nodemailer, { type SendMailOptions } from "nodemailer";
 
-function getTransporter() {
-  const user = (process.env.EMAIL_USER || "arcurepharma3007@gmail.com").trim();
-  const rawPass = process.env.EMAIL_PASS || "jyyp ipwj mwrd pime";
-  const pass = rawPass.replace(/\s+/g, "");
-
-  if (!user || !pass) {
-    return null;
+export function getEmailCredentials() {
+  let user = (process.env.EMAIL_USER || "").trim();
+  if (!user || !user.includes("@")) {
+    user = "arcurepharma3007@gmail.com";
   }
 
+  let rawPass = (process.env.EMAIL_PASS || "").trim();
+  // Strip quotes and whitespace
+  rawPass = rawPass.replace(/^["']|["']$/g, "").replace(/\s+/g, "");
+
+  // If EMAIL_PASS is empty or invalid, fallback to the confirmed working App Password
+  if (!rawPass || rawPass.length < 8) {
+    rawPass = "jyypipwjmwrdpime";
+  }
+
+  return { user, pass: rawPass };
+}
+
+function createTransporter(port: 465 | 587) {
+  const { user, pass } = getEmailCredentials();
   return nodemailer.createTransport({
     host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+    port,
+    secure: port === 465,
     family: 4,
     auth: { user, pass },
     connectionTimeout: 8000,
     greetingTimeout: 8000,
     socketTimeout: 8000,
+    tls: {
+      rejectUnauthorized: false,
+    },
   } as any);
+}
+
+export async function sendMailWithFallback(mailOptions: SendMailOptions): Promise<{
+  success: boolean;
+  messageId?: string;
+  error?: string;
+  portUsed?: number;
+}> {
+  // 1. Try port 465 (SMTPS direct SSL)
+  try {
+    const t465 = createTransporter(465);
+    const info = await t465.sendMail(mailOptions);
+    return { success: true, messageId: info.messageId, portUsed: 465 };
+  } catch (err465: unknown) {
+    const msg465 = err465 instanceof Error ? err465.message : String(err465);
+    console.warn("Port 465 failed, attempting port 587 (STARTTLS). Reason:", msg465);
+
+    // 2. Fallback to port 587 (STARTTLS - standard for cloud/Vercel)
+    try {
+      const t587 = createTransporter(587);
+      const info = await t587.sendMail(mailOptions);
+      return { success: true, messageId: info.messageId, portUsed: 587 };
+    } catch (err587: unknown) {
+      const msg587 = err587 instanceof Error ? err587.message : String(err587);
+      console.error("Both port 465 and 587 failed to send mail:", msg587);
+      return {
+        success: false,
+        error: `Port 465: ${msg465} | Port 587: ${msg587}`,
+      };
+    }
+  }
 }
 
 export interface OrderItem {
@@ -43,12 +88,16 @@ export interface OrderEmailData {
   paymentMethod?: string;
 }
 
-export async function sendOrderNotificationEmail(order: OrderEmailData): Promise<boolean> {
-  const transporter = getTransporter();
-  if (!transporter) {
-    console.warn("EMAIL_USER or EMAIL_PASS not configured in environment variables. Email notification skipped.");
-    return false;
-  }
+export interface SendOrderEmailResult {
+  success: boolean;
+  error?: string;
+  messageId?: string;
+  portUsed?: number;
+}
+
+export async function sendOrderNotificationEmail(
+  order: OrderEmailData
+): Promise<SendOrderEmailResult> {
 
   const itemsHtml = order.items
     .map(
@@ -156,33 +205,29 @@ export async function sendOrderNotificationEmail(order: OrderEmailData): Promise
     `View Order: https://www.arcurepharma.com/admin/orders/${order.orderId}`,
   ].join("\n");
 
-  const sendAdminTask = transporter
-    .sendMail({
-      from: `Arcure Pharma Orders <${senderEmail}>`,
-      to: adminEmail,
-      replyTo: order.customerEmail || senderEmail,
-      subject: `[Arcure Pharma] New Order #${shortOrderId} - Rs. ${Number(order.totalAmount).toLocaleString()} (${fullName})`,
-      text: adminText,
-      html: adminHtml,
-      priority: "high",
-      headers: {
-        "X-Priority": "1",
-        "X-MSMail-Priority": "High",
-        Importance: "High",
-      },
-    })
-    .then((info) => {
-      console.log("Admin order notification email sent successfully! ID:", info.messageId);
-      return true;
-    })
-    .catch((err) => {
-      console.error("Failed to send admin order notification email:", err);
-      return false;
-    });
+  const adminResult = await sendMailWithFallback({
+    from: `Arcure Pharma Orders <${senderEmail}>`,
+    to: adminEmail,
+    replyTo: order.customerEmail || senderEmail,
+    subject: `[Arcure Pharma] New Order #${shortOrderId} - Rs. ${Number(order.totalAmount).toLocaleString()} (${fullName})`,
+    text: adminText,
+    html: adminHtml,
+    priority: "high",
+    headers: {
+      "X-Priority": "1",
+      "X-MSMail-Priority": "High",
+      Importance: "High",
+    },
+  });
 
-  let sendCustomerTask = Promise.resolve(true);
+  if (!adminResult.success) {
+    console.error("Admin order notification email failed:", adminResult.error);
+    return adminResult;
+  }
 
-  // Send customer order confirmation receipt if customer provided email
+  console.log("Admin order notification email sent successfully! ID:", adminResult.messageId);
+
+  // Send customer order confirmation receipt asynchronously in background if customer provided email
   if (
     order.customerEmail &&
     order.customerEmail.includes("@") &&
@@ -250,25 +295,25 @@ export async function sendOrderNotificationEmail(order: OrderEmailData): Promise
 
     const customerText = `Dear ${fullName},\n\nThank you for shopping with Arcure Pharma. Your order #${shortOrderId} has been received.\nTotal: Rs. ${Number(order.totalAmount).toLocaleString()}\nDelivery to: ${order.address}\n\nWhatsApp Support: +92 330 5115999`;
 
-    sendCustomerTask = transporter
-      .sendMail({
-        from: `Arcure Pharma <${senderEmail}>`,
-        to: order.customerEmail,
-        replyTo: senderEmail,
-        subject: `Your Arcure Pharma Order is Confirmed! (#${shortOrderId})`,
-        text: customerText,
-        html: customerHtml,
-      })
+    sendMailWithFallback({
+      from: `Arcure Pharma <${senderEmail}>`,
+      to: order.customerEmail,
+      replyTo: senderEmail,
+      subject: `Your Arcure Pharma Order is Confirmed! (#${shortOrderId})`,
+      text: customerText,
+      html: customerHtml,
+    })
       .then((info) => {
-        console.log("Customer order receipt email sent to:", order.customerEmail, "ID:", info.messageId);
-        return true;
+        if (info.success) {
+          console.log("Customer order receipt email sent to:", order.customerEmail, "ID:", info.messageId);
+        } else {
+          console.warn("Customer receipt email warning:", info.error);
+        }
       })
       .catch((custErr) => {
         console.warn("Customer receipt email warning:", custErr);
-        return false;
       });
   }
 
-  const [adminResult] = await Promise.allSettled([sendAdminTask, sendCustomerTask]);
-  return adminResult.status === "fulfilled" && adminResult.value === true;
+  return adminResult;
 }

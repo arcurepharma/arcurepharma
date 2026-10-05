@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { BadgePercent } from "lucide-react";
 import ProductCard from "./ProductCard";
+import { DEFAULT_PRODUCTS } from "@/lib/default-products";
 
 interface Product {
   id: string;
@@ -16,7 +17,9 @@ interface Product {
 const DEAL_CATEGORIES = ["Deals", "Deals & Bundles", "Deal", "Bundle"];
 
 export default function DealsSection() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(() =>
+    (DEFAULT_PRODUCTS as any[]).filter((p) => DEAL_CATEGORIES.includes(p.category?.trim() || ""))
+  );
 
   useEffect(() => {
     fetch("/api/products")

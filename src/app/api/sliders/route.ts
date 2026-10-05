@@ -9,7 +9,11 @@ export async function GET() {
       .select()
       .from(sliders)
       .orderBy(asc(sliders.order));
-    return NextResponse.json(allSliders);
+    return NextResponse.json(allSliders, {
+      headers: {
+        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+      },
+    });
   } catch {
     return NextResponse.json(
       { error: "Failed to fetch sliders" },

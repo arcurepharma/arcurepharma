@@ -82,7 +82,11 @@ export async function GET() {
   if (!localMap.official_phone) localMap.official_phone = "+923305115999";
   if (!localMap.website_url) localMap.website_url = "https://www.arcurepharma.com/";
 
-  return NextResponse.json(localMap);
+  return NextResponse.json(localMap, {
+    headers: {
+      "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+    },
+  });
 }
 
 export async function POST(request: NextRequest) {

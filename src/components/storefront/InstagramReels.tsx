@@ -87,11 +87,12 @@ export default function InstagramReels() {
     "reel-4": false,
   });
 
+  const [inView, setInView] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
 
-  // Autoplay videos safely when section is visible
+  // Autoplay videos safely ONLY when section is scrolled into view
   useEffect(() => {
     const playAllMuted = () => {
       Object.values(videoRefs.current).forEach((video) => {
@@ -104,25 +105,34 @@ export default function InstagramReels() {
       });
     };
 
-    playAllMuted();
+    const pauseAll = () => {
+      Object.values(videoRefs.current).forEach((video) => {
+        if (video && !video.paused) {
+          video.pause();
+        }
+      });
+    };
 
-    // Intersection observer to play/pause when in view
+    // Intersection observer to load and play/pause only when in view
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            setInView(true);
             playAllMuted();
+          } else {
+            pauseAll();
           }
         });
       },
-      { threshold: 0.15 }
+      { rootMargin: "150px", threshold: 0.1 }
     );
 
     const section = document.getElementById("social-proof");
     if (section) observer.observe(section);
 
     return () => observer.disconnect();
-  }, []);
+  }, [inView]);
 
   // Update active slide on carousel scroll
   const handleCarouselScroll = () => {
@@ -258,12 +268,12 @@ export default function InstagramReels() {
                     ref={(el) => {
                       videoRefs.current[reel.id] = el;
                     }}
-                    src={reel.src}
-                    autoPlay
+                    src={inView ? reel.src : undefined}
+                    autoPlay={inView}
                     loop
                     muted={isMuted}
                     playsInline
-                    preload="auto"
+                    preload="none"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
 
@@ -389,12 +399,12 @@ export default function InstagramReels() {
                   ref={(el) => {
                     videoRefs.current[reel.id] = el;
                   }}
-                  src={reel.src}
-                  autoPlay
+                  src={inView ? reel.src : undefined}
+                  autoPlay={inView}
                   loop
                   muted={isMuted}
                   playsInline
-                  preload="auto"
+                  preload="none"
                   className="w-full h-full object-cover transition duration-700 group-hover:scale-105"
                 />
 

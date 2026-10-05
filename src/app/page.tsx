@@ -19,6 +19,7 @@ import RecentlyViewed from "@/components/storefront/RecentlyViewed";
 import Footer from "@/components/storefront/Footer";
 import BottomTrustBar from "@/components/storefront/BottomTrustBar";
 import { useReveal } from "@/lib/useReveal";
+import { DEFAULT_PRODUCTS } from "@/lib/default-products";
 
 interface Product {
   id: string;
@@ -34,8 +35,8 @@ interface Product {
 }
 
 function HomeContent() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>(DEFAULT_PRODUCTS as any);
+  const [loading, setLoading] = useState(false);
   const { ref: headerRef, visible: headerVisible } = useReveal();
   const searchParams = useSearchParams();
   const rawQ = searchParams.get("q") || searchParams.get("search") || "";
@@ -45,8 +46,12 @@ function HomeContent() {
   useEffect(() => {
     fetch("/api/products")
       .then((r) => r.json())
-      .then((data) => { setProducts(Array.isArray(data) ? data : []); setLoading(false); })
-      .catch(() => setLoading(false));
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProducts(data);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   useEffect(() => {

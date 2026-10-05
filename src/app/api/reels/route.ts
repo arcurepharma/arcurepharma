@@ -7,7 +7,11 @@ export async function GET(request: NextRequest) {
     const showAll = searchParams.get("all") === "true";
 
     const items = showAll ? await getAllReels() : await getActiveReels();
-    return NextResponse.json(items);
+    return NextResponse.json(items, {
+      headers: {
+        "Cache-Control": "public, s-maxage=120, stale-while-revalidate=600",
+      },
+    });
   } catch (error) {
     console.error("Failed to fetch reels:", error);
     return NextResponse.json({ error: "Failed to fetch reels" }, { status: 500 });

@@ -3,11 +3,18 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import Image from "next/image";
+
 interface Category {
   id: string;
   name: string;
   imageUrl?: string | null;
 }
+
+const INITIAL_CATEGORIES: Category[] = [
+  { id: "cat-skincare", name: "Skin Care", imageUrl: "/categories/skin-care.png" },
+  { id: "cat-supplements", name: "Supplements", imageUrl: "/categories/oral-medicines.png" },
+];
 
 const FALLBACK_IMAGES: Record<string, string> = {
   "Skin Care": "/categories/skin-care.png",
@@ -30,11 +37,12 @@ function CategoryTile({
       onClick={onClick}
       className="relative aspect-[4/3] sm:aspect-[3/2] lg:aspect-[16/9] rounded-2xl overflow-hidden group cursor-pointer shadow-md hover:shadow-2xl transition-all duration-300 focus:outline-none"
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={image}
         alt={label}
-        className="w-full h-full object-contain bg-gradient-to-br from-gray-50 to-gray-200 transition-transform duration-500 group-hover:scale-105"
+        fill
+        sizes="(max-width: 640px) 50vw, 50vw"
+        className="object-contain bg-gradient-to-br from-gray-50 to-gray-200 transition-transform duration-500 group-hover:scale-105"
       />
     </button>
   );
@@ -42,7 +50,7 @@ function CategoryTile({
 
 export default function CategorySection() {
   const router = useRouter();
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[]>(INITIAL_CATEGORIES);
 
   useEffect(() => {
     fetch("/api/categories")
@@ -54,7 +62,7 @@ export default function CategorySection() {
           const bi = FIXED_ORDER.indexOf(b.name);
           return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
         });
-        setCategories(sorted);
+        if (sorted.length > 0) setCategories(sorted);
       })
       .catch(() => {});
   }, []);

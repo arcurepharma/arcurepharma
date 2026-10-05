@@ -39,10 +39,9 @@ const FALLBACK_SLIDES: Slide[] = [
 ];
 
 export default function HeroSlider() {
-  const [slides, setSlides] = useState<Slide[]>([]);
+  const [slides, setSlides] = useState<Slide[]>(FALLBACK_SLIDES);
   const [current, setCurrent] = useState(0);
   const [duration, setDuration] = useState(5000);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     Promise.all([
@@ -51,16 +50,14 @@ export default function HeroSlider() {
     ])
       .then(([slidesData, settingsData]) => {
         const apiSlides = Array.isArray(slidesData) ? slidesData : [];
-        setSlides(apiSlides.length > 0 ? apiSlides : FALLBACK_SLIDES);
+        if (apiSlides.length > 0) {
+          setSlides(apiSlides);
+        }
         if (settingsData?.slider_duration) {
           setDuration(Number(settingsData.slider_duration) * 1000);
         }
-        setLoading(false);
       })
-      .catch(() => {
-        setSlides(FALLBACK_SLIDES);
-        setLoading(false);
-      });
+      .catch(() => {});
   }, []);
 
   const next = useCallback(() => {
@@ -78,14 +75,6 @@ export default function HeroSlider() {
   }, [next, slides.length, duration]);
 
   const displaySlides = slides.length > 0 ? slides : FALLBACK_SLIDES;
-
-  if (loading) {
-    return (
-      <section className="relative w-full bg-[#f5e6ed] mt-[64px] lg:mt-[68px] flex items-center justify-center" style={{aspectRatio: '16/7'}}>
-        <div className="w-10 h-10 border-4 border-[#16a34a]/20 border-t-[#16a34a] rounded-full animate-spin" />
-      </section>
-    );
-  }
 
   return (
     <section className="relative w-full mt-[64px] lg:mt-[68px] overflow-hidden bg-gray-100" style={{aspectRatio: '16/7', minHeight: '180px'}}>

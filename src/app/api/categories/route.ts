@@ -9,7 +9,11 @@ export async function GET() {
       .select()
       .from(categories)
       .orderBy(asc(categories.name));
-    return NextResponse.json(allCategories);
+    return NextResponse.json(allCategories, {
+      headers: {
+        "Cache-Control": "public, s-maxage=120, stale-while-revalidate=600",
+      },
+    });
   } catch {
     return NextResponse.json(
       { error: "Failed to fetch categories" },

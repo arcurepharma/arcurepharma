@@ -40,7 +40,7 @@ export default function WhatsAppBuyButton({
         "w-full flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 text-[10px] sm:text-xs font-bold rounded-md transition-all active:scale-[0.98] tracking-wide uppercase bg-[#1d685b] hover:bg-[#154e44] text-white shadow-sm"
       }
     >
-      <WhatsAppGlyph className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+      <WhatsAppGlyph className="hidden sm:block w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
       <span className="truncate">BUY ON WHATSAPP</span>
     </button>
   );

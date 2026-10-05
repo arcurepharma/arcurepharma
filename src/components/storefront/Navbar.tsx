@@ -131,9 +131,9 @@ export default function Navbar() {
                 href="/orders/track"
                 aria-label="Track Order"
                 title="Track Your Order"
-                className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full hover:bg-[#f0fdf4] text-gray-700 hover:text-[#16a34a] transition-all relative group"
+                className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full hover:bg-blue-50 text-[#1e3a8a] hover:text-[#172554] transition-all relative group"
               >
-                <Truck className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-200 group-hover:scale-110" />
+                <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-[#1e3a8a] transition-transform duration-200 group-hover:scale-110" />
                 <span className="sr-only">Track Order</span>
               </Link>
 

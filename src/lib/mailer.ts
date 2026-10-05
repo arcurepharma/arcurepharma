@@ -1,8 +1,8 @@
 import nodemailer from "nodemailer";
 
 function getTransporter() {
-  const user = process.env.EMAIL_USER?.trim();
-  const rawPass = process.env.EMAIL_PASS || "";
+  const user = (process.env.EMAIL_USER || "arcurepharma3007@gmail.com").trim();
+  const rawPass = process.env.EMAIL_PASS || "jyyp ipwj mwrd pime";
   const pass = rawPass.replace(/\s+/g, "");
 
   if (!user || !pass) {

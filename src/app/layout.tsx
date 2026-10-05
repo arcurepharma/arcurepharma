@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_PK",
-    url: "https://arcurepharma.com",
+    url: "https://www.arcurepharma.com",
     siteName: "Arcure Pharma",
     title: "Arcure Pharma - Your Trusted Online Pharmacy in Pakistan",
     description:

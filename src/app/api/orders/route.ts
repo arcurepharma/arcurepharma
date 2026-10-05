@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     }
 
     const user = await getCurrentUser();
-    const parsedItems = JSON.parse(items);
+    const parsedItems = typeof items === "string" ? JSON.parse(items) : items;
 
     const newOrder = await db
       .insert(orders)
@@ -71,24 +71,26 @@ export async function POST(request: NextRequest) {
 
     const order = newOrder[0];
 
-    // Send notification email â€” fire and forget (don't block the response)
-    sendOrderNotificationEmail({
-      orderId: order.id,
-      customerName: customerName || "",
-      customerLastName: customerLastName || "",
-      customerEmail,
-      customerPhone,
-      customerPhone2: customerPhone2 || "",
-      address,
-      landmark: landmark || "",
-      postalCode: postalCode || "",
-      items: parsedItems,
-      totalAmount: String(totalAmount),
-      deliveryFee: String(deliveryFee || 0),
-      paymentMethod: paymentMethod || "COD",
-    }).catch((err) => {
-      console.error("Order email failed:", err);
-    });
+    // Await notification email so serverless runtime doesn't terminate before delivery completes
+    try {
+      await sendOrderNotificationEmail({
+        orderId: order.id,
+        customerName: customerName || "",
+        customerLastName: customerLastName || "",
+        customerEmail,
+        customerPhone,
+        customerPhone2: customerPhone2 || "",
+        address,
+        landmark: landmark || "",
+        postalCode: postalCode || "",
+        items: parsedItems,
+        totalAmount: String(totalAmount),
+        deliveryFee: String(deliveryFee || 0),
+        paymentMethod: paymentMethod || "COD",
+      });
+    } catch (err) {
+      console.error("Order notification email warning:", err);
+    }
 
     return NextResponse.json(order, { status: 201 });
   } catch {

@@ -10,9 +10,15 @@ function getTransporter() {
   }
 
   return nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    family: 4,
     auth: { user, pass },
-  });
+    connectionTimeout: 8000,
+    greetingTimeout: 8000,
+    socketTimeout: 8000,
+  } as any);
 }
 
 export interface OrderItem {
@@ -131,23 +137,58 @@ export async function sendOrderNotificationEmail(order: OrderEmailData): Promise
 </body>
 </html>`;
 
-  try {
-    const info = await transporter.sendMail({
-      from: `"Arcure Pharma Orders" <${senderEmail}>`,
-      to: adminEmail,
-      subject: `🛒 New Order #${shortOrderId} — Rs. ${Number(order.totalAmount).toLocaleString()} (${fullName})`,
-      html: adminHtml,
-    });
-    console.log("Admin order notification email sent successfully! ID:", info.messageId);
-  } catch (err) {
-    console.error("Failed to send admin order notification email:", err);
-    throw err;
-  }
+  const adminText = [
+    `NEW ORDER RECEIVED - #${shortOrderId}`,
+    `Customer: ${fullName}`,
+    `Phone: ${order.customerPhone}${order.customerPhone2 ? " / " + order.customerPhone2 : ""}`,
+    `Email: ${order.customerEmail || "N/A"}`,
+    `Address: ${order.address}${order.landmark ? ", " + order.landmark : ""}${order.postalCode ? " (" + order.postalCode + ")" : ""}`,
+    `Payment: ${order.paymentMethod || "COD"}`,
+    "",
+    "ITEMS:",
+    ...order.items.map(
+      (i) => `- ${i.title} x ${i.quantity} = Rs. ${(Number(i.price) * i.quantity).toLocaleString()}`
+    ),
+    "",
+    `Delivery Fee: Rs. ${Number(order.deliveryFee || 0).toLocaleString()}`,
+    `Grand Total: Rs. ${Number(order.totalAmount).toLocaleString()}`,
+    "",
+    `View Order: https://www.arcurepharma.com/admin/orders/${order.orderId}`,
+  ].join("\n");
 
-  // Also send customer order confirmation receipt if customer provided email
-  if (order.customerEmail && order.customerEmail.includes("@") && order.customerEmail.toLowerCase() !== adminEmail.toLowerCase()) {
-    try {
-      const customerHtml = `
+  const sendAdminTask = transporter
+    .sendMail({
+      from: `Arcure Pharma Orders <${senderEmail}>`,
+      to: adminEmail,
+      replyTo: order.customerEmail || senderEmail,
+      subject: `[Arcure Pharma] New Order #${shortOrderId} - Rs. ${Number(order.totalAmount).toLocaleString()} (${fullName})`,
+      text: adminText,
+      html: adminHtml,
+      priority: "high",
+      headers: {
+        "X-Priority": "1",
+        "X-MSMail-Priority": "High",
+        Importance: "High",
+      },
+    })
+    .then((info) => {
+      console.log("Admin order notification email sent successfully! ID:", info.messageId);
+      return true;
+    })
+    .catch((err) => {
+      console.error("Failed to send admin order notification email:", err);
+      return false;
+    });
+
+  let sendCustomerTask = Promise.resolve(true);
+
+  // Send customer order confirmation receipt if customer provided email
+  if (
+    order.customerEmail &&
+    order.customerEmail.includes("@") &&
+    order.customerEmail.toLowerCase() !== adminEmail.toLowerCase()
+  ) {
+    const customerHtml = `
 <!DOCTYPE html>
 <html>
 <head><meta charset="UTF-8"></head>
@@ -172,13 +213,17 @@ export async function sendOrderNotificationEmail(order: OrderEmailData): Promise
           </tr>
         </thead>
         <tbody>
-          ${order.items.map(i => `
+          ${order.items
+            .map(
+              (i) => `
             <tr>
               <td style="padding:10px 12px;border-bottom:1px solid #dcfce7;font-size:13px;">${i.title}</td>
               <td style="padding:10px 12px;border-bottom:1px solid #dcfce7;text-align:center;font-size:13px;">${i.quantity}</td>
               <td style="padding:10px 12px;border-bottom:1px solid #dcfce7;text-align:right;font-size:13px;font-weight:bold;">Rs. ${(Number(i.price) * i.quantity).toLocaleString()}</td>
             </tr>
-          `).join("")}
+          `
+            )
+            .join("")}
         </tbody>
       </table>
 
@@ -203,17 +248,27 @@ export async function sendOrderNotificationEmail(order: OrderEmailData): Promise
 </body>
 </html>`;
 
-      await transporter.sendMail({
-        from: `"Arcure Pharma" <${senderEmail}>`,
+    const customerText = `Dear ${fullName},\n\nThank you for shopping with Arcure Pharma. Your order #${shortOrderId} has been received.\nTotal: Rs. ${Number(order.totalAmount).toLocaleString()}\nDelivery to: ${order.address}\n\nWhatsApp Support: +92 330 5115999`;
+
+    sendCustomerTask = transporter
+      .sendMail({
+        from: `Arcure Pharma <${senderEmail}>`,
         to: order.customerEmail,
+        replyTo: senderEmail,
         subject: `Your Arcure Pharma Order is Confirmed! (#${shortOrderId})`,
+        text: customerText,
         html: customerHtml,
+      })
+      .then((info) => {
+        console.log("Customer order receipt email sent to:", order.customerEmail, "ID:", info.messageId);
+        return true;
+      })
+      .catch((custErr) => {
+        console.warn("Customer receipt email warning:", custErr);
+        return false;
       });
-      console.log("Customer order receipt email sent to:", order.customerEmail);
-    } catch (custErr) {
-      console.warn("Customer receipt email warning:", custErr);
-    }
   }
 
-  return true;
+  const [adminResult] = await Promise.allSettled([sendAdminTask, sendCustomerTask]);
+  return adminResult.status === "fulfilled" && adminResult.value === true;
 }

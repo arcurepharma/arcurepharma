@@ -16,10 +16,14 @@ interface Product {
 
 const DEAL_CATEGORIES = ["Deals", "Deals & Bundles", "Deal", "Bundle"];
 
-export default function DealsSection() {
-  const [products, setProducts] = useState<Product[]>(() =>
-    (DEFAULT_PRODUCTS as any[]).filter((p) => DEAL_CATEGORIES.includes(p.category?.trim() || ""))
-  );
+export default function DealsSection({ initialProducts }: { initialProducts?: Product[] }) {
+  const [products, setProducts] = useState<Product[]>(() => {
+    const src: Product[] =
+      initialProducts && initialProducts.length > 0
+        ? initialProducts
+        : (DEFAULT_PRODUCTS as any[]);
+    return src.filter((p) => DEAL_CATEGORIES.includes(p.category?.trim() || ""));
+  });
 
   useEffect(() => {
     fetch("/api/products")

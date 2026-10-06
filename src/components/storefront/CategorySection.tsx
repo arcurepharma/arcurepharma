@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import Image from "next/image";
 
-interface Category {
+export interface Category {
   id: string;
   name: string;
   imageUrl?: string | null;
@@ -48,9 +48,11 @@ function CategoryTile({
   );
 }
 
-export default function CategorySection() {
+export default function CategorySection({ initialCategories }: { initialCategories?: Category[] }) {
   const router = useRouter();
-  const [categories, setCategories] = useState<Category[]>(INITIAL_CATEGORIES);
+  const [categories, setCategories] = useState<Category[]>(() =>
+    initialCategories && initialCategories.length > 0 ? initialCategories : INITIAL_CATEGORIES
+  );
 
   useEffect(() => {
     fetch("/api/categories")

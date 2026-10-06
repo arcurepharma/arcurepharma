@@ -103,6 +103,29 @@ export default function ResultsSection() {
           ))}
         </div>
 
+        {/* Combined before & after (single image) */}
+        <div className="flex justify-center mt-8">
+          <div className="w-36 sm:w-44 lg:w-48">
+            <div className="relative aspect-[766/1600] rounded-3xl overflow-hidden border-4 border-gray-200 shadow-md">
+              <Image
+                src="/results/result-3.jpg"
+                alt="Before and After"
+                fill
+                sizes="200px"
+                className="object-cover"
+              />
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+                <span className="bg-gray-800 text-white text-[8px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap shadow">
+                  BEFORE &amp; AFTER
+                </span>
+              </div>
+            </div>
+            <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-center mt-2 text-gray-500">
+              Before &amp; After
+            </p>
+          </div>
+        </div>
+
         <p className="text-center text-[10px] sm:text-xs text-gray-400 mt-6">
           * Individual results may vary. Consistent use as directed is recommended.
         </p>

@@ -34,11 +34,16 @@ interface Product {
 }
 
 const REVIEW_COUNTS: { match: RegExp; count: number }[] = [
-  { match: /radiance|bundle/i, count: 26 },
-  { match: /arcuder/i, count: 48 },
-  { match: /gleam|face\s*wash/i, count: 41 },
-  { match: /arcu-?cal|k2/i, count: 19 },
-  { match: /mida|vitamin\s*d3/i, count: 15 },
+  { match: /sheild|sunscreen/i, count: 23 },
+  { match: /gleam/i, count: 41 },
+  { match: /glow/i, count: 32 },
+  { match: /arcu-?derm\s*cs/i, count: 35 },
+  { match: /arcu-?derm|arcuder/i, count: 48 },
+  { match: /cholecalciferol|d\s*two/i, count: 17 },
+  { match: /arcu-?cal/i, count: 19 },
+  { match: /mida/i, count: 15 },
+  { match: /ultimate/i, count: 26 },
+  { match: /wellness/i, count: 22 },
 ];
 
 const getReviewCount = (title: string) =>

@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/storefront/Navbar";
 import FooterOnly from "@/components/storefront/FooterOnly";
+import InstagramReels from "@/components/storefront/InstagramReels";
 import { useCartStore } from "@/store/cart";
 import { formatPrice, formatFormula } from "@/lib/utils";
 import toast from "react-hot-toast";
@@ -166,7 +167,7 @@ export default function ProductDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
           {/* â”€â”€ Gallery â”€â”€ */}
           <div>
-            <div className="relative aspect-square bg-[#f0fdf4] rounded-3xl overflow-hidden border border-[#dcfce7]">
+            <div className="relative aspect-square bg-white rounded-3xl overflow-hidden border border-gray-100">
               {gallery.map((img, i) => (
                 <Image
                   key={i}
@@ -366,6 +367,27 @@ export default function ProductDetailPage() {
                 </div>
               </div>
             ))}
+
+            {/* Combined before & after (single image) */}
+            <div className="col-span-2 flex justify-center pt-2">
+              <div className="w-40 sm:w-48">
+                <div className="relative aspect-[766/1600] rounded-2xl overflow-hidden border-4 border-gray-200">
+                  <Image
+                    src="/results/result-3.jpg"
+                    alt="Before and After"
+                    fill
+                    sizes="200px"
+                    className="object-cover"
+                  />
+                  <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap shadow">
+                    BEFORE &amp; AFTER
+                  </span>
+                </div>
+                <p className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-wider text-gray-500 mt-2">
+                  Before &amp; After
+                </p>
+              </div>
+            </div>
           </div>
 
           <p className="text-center text-[10px] sm:text-xs text-gray-400 mt-6">
@@ -422,6 +444,8 @@ export default function ProductDetailPage() {
           </div>
         )}
       </div>
+
+      <InstagramReels />
 
       <FooterOnly />
     </main>

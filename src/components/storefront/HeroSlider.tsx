@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-interface Slide {
+export interface Slide {
   id: string;
   imageUrl: string;
   title: string;
@@ -38,8 +38,10 @@ const FALLBACK_SLIDES: Slide[] = [
   },
 ];
 
-export default function HeroSlider() {
-  const [slides, setSlides] = useState<Slide[]>(FALLBACK_SLIDES);
+export default function HeroSlider({ initialSlides }: { initialSlides?: Slide[] }) {
+  const [slides, setSlides] = useState<Slide[]>(() =>
+    initialSlides && initialSlides.length > 0 ? initialSlides : FALLBACK_SLIDES
+  );
   const [current, setCurrent] = useState(0);
   const [duration, setDuration] = useState(5000);
 
@@ -87,14 +89,14 @@ export default function HeroSlider() {
             i === current ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         >
-          {/* Full-width background image */}
+          {/* Full-width background image — contain on mobile so banners are never cut */}
           <Image
             src={s.imageUrl}
             alt={s.title || "Arcure Pharma"}
             fill
             sizes="100vw"
             priority={i === 0}
-            className="object-cover object-center"
+            className="object-contain sm:object-cover object-center"
           />
 
           {/* Gradient overlay â€” left side so text is readable */}

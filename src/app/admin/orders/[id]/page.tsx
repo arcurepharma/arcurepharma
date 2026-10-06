@@ -13,6 +13,7 @@ import {
   CreditCard,
   Package,
   RefreshCw,
+  Receipt,
 } from "lucide-react";
 
 interface OrderItem {
@@ -42,6 +43,7 @@ interface OrderData {
   trackingNumber: string | null;
   status: string;
   notes: string | null;
+  receiptUrl?: string | null;
   statusHistory: { status: string; timestamp: string; note: string }[];
   createdAt: string;
 }
@@ -178,6 +180,23 @@ export default function AdminOrderDetailPage() {
           <p className="text-sm font-mono text-gray-700 break-all">{order.userId ? order.userId.slice(0, 13) + "…" : "Guest"}</p>
         </div>
       </div>
+
+      {/* Payment receipt */}
+      {order.receiptUrl && (
+        <div className="bg-white rounded-2xl border border-gray-100 p-6">
+          <h2 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <Receipt className="w-4 h-4 text-teal-600" /> Payment Receipt
+          </h2>
+          <a href={order.receiptUrl} target="_blank" rel="noopener noreferrer" className="inline-block">
+            <img
+              src={order.receiptUrl}
+              alt="Payment receipt"
+              className="max-h-64 rounded-xl border border-gray-200 object-contain"
+            />
+          </a>
+          <p className="text-xs text-gray-400 mt-2">Click the image to view full size</p>
+        </div>
+      )}
 
       {/* Status update */}
       <div className="bg-white rounded-2xl border border-gray-100 p-6">

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   ArrowLeft, Minus, Plus, Trash2, ShoppingBag, Truck,
-  MapPin, Loader2, WifiOff, PencilLine, CheckCircle2,
+  MapPin, Loader2, PencilLine, CheckCircle2, Paperclip, X,
 } from "lucide-react";
 import Navbar from "@/components/storefront/Navbar";
 import { useCartStore, CartItem } from "@/store/cart";
@@ -13,11 +13,12 @@ import { formatPrice } from "@/lib/utils";
 import toast from "react-hot-toast";
 
 const PAYMENT_METHODS = [
-  { id: "COD",         label: "Cash on Delivery", desc: "Pay when your order arrives", icon: "💵", available: true },
-  { id: "JazzCash",   label: "JazzCash",          desc: "Coming soon",                icon: "📱", available: false },
-  { id: "EasyPaisa",  label: "EasyPaisa",         desc: "Coming soon",                icon: "💳", available: false },
-  { id: "BankTransfer",label: "Bank Transfer",    desc: "Coming soon",                icon: "🏦", available: false },
+  { id: "COD",          label: "Cash on Delivery", desc: "Pay when your order arrives",     icon: "💵" },
+  { id: "JazzCash",     label: "JazzCash",         desc: "Send payment to our JazzCash account", icon: "📱" },
+  { id: "BankTransfer", label: "Bank Transfer",    desc: "Transfer to our bank account",    icon: "🏦" },
 ];
+
+const ONLINE_PAYMENT_METHODS = ["JazzCash", "BankTransfer"];
 
 type AddressMode = null | "gps" | "manual";
 interface AuthUser { id: string; name: string; email: string; phone: string; }
@@ -31,6 +32,8 @@ export default function CheckoutPage() {
   const [deliveryFee, setDeliveryFee]     = useState("150");
   const [submitting, setSubmitting]       = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("COD");
+  const [receiptFile, setReceiptFile]         = useState<File | null>(null);
+  const [receiptPreview, setReceiptPreview]   = useState<string>("");
   const [addressMode, setAddressMode]     = useState<AddressMode>(null);
   const [detectingLocation, setDetecting] = useState(false);
   const [gpsCoords, setGpsCoords]         = useState<{ lat: number; lng: number } | null>(null);
@@ -112,6 +115,26 @@ export default function CheckoutPage() {
     );
   };
 
+  // ── Payment receipt ──
+  const needsReceipt = ONLINE_PAYMENT_METHODS.includes(paymentMethod);
+
+  const handleReceiptChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select an image file for the receipt");
+      return;
+    }
+    setReceiptFile(file);
+    setReceiptPreview(URL.createObjectURL(file));
+  };
+
+  const clearReceipt = () => {
+    if (receiptPreview) URL.revokeObjectURL(receiptPreview);
+    setReceiptFile(null);
+    setReceiptPreview("");
+  };
+
   // ── Submit ──
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -124,9 +147,27 @@ export default function CheckoutPage() {
     if (addressMode === "manual" && (!form.street || !form.landmark || !form.postalCode)) {
       toast.error("Please fill in your delivery address"); return;
     }
+    if (needsReceipt && !receiptFile) {
+      toast.error("Please attach your payment receipt"); return;
+    }
 
     setSubmitting(true);
     try {
+      let receiptUrl: string | null = null;
+      if (needsReceipt && receiptFile) {
+        const fd = new FormData();
+        fd.append("file", receiptFile);
+        fd.append("folder", "arcurepharma/receipts");
+        const upRes = await fetch("/api/upload", { method: "POST", body: fd });
+        if (!upRes.ok) {
+          toast.error("Failed to upload receipt. Try again.");
+          setSubmitting(false);
+          return;
+        }
+        const upData = await upRes.json();
+        receiptUrl = upData.url || null;
+      }
+
       const mapsLink    = gpsCoords ? `https://www.google.com/maps?q=${gpsCoords.lat},${gpsCoords.lng}` : null;
       const addressLine = addressMode === "gps"
         ? (form.houseNo ? `House/Flat: ${form.houseNo}` : "GPS Location Detected")
@@ -148,6 +189,7 @@ export default function CheckoutPage() {
           deliveryFee,
           totalAmount:   total,
           paymentMethod,
+          receiptUrl,
           notes: mapsLink ? `GPS: ${gpsCoords!.lat},${gpsCoords!.lng} | Maps: ${mapsLink} | Address: ${gpsAddress}` : null,
         }),
       });
@@ -354,11 +396,10 @@ export default function CheckoutPage() {
                 <h2 className="font-bold text-gray-900 mb-4">Payment Method</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {PAYMENT_METHODS.map((method) => (
-                    <button key={method.id} type="button" disabled={!method.available}
-                      onClick={() => method.available && setPaymentMethod(method.id)}
+                    <button key={method.id} type="button"
+                      onClick={() => setPaymentMethod(method.id)}
                       className={`relative flex items-center gap-3 p-4 rounded-xl border-2 text-left transition-all ${
-                        !method.available ? "opacity-50 cursor-not-allowed border-gray-100 bg-gray-50/50"
-                        : paymentMethod === method.id ? "border-[#16a34a] bg-[#f0fdf4]"
+                        paymentMethod === method.id ? "border-[#16a34a] bg-[#f0fdf4]"
                         : "border-gray-200 hover:border-[#16a34a]/40 bg-white/60"
                       }`}
                     >
@@ -367,8 +408,7 @@ export default function CheckoutPage() {
                         <p className="font-semibold text-gray-800 text-sm">{method.label}</p>
                         <p className="text-xs text-gray-400 mt-0.5">{method.desc}</p>
                       </div>
-                      {!method.available && <span className="absolute top-2 right-2 flex items-center gap-1 text-[9px] font-bold text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded-full"><WifiOff className="w-2.5 h-2.5" /> Soon</span>}
-                      {method.available && paymentMethod === method.id && (
+                      {paymentMethod === method.id && (
                         <div className="w-5 h-5 rounded-full bg-[#16a34a] flex items-center justify-center shrink-0">
                           <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
                         </div>
@@ -376,6 +416,54 @@ export default function CheckoutPage() {
                     </button>
                   ))}
                 </div>
+
+                {/* JazzCash account details */}
+                {paymentMethod === "JazzCash" && (
+                  <div className="mt-4 p-4 bg-[#f0fdf4] border border-[#dcfce7] rounded-xl">
+                    <p className="text-sm font-bold text-gray-900 mb-1">JazzCash Account</p>
+                    <p className="text-sm text-gray-700">
+                      Account Number: <span className="font-mono font-bold text-gray-900">03332000341</span>
+                    </p>
+                  </div>
+                )}
+
+                {/* Bank account details */}
+                {paymentMethod === "BankTransfer" && (
+                  <div className="mt-4 p-4 bg-[#f0fdf4] border border-[#dcfce7] rounded-xl space-y-1">
+                    <p className="text-sm font-bold text-gray-900 mb-1">Bank Account Details</p>
+                    <p className="text-sm text-gray-700">Account Title: <span className="font-semibold text-gray-900">Iftikhar Ahmed</span></p>
+                    <p className="text-sm text-gray-700">Account Number: <span className="font-mono font-semibold text-gray-900">08797902172903</span></p>
+                    <p className="text-sm text-gray-700">IBAN: <span className="font-mono font-semibold text-gray-900">PK55HABB0008797902172903</span></p>
+                  </div>
+                )}
+
+                {/* Receipt attachment for online payments */}
+                {needsReceipt && (
+                  <div className="mt-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Payment Receipt (screenshot) <span className="text-red-500">*</span>
+                    </label>
+                    {!receiptPreview ? (
+                      <label className="flex flex-col items-center justify-center gap-2 p-6 border-2 border-dashed border-gray-300 hover:border-[#16a34a] rounded-xl cursor-pointer transition-colors">
+                        <input type="file" accept="image/*" className="hidden" onChange={handleReceiptChange} />
+                        <Paperclip className="w-5 h-5 text-[#16a34a]" />
+                        <span className="text-xs sm:text-sm text-gray-500">Tap to attach your payment receipt image</span>
+                      </label>
+                    ) : (
+                      <div className="relative inline-block">
+                        <img src={receiptPreview} alt="Payment receipt" className="max-h-40 rounded-xl border border-gray-200" />
+                        <button
+                          type="button"
+                          onClick={clearReceipt}
+                          aria-label="Remove receipt"
+                          className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 

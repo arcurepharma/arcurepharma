@@ -33,6 +33,17 @@ interface Product {
   ingredients?: string;
 }
 
+const REVIEW_COUNTS: { match: RegExp; count: number }[] = [
+  { match: /radiance|bundle/i, count: 26 },
+  { match: /arcuder/i, count: 48 },
+  { match: /gleam|face\s*wash/i, count: 41 },
+  { match: /arcu-?cal|k2/i, count: 19 },
+  { match: /mida|vitamin\s*d3/i, count: 15 },
+];
+
+const getReviewCount = (title: string) =>
+  REVIEW_COUNTS.find((r) => r.match.test(title))?.count ?? 10;
+
 export default function ProductCard({ product }: { product: Product }) {
   const addItem = useCartStore((s) => s.addItem);
   const [wished, setWished] = useState(false);
@@ -42,6 +53,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const isOutOfStock = product.isActive === 0;
 
   const formulaDisplay = formatFormula(product.formula || product.ingredients);
+  const reviewCount = getReviewCount(product.title);
 
   const gallery = Array.from(
     new Set([product.imageUrl, ...(product.images || [])])
@@ -114,7 +126,7 @@ export default function ProductCard({ product }: { product: Product }) {
     <>
       <div className="group relative flex flex-col bg-white rounded-2xl overflow-hidden border border-gray-100/80 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
         {/* Top media container */}
-        <Link href={`/product/${product.id}`} className="block relative aspect-square bg-[#fbf9f5] overflow-hidden">
+        <Link href={`/product/${product.id}`} className="block relative aspect-square bg-white overflow-hidden">
           <Image
             src={product.imageUrl}
             alt={product.title}
@@ -185,7 +197,7 @@ export default function ProductCard({ product }: { product: Product }) {
             {[1, 2, 3, 4, 5].map((s) => (
               <Star key={s} className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-yellow-400 text-yellow-400" />
             ))}
-            <span className="text-[11px] text-gray-500 ml-1">(32)</span>
+            <span className="text-[11px] text-gray-500 ml-1">({reviewCount})</span>
           </div>
 
           {/* Price */}

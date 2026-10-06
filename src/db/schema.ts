@@ -70,6 +70,7 @@ export const orders = pgTable("orders", {
   status: varchar("status", { length: 50 }).default("Pending").notNull(), // Pending, Confirmed, Processing, Shipped, Delivered, Cancelled
   trackingNumber: varchar("tracking_number", { length: 255 }),
   notes: text("notes"),
+  receiptUrl: text("receipt_url"),
   statusHistory: jsonb("status_history").$type<{status: string, timestamp: string, note: string}[]>().default([]),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),

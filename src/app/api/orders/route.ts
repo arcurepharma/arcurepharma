@@ -37,6 +37,7 @@ export async function POST(request: NextRequest) {
       totalAmount,
       paymentMethod,
       notes,
+      receiptUrl,
     } = body;
 
     if (!customerEmail || !customerPhone || !address || !items || !totalAmount) {
@@ -66,6 +67,7 @@ export async function POST(request: NextRequest) {
         totalAmount: String(totalAmount),
         paymentMethod: paymentMethod || "COD",
         notes: notes || null,
+        receiptUrl: receiptUrl || null,
       })
       .returning();
 

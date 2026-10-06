@@ -18,6 +18,7 @@ interface Order {
   totalAmount: string;
   status: string;
   notes: string | null;
+  receiptUrl?: string | null;
   createdAt: string;
 }
 
@@ -157,13 +158,30 @@ export default function AdminOrdersPage() {
                       {new Date(order.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <Link
-                        href={`/admin/orders/${order.id}`}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-teal-600 bg-teal-50 rounded-lg hover:bg-teal-100 transition-colors"
-                      >
-                        <Eye className="w-3.5 h-3.5" />
-                        View
-                      </Link>
+                      <div className="flex items-center justify-end gap-2">
+                        {order.receiptUrl && (
+                          <a
+                            href={order.receiptUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title="View payment receipt"
+                            className="block"
+                          >
+                            <img
+                              src={order.receiptUrl}
+                              alt="Payment receipt"
+                              className="w-9 h-9 object-cover rounded-lg border border-teal-200 hover:scale-110 transition-transform"
+                            />
+                          </a>
+                        )}
+                        <Link
+                          href={`/admin/orders/${order.id}`}
+                          className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-teal-600 bg-teal-50 rounded-lg hover:bg-teal-100 transition-colors"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                          View
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                 ))}

@@ -382,7 +382,7 @@ function TrackingContent() {
                         )}
                       </div>
                       <div className="sm:hidden flex-1 min-w-0">
-                        <h4 className="font-bold text-sm text-gray-900 leading-snug">
+                        <h4 className="font-bold text-sm text-[#1e3a8a] leading-snug">
                           {item.title}
                         </h4>
                         {item.category && (
@@ -397,8 +397,8 @@ function TrackingContent() {
                     <div className="flex-1 min-w-0">
                       <div className="hidden sm:flex items-start justify-between gap-2">
                         <div>
-                          <h4 className="font-bold text-sm sm:text-base text-gray-900 leading-snug">
-                            {item.title}
+                        <h4 className="font-bold text-sm sm:text-base text-[#1e3a8a] leading-snug">
+                          {item.title}
                           </h4>
                           {item.category && (
                             <span className="inline-block mt-0.5 text-[11px] font-semibold text-[#16a34a] bg-[#f0fdf4] px-2 py-0.5 rounded">

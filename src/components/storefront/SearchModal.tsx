@@ -323,7 +323,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                         )}
                       </div>
 
-                      <h4 className="text-sm sm:text-base font-bold text-gray-900 group-hover:text-[#16a34a] transition-colors truncate">
+                      <h4 className="text-sm sm:text-base font-bold text-[#1e3a8a] group-hover:text-[#16a34a] transition-colors truncate">
                         {product.title}
                       </h4>
 

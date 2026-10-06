@@ -184,7 +184,7 @@ export default function ProductCard({ product }: { product: Product }) {
         {/* Body content */}
         <div className="flex flex-col flex-1 px-3 sm:px-4 pt-3 pb-3 sm:pb-4">
           {/* Title */}
-          <h3 className="font-bold text-gray-900 text-xs sm:text-sm leading-snug line-clamp-2 mb-1 group-hover:text-[#99611a] transition-colors">
+          <h3 className="font-bold text-[#1e3a8a] text-xs sm:text-sm leading-snug line-clamp-2 mb-1 group-hover:text-[#99611a] transition-colors">
             {product.title}
           </h3>
 
@@ -272,7 +272,7 @@ export default function ProductCard({ product }: { product: Product }) {
                 <span className="inline-flex items-center gap-1.5 self-start px-3 py-1 bg-[#f0fdf4] text-[#16a34a] text-xs font-bold rounded-full mb-3">
                   <BadgeCheck className="w-3.5 h-3.5" /> Verified Product
                 </span>
-                <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">{product.title}</h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-[#1e3a8a] mb-1">{product.title}</h2>
                 {formulaDisplay && (
                   <div className="mb-3">
                     <span className="inline-block px-3 py-1 bg-[#fce7f3]/80 text-[#9d174d] text-xs font-semibold rounded-lg tracking-wide">

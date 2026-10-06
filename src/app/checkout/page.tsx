@@ -261,7 +261,7 @@ export default function CheckoutPage() {
                         <img src={item.imageUrl} alt={item.title} className="w-full h-full object-contain p-1" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-medium text-gray-800 text-sm truncate">{item.title}</h3>
+                        <h3 className="font-medium text-[#1e3a8a] text-sm truncate">{item.title}</h3>
                         <p className="text-[#16a34a] font-semibold text-sm">{formatPrice(item.price)}</p>
                       </div>
                       <div className="flex items-center gap-1.5">

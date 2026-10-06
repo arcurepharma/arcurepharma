@@ -156,7 +156,7 @@ function ThankYouContent() {
               <tbody>
                 {items.map((item: OrderItem, i: number) => (
                   <tr key={i} className="border-b border-gray-50">
-                    <td className="py-3 text-sm text-gray-800 font-medium">{item.title}</td>
+                    <td className="py-3 text-sm text-[#1e3a8a] font-medium">{item.title}</td>
                     <td className="py-3 text-sm text-gray-500 text-center">{item.quantity}</td>
                     <td className="py-3 text-sm text-gray-500 text-right">{formatPrice(item.price)}</td>
                     <td className="py-3 text-sm font-semibold text-gray-800 text-right">{formatPrice(Number(item.price) * item.quantity)}</td>

@@ -81,7 +81,7 @@ export default function RecentlyViewed() {
                 )}
               </div>
               <div className="p-4">
-                <h3 className="font-semibold text-gray-900 text-sm mb-2 line-clamp-2 group-hover:text-purple-700 transition-colors">
+                <h3 className="font-semibold text-[#1e3a8a] text-sm mb-2 line-clamp-2 group-hover:text-purple-700 transition-colors">
                   {product.title}
                 </h3>
                 <p className="text-lg font-bold text-[#16a34a]">

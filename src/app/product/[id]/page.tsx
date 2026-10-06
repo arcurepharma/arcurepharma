@@ -147,6 +147,7 @@ export default function ProductDetailPage() {
 
   const isOutOfStock = product.isActive === 0; const formulaDisplay = formatFormula(product.formula || product.ingredients);
   const benefits = product.benefits || [];
+  const showBeforeAfter = /face\s*wash|serum/i.test(product.title);
 
   const infoSections = [
     { icon: FileText, title: "Description", text: product.description || "No description available." },
@@ -219,7 +220,7 @@ export default function ProductDetailPage() {
               </span>
             )}
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1e3a8a] mb-3">
               {product.title}
             </h1>
             {formulaDisplay && (
@@ -282,7 +283,7 @@ export default function ProductDetailPage() {
             <button
               onClick={handleBuyNow}
               disabled={isOutOfStock}
-              className="w-full flex items-center justify-center gap-2 py-3.5 bg-gray-900 hover:bg-gray-700 text-white font-bold text-sm rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed mb-3"
+              className="w-full flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-[#c89d53] to-[#b3853b] hover:from-[#b58c48] hover:to-[#9c722e] text-white font-bold text-sm rounded-xl transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#b3853b]/20 mb-3"
             >
               <Zap className="w-4 h-4" /> Buy Now
             </button>
@@ -328,7 +329,8 @@ export default function ProductDetailPage() {
           </div>
         </div>
 
-        {/* â”€â”€ Before & After Results â”€â”€ */}
+        {/* â”€â”€ Before & After Results (only for Face Wash / Serum products) â”€â”€ */}
+        {showBeforeAfter && (
         <div className="mt-14">
           <div className="text-center mb-8">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#f0fdf4] text-[#16a34a] text-xs font-semibold rounded-full mb-4 border border-[#dcfce7]">
@@ -394,6 +396,7 @@ export default function ProductDetailPage() {
             * Individual results may vary. Consistent use as directed is recommended.
           </p>
         </div>
+        )}
 
         {/* â”€â”€ Customer Reviews â”€â”€ */}
         {reviews.length > 0 && (

@@ -32,10 +32,15 @@ function CategoryTile({
   label: string;
   onClick: () => void;
 }) {
+  const [ratio, setRatio] = useState<number | null>(null);
+
   return (
     <button
       onClick={onClick}
-      className="relative aspect-[4/3] sm:aspect-[3/2] lg:aspect-[16/9] rounded-2xl overflow-hidden group cursor-pointer shadow-md hover:shadow-2xl transition-all duration-300 focus:outline-none"
+      style={ratio ? { aspectRatio: String(ratio) } : undefined}
+      className={`relative w-full rounded-2xl overflow-hidden group cursor-pointer shadow-md hover:shadow-2xl transition-all duration-300 focus:outline-none ${
+        ratio ? "" : "aspect-[4/3] sm:aspect-[3/2] lg:aspect-[16/9]"
+      }`}
     >
       <Image
         src={image}
@@ -43,6 +48,12 @@ function CategoryTile({
         fill
         sizes="(max-width: 640px) 50vw, 50vw"
         className="object-contain bg-gradient-to-br from-gray-50 to-gray-200 transition-transform duration-500 group-hover:scale-105"
+        onLoad={(e) => {
+          const el = e.currentTarget;
+          if (el.naturalWidth && el.naturalHeight) {
+            setRatio((r) => r ?? el.naturalWidth / el.naturalHeight);
+          }
+        }}
       />
     </button>
   );

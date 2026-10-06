@@ -7,6 +7,8 @@ import { useReveal } from "@/lib/useReveal";
 const CLIENTS = [
   "Dermalax clinic",
   "AB clinic",
+   "Derm Md Care",
+    "Amirza",
   "Al khaleej",
   "Shamsi hospital",
   "Dr shaheena",
@@ -28,7 +30,7 @@ export default function OurClients() {
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#f7f1e7] text-[#9e6e2e] border border-[#e2d1bc] text-sm font-semibold rounded-full mb-4">
             <Users className="w-4 h-4" />
-            Our Clients
+            Our Partners
           </span>
           <h2 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-4">
             Trusted by Leading Clinics &amp; Hospitals

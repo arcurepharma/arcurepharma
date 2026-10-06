@@ -44,6 +44,24 @@ export default function HeroSlider({ initialSlides }: { initialSlides?: Slide[] 
   );
   const [current, setCurrent] = useState(0);
   const [duration, setDuration] = useState(5000);
+  const [ratios, setRatios] = useState<Record<string, number>>({});
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  const captureRatio = (id: string, el: HTMLImageElement) => {
+    if (el.naturalWidth && el.naturalHeight) {
+      setRatios((r) =>
+        r[id] ? r : { ...r, [id]: el.naturalWidth / el.naturalHeight }
+      );
+    }
+  };
 
   useEffect(() => {
     Promise.all([
@@ -78,8 +96,19 @@ export default function HeroSlider({ initialSlides }: { initialSlides?: Slide[] 
 
   const displaySlides = slides.length > 0 ? slides : FALLBACK_SLIDES;
 
+  // Mobile: fit container exactly to the active banner's own ratio (no leftover space)
+  const activeId = displaySlides[current]?.id;
+  const activeRatio = activeId ? ratios[activeId] : undefined;
+  const containerStyle: React.CSSProperties =
+    isMobile && activeRatio
+      ? { aspectRatio: String(activeRatio) }
+      : { aspectRatio: "16/7", minHeight: "180px" };
+
   return (
-    <section className="relative w-full mt-[64px] lg:mt-[68px] overflow-hidden bg-gray-100" style={{aspectRatio: '16/7', minHeight: '180px'}}>
+    <section
+      className="relative w-full mt-[64px] lg:mt-[68px] overflow-hidden bg-gray-100 transition-[aspect-ratio] duration-700"
+      style={containerStyle}
+    >
 
       {/* â”€â”€ Slides â”€â”€ */}
       {displaySlides.map((s, i) => (
@@ -89,7 +118,7 @@ export default function HeroSlider({ initialSlides }: { initialSlides?: Slide[] 
             i === current ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         >
-          {/* Full-width background image — contain on mobile so banners are never cut */}
+          {/* Full-width background image — container matches image ratio so nothing is cut or left empty */}
           <Image
             src={s.imageUrl}
             alt={s.title || "Arcure Pharma"}
@@ -97,6 +126,7 @@ export default function HeroSlider({ initialSlides }: { initialSlides?: Slide[] 
             sizes="100vw"
             priority={i === 0}
             className="object-contain sm:object-cover object-center"
+            onLoad={(e) => captureRatio(s.id, e.currentTarget)}
           />
 
           {/* Gradient overlay â€” left side so text is readable */}

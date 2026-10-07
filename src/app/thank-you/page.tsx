@@ -126,19 +126,19 @@ function ThankYouContent() {
             </div>
 
             {/* Customer + Address */}
-            <div className="grid grid-cols-2 gap-6 mb-6 pb-6 border-b border-gray-100">
-              <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6 pb-6 border-b border-gray-100">
+              <div className="min-w-0">
                 <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Customer</h3>
-                {fullName && <p className="text-sm font-semibold text-gray-800">{fullName}</p>}
-                <p className="text-sm text-gray-500">{order.customerEmail}</p>
-                <p className="text-sm text-gray-500">{order.customerPhone}</p>
-                {order.customerPhone2 && <p className="text-sm text-gray-500">Secondary: {order.customerPhone2}</p>}
+                {fullName && <p className="text-sm font-semibold text-gray-800 break-words">{fullName}</p>}
+                <p className="text-sm text-gray-500 break-all">{order.customerEmail}</p>
+                <p className="text-sm text-gray-500 break-words">{order.customerPhone}</p>
+                {order.customerPhone2 && <p className="text-sm text-gray-500 break-words">Secondary: {order.customerPhone2}</p>}
                 <p className="text-sm text-gray-500 mt-1">Payment: <span className="font-medium text-gray-700">{order.paymentMethod || "COD"}</span></p>
               </div>
-              <div>
+              <div className="min-w-0">
                 <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Delivery Address</h3>
-                <p className="text-sm text-gray-600">{order.address}</p>
-                {order.landmark && <p className="text-sm text-gray-500">Landmark: {order.landmark}</p>}
+                <p className="text-sm text-gray-600 break-words">{order.address}</p>
+                {order.landmark && <p className="text-sm text-gray-500 break-words">Landmark: {order.landmark}</p>}
                 {order.postalCode && <p className="text-sm text-gray-500">Postal Code: {order.postalCode}</p>}
               </div>
             </div>

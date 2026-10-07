@@ -111,7 +111,7 @@ export default function HomeContent({
       <CategorySection initialCategories={initialCategories} />
 
       {/* Products Section */}
-      <section id="products" className="py-12 lg:py-20 bg-transparent">
+      <section id="products" className="py-12 lg:py-20 bg-transparent scroll-mt-[64px] lg:scroll-mt-[68px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
             ref={headerRef}

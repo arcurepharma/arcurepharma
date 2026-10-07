@@ -96,6 +96,21 @@ export default function HeroSlider({ initialSlides }: { initialSlides?: Slide[] 
 
   const displaySlides = slides.length > 0 ? slides : FALLBACK_SLIDES;
 
+  // Reliable scroll to products — hash-only Links sometimes don't scroll
+  // (e.g. when URL already has #products, or before hydration settles)
+  const goToProducts = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const el = document.getElementById("products");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (window.location.hash !== "#products") {
+        window.history.replaceState(null, "", "#products");
+      }
+    } else {
+      window.location.assign("/#products");
+    }
+  };
+
   // Mobile: fit container exactly to the active banner's own ratio (no leftover space)
   const activeId = displaySlides[current]?.id;
   const activeRatio = activeId ? ratios[activeId] : undefined;
@@ -118,23 +133,31 @@ export default function HeroSlider({ initialSlides }: { initialSlides?: Slide[] 
             i === current ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         >
-          {/* Full-width background image — container matches image ratio so nothing is cut or left empty */}
-          <Image
-            src={s.imageUrl}
-            alt={s.title || "Arcure Pharma"}
-            fill
-            sizes="100vw"
-            priority={i === 0}
-            className="object-contain sm:object-cover object-center"
-            onLoad={(e) => captureRatio(s.id, e.currentTarget)}
-          />
+          {/* Whole banner is clickable — takes user to products */}
+          <Link
+            href="/#products"
+            onClick={goToProducts}
+            aria-label="Shop now"
+            className="absolute inset-0 z-0 block cursor-pointer"
+          >
+            {/* Full-width background image — container matches image ratio so nothing is cut or left empty */}
+            <Image
+              src={s.imageUrl}
+              alt={s.title || "Arcure Pharma"}
+              fill
+              sizes="100vw"
+              priority={i === 0}
+              className="object-contain sm:object-cover object-center"
+              onLoad={(e) => captureRatio(s.id, e.currentTarget)}
+            />
 
-          {/* Gradient overlay â€” left side so text is readable */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent" />
+            {/* Gradient overlay â€” left side so text is readable */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent" />
+          </Link>
 
           {/* Text overlay â€” only if title exists */}
           {s.title && (
-            <div className={`absolute inset-0 flex items-center ${i === current ? "animate-fade-in-up" : "opacity-0"}`}>
+            <div className={`absolute inset-0 flex items-center pointer-events-none ${i === current ? "animate-fade-in-up" : "opacity-0"}`}>
               <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full">
                 <div className="max-w-xs sm:max-w-sm lg:max-w-md">
                   <p className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] text-white/80 mb-2">
@@ -150,7 +173,8 @@ export default function HeroSlider({ initialSlides }: { initialSlides?: Slide[] 
                   )}
                   <Link
                     href="/#products"
-                    className="inline-flex items-center px-5 sm:px-7 py-2.5 sm:py-3 bg-[#16a34a] hover:bg-[#15803d] text-white font-bold text-xs sm:text-sm rounded-md transition-all hover:shadow-lg active:scale-95"
+                    onClick={goToProducts}
+                    className="inline-flex items-center px-5 sm:px-7 py-2.5 sm:py-3 bg-[#16a34a] hover:bg-[#15803d] text-white font-bold text-xs sm:text-sm rounded-md transition-all hover:shadow-lg active:scale-95 pointer-events-auto"
                   >
                     Shop Now
                   </Link>

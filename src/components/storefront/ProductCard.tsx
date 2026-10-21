@@ -101,6 +101,7 @@ export default function ProductCard({ product }: { product: Product }) {
       title: product.title,
       price: product.price,
       imageUrl: product.imageUrl,
+      category: product.category,
     });
     toast.success("Added to cart!");
   };
@@ -121,6 +122,7 @@ export default function ProductCard({ product }: { product: Product }) {
         title: product.title,
         price: product.price,
         imageUrl: product.imageUrl,
+        category: product.category,
       });
     }
     toast.success(`Added ${qty} to cart!`);

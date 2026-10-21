@@ -544,7 +544,7 @@ export default function OrderTrackingPage() {
   return (
     <main className="min-h-screen bg-transparent flex flex-col justify-between">
       <Navbar />
-      <div className="pt-20 sm:pt-24 flex-1">
+      <div className="pt-[108px] flex-1">
         <Suspense
           fallback={
             <div className="flex justify-center items-center py-40">

@@ -10,6 +10,7 @@ import {
 import Navbar from "@/components/storefront/Navbar";
 import { useCartStore, CartItem } from "@/store/cart";
 import { formatPrice } from "@/lib/utils";
+import { isDealCategory } from "@/lib/deals";
 import toast from "react-hot-toast";
 
 const PAYMENT_METHODS = [
@@ -29,7 +30,7 @@ export default function CheckoutPage() {
 
   const [user, setUser]                   = useState<AuthUser | null>(null);
   const [authLoading, setAuthLoading]     = useState(true);
-  const [deliveryFee, setDeliveryFee]     = useState("150");
+  const [baseDeliveryFee, setBaseDeliveryFee] = useState("150");
   const [submitting, setSubmitting]       = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("COD");
   const [receiptFile, setReceiptFile]         = useState<File | null>(null);
@@ -68,9 +69,37 @@ export default function CheckoutPage() {
   useEffect(() => {
     fetch("/api/settings")
       .then((r) => r.json())
-      .then((data) => { if (data.delivery_fee) setDeliveryFee(data.delivery_fee); })
+      .then((data) => { if (data.delivery_fee) setBaseDeliveryFee(data.delivery_fee); })
       .catch(() => {});
   }, []);
+
+  // ── Free delivery: waive delivery fee when the cart has a deal/bundle item ──
+  const hasDealItem = items.some((i) => isDealCategory(i.category));
+  const deliveryFee = hasDealItem ? "0" : baseDeliveryFee;
+
+  // ── Backfill: old cart items saved before this feature have no category —
+  // fetch each product's category once so deal detection still works ──
+  useEffect(() => {
+    const missing = items.filter((i) => !i.category);
+    if (missing.length === 0) return;
+    let cancelled = false;
+    fetch("/api/products")
+      .then((r) => r.json())
+      .then((list) => {
+        if (cancelled || !Array.isArray(list)) return;
+        const map = new Map<string, string>(
+          list.map((p: { id: string; category?: string }) => [p.id, p.category || ""])
+        );
+        useCartStore.setState({
+          items: useCartStore
+            .getState()
+            .items.map((i) => ({ ...i, category: i.category || map.get(i.id) })),
+        });
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items.length]);
 
   const subtotal = getTotalPrice();
   const total    = subtotal + Number(deliveryFee);
@@ -225,7 +254,7 @@ export default function CheckoutPage() {
   return (
     <main className="min-h-screen">
       <Navbar />
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-[108px] pb-20">
         <Link href="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-700 mb-6 text-sm">
           <ArrowLeft className="w-4 h-4" /> Continue Shopping
         </Link>
@@ -469,7 +498,7 @@ export default function CheckoutPage() {
 
             {/* ── Summary ── */}
             <div className="lg:col-span-1">
-              <div className="glass-card rounded-2xl p-6 sticky top-24">
+              <div className="glass-card rounded-2xl p-6 sticky top-[112px]">
                 <h2 className="font-bold text-gray-900 mb-4">Order Summary</h2>
                 <div className="space-y-2.5 mb-5">
                   {items.map((item) => (
@@ -481,7 +510,7 @@ export default function CheckoutPage() {
                 </div>
                 <div className="border-t border-emerald-100/60 pt-4 space-y-2">
                   <div className="flex justify-between text-sm"><span className="text-gray-500">Subtotal</span><span className="text-gray-700">{formatPrice(subtotal)}</span></div>
-                  <div className="flex justify-between text-sm"><span className="text-gray-500 flex items-center gap-1"><Truck className="w-4 h-4" /> Delivery</span><span className="text-gray-700">{formatPrice(deliveryFee)}</span></div>
+                  <div className="flex justify-between text-sm"><span className="text-gray-500 flex items-center gap-1"><Truck className="w-4 h-4" /> Delivery</span>{hasDealItem ? <span className="text-[#16a34a] font-bold">FREE 🎉</span> : <span className="text-gray-700">{formatPrice(deliveryFee)}</span>}</div>
                   <div className="flex justify-between text-sm"><span className="text-gray-500">Payment</span><span className="text-gray-700 font-medium">{paymentMethod}</span></div>
                 </div>
                 <div className="border-t border-emerald-100/60 pt-4 mt-3">

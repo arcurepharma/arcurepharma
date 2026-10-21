@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import WhatsAppWidget from "@/components/storefront/WhatsAppWidget";
 import ThemeInit from "@/components/storefront/ThemeInit";
 import { ThemeProvider } from "@/lib/ThemeProvider";
+import FreeDeliveryBanner from "@/components/storefront/FreeDeliveryBanner";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -73,6 +74,7 @@ export default function RootLayout({
         <ThemeInit />
         <ThemeProvider>
           <WhatsAppWidget />
+          <FreeDeliveryBanner />
           <Toaster
             position="top-center"
             toastOptions={{

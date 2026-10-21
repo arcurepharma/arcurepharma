@@ -85,7 +85,7 @@ export default function Navbar() {
     <>
       {/* ── Main Header ── */}
       <header
-        className={`fixed left-0 right-0 z-50 top-0 transition-all duration-300 glass-nav ${scrolled ? "shadow-lg shadow-green-100/50" : ""
+        className={`fixed left-0 right-0 z-50 top-8 transition-all duration-300 glass-nav ${scrolled ? "shadow-lg shadow-green-100/50" : ""
           }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

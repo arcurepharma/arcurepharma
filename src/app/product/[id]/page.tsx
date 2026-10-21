@@ -106,6 +106,7 @@ export default function ProductDetailPage() {
         title: product.title,
         price: product.price,
         imageUrl: product.imageUrl,
+        category: product.category,
       });
     }
     toast.success(`${qty} x ${product.title} added to cart!`);
@@ -160,7 +161,7 @@ export default function ProductDetailPage() {
     <main className="min-h-screen bg-transparent">
       <Navbar />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[108px] pb-20">
         <Link href="/#products" className="inline-flex items-center gap-2 text-gray-500 hover:text-[#16a34a] mb-6 text-sm transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Products
         </Link>

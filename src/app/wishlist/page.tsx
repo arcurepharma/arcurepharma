@@ -34,7 +34,7 @@ export default function WishlistPage() {
     <main className="min-h-screen bg-transparent">
       <Navbar />
 
-      <section className="py-20">
+      <section className="pt-[112px] pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">

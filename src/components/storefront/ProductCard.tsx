@@ -224,9 +224,8 @@ export default function ProductCard({ product }: { product: Product }) {
             <span className="text-[11px] text-gray-500 ml-1">({reviewCount})</span>
           </div>
 
-                {/* Price */}
-      <div className="flex items-center gap-1.5 mb-3 flex-wrap">
-        {/* Bada Price */}
+                    <div className="flex items-center gap-1.5 mb-3 flex-wrap">
+        {/* Main Price */}
         <p className="text-base sm:text-lg font-black text-gray-900">
           {formatPrice(product.price)}
         </p>
@@ -238,14 +237,22 @@ export default function ProductCard({ product }: { product: Product }) {
               {formatPrice(product.previousPrice)}
             </p>
             
-            {/* Save Badge */}
-            <span className="bg-green-100 text-green-800 text-xs font-black px-2 py-0.5 rounded-md tracking-wide">
-
-              Save {formatPrice(Number(product.previousPrice) - Number(product.price))}
-            </span>
+            {/* Save Badge - Sirf Deals / Bundles par dikhega */}
+            {(product.category?.toLowerCase().includes("bundle") || 
+              product.category?.toLowerCase().includes("deal") || 
+              product.isDeal ||
+              product.title?.toLowerCase().includes("duo") ||
+              product.title?.toLowerCase().includes("trio") ||
+              product.title?.toLowerCase().includes("pack") ||
+              product.title?.toLowerCase().includes("+")) && (
+              <span className="bg-green-100 text-green-800 text-xs font-black px-2 py-0.5 rounded-md tracking-wide">
+                Save {formatPrice(Number(product.previousPrice) - Number(product.price))}
+              </span>
+            )}
           </>
         )}
       </div>
+
 
 
           {/* ADD TO CART + WhatsApp */}

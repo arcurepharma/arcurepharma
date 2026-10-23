@@ -8,6 +8,7 @@ interface Product {
   id: string;
   title: string;
   price: string;
+  previousPrice?: string | null;
   imageUrl: string;
   category?: string;
   isActive?: number;

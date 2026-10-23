@@ -31,6 +31,7 @@ interface Product {
   id: string;
   title: string;
   price: string;
+  previousPrice?: string | null;
   description?: string;
   category?: string;
   imageUrl: string;
@@ -241,10 +242,17 @@ export default function ProductDetailPage() {
               <span className="text-xs text-gray-400 ml-1">(Verified Product)</span>
             </div>
 
-            <p className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6">
-              {formatPrice(product.price)}
-              <span className="text-sm font-medium text-gray-400 ml-2">incl. GST</span>
-            </p>
+            <div className="flex items-baseline gap-3 mb-6">
+              <p className="text-3xl sm:text-4xl font-extrabold text-gray-900">
+                {formatPrice(product.price)}
+                <span className="text-sm font-medium text-gray-400 ml-2">incl. GST</span>
+              </p>
+              {product.previousPrice && Number(product.previousPrice) > Number(product.price) && (
+                <p className="text-lg sm:text-xl font-medium text-gray-400 line-through">
+                  {formatPrice(product.previousPrice)}
+                </p>
+              )}
+            </div>
 
             {product.sku && (
               <p className="text-xs text-gray-400 mb-4">

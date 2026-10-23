@@ -224,17 +224,28 @@ export default function ProductCard({ product }: { product: Product }) {
             <span className="text-[11px] text-gray-500 ml-1">({reviewCount})</span>
           </div>
 
-          {/* Price */}
-          <div className="flex items-baseline gap-2 mb-3">
-            <p className="text-sm sm:text-base font-extrabold text-gray-900">
-              {formatPrice(product.price)}
+                {/* Price */}
+      <div className="flex items-center gap-1.5 mb-3 flex-wrap">
+        {/* Bada Price */}
+        <p className="text-base sm:text-lg font-black text-gray-900">
+          {formatPrice(product.price)}
+        </p>
+        
+        {product.previousPrice && Number(product.previousPrice) > Number(product.price) && (
+          <>
+            {/* Cut Price */}
+            <p className="text-xs text-gray-400 line-through">
+              {formatPrice(product.previousPrice)}
             </p>
-            {product.previousPrice && Number(product.previousPrice) > Number(product.price) && (
-              <p className="text-xs sm:text-sm font-medium text-gray-400 line-through">
-                {formatPrice(product.previousPrice)}
-              </p>
-            )}
-          </div>
+            
+            {/* Save Badge */}
+            <span className="bg-green-100 text-green-700 text-[10px] font-bold px-1.5 py-0.5 rounded-md">
+              Save {formatPrice(Number(product.previousPrice) - Number(product.price))}
+            </span>
+          </>
+        )}
+      </div>
+
 
           {/* ADD TO CART + WhatsApp */}
           <div className="mt-auto space-y-1.5">

@@ -239,7 +239,8 @@ export default function ProductCard({ product }: { product: Product }) {
             </p>
             
             {/* Save Badge */}
-            <span className="bg-green-100 text-green-700 text-[10px] font-bold px-1.5 py-0.5 rounded-md">
+            <span className="bg-green-100 text-green-800 text-xs font-black px-2 py-0.5 rounded-md tracking-wide">
+
               Save {formatPrice(Number(product.previousPrice) - Number(product.price))}
             </span>
           </>

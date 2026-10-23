@@ -237,7 +237,7 @@ export default function ProductCard({ product }: { product: Product }) {
               {formatPrice(product.previousPrice)}
             </p>
             
-                       {/* Save Badge - Sirf Deals / Bundles par dikhega */{
+                       {/* Save Badge - Sirf Deals / Bundles par dikhega */
             (product.category?.toLowerCase().includes("bundle") ||
 
               product.category?.toLowerCase().includes("deal") || 

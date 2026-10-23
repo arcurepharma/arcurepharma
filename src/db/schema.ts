@@ -227,3 +227,15 @@ export const chatHistory = pgTable("chat_history", {
 
 
 
+
+// Video reviews (customer video testimonials)
+export const videoReviews = pgTable("video_reviews", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  title: varchar("title", { length: 255 }).default(""),
+  customerName: varchar("customer_name", { length: 255 }).default(""),
+  videoUrl: text("video_url").notNull(),
+  thumbnailUrl: text("thumbnail_url"),
+  order: integer("order").default(0).notNull(),
+  isActive: integer("is_active").default(1).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});

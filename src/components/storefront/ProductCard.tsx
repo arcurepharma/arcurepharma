@@ -23,6 +23,7 @@ interface Product {
   id: string;
   title: string;
   price: string;
+  previousPrice?: string | null;
   imageUrl: string;
   category?: string;
   description?: string;
@@ -34,20 +35,36 @@ interface Product {
 }
 
 const REVIEW_COUNTS: { match: RegExp; count: number }[] = [
-  { match: /sheild|sunscreen/i, count: 23 },
-  { match: /gleam/i, count: 41 },
-  { match: /glow/i, count: 32 },
+  { match: /\barcu-?sheild\b|\barcu-?shield\b|^arcu.?sh/i, count: 23 },
+  { match: /\bgleam\b/i, count: 41 },
+  { match: /\bglow\b/i, count: 32 },
   { match: /arcu-?derm\s*cs/i, count: 35 },
   { match: /arcu-?derm|arcuder/i, count: 48 },
   { match: /cholecalciferol|d\s*two/i, count: 17 },
   { match: /arcu-?cal/i, count: 19 },
-  { match: /mida/i, count: 15 },
-  { match: /ultimate/i, count: 26 },
-  { match: /wellness/i, count: 22 },
+  { match: /\bmida\b/i, count: 15 },
+  { match: /\bultimate\b/i, count: 26 },
+  { match: /\bwellness\b/i, count: 22 },
 ];
 
-const getReviewCount = (title: string) =>
-  REVIEW_COUNTS.find((r) => r.match.test(title))?.count ?? 10;
+// Seeded pseudo-random from product id — unique per product, stable across renders
+const seededRandom = (id: string) => {
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) {
+    hash = (hash * 31 + id.charCodeAt(i)) >>> 0;
+  }
+  return 11 + (hash % 40); // range 11–50
+};
+
+const DEAL_CATS = ["deals", "deals & bundles", "deal", "bundle"];
+
+const getReviewCount = (title: string, id: string, category?: string) => {
+  // Deals always get seeded random so each deal has a unique count
+  if (DEAL_CATS.includes((category || "").toLowerCase().trim())) {
+    return seededRandom(id);
+  }
+  return REVIEW_COUNTS.find((r) => r.match.test(title))?.count ?? seededRandom(id);
+};
 
 export default function ProductCard({ product }: { product: Product }) {
   const addItem = useCartStore((s) => s.addItem);
@@ -58,7 +75,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const isOutOfStock = product.isActive === 0;
 
   const formulaDisplay = formatFormula(product.formula || product.ingredients);
-  const reviewCount = getReviewCount(product.title);
+  const reviewCount = getReviewCount(product.title, product.id, product.category);
 
   const gallery = Array.from(
     new Set([product.imageUrl, ...(product.images || [])])
@@ -208,9 +225,16 @@ export default function ProductCard({ product }: { product: Product }) {
           </div>
 
           {/* Price */}
-          <p className="text-sm sm:text-base font-extrabold text-gray-900 mb-3">
-            {formatPrice(product.price)}
-          </p>
+          <div className="flex items-baseline gap-2 mb-3">
+            <p className="text-sm sm:text-base font-extrabold text-gray-900">
+              {formatPrice(product.price)}
+            </p>
+            {product.previousPrice && Number(product.previousPrice) > Number(product.price) && (
+              <p className="text-xs sm:text-sm font-medium text-gray-400 line-through">
+                {formatPrice(product.previousPrice)}
+              </p>
+            )}
+          </div>
 
           {/* ADD TO CART + WhatsApp */}
           <div className="mt-auto space-y-1.5">
@@ -290,6 +314,11 @@ export default function ProductCard({ product }: { product: Product }) {
                 </div>
                 <p className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-4">
                   {formatPrice(product.price)}
+                  {product.previousPrice && Number(product.previousPrice) > Number(product.price) && (
+                    <span className="ml-3 text-base sm:text-lg font-medium text-gray-400 line-through">
+                      {formatPrice(product.previousPrice)}
+                    </span>
+                  )}
                 </p>
                 <p className="text-gray-500 text-sm leading-relaxed mb-6">
                   {product.description || "No description available."}

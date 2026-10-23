@@ -55,6 +55,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     const {
       title,
       price,
+      previousPrice,
       description,
       category,
       imageUrl,
@@ -93,6 +94,9 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       .set({
         title: title !== undefined ? title : undefined,
         price: price !== undefined ? String(price) : undefined,
+        previousPrice: previousPrice !== undefined
+          ? (previousPrice ? String(previousPrice) : null)
+          : undefined,
         description: description !== undefined ? description : undefined,
         category: category !== undefined ? category : undefined,
         imageUrl: imageUrl !== undefined ? imageUrl : undefined,

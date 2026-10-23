@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { db, isDbConfigured } from "@/db";
 import { products } from "@/db/schema";
 import { sql } from "drizzle-orm";
-import { DEFAULT_PRODUCTS } from "@/lib/default-products";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -28,13 +27,8 @@ export async function GET(request: NextRequest) {
         }));
       }
     } catch {
-      // Fallback below
+      // return empty on error
     }
-  }
-
-  // If DB not configured or returned no items, use default products catalogue
-  if (!list || list.length === 0) {
-    list = DEFAULT_PRODUCTS;
   }
 
   if (category) {
@@ -67,6 +61,7 @@ export async function POST(request: NextRequest) {
     const {
       title,
       price,
+      previousPrice,
       description,
       category,
       imageUrl,
@@ -91,6 +86,7 @@ export async function POST(request: NextRequest) {
       .values({
         title,
         price: String(price),
+        previousPrice: previousPrice ? String(previousPrice) : null,
         description,
         category,
         imageUrl,

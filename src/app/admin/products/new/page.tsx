@@ -18,6 +18,7 @@ export default function NewProductPage() {
     title: "",
     formula: "",
     price: "",
+    previousPrice: "",
     description: "",
     category: "General",
     imageUrl: "",
@@ -167,20 +168,35 @@ export default function NewProductPage() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Category
+              Previous Price (Rs.)
+              <span className="ml-1 text-xs text-gray-400 font-normal">(optional — shown as strikethrough)</span>
             </label>
-            <select
-              value={form.category}
-              onChange={(e) => setForm({ ...form, category: e.target.value })}
+            <input
+              type="number"
+              value={form.previousPrice}
+              onChange={(e) => setForm({ ...form, previousPrice: e.target.value })}
               className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-            >
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
+              placeholder="350"
+              min="0"
+            />
           </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Category
+          </label>
+          <select
+            value={form.category}
+            onChange={(e) => setForm({ ...form, category: e.target.value })}
+            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+          >
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>

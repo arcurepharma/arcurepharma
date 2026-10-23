@@ -121,7 +121,7 @@ export default function HeroSlider({ initialSlides }: { initialSlides?: Slide[] 
 
   return (
     <section
-      className="relative w-full mt-[64px] lg:mt-[68px] overflow-hidden bg-gray-100 transition-[aspect-ratio] duration-700"
+      className="relative w-full mt-[96px] lg:mt-[100px] overflow-hidden bg-gray-100 transition-[aspect-ratio] duration-700"
       style={containerStyle}
     >
 

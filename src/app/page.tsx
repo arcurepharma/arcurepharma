@@ -3,13 +3,12 @@ import { db, isDbConfigured } from "@/db";
 import { products, sliders, categories } from "@/db/schema";
 import { sql, asc } from "drizzle-orm";
 import HomeContent from "@/components/storefront/HomeContent";
-import { DEFAULT_PRODUCTS } from "@/lib/default-products";
 import { getActiveReels } from "@/lib/reels";
 
 export const dynamic = "force-dynamic";
 
 async function getInitialProducts(): Promise<any[]> {
-  if (!isDbConfigured) return DEFAULT_PRODUCTS as any[];
+  if (!isDbConfigured) return [];
   try {
     const rows = await db
       .select()
@@ -32,7 +31,7 @@ async function getInitialProducts(): Promise<any[]> {
       }));
     }
   } catch {}
-  return DEFAULT_PRODUCTS as any[];
+  return [];
 }
 
 async function getInitialSlides(): Promise<any[]> {

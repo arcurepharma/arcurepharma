@@ -238,7 +238,7 @@ export default function ProductCard({ product }: { product: Product }) {
             </p>
             
             {/* Save Badge - Sirf Deals / Bundles par dikhega */}
-            {(product.category?.toLowerCase().includes("bundle") || 
+            (product.category?.toLowerCase().includes("bundle") || 
               product.category?.toLowerCase().includes("deal") || 
               product.isDeal ||
               product.title?.toLowerCase().includes("duo") ||

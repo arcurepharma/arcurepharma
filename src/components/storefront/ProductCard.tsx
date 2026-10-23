@@ -241,7 +241,7 @@ export default function ProductCard({ product }: { product: Product }) {
             (product.category?.toLowerCase().includes("bundle") ||
 
               product.category?.toLowerCase().includes("deal") || 
-              product.isDeal ||
+              
               product.title?.toLowerCase().includes("duo") ||
               product.title?.toLowerCase().includes("trio") ||
               product.title?.toLowerCase().includes("pack") ||

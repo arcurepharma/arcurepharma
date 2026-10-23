@@ -71,7 +71,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className={`${montserrat.variable} antialiased`}>
-        <ThemeInit />
+        
         <ThemeProvider>
           <WhatsAppWidget />
           <FreeDeliveryBanner />

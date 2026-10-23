@@ -43,9 +43,14 @@ export default function DealsSection({ initialProducts }: { initialProducts?: Pr
         
                     {/* Lightweight Moving Ticker Banner */}
         <div className="w-full bg-[#16a34a] text-white py-2.5 my-6 rounded-xl shadow-sm overflow-hidden">
-          <marquee scrollamount="6" className="font-bold tracking-widest text-xs sm:text-sm uppercase">
-            🔥 EXCLUSIVE DEALS & BUNDLES — SAVE UP TO 30% OFF &nbsp;&nbsp;✦&nbsp;&nbsp; 🚚 FREE DELIVERY ON ALL BUNDLES ACROSS PAKISTAN &nbsp;&nbsp;✦&nbsp;&nbsp; ✨ LIMITED TIME OFFER — SHOP YOUR FAVORITE DUOS & TRIOS
-          </marquee>
+                    <div className="flex whitespace-nowrap animate-marquee items-center gap-8 font-bold tracking-widest text-xs sm:text-sm uppercase">
+            <span>🔥 EXCLUSIVE DEALS & BUNDLES — SAVE UP TO 30% OFF</span>
+            <span>✦</span>
+            <span>🚚 FREE DELIVERY ON ALL BUNDLES ACROSS PAKISTAN</span>
+            <span>✦</span>
+            <span>✨ LIMITED TIME OFFER — SHOP YOUR FAVORITE DUOS & TRIOS</span>
+          </div>
+
         </div>
 
 

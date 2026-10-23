@@ -40,14 +40,28 @@ export default function DealsSection({ initialProducts }: { initialProducts?: Pr
     <section className="py-12 lg:py-20 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8 lg:mb-10">
-          <div className="flex items-center justify-center gap-2">
-            <BadgePercent className="w-5 h-5 sm:w-6 sm:h-6 text-[#c58a38]" />
-            <h2 className="text-lg sm:text-2xl lg:text-3xl font-bold text-gray-900 uppercase tracking-widest">
-              Deals &amp; Bundles
-            </h2>
+                 {/* Continuous Moving Ticker Banner */}
+        <div className="w-full bg-[#16a34a] text-white py-3 my-6 overflow-hidden rounded-xl shadow-md">
+          <div className="flex whitespace-nowrap animate-marquee items-center gap-8 font-black tracking-widest text-xs sm:text-sm uppercase">
+            <span className="flex items-center gap-2">
+              🔥 EXCLUSIVE DEALS & BUNDLES — SAVE UP TO 30% OFF <span className="text-yellow-300">✦</span>
+            </span>
+            <span className="flex items-center gap-2">
+              🚚 FREE DELIVERY ON ALL BUNDLES ACROSS PAKISTAN <span className="text-yellow-300">✦</span>
+            </span>
+            <span className="flex items-center gap-2">
+              ✨ LIMITED TIME OFFER — SHOP YOUR FAVORITE DUOS & TRIOS <span className="text-yellow-300">✦</span>
+            </span>
+            {/* Loop Repeat */}
+            <span className="flex items-center gap-2">
+              🔥 EXCLUSIVE DEALS & BUNDLES — SAVE UP TO 30% OFF <span className="text-yellow-300">✦</span>
+            </span>
+            <span className="flex items-center gap-2">
+              🚚 FREE DELIVERY ON ALL BUNDLES ACROSS PAKISTAN <span className="text-yellow-300">✦</span>
+            </span>
           </div>
-          <div className="w-10 h-[3px] bg-gradient-to-r from-[#c58a38] to-[#16a34a] rounded-full mx-auto mt-3" />
         </div>
+
 
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
           {products.map((product) => (

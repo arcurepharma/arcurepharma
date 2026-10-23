@@ -245,7 +245,7 @@ export default function ProductCard({ product }: { product: Product }) {
               product.title?.toLowerCase().includes("duo") ||
               product.title?.toLowerCase().includes("trio") ||
               product.title?.toLowerCase().includes("pack") ||
-              product.title?.toLowerCase().includes("+")) && (
+              product.title?.toLowerCase().includes("bundle")) && (
               <span className="bg-green-100 text-green-800 text-xs font-black px-2 py-0.5 rounded-md tracking-wide">
                 Save {formatPrice(Number(product.previousPrice) - Number(product.price))}
               </span>

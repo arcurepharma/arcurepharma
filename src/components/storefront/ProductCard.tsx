@@ -232,10 +232,17 @@ export default function ProductCard({ product }: { product: Product }) {
         
         {product.previousPrice && Number(product.previousPrice) > Number(product.price) && (
           <>
-            {/* Cut Price */}
-            <p className="text-xs text-gray-400 line-through">
-              {formatPrice(product.previousPrice)}
-            </p>
+            {(product.category?.toLowerCase().includes("deal") ||
+  product.category?.toLowerCase().includes("bundle") ||
+  product.title?.toLowerCase().includes("duo") ||
+  product.title?.toLowerCase().includes("trio") ||
+  product.title?.toLowerCase().includes("pack") ||
+  product.title?.toLowerCase().includes("bundle")) && (
+  <p className="text-xs text-gray-400 line-through">
+    {formatPrice(product.previousPrice)}
+  </p>
+)}
+
             
                        {/* Save Badge - Sirf Deals / Bundles par dikhega */
             (product.category?.toLowerCase().includes("bundle") ||

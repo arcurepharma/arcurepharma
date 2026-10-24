@@ -202,9 +202,6 @@ export default function Footer() {
             <p className="text-gray-500 text-sm text-center sm:text-left">
               &copy; {new Date().getFullYear()} Arcure Pharma. All rights reserved.
             </p>
-            <p className="text-gray-400 text-xs">
-              Created by <span className="text-[#c58a38] font-semibold">Muhammad Ayan</span>
-            </p>
           </div>
         </div>
       </footer>

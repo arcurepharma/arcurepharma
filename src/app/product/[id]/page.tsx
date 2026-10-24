@@ -379,24 +379,49 @@ export default function ProductDetailPage() {
               </div>
             ))}
 
-            {/* Combined before & after (single image) */}
-            <div className="col-span-2 flex justify-center pt-2">
-              <div className="w-40 sm:w-48">
-                <div className="relative aspect-[766/1600] rounded-2xl overflow-hidden border-4 border-gray-200">
+            {/* result-3: split top=Before, bottom=After */}
+            <div className="col-span-2 flex justify-center gap-3 sm:gap-5 pt-2">
+              {/* Before — top half */}
+              <div className="flex flex-col items-center gap-1.5">
+                <div className="relative w-32 sm:w-40 aspect-square rounded-2xl overflow-hidden border-4 border-gray-200">
                   <Image
                     src="/results/result-3.jpg"
-                    alt="Before and After"
+                    alt="Before"
                     fill
-                    sizes="200px"
+                    sizes="160px"
                     className="object-cover"
+                    style={{ objectPosition: "center 0%", transform: "scaleY(2)", transformOrigin: "top" }}
                   />
                   <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap shadow">
-                    BEFORE &amp; AFTER
+                    BEFORE
                   </span>
                 </div>
-                <p className="text-center text-[10px] sm:text-xs font-bold uppercase tracking-wider text-gray-500 mt-2">
-                  Before &amp; After
-                </p>
+                <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-gray-500">Before</p>
+              </div>
+
+              {/* Arrow */}
+              <div className="flex items-center self-center text-[#16a34a]">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </div>
+
+              {/* After — bottom half */}
+              <div className="flex flex-col items-center gap-1.5">
+                <div className="relative w-32 sm:w-40 aspect-square rounded-2xl overflow-hidden border-4 border-[#dcfce7]">
+                  <Image
+                    src="/results/result-3.jpg"
+                    alt="After"
+                    fill
+                    sizes="160px"
+                    className="object-cover"
+                    style={{ objectPosition: "center 100%", transform: "scaleY(2)", transformOrigin: "bottom" }}
+                  />
+                  <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-[#16a34a] text-white text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap shadow">
+                    AFTER
+                  </span>
+                </div>
+                <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#16a34a]">After</p>
               </div>
             </div>
           </div>

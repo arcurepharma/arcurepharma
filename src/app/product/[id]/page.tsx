@@ -487,7 +487,6 @@ export default function ProductDetailPage() {
           </div>
         )}
       </div>
-
       <InstagramReels />
       <FooterOnly />
     </main>

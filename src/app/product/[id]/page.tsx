@@ -440,54 +440,54 @@ export default function ProductDetailPage() {
 
         {/* â”€â”€ Customer Reviews â”€â”€ */}
         {reviews.length > 0 && (
-          <div className="mt-14">
-            <div className="flex items-center justify-between mb-6 border-b-2 border-[#dcfce7] pb-3">
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
-                Customer Reviews
-              </h2>
-              <Link href="/reviews" className="text-[#16a34a] hover:text-[#16a34a] text-sm font-bold transition-colors">
-                View All â†’
-              </Link>
-            </div>
+  <div className="mt-14">
+    <div className="flex items-center justify-between mb-6 border-b-2 border-[#dcfce7] pb-3">
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
+        Customer Reviews
+      </h2>
+      <Link href="/reviews" className="text-[#16a34a] hover:text-[#16a34a] text-sm font-bold transition-colors">
+        View All &gt;
+      </Link>
+    </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {reviews.map((review) => (
-                <div key={review.id} className="bg-white rounded-2xl border border-gray-100 p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    {review.imageUrl ? (
-                      <Image
-                        src={review.imageUrl}
-                        alt={review.name}
-                        width={44}
-                        height={44}
-                        className="w-11 h-11 rounded-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-11 h-11 rounded-full bg-[#f0fdf4] text-[#16a34a] font-bold flex items-center justify-center text-lg shrink-0">
-                        {(review.name || "?").charAt(0).toUpperCase()}
-                      </div>
-                    )}
-                    <div className="min-w-0">
-                      <p className="font-semibold text-gray-900 text-sm truncate">{review.name}</p>
-                      {review.role && <p className="text-xs text-gray-400 truncate">{review.role}</p>}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1 mb-2">
-                    {[1, 2, 3, 4, 5].map((s) => (
-                      <Star
-                        key={s}
-                        className={`w-3.5 h-3.5 ${s <= (review.rating || 5) ? "fill-yellow-400 text-yellow-400" : "text-gray-200 fill-gray-100"}`}
-                      />
-                    ))}
-                            </div>
-                  <p className="text-gray-500 text-sm leading-relaxed line-clamp-4">{review.text}</p>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {reviews.map((review) => (
+        <div key={review.id} className="bg-white rounded-2xl border border-gray-100 p-6">
+          <div className="flex items-center gap-3 mb-3">
+            {review.imageUrl ? (
+              <Image
+                src={review.imageUrl}
+                alt={review.name}
+                width={44}
+                height={44}
+                className="w-11 h-11 rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-11 h-11 rounded-full bg-[#f0fdf4] text-[#16a34a] font-bold flex items-center justify-center">
+                {(review.name || "?").charAt(0).toUpperCase()}
+              </div>
+            )}
+            <div className="min-w-0">
+              <p className="font-semibold text-gray-900 text-sm truncate">{review.name}</p>
+              {review.role && <p className="text-xs text-gray-400 truncate">{review.role}</p>}
+            </div>
+          </div>
+          <div className="flex items-center gap-1 mb-2">
+            {[1, 2, 3, 4, 5].map((s) => (
+              <Star
+                key={s}
+                className={`w-3.5 h-3.5 ${s <= (review.rating || 5) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
+              />
+            ))}
+          </div>
+          <p className="text-gray-500 text-sm leading-relaxed line-clamp-4">
+            {review.text}
+          </p>
         </div>
-      )}
+      ))}
     </div>
   </div>
 )}
-</div>
-
 <InstagramReels />
 <FooterOnly />
 </main>

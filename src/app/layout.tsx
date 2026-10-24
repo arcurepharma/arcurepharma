@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: "%s | Arcure Pharma",
   },
   description:
-    "Arcure Pharma provides dermatologically approved medicated products. Buy skincare, haircare & health products with doorstep delivery across Pakistan. Quality you can trust.",
+      "Arcure Pharma offers premium dermatological skincare in Pakistan. Shop original Arcu Gleam Face Wash, Arcu Shield Sunscreen, Arcu Glow, and Arcu Derm Serum with fast delivery in Karachi and across Pakistan.",
   keywords: [
     "pharmacy",
     "online pharmacy Pakistan",
@@ -31,6 +31,11 @@ export const metadata: Metadata = {
     "Arcure Pharma",
     "Karachi pharmacy",
     "doorstep delivery",
+      "Arcu Gleam Face Wash",
+      "Arcu Shield Sunscreen",
+      "Arcu Glow",
+      "Arcu Derm Serum",
+
   ],
   authors: [{ name: "Arcure Pharma" }],
   creator: "Arcure Pharma",

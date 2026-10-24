@@ -479,16 +479,18 @@ export default function ProductDetailPage() {
                         className={`w-3.5 h-3.5 ${s <= (review.rating || 5) ? "fill-yellow-400 text-yellow-400" : "text-gray-200 fill-gray-100"}`}
                       />
                     ))}
-                  </div>
+                            </div>
                   <p className="text-gray-500 text-sm leading-relaxed line-clamp-4">{review.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-      <InstagramReels />
-      <FooterOnly />
-    </main>
-  );
-}
+        </div>
+      )}
+    </div>
+  </div>
+)}
+</div>
+
+<InstagramReels />
+<FooterOnly />
+</main>
+);
+      }
+      

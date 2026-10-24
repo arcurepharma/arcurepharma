@@ -360,81 +360,80 @@ export default function ProductDetailPage() {
             <div className="w-12 h-1 bg-[#16a34a] rounded-full mx-auto mt-4" />
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:gap-8 max-w-3xl mx-auto">
-            {beforeAfterResults.map((r, i) => (
-              <div key={i} className="space-y-3">
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="relative aspect-square rounded-2xl overflow-hidden border-4 border-gray-200">
-                    <Image src={r.before} alt="Before" fill sizes="200px" className="object-cover" />
-                    <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-gray-700 text-white text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap shadow">
-                      BEFORE
-                    </span>
-                  </div>
-                  <div className="relative aspect-square rounded-2xl overflow-hidden border-4 border-[#dcfce7]">
-                    <Image src={r.after} alt="After" fill sizes="200px" className="object-cover" />
-                    <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-[#16a34a] text-white text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap shadow">
-                      AFTER
-                    </span>
-                  </div>
-                </div>
-                <div className="flex justify-center text-[#16a34a]">
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </div>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
+  {beforeAfterResults.map((r, i) => (
+    <div
+      key={i}
+      className="rounded-2xl border border-[#d4af37]/40 bg-white p-3 sm:p-4 shadow-[0_8px_30px_rgba(15,23,42,0.08)]"
+    >
+      <div className="grid grid-cols-2 gap-3">
+        <div className="relative aspect-square overflow-hidden rounded-xl border border-[#e5e7eb]">
+          <Image src={r.before} alt="Before" fill sizes="(max-width: 640px) 45vw, 220px" className="object-cover" />
+          <span className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-[#172554] px-3 py-1 text-[9px] sm:text-[10px] font-bold tracking-wider text-white shadow">
+            BEFORE
+          </span>
+        </div>
+        <div className="relative aspect-square overflow-hidden rounded-xl border border-[#d4af37]">
+          <Image src={r.after} alt="After" fill sizes="(max-width: 640px) 45vw, 220px" className="object-cover" />
+          <span className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-[#d4af37] px-3 py-1 text-[9px] sm:text-[10px] font-bold tracking-wider text-[#172554] shadow">
+            AFTER
+          </span>
+        </div>
+      </div>
+      <div className="mt-3 flex items-center justify-center gap-2 text-[#b8962e]">
+        <span className="h-px w-8 bg-[#d4af37]/60" />
+        <span className="text-xs font-semibold tracking-[0.2em]">RESULTS</span>
+        <span className="h-px w-8 bg-[#d4af37]/60" />
+      </div>
+    </div>
+  ))}
 
-            {/* result-3: split top=Before, bottom=After */}
-            <div className="col-span-2 flex justify-center gap-3 sm:gap-5 pt-2">
-              {/* Before — top half */}
-              <div className="flex flex-col items-center gap-1.5">
-                <div className="relative w-32 sm:w-40 aspect-square rounded-2xl overflow-hidden border-4 border-gray-200">
-                  <Image
-                    src="/results/result-3.jpg"
-                    alt="Before"
-                    fill
-                    sizes="160px"
-                    className="object-cover"
-                    style={{ objectPosition: "center 0%", transform: "scaleY(2)", transformOrigin: "top" }}
-                  />
-                  <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap shadow">
-                    BEFORE
-                  </span>
-                </div>
-                <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-gray-500">Before</p>
-              </div>
+  <div className="col-span-1 sm:col-span-2 flex justify-center gap-4 sm:gap-6 pt-2">
+    <div className="flex flex-col items-center gap-2 rounded-2xl border border-gray-200 bg-white p-3 shadow-sm">
+      <div className="relative w-32 sm:w-40 aspect-square overflow-hidden rounded-xl border border-gray-200">
+        <Image
+          src="/results/result-3.jpg"
+          alt="Before"
+          fill
+          sizes="160px"
+          className="object-cover"
+          style={{ objectPosition: "center 0%", transform: "scaleY(2)", transformOrigin: "top" }}
+        />
+        <span className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-[#172554] px-3 py-1 text-[9px] sm:text-[10px] font-bold text-white">
+          BEFORE
+        </span>
+      </div>
+      <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#172554]">Before</p>
+    </div>
 
-              {/* Arrow */}
-              <div className="flex items-center self-center text-[#16a34a]">
-                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </div>
+    <div className="flex items-center text-[#b8962e]">
+      <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg>
+    </div>
 
-              {/* After — bottom half */}
-              <div className="flex flex-col items-center gap-1.5">
-                <div className="relative w-32 sm:w-40 aspect-square rounded-2xl overflow-hidden border-4 border-[#dcfce7]">
-                  <Image
-                    src="/results/result-3.jpg"
-                    alt="After"
-                    fill
-                    sizes="160px"
-                    className="object-cover"
-                    style={{ objectPosition: "center 100%", transform: "scaleY(2)", transformOrigin: "bottom" }}
-                  />
-                  <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-[#16a34a] text-white text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-full whitespace-nowrap shadow">
-                    AFTER
-                  </span>
-                </div>
-                <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#16a34a]">After</p>
-              </div>
-            </div>
-          </div>
+    <div className="flex flex-col items-center gap-2 rounded-2xl border border-[#d4af37]/50 bg-white p-3 shadow-sm">
+      <div className="relative w-32 sm:w-40 aspect-square overflow-hidden rounded-xl border border-[#d4af37]">
+        <Image
+          src="/results/result-3.jpg"
+          alt="After"
+          fill
+          sizes="160px"
+          className="object-cover"
+          style={{ objectPosition: "center 100%", transform: "scaleY(2)", transformOrigin: "bottom" }}
+        />
+        <span className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-[#d4af37] px-3 py-1 text-[9px] sm:text-[10px] font-bold text-[#172554]">
+          AFTER
+        </span>
+      </div>
+      <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-[#b8962e]">After</p>
+    </div>
+  </div>
+</div>
 
-          <p className="text-center text-[10px] sm:text-xs text-gray-400 mt-6">
-            * Individual results may vary. Consistent use as directed is recommended.
-          </p>
+<p className="mt-6 text-center text-[10px] sm:text-xs text-gray-400">
+  * Individual results may vary. Consistent use as directed is recommended.
+</p>
         </div>
         )}
 

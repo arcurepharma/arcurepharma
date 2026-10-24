@@ -224,17 +224,37 @@ export default function ProductCard({ product }: { product: Product }) {
             <span className="text-[11px] text-gray-500 ml-1">({reviewCount})</span>
           </div>
 
-          {/* Price */}
-          <div className="flex items-baseline gap-2 mb-3">
-            <p className="text-sm sm:text-base font-extrabold text-gray-900">
-              {formatPrice(product.price)}
+                    <div className="flex items-center gap-1.5 mb-3 flex-wrap">
+        {/* Main Price */}
+        <p className="text-base sm:text-lg font-black text-gray-900">
+          {formatPrice(product.price)}
+        </p>
+        
+        {product.previousPrice && Number(product.previousPrice) > Number(product.price) && (
+          <>
+            {/* Cut Price */}
+            <p className="text-xs text-gray-400 line-through">
+              {formatPrice(product.previousPrice)}
             </p>
-            {product.previousPrice && Number(product.previousPrice) > Number(product.price) && (
-              <p className="text-xs sm:text-sm font-medium text-gray-400 line-through">
-                {formatPrice(product.previousPrice)}
-              </p>
+            
+                       {/* Save Badge - Sirf Deals / Bundles par dikhega */
+            (product.category?.toLowerCase().includes("bundle") ||
+
+              product.category?.toLowerCase().includes("deal") || 
+              
+              product.title?.toLowerCase().includes("duo") ||
+              product.title?.toLowerCase().includes("trio") ||
+              product.title?.toLowerCase().includes("pack") ||
+              product.title?.toLowerCase().includes("bundle")) && (
+              <span className="bg-green-100 text-green-800 text-xs font-black px-2 py-0.5 rounded-md tracking-wide">
+                Save {formatPrice(Number(product.previousPrice) - Number(product.price))}
+              </span>
             )}
-          </div>
+          </>
+        )}
+      </div>
+
+
 
           {/* ADD TO CART + WhatsApp */}
           <div className="mt-auto space-y-1.5">

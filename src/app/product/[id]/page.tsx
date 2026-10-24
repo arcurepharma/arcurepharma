@@ -247,12 +247,18 @@ export default function ProductDetailPage() {
                 {formatPrice(product.price)}
                 <span className="text-sm font-medium text-gray-400 ml-2">incl. GST</span>
               </p>
-              {product.previousPrice && Number(product.previousPrice) > Number(product.price) && (
-                <p className="text-lg sm:text-xl font-medium text-gray-400 line-through">
-                  {formatPrice(product.previousPrice)}
-                </p>
-              )}
-            </div>
+          {(product.category?.toLowerCase().includes("deal") ||
+  product.category?.toLowerCase().includes("bundle") ||
+  product.title?.toLowerCase().includes("duo") ||
+  product.title?.toLowerCase().includes("trio") ||
+  product.title?.toLowerCase().includes("pack") ||
+  product.title?.toLowerCase().includes("bundle")) &&
+  product.previousPrice && (
+  <p className="text-lg sm:text-xl font-medium text-gray-400 line-through">
+    {formatPrice(product.previousPrice)}
+  </p>
+)}
+
 
             {product.sku && (
               <p className="text-xs text-gray-400 mb-4">

@@ -438,7 +438,7 @@ export default function ProductDetailPage() {
         </div>
         )}
 
-        {/* â”€â”€ Customer Reviews â”€â”€ */}
+        {/* Customer Reviews */}
         {reviews.length > 0 && (
   <div className="mt-14">
     <div className="flex items-center justify-between mb-6 border-b-2 border-[#dcfce7] pb-3">
@@ -487,10 +487,9 @@ export default function ProductDetailPage() {
       ))}
     </div>
   </div>
-)}
-<InstagramReels />
-<FooterOnly />
-</main>
-);
-      }
-      
+        )}
+        <InstagramReels />
+        <FooterOnly />
+      </main>
+    );
+        }

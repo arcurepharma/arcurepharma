@@ -198,30 +198,7 @@ function TrackingContent() {
           </button>
         </form>
 
-        {/* Quick Demo Suggestions */}
-        <div className="mt-4 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-2 text-xs text-gray-500">
-          <span className="font-semibold text-gray-700">Quick Test:</span>
-          <button
-            type="button"
-            onClick={() => {
-              setInputVal("demo123");
-              fetchTracking("demo123");
-            }}
-            className="px-2.5 py-1 bg-gray-100 hover:bg-green-50 hover:text-[#16a34a] text-gray-700 rounded-lg transition-colors font-mono font-medium cursor-pointer"
-          >
-            demo123
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setInputVal("ARC-8941-DEMO");
-              fetchTracking("ARC-8941-DEMO");
-            }}
-            className="px-2.5 py-1 bg-gray-100 hover:bg-green-50 hover:text-[#16a34a] text-gray-700 rounded-lg transition-colors font-mono font-medium cursor-pointer"
-          >
-            ARC-8941-DEMO
-          </button>
-        </div>
+
 
         {error && (
           <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3 text-red-700 text-sm animate-fade-in">

@@ -487,8 +487,10 @@ export default function ProductDetailPage() {
     </div>
   </div>
         )}
-        <InstagramReels />
-        <FooterOnly />
-      </main>
-    );
+      </div>
+
+      <InstagramReels />
+      <FooterOnly />
+    </main>
+  );
 }
